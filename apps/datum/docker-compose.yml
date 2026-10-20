@@ -1,0 +1,18 @@
+services:
+  datum:
+    image: ghcr.io/retropex/datum:v1.14
+    command:
+      - '--config=/app/conf/datum_gateway_config.json'
+    entrypoint:
+      - /app/datum_gateway
+    user: '1000:1000'
+    ports:
+      - 23334:23334/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/settings/:/app/conf/
+    x-runtipi:
+      internal_port: 21000
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

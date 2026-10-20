@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "seedtool",
+      "image": "dennysubke/seedtool:2.3.0",
+      "isMain": true,
+      "internalPort": 8080
+    }
+  ]
+}

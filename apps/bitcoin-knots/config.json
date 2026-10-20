@@ -1,0 +1,56 @@
+{
+  "name": "Bitcoin Knots",
+  "available": true,
+  "port": 2105,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bitcoin-knots",
+  "description": "Take control of your digital sovereignty by choosing Bitcoin Knots to run your node! By using Knots, you’re supporting a version of Bitcoin that prioritizes efficiency, security, and flexibility. With Bitcoin Knots’ enhanced configuration options, you can fine-tune your node to help keep the network clean and resilient, actively reducing unnecessary load from spam or parasitic transactions.",
+  "tipi_version": 1,
+  "version": "1.2.13",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Run your personal node powered by Bitcoin Knots",
+  "author": "Léo Haf",
+  "source": "https://github.com/bitcoinknots/bitcoin.git",
+  "website": "https://bitcoinknots.org",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Bitcoin Knots rpc hidden service",
+      "min": 32,
+      "env_variable": "APP_BITCOIN_KNOTS_RPC_HIDDEN_SERVICE"
+    },
+    {
+      "type": "random",
+      "label": "Bitcoin Knots p2p hidden service",
+      "min": 32,
+      "env_variable": "APP_BITCOIN_KNOTS_P2P_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Knots app bitcoin knots rpc user",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_BITCOIN_KNOTS_RPC_USER"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Knots app bitcoin knots rpc pass",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_BITCOIN_KNOTS_RPC_PASS"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501489982,
+  "updated_at": 1792501549982,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

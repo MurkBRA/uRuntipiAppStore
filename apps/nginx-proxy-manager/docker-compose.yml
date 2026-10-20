@@ -1,0 +1,21 @@
+services:
+  nginx-proxy-manager:
+    image: jc21/nginx-proxy-manager:2.16.0
+    hostname: nginx-proxy-manager
+    ports:
+      - 40080:80/tcp
+      - 40443:443/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/npm-data:/data
+      - ${APP_DATA_DIR}/data/letsencrypt:/etc/letsencrypt
+    x-runtipi:
+      internal_port: 81
+      is_main: true
+  nginx-proxy-manager-docker-host:
+    image: qoomon/docker-host:3.3.1
+    hostname: ${APP_DOMAIN}
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+x-runtipi:
+  schema_version: 2

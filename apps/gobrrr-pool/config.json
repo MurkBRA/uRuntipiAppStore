@@ -1,0 +1,64 @@
+{
+  "name": "Go Brrr Pool",
+  "available": true,
+  "port": 21421,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "gobrrr-pool",
+  "description": "Go Brrr Pool is a self-hosted solo Bitcoin mining pool powered by ckpool-solo. Connect your miners directly to your own node and keep 100% of block rewards. No third-party pool, no KYC, no fees, no middleman.",
+  "tipi_version": 1,
+  "version": "v1.2.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Bitcoin Solo Mining, Done Right!",
+  "author": "GoBrrr",
+  "source": "https://github.com/gobrrrme/GoBrrr-Pool",
+  "website": "https://gobrrr.me",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Hashblock Port",
+      "required": false,
+      "default": 28334,
+      "env_variable": "APP_BITCOIN_ZMQ_HASHBLOCK_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501497005,
+  "updated_at": 1792501557005,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

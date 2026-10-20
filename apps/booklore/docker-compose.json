@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "booklore",
+      "image": "ghcr.io/booklore-app/booklore:v2.4.0",
+      "isMain": true,
+      "internalPort": 6060,
+      "environment": [
+        {
+          "key": "DATABASE_URL",
+          "value": "jdbc:mariadb://booklore-db:3306/booklore"
+        },
+        {
+          "key": "DATABASE_USERNAME",
+          "value": "bookloreuser"
+        },
+        {
+          "key": "DATABASE_PASSWORD",
+          "value": "booklorepass"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/app/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/books",
+          "containerPath": "/books"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/bookdrop",
+          "containerPath": "/bookdrop"
+        }
+      ],
+      "dependsOn": {
+        "booklore-db": {
+          "condition": "service_started"
+        }
+      }
+    },
+    {
+      "name": "booklore-db",
+      "image": "mariadb:12.0.2",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "MARIADB_DATABASE",
+          "value": "booklore"
+        },
+        {
+          "key": "MARIADB_USER",
+          "value": "bookloreuser"
+        },
+        {
+          "key": "MARIADB_PASSWORD",
+          "value": "booklorepass"
+        },
+        {
+          "key": "MARIADB_ROOT_PASSWORD",
+          "value": "rootpass"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    }
+  ]
+}

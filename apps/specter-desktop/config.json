@@ -1,0 +1,57 @@
+{
+  "name": "Specter Desktop",
+  "available": true,
+  "port": 25441,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "specter-desktop",
+  "description": "Specter Desktop can be used to connect to the Bitcoin Core running on your Umbrel or an Electrum Server. It functions as a watch-only coordinator for multi-signature and single-key Bitcoin wallets. At the moment Specter Desktop is working with all major hardware wallets including:",
+  "tipi_version": 1,
+  "version": "v2.1.11",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Multisig with hardware wallets made easy",
+  "author": "Crypto Advance",
+  "source": "https://github.com/cryptoadvance/specter-desktop",
+  "website": "https://specter.solutions",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501509650,
+  "updated_at": 1792501569650,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "seafile",
+      "image": "seafileltd/seafile-mc:14.0.9",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "DB_HOST",
+          "value": "seafile-mysql"
+        },
+        {
+          "key": "DB_ROOT_PASSWD",
+          "value": "db_dev"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_HOST",
+          "value": "seafile-mysql"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_PORT",
+          "value": "3306"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_USER",
+          "value": "root"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_PASSWORD",
+          "value": "db_dev"
+        },
+        {
+          "key": "INIT_SEAFILE_MYSQL_ROOT_PASSWORD",
+          "value": "db_dev"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_CCNET_DB_NAME",
+          "value": "ccnet_db"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_SEAFILE_DB_NAME",
+          "value": "seafile_db"
+        },
+        {
+          "key": "SEAFILE_MYSQL_DB_SEAHUB_DB_NAME",
+          "value": "seahub_db"
+        },
+        {
+          "key": "JWT_PRIVATE_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "INIT_SEAFILE_ADMIN_EMAIL",
+          "value": "umbrel"
+        },
+        {
+          "key": "INIT_SEAFILE_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SEAFILE_SERVER_LETSENCRYPT",
+          "value": "false"
+        },
+        {
+          "key": "SEAFILE_SERVER_HOSTNAME",
+          "value": "${APP_DOMAIN}:8920"
+        },
+        {
+          "key": "SEAFILE_SERVER_PROTOCOL",
+          "value": "http"
+        },
+        {
+          "key": "SITE_ROOT",
+          "value": "/"
+        },
+        {
+          "key": "ENABLE_SEADOC",
+          "value": "true"
+        },
+        {
+          "key": "SEADOC_SERVER_URL",
+          "value": "http://${APP_DOMAIN}:8921"
+        },
+        {
+          "key": "CACHE_PROVIDER",
+          "value": "memcached"
+        },
+        {
+          "key": "MEMCACHED_HOST",
+          "value": "memcached"
+        },
+        {
+          "key": "MEMCACHED_PORT",
+          "value": "11211"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/seafile-data",
+          "containerPath": "/shared"
+        }
+      ],
+      "dependsOn": [
+        "seafile-db",
+        "seafile-memcached"
+      ],
+      "extraHosts": [
+        "${APP_DOMAIN}:host-gateway"
+      ]
+    },
+    {
+      "name": "seafile-db",
+      "image": "mariadb:10.11.6",
+      "environment": [
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "db_dev"
+        },
+        {
+          "key": "MYSQL_LOG_CONSOLE",
+          "value": "true"
+        },
+        {
+          "key": "MARIADB_AUTO_UPGRADE",
+          "value": "1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    },
+    {
+      "name": "seafile-memcached",
+      "image": "memcached:1.6.42",
+      "entrypoint": "memcached -m 256"
+    },
+    {
+      "name": "seafile-seadoc",
+      "image": "seafileltd/sdoc-server:2.0.9",
+      "environment": [
+        {
+          "key": "DB_HOST",
+          "value": "seafile-mysql"
+        },
+        {
+          "key": "DB_USER",
+          "value": "root"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "db_dev"
+        },
+        {
+          "key": "DB_NAME",
+          "value": "seahub_db"
+        },
+        {
+          "key": "JWT_PRIVATE_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "SEAHUB_SERVICE_URL",
+          "value": "http://seafile"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/seadoc-data",
+          "containerPath": "/shared"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8921,
+          "containerPort": 80,
+          "tcp": true
+        }
+      ],
+      "dependsOn": [
+        "seafile-db"
+      ],
+      "extraHosts": [
+        "${APP_DOMAIN}:host-gateway"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "Decred Pulse",
+  "available": true,
+  "port": 8735,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "dcrpulse",
+  "description": "Decred Pulse is a comprehensive dashboard for running a full Decred node.",
+  "tipi_version": 1,
+  "version": "1.0.3",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Full Decred node with watch-only wallet and database-free block explorer",
+  "author": "Decred",
+  "source": "https://github.com/karamble/dcrpulse",
+  "website": "https://decred.org",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Decred Pulse seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501493876,
+  "updated_at": 1792501553876,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

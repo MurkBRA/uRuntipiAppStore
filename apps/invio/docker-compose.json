@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "invio",
+      "image": "ghcr.io/kittendevv/invio-frontend:v2.2.0",
+      "isMain": true,
+      "internalPort": 8000,
+      "environment": [
+        {
+          "key": "PORT",
+          "value": 8000
+        },
+        {
+          "key": "BACKEND_URL",
+          "value": "http://invio-backend:3000"
+        },
+        {
+          "key": "COOKIE_SECURE",
+          "value": "false"
+        },
+        {
+          "key": "FRONTEND_SECURE_HEADERS_DISABLED",
+          "value": "false"
+        },
+        {
+          "key": "ENABLE_HSTS",
+          "value": "false"
+        },
+        {
+          "key": "ORIGIN",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        }
+      ],
+      "dependsOn": [
+        "invio-backend"
+      ]
+    },
+    {
+      "name": "invio-backend",
+      "image": "ghcr.io/kittendevv/invio-backend:v2.2.0",
+      "environment": [
+        {
+          "key": "ADMIN_USER",
+          "value": "admin"
+        },
+        {
+          "key": "ADMIN_PASS",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "JWT_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "SESSION_TTL_SECONDS",
+          "value": 43200
+        },
+        {
+          "key": "SECURE_HEADERS_DISABLED",
+          "value": "false"
+        },
+        {
+          "key": "ENABLE_HSTS",
+          "value": "true"
+        },
+        {
+          "key": "DATABASE_PATH",
+          "value": "/app/data/invio.db"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+services:
+  bitbalance:
+    image: ghcr.io/egzola/bitbalance:1.0.18
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - PORT=3710
+      - ELECTRUM_HOST=${APP_ELECTRS_NODE_IP}
+      - ELECTRUM_PORT=${APP_ELECTRS_NODE_PORT}
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3710
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

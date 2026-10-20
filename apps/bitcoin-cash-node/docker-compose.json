@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bitcoin-cash-node",
+      "image": "ghcr.io/danhaus93-ops/bchn-dashboard:8bb17f3689d837dbd370ac0d35e4a158ea12b75a",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "PORT",
+          "value": 3000
+        },
+        {
+          "key": "APP_VERSION",
+          "value": "v29.1.37"
+        },
+        {
+          "key": "TOR_IP",
+          "value": "10.21.22.50"
+        },
+        {
+          "key": "RPC_HOST",
+          "value": "bitcoind"
+        },
+        {
+          "key": "RPC_PORT",
+          "value": "8332"
+        },
+        {
+          "key": "RPC_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "RPC_PASS",
+          "value": "${APP_BITCOIN_CASH_NODE_RPC_PASS}"
+        },
+        {
+          "key": "PUBLIC_HOST",
+          "value": "${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/bitcoind",
+          "containerPath": "/nodedata"
+        }
+      ],
+      "dependsOn": [
+        "bitcoin-cash-node-bitcoind"
+      ]
+    },
+    {
+      "name": "bitcoin-cash-node-bitcoind",
+      "image": "mainnet/bitcoin-cash-node:v29.0.0",
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "command": [
+        "-datadir=/data",
+        "-printtoconsole",
+        "-server=1",
+        "-listen=1",
+        "-port=8335",
+        "-rpcbind=0.0.0.0",
+        "-rpcallowip=0.0.0.0/0",
+        "-rpcuser=umbrel",
+        "-rpcpassword=${APP_BITCOIN_CASH_NODE_RPC_PASS}",
+        "-rpcworkqueue=512",
+        "-rpcthreads=64",
+        "-dbcache=512",
+        "-maxmempool=300",
+        "-txindex=1",
+        "-disablewallet=1",
+        "-maxconnections=64",
+        "-zmqpubhashblock=tcp://0.0.0.0:28332"
+      ],
+      "entrypoint": [
+        "bitcoind"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/bitcoind",
+          "containerPath": "/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8335,
+          "containerPort": 8335,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

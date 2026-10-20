@@ -1,0 +1,65 @@
+{
+  "name": "Fulcrum",
+  "available": true,
+  "port": 2109,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "fulcrum",
+  "description": "Run your personal Electrum server and connect your Electrum-compatible wallet, including BitBoxApp, BlueWallet, Electrum Wallet (Android and Desktop), Nunchuk  (Desktop), Phoenix, and Sparrow Wallet to it instead of using a third-party Electrum server.",
+  "tipi_version": 1,
+  "version": "1.0.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A fast and nimble Electrum Server",
+  "author": "Calin Culianu",
+  "source": "https://github.com/cculianu/Fulcrum",
+  "website": "https://fulcrumserver.org/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Fulcrum rpc hidden service",
+      "min": 32,
+      "env_variable": "APP_FULCRUM_RPC_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501496474,
+  "updated_at": 1792501556474,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

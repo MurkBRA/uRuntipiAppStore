@@ -1,0 +1,15 @@
+services:
+  fossflow:
+    image: stnsmith/fossflow:master-b69fc2e
+    volumes:
+      - ${APP_DATA_DIR}/data/diagrams:/data/diagrams
+    environment:
+      - NODE_ENV=production
+      - ENABLE_SERVER_STORAGE=true
+      - STORAGE_PATH=/data/diagrams
+      - ENABLE_GIT_BACKUP=false
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

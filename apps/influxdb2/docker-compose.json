@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "influxdb2",
+      "image": "influxdb:2.9.1-alpine",
+      "isMain": true,
+      "internalPort": 8086,
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data",
+          "containerPath": "/var/lib/influxdb2"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/etc/influxdb2"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "blockstream-blind-oracle",
+      "image": "tulipan81/pinserver_web:v0.0.36",
+      "isMain": true,
+      "internalPort": 8095,
+      "environment": [
+        {
+          "key": "PINSERVER_URL_A",
+          "value": "${APP_PINSERVER_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "PINSERVER_PORT_A",
+          "value": "8097"
+        },
+        {
+          "key": "PINSERVER_URL_B",
+          "value": "${APP_TAILSCALE_URL}"
+        },
+        {
+          "key": "PINSERVER_PORT_B",
+          "value": "8097"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server_public_key.pub",
+          "containerPath": "/app/server_public_key.pub"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server_private_key.key",
+          "containerPath": "/app/server_private_key.key"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/pins",
+          "containerPath": "/app/pins"
+        }
+      ]
+    },
+    {
+      "name": "blockstream-blind-oracle-node",
+      "image": "tulipan81/blind_pin_server:v0.0.7",
+      "stopGracePeriod": "1m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server_public_key.pub",
+          "containerPath": "/server_public_key.pub"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server_private_key.key",
+          "containerPath": "/server_private_key.key"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/pins",
+          "containerPath": "/pins"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8097,
+          "containerPort": 8096,
+          "tcp": true
+        }
+      ],
+      "dependsOn": [
+        "blockstream-blind-oracle"
+      ]
+    }
+  ]
+}

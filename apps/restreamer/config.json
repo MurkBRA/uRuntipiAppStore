@@ -1,0 +1,28 @@
+{
+  "name": "Restreamer",
+  "available": true,
+  "port": 20264,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "restreamer",
+  "description": "Restreamer is an open-source streaming server developed by datarhei, designed to simplify live video broadcasting. It provides an intuitive web-based interface that allows users to set up and manage streams without requiring advanced technical knowledge. Supporting a variety of streaming protocols, including RTMP, HLS, SRT, and WebRTC, it enables seamless video transmission across different platforms.",
+  "tipi_version": 1,
+  "version": "2.12.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An easy to use open source video server",
+  "author": "datarhei",
+  "source": "https://github.com/datarhei/restreamer",
+  "website": "https://datarhei.com/",
+  "url_suffix": "ui",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506762,
+  "updated_at": 1792501566762,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

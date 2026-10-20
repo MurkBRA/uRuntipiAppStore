@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "btcpay-server",
+      "image": "btcpayserver/btcpayserver:2.4.5",
+      "isMain": true,
+      "internalPort": 3003,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "entrypoint": [
+        "dotnet",
+        "BTCPayServer.dll"
+      ],
+      "environment": [
+        {
+          "key": "HOME",
+          "value": "/data"
+        },
+        {
+          "key": "BTCPAY_DATADIR",
+          "value": "/data"
+        },
+        {
+          "key": "BTCPAY_PLUGINDIR",
+          "value": "/data/plugins"
+        },
+        {
+          "key": "BTCPAY_DOCKERDEPLOYMENT",
+          "value": "false"
+        },
+        {
+          "key": "BTCPAY_POSTGRES",
+          "value": "User ID=postgres;Host=btcpay-server-postgres;Port=5432;Database=btcpayserver${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "BTCPAY_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "BTCPAY_BIND",
+          "value": "0.0.0.0:3003"
+        },
+        {
+          "key": "BTCPAY_CHAINS",
+          "value": "btc"
+        },
+        {
+          "key": "BTCPAY_BTCEXPLORERURL",
+          "value": "http://btcpay-server-nbxplorer:32838"
+        },
+        {
+          "key": "BTCPAY_BTCLIGHTNING",
+          "value": "type=lnd-rest;server=https://${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_REST_PORT}/;macaroonfilepath=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon;allowinsecure=true"
+        },
+        {
+          "key": "BTCPAY_SOCKSENDPOINT",
+          "value": "${TOR_PROXY_IP}:${TOR_PROXY_PORT}"
+        },
+        {
+          "key": "BTCPAY_EXPLORERPOSTGRES",
+          "value": "User ID=postgres;Host=btcpay-server-postgres;Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=nbxplorer${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "BTCPAY_TORSERVICES",
+          "value": "btcpayserver:${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/btcpay",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nbxplorer",
+          "containerPath": "/data/.nbxplorer"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": [
+        "btcpay-server-nbxplorer",
+        "btcpay-server-postgres"
+      ]
+    },
+    {
+      "name": "btcpay-server-nbxplorer",
+      "image": "nicolasdorier/nbxplorer:2.6.19",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "NBXPLORER_DATADIR",
+          "value": "/data"
+        },
+        {
+          "key": "NBXPLORER_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "NBXPLORER_BIND",
+          "value": "0.0.0.0:32838"
+        },
+        {
+          "key": "NBXPLORER_CHAINS",
+          "value": "btc"
+        },
+        {
+          "key": "NBXPLORER_SIGNALFILEDIR",
+          "value": "/data"
+        },
+        {
+          "key": "NBXPLORER_BTCRPCURL",
+          "value": "http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "NBXPLORER_BTCNODEENDPOINT",
+          "value": "${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_P2P_WHITEBIND_PORT-${APP_BITCOIN_P2P_PORT}}"
+        },
+        {
+          "key": "NBXPLORER_BTCRPCUSER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "NBXPLORER_BTCRPCPASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "NBXPLORER_POSTGRES",
+          "value": "User ID=postgres;Host=btcpay-server-postgres;Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=nbxplorer${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "NBXPLORER_BTCHASTXINDEX",
+          "value": 1
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nbxplorer",
+          "containerPath": "/data"
+        }
+      ],
+      "dependsOn": [
+        "btcpay-server-postgres"
+      ]
+    },
+    {
+      "name": "btcpay-server-postgres",
+      "image": "btcpayserver/postgres:13.13",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "command": [
+        "-c",
+        "random_page_cost=1.0",
+        "-c",
+        "shared_preload_libraries=pg_stat_statements"
+      ],
+      "environment": [
+        {
+          "key": "POSTGRES_HOST_AUTH_METHOD",
+          "value": "trust"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ]
+    }
+  ]
+}

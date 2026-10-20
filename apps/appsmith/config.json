@@ -1,0 +1,34 @@
+{
+  "name": "Appsmith",
+  "available": true,
+  "port": 25946,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "appsmith",
+  "description": "Appsmith is an open-source, low-code development platform designed to help developers and teams build internal tools and business applications quickly and efficiently. Whether you need dashboards, admin panels, database GUIs, or approval workflows, Appsmith provides a powerful yet flexible environment to create robust applications without the overhead of traditional software development.",
+  "tipi_version": 1,
+  "version": "v2.5.0",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "Platform to build admin panels, internal tools, and dashboards",
+  "author": "Appsmith",
+  "source": "https://github.com/appsmithorg/appsmith",
+  "website": "https://www.appsmith.com/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Appsmith password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501488625,
+  "updated_at": 1792501548625,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

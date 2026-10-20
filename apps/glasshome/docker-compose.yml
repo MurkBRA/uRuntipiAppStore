@@ -1,0 +1,14 @@
+services:
+  glasshome:
+    image: ghcr.io/glasshome/dash:1.4.5
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - PORT=3123
+      - DATA_DIR=/data
+      - TRUSTED_PROXIES=127.0.0.0/8,::1,${GATEWAY_IP}/32
+    x-runtipi:
+      internal_port: 3123
+      is_main: true
+x-runtipi:
+  schema_version: 2

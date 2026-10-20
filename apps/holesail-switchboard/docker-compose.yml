@@ -1,0 +1,29 @@
+services:
+  holesail-switchboard:
+    image: orenz0/holesail-switchboard:v2.0.8
+    ports:
+      - 3161:3161/tcp
+      - 3162:3162/tcp
+      - 3163:3163/tcp
+      - 3164:3164/tcp
+      - 3165:3165/tcp
+      - 3166:3166/tcp
+      - 3167:3167/tcp
+      - 3168:3168/tcp
+      - 3169:3169/tcp
+      - 3170:3170/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - HSSB_DATA_FILE=/data/data.json
+      - HSSB_HOST=0.0.0.0
+      - HSSB_PORT=3160
+      - HSSB_CLIENT_HOST=0.0.0.0
+      - HSSB_FIXED_CLIENT_PORTS=3161-3170
+      - 'HSSB_SUBTITLE=For more information, visit: https://github.com/oren-z0/holesail-switchboard/blob/main/docs/Umbrel.md'
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3160
+      is_main: true
+x-runtipi:
+  schema_version: 2

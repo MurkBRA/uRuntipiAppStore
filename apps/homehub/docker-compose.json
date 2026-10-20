@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "homehub",
+      "image": "ghcr.io/surajverma/homehub:0.4.1",
+      "isMain": true,
+      "internalPort": 5000,
+      "environment": [
+        {
+          "key": "FLASK_ENV",
+          "value": "production"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/app/uploads"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/media",
+          "containerPath": "/app/media"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/pdfs",
+          "containerPath": "/app/pdfs"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app_data",
+          "containerPath": "/app/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config/config.yml",
+          "containerPath": "/app/config.yml",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

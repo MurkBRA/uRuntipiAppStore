@@ -1,0 +1,171 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "gobrrr-pool",
+      "image": "ghcr.io/gobrrrme/gobrrr-pool-webui:v1.2.1",
+      "isMain": true,
+      "internalPort": 21421,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "30s",
+      "environment": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "PORT",
+          "value": "21421"
+        },
+        {
+          "key": "CKPOOL_SOCKET_DIR",
+          "value": "/tmp/ckpool"
+        },
+        {
+          "key": "CKPOOL_LOGS_DIR",
+          "value": "/var/log/ckpool"
+        },
+        {
+          "key": "STRATUM_PORT",
+          "value": "21420"
+        },
+        {
+          "key": "BITCOIN_RPC_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ckpool-socket",
+          "containerPath": "/tmp/ckpool",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ckpool-logs",
+          "containerPath": "/var/log/ckpool",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/webui",
+          "containerPath": "/app/data"
+        }
+      ],
+      "dependsOn": [
+        "gobrrr-pool-ckpool"
+      ]
+    },
+    {
+      "name": "gobrrr-pool-ckpool",
+      "image": "ghcr.io/gobrrrme/gobrrr-ckpool:v1.2.1",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "BITCOIN_RPC_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "BITCOIN_ZMQ_HASHBLOCK",
+          "value": "tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}"
+        },
+        {
+          "key": "POOL_SIGNATURE",
+          "value": "GoBrrrPool_Umbrel"
+        },
+        {
+          "key": "START_DIFFICULTY",
+          "value": "10000"
+        },
+        {
+          "key": "MIN_DIFFICULTY",
+          "value": "1"
+        },
+        {
+          "key": "BLOCKPOLL",
+          "value": "50"
+        },
+        {
+          "key": "UPDATE_INTERVAL",
+          "value": "20"
+        },
+        {
+          "key": "STRATUM_HIGHDIFF_PORT",
+          "value": "4444"
+        },
+        {
+          "key": "HIGHDIFF",
+          "value": "1000000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ckpool-socket",
+          "containerPath": "/tmp/ckpool"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ckpool-logs",
+          "containerPath": "/var/log/ckpool"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 21420,
+          "containerPort": 3333,
+          "tcp": true
+        },
+        {
+          "hostPort": 21422,
+          "containerPort": 4444,
+          "tcp": true
+        }
+      ],
+      "healthCheck": {
+        "test": "test -f /var/log/ckpool/ckpool.log",
+        "interval": "2s",
+        "timeout": "3s",
+        "retries": 15
+      }
+    },
+    {
+      "name": "gobrrr-pool-gobrrr-stats",
+      "image": "rodb2008com/gobrrr-pool-api-etl:v1",
+      "addToMainNetwork": true,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ckpool-logs",
+          "containerPath": "/data",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": {
+        "gobrrr-pool-ckpool": {
+          "condition": "service_healthy"
+        }
+      }
+    }
+  ]
+}

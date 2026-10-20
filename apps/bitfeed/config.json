@@ -1,0 +1,80 @@
+{
+  "name": "Bitfeed",
+  "available": true,
+  "port": 8314,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bitfeed",
+  "description": "A self-hosted version of Bitfeed - the open source mempool visualizer & block explorer available at https://bitfeed.live.",
+  "tipi_version": 1,
+  "version": "v2.3.4",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A beautiful mempool visualizer and block explorer",
+  "author": "Mononaut",
+  "source": "https://github.com/bitfeed-project/bitfeed",
+  "website": "https://monospace.live",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Rawtx Port",
+      "required": false,
+      "default": 28333,
+      "env_variable": "APP_BITCOIN_ZMQ_RAWTX_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Rawblock Port",
+      "required": false,
+      "default": 28332,
+      "env_variable": "APP_BITCOIN_ZMQ_RAWBLOCK_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Sequence Port",
+      "required": false,
+      "default": 28335,
+      "env_variable": "APP_BITCOIN_ZMQ_SEQUENCE_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501490300,
+  "updated_at": 1792501550300,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

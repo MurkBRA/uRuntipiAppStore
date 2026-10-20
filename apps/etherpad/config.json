@@ -1,0 +1,37 @@
+{
+  "name": "Etherpad",
+  "available": true,
+  "port": 9002,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "etherpad",
+  "description": "⚙️ The admin panel for Etherpad is accessible at \"http://umbrel.local:9002/admin/\". You can find your unique credentials by right-clicking on the Etherpad app icon on the umbrelOS homescreen and selecting \"Show default credentials\".",
+  "tipi_version": 1,
+  "version": "3.3.9",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An intuitive tool for real-time collaborative writing",
+  "author": "The Etherpad Foundation",
+  "source": "https://github.com/ether/etherpad",
+  "website": "https://etherpad.org/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Etherpad password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495648,
+  "updated_at": 1792501555648,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

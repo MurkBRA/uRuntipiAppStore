@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "myspeed",
+      "image": "germannewsmaker/myspeed:1.0.9",
+      "isMain": true,
+      "internalPort": 5216,
+      "stopGracePeriod": "1m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/myspeed",
+          "containerPath": "/myspeed/data"
+        }
+      ]
+    }
+  ]
+}

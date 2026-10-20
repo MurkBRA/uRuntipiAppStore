@@ -1,0 +1,19 @@
+services:
+  neko:
+    image: ghcr.io/m1k1o/neko/firefox:3.2.0
+    ports:
+      - 52000:52000/udp
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - NEKO_DESKTOP_SCREEN=1920x1080@30
+      - NEKO_MEMBER_MULTIUSER_USER_PASSWORD=neko
+      - NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD=${APP_PASSWORD}
+      - NEKO_WEBRTC_EPR=52000-52100
+      - NEKO_WEBRTC_ICELITE=0
+    shm_size: 2gb
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+x-runtipi:
+  schema_version: 2

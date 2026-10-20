@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "zen",
+      "image": "ghcr.io/sheshbabu/zen/zen:1.5.0",
+      "isMain": true,
+      "internalPort": 8080,
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/images",
+          "containerPath": "/images"
+        }
+      ]
+    }
+  ]
+}

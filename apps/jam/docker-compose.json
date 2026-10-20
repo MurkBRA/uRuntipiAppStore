@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "jam",
+      "image": "ghcr.io/joinmarket-webui/jam-standalone:v0.4.1-clientserver-v0.9.11",
+      "isMain": true,
+      "internalPort": 80,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "RESTORE_DEFAULT_CONFIG",
+          "value": "true"
+        },
+        {
+          "key": "REMOVE_LOCK_FILES",
+          "value": "true"
+        },
+        {
+          "key": "ENSURE_WALLET",
+          "value": "true"
+        },
+        {
+          "key": "APP_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "jm_network",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "jm_rpc_host",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "jm_rpc_port",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "jm_rpc_user",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "jm_rpc_password",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "jm_rpc_wallet_file",
+          "value": "jam_default"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/joinmarket",
+          "containerPath": "/root/.joinmarket"
+        }
+      ]
+    }
+  ]
+}

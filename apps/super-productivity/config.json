@@ -1,0 +1,27 @@
+{
+  "name": "Super Productivity",
+  "available": true,
+  "port": 8020,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "super-productivity",
+  "description": "⚠️ By default, Super Productivity stores your data (like tasks and settings) in the browser on the device you're using to access it. This means your data stays tied to that browser and device and it won't automativelly sync elsewhere and could be lost if you clear your browser data or use a different device.",
+  "tipi_version": 1,
+  "version": "19.2.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An efficient way to manage tasks, time, and projects all in one place",
+  "author": "Johannes Schickling",
+  "source": "https://github.com/johannesjo/super-productivity",
+  "website": "https://super-productivity.com/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501510233,
+  "updated_at": 1792501570233,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,17 @@
+# Pastefy
+
+> An easy paste for seamless sharing
+
+Pastefy is a user-friendly online platform that allows you to quickly and securely store and share text, code, or other notes. Perfect for developers, creatives, or anyone who needs to exchange ideas in real time, Pastefy offers a simple way to save and share content without the hassle of sending files back and forth.
+
+With just a click, you can paste your text or code and receive a link to easily share it. For added security, Pastefy also offers the option to create private pastes, giving you full control over who has access to your information.
+
+Whether you're sharing code snippets with a colleague, keeping track of notes, or just quickly saving something for later, Pastefy makes sharing information faster, easier, and more secure.
+
+⚠️ Unless you make your pastes public or keep the link, they will not be able to be accessed once the browser's local storage is cleared or a different browser is used.
+
+## Links
+- **Upstream Version**: `7.1.6-patch.1`
+- **Website**: https://pastefy.app/
+- **Source Repository**: https://github.com/interaapps/pastefy
+- **Support**: https://github.com/interaapps/pastefy/issues

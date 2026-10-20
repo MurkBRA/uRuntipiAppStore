@@ -1,0 +1,35 @@
+{
+  "name": "Stratum V2 UI",
+  "available": true,
+  "port": 8077,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "sv2-ui",
+  "description": "Stratum V2 UI is a setup wizard and monitoring dashboard for running a Stratum V2 mining stack on Umbrel. It guides you through pool mining, solo mining, and Job Declaration flows where your Bitcoin node can provide custom block templates.",
+  "tipi_version": 1,
+  "version": "0.7.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Setup and monitor Stratum V2 mining",
+  "author": "The Stratum V2 Developers",
+  "source": "https://github.com/stratum-mining/sv2-ui",
+  "website": "https://stratumprotocol.org/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Data Directory Path",
+      "required": false,
+      "default": "/data/bitcoin",
+      "env_variable": "APP_BITCOIN_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501510463,
+  "updated_at": 1792501570463,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

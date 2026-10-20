@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "networkingtoolbox",
+      "image": "ghcr.io/lissy93/networking-toolbox:1.6.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "PORT",
+          "value": 3000
+        },
+        {
+          "key": "HOST",
+          "value": "0.0.0.0"
+        }
+      ],
+      "healthCheck": {
+        "test": "wget -qO- http://localhost:3000/health",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3,
+        "startPeriod": "40s"
+      }
+    }
+  ]
+}

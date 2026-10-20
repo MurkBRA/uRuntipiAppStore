@@ -1,0 +1,14 @@
+services:
+  agent-zero:
+    image: agent0ai/agent-zero:v2.14
+    volumes:
+      - ${APP_DATA_DIR}/data/usr:/a0/usr
+    environment:
+      - ALLOWED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:3015,${ips_with_port}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

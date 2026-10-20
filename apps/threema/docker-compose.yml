@@ -1,0 +1,8 @@
+services:
+  threema:
+    image: dennysubke/threema-web:v2.6.5
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

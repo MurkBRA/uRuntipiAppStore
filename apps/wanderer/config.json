@@ -1,0 +1,51 @@
+{
+  "name": "Wanderer",
+  "available": true,
+  "port": 3111,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "wanderer",
+  "description": "🗺️ Wanderer is a self-hosted, open-source platform designed for outdoor enthusiasts who want to manage, explore, and share hiking and biking routes on their own terms. It provides a clean and modern interface for uploading GPX files, drawing new routes on an interactive map, and organizing them with detailed metadata such as difficulty, duration, and elevation gain. Wanderer supports full-text search and powerful filtering to help users find exactly the route they are looking for based on various criteria like region, length, or type of activity.",
+  "tipi_version": 1,
+  "version": "0.21.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A self-hosted trail database",
+  "author": "Flomp",
+  "source": "https://github.com/Flomp/wanderer",
+  "website": "https://wanderer.to/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Wanderer encryption key",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_WANDERER_ENCRYPTION_KEY"
+    },
+    {
+      "type": "random",
+      "label": "Wanderer seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "random",
+      "label": "Wanderer password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501512424,
+  "updated_at": 1792501572424,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

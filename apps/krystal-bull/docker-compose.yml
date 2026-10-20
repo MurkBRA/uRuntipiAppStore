@@ -1,0 +1,38 @@
+services:
+  krystal-bull:
+    image: bitcoinscala/oracle-server-ui:1.9.7
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/oracleserver:/bitcoin-s
+      - ${APP_DATA_DIR}/data/log:/log
+    environment:
+      - LOG_PATH=/log/
+      - BITCOIN_S_HOME=/bitcoin-s/
+      - ORACLE_SERVER_API_URL=http://krystal-bull-oracleserver:9998/
+      - TOR_PROXY=socks5://${TOR_PROXY_IP}:${TOR_PROXY_PORT}
+      - DEFAULT_UI_PASSWORD=none
+      - BITCOIN_S_ORACLE_RPC_PASSWORD=${APP_PASSWORD}
+    depends_on:
+      - krystal-bull-oracleserver
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3001
+      is_main: true
+  krystal-bull-oracleserver:
+    image: bitcoinscala/bitcoin-s-oracle-server:1.9.7
+    entrypoint:
+      - /opt/docker/bin/bitcoin-s-oracle-server
+      - '--datadir'
+      - /bitcoin-s
+      - '--conf'
+      - /opt/docker/docker-application.conf
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/oracleserver:/bitcoin-s
+    environment:
+      - BITCOIN_S_KEYMANAGER_ENTROPY=${APP_SEED}
+      - BITCOIN_S_ORACLE_RPC_PASSWORD=${APP_PASSWORD}
+      - DISABLE_JLINK=1
+      - JAVA_OPTS=-Xmx256m
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "yuvomi",
+      "image": "ghcr.io/ulsklyc/yuvomi:2.78.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "PORT",
+          "value": "3000"
+        },
+        {
+          "key": "DB_PATH",
+          "value": "/data/yuvomi.db"
+        },
+        {
+          "key": "BACKUP_DIR",
+          "value": "/backups"
+        },
+        {
+          "key": "SESSION_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DB_ENCRYPTION_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "SESSION_SECURE",
+          "value": "false"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/backups",
+          "containerPath": "/backups"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "noStrudel",
+  "available": true,
+  "port": 3149,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "nostrudel",
+  "description": "noStrudel is a nostr web client that is focused on exploring the nostr network. The focus is on power users or any other users who want to learn the inner workings of nostr.",
+  "tipi_version": 1,
+  "version": "1.1.0",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "A sandbox for exploring nostr",
+  "author": "hzrd149",
+  "source": "https://github.com/hzrd149/nostrudel",
+  "website": "https://github.com/hzrd149/nostrudel",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501503298,
+  "updated_at": 1792501563298,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

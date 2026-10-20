@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "wavelog",
+      "image": "ghcr.io/wavelog/wavelog:3.2.4",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "CI_ENV",
+          "value": "docker"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/var/www/html/application/config/docker"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/var/www/html/uploads"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/userdata",
+          "containerPath": "/var/www/html/userdata"
+        }
+      ],
+      "dependsOn": [
+        "wavelog-wavelog-db"
+      ]
+    },
+    {
+      "name": "wavelog-wavelog-db",
+      "image": "mariadb:11.4",
+      "environment": [
+        {
+          "key": "MARIADB_RANDOM_ROOT_PASSWORD",
+          "value": "yes"
+        },
+        {
+          "key": "MARIADB_DATABASE",
+          "value": "wavelog"
+        },
+        {
+          "key": "MARIADB_USER",
+          "value": "wavelog"
+        },
+        {
+          "key": "MARIADB_PASSWORD",
+          "value": "wavelog"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    }
+  ]
+}

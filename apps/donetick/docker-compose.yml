@@ -1,0 +1,16 @@
+services:
+  donetick:
+    image: donetick/donetick:v0.1.83
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/donetick-data
+      - ${APP_DATA_DIR}/data/config:/config
+    environment:
+      - DT_ENV=selfhosted
+      - DT_JWT_SECRET=${APP_SEED}
+      - DT_SQLITE_PATH=/donetick-data/donetick.db
+    x-runtipi:
+      internal_port: 2021
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,111 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bassin",
+      "image": "halverneus/static-file-server:v1.8.11",
+      "isMain": true,
+      "internalPort": 80,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "FOLDER",
+          "value": "/www"
+        },
+        {
+          "key": "PORT",
+          "value": "80"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/www",
+          "containerPath": "/www",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": [
+        "bassin-ui"
+      ]
+    },
+    {
+      "name": "bassin-init",
+      "image": "alpine:3.22.1",
+      "addToMainNetwork": true,
+      "entrypoint": "/bin/sh -c '\n  apk add --no-cache envsubst &&\n  if [ ! -f /config/ckpool.conf ]; then\n    envsubst < /config/ckpool.conf.template > /config/ckpool.conf &&\n    chown 1000:1000 /config/ckpool.conf\n  fi\n'",
+      "environment": [
+        {
+          "key": "APP_BITCOIN_NODE_IP",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "APP_BITCOIN_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "APP_BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "APP_BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "APP_BITCOIN_ZMQ_HASHBLOCK_PORT",
+          "value": "${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config"
+        }
+      ]
+    },
+    {
+      "name": "bassin-ckpool",
+      "image": "ghcr.io/getumbrel/docker-ckpool-solo:v1.1.1",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "30s",
+      "command": "-k -B -c /config/ckpool.conf",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/www",
+          "containerPath": "/www"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 3456,
+          "containerPort": 3333,
+          "tcp": true
+        }
+      ],
+      "dependsOn": {
+        "bassin-init": {
+          "condition": "service_completed_successfully"
+        }
+      }
+    },
+    {
+      "name": "bassin-ui",
+      "image": "ghcr.io/blockdyor/bassin-ui:0e779e6",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "entrypoint": "/bin/sh -c \"cp -r /ui/* /www/\"",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/www",
+          "containerPath": "/www"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "ValorGrid",
+  "available": true,
+  "port": 1325,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "valorgrid",
+  "description": "ValorGrid is a local-first portfolio tracker for recording, importing and analysing investment movements with SQLite persistence, local backups and a browser UI. Portfolio data stays on your Umbrel server; market price lookups are sent only to the configured market data provider for the requested symbol.",
+  "tipi_version": 1,
+  "version": "3.36.3",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Private and auditable investment portfolio tracking",
+  "author": "aivm23",
+  "source": "https://github.com/aivm23/ValorGrid",
+  "website": "https://valorgrid.app",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501512235,
+  "updated_at": 1792501572235,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

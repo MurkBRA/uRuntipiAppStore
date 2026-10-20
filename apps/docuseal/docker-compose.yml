@@ -1,0 +1,25 @@
+services:
+  docuseal:
+    image: docuseal/docuseal:3.3.3
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/data/docuseal
+    environment:
+      - DATABASE_URL=postgresql://docusealuser:docusealpass@docuseal-db:5432/docuseal?sslmode=disable
+    depends_on:
+      - docuseal-db
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  docuseal-db:
+    image: postgres:17.3
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=docuseal
+      - POSTGRES_USER=docusealuser
+      - POSTGRES_PASSWORD=docusealpass
+x-runtipi:
+  schema_version: 2

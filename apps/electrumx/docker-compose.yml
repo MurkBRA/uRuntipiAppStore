@@ -1,0 +1,33 @@
+services:
+  electrumx:
+    image: ghcr.io/getumbrel/umbrel-electrumx:1.0.0
+    environment:
+      - ELECTRUM_HIDDEN_SERVICE=${APP_ELECTRUMX_RPC_HIDDEN_SERVICE}
+      - ELECTRUM_LOCAL_SERVICE=${APP_DOMAIN}
+      - ELECTRUM_HOST=electrumx-electrumx-sidecar
+      - ELECTRUM_PUBLIC_CONNECTION_PORT=50003
+      - ELECTRUM_RPC_PORT=8000
+      - BITCOIN_HOST=${APP_BITCOIN_NODE_IP}
+      - RPC_USER=${APP_BITCOIN_RPC_USER}
+      - RPC_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - RPC_PORT=${APP_BITCOIN_RPC_PORT}
+    depends_on:
+      - electrumx-electrumx-sidecar
+    x-runtipi:
+      internal_port: 3007
+      add_to_main_network: true
+      is_main: true
+  electrumx-electrumx-sidecar:
+    image: lukechilds/electrumx:v1.16.0
+    ports:
+      - 50003:50001/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/electrumx:/data
+    environment:
+      - DAEMON_URL=http://${APP_BITCOIN_RPC_USER}:${APP_BITCOIN_RPC_PASS}@${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}
+      - COIN=BitcoinSegwit
+      - NET=${APP_BITCOIN_NETWORK}
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

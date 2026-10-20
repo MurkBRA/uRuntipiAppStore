@@ -1,0 +1,28 @@
+{
+  "name": "Bitaxe Sentry",
+  "available": true,
+  "port": 7070,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bitaxe-sentry",
+  "description": "Bitaxe Sentry is a monitoring and management solution for Bitaxe ASIC miners. Track the performance, temperature, and status of your miners from a single dashboard. Get alerts when your miners hit a new best difficulty, or when temperature or voltage thresholds are exceeded.",
+  "tipi_version": 1,
+  "version": "v0.8.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Bitaxe stats and alerts, all in one",
+  "author": "Zach Price",
+  "source": "https://github.com/zachchan105/bitaxe-sentry",
+  "website": "https://github.com/zachchan105/bitaxe-sentry",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501489379,
+  "updated_at": 1792501549379,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

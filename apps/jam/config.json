@@ -1,0 +1,71 @@
+{
+  "name": "Jam",
+  "available": true,
+  "port": 5002,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "jam",
+  "description": "⚠️ Compatibility Notice: Jam is not yet compatible with Bitcoin Core v30 or any Bitcoin node version/implementation that has fully removed legacy bdb wallet support. If you are running the Bitcoin Node app alongside Jam, you can still use Jam by pinning the Bitcoin Core version to v29.2 in your Bitcoin Node app. See instructions in the following GitHub comment: https://github.com/joinmarket-webui/jam/issues/983#issuecomment-3437241631",
+  "tipi_version": 1,
+  "version": "v0.4.1-clientserver-v0.9.11",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Your sats. Your privacy. Your profit.",
+  "author": "JoinMarket WebUI Org.",
+  "source": "https://github.com/joinmarket-webui/jam",
+  "website": "https://jamapp.org",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Jam password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501498620,
+  "updated_at": 1792501558620,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

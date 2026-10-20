@@ -1,0 +1,12 @@
+services:
+  influxdb2:
+    image: influxdb:2.9.1-alpine
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/data:/var/lib/influxdb2
+      - ${APP_DATA_DIR}/data/config:/etc/influxdb2
+    x-runtipi:
+      internal_port: 8086
+      is_main: true
+x-runtipi:
+  schema_version: 2

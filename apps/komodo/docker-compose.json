@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "komodo",
+      "image": "ghcr.io/moghtech/komodo-core:2.3.3",
+      "isMain": true,
+      "internalPort": 9120,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "KOMODO_DATABASE_ADDRESS",
+          "value": "komodo-ferretdb:27017"
+        },
+        {
+          "key": "KOMODO_DATABASE_USERNAME",
+          "value": "admin"
+        },
+        {
+          "key": "KOMODO_DATABASE_PASSWORD",
+          "value": "admin"
+        },
+        {
+          "key": "KOMODO_PASSKEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "KOMODO_FIRST_SERVER",
+          "value": "https://komodo-periphery:8120"
+        },
+        {
+          "key": "KOMODO_JWT_SECRET",
+          "value": "${APP_SEED}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/core",
+          "containerPath": "/backups"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/keys",
+          "containerPath": "/config/keys"
+        }
+      ],
+      "dependsOn": [
+        "komodo-ferretdb"
+      ]
+    },
+    {
+      "name": "komodo-docker",
+      "image": "docker:28.3.0-dind",
+      "networkMode": "host",
+      "privileged": true,
+      "stopGracePeriod": "1m",
+      "command": "dockerd\n  --bridge dind0\n  --data-root /data/data\n  --exec-root /data/exec\n  --host unix:///data/docker.sock\n  --pidfile /data/docker.pid",
+      "entrypoint": "/entrypoint.sh",
+      "environment": [
+        {
+          "key": "DOCKER_ENSURE_BRIDGE",
+          "value": "dind0:10.32.0.1/16"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/entrypoint.sh",
+          "containerPath": "/entrypoint.sh"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "komodo-postgres",
+      "image": "ghcr.io/ferretdb/postgres-documentdb:17-0.104.0",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "admin"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "admin"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "postgres"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ]
+    },
+    {
+      "name": "komodo-ferretdb",
+      "image": "ghcr.io/ferretdb/ferretdb:2.3.1",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "FERRETDB_POSTGRESQL_URL",
+          "value": "postgres://admin:admin@komodo-postgres:5432/postgres"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ferretdb",
+          "containerPath": "/state"
+        }
+      ],
+      "dependsOn": [
+        "komodo-postgres"
+      ]
+    },
+    {
+      "name": "komodo-periphery",
+      "image": "ghcr.io/moghtech/komodo-periphery:2.3.3",
+      "environment": [
+        {
+          "key": "COMPOSE_KOMODO_IMAGE_TAG",
+          "value": "latest"
+        },
+        {
+          "key": "KOMODO_PASSKEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "TZ",
+          "value": "Europe/Berlin"
+        },
+        {
+          "key": "PERIPHERY_ROOT_DIRECTORY",
+          "value": "/etc/komodo"
+        },
+        {
+          "key": "PERIPHERY_PASSKEYS",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "PERIPHERY_DISABLE_TERMINALS",
+          "value": "false"
+        },
+        {
+          "key": "PERIPHERY_SSL_ENABLED",
+          "value": "true"
+        },
+        {
+          "key": "PERIPHERY_INCLUDE_DISK_MOUNTS",
+          "value": "/etc/hostname"
+        },
+        {
+          "key": "PERIPHERY_LOGGING_PRETTY",
+          "value": "false"
+        },
+        {
+          "key": "PERIPHERY_PRETTY_STARTUP_CONFIG",
+          "value": "false"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/var/run"
+        },
+        {
+          "hostPath": "/proc",
+          "containerPath": "/proc"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/periphery",
+          "containerPath": "/etc/komodo"
+        }
+      ]
+    }
+  ]
+}

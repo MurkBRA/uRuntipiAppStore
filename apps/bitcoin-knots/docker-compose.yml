@@ -1,0 +1,45 @@
+services:
+  bitcoin-knots:
+    image: ghcr.io/retropex/umbrel-bitcoin-knots:1.2.13
+    user: '1000:1000'
+    ports:
+      - 9333:9333/tcp
+      - 9332:9332/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - BITCOIND_EXTRA_ARGS=-deprecatedrpc=create_bdb
+      - APPS_SUBNET=${INTERNAL_IP}/16
+      - P2P_PORT=9333
+      - P2P_WHITEBIND_PORT=9335
+      - RPC_PORT=9332
+      - TOR_PORT=8334
+      - ZMQ_RAWBLOCK_PORT=48332
+      - ZMQ_RAWTX_PORT=48333
+      - ZMQ_HASHBLOCK_PORT=48334
+      - ZMQ_SEQUENCE_PORT=48335
+      - ZMQ_HASHTX_PORT=48336
+      - TOR_HOST=10.21.22.12
+      - TOR_SOCKS_PORT=9050
+      - TOR_CONTROL_PORT=9051
+      - TOR_CONTROL_PASSWORD=moneyprintergobrrr
+      - I2P_HOST=bitcoin-knots-i2pd_daemon
+      - I2P_SAM_PORT=7656
+      - BITCOIND_IP=bitcoin-knots
+      - RPC_USER=${APP_BITCOIN_KNOTS_RPC_USER}
+      - RPC_PASS=${APP_BITCOIN_KNOTS_RPC_PASS}
+      - DEVICE_DOMAIN_NAME=${APP_DOMAIN}
+      - P2P_HIDDEN_SERVICE=${APP_BITCOIN_KNOTS_P2P_HIDDEN_SERVICE}
+      - RPC_HIDDEN_SERVICE=${APP_BITCOIN_KNOTS_RPC_HIDDEN_SERVICE}
+    stop_grace_period: 15m30s
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  bitcoin-knots-i2pd_daemon:
+    image: purplei2p/i2pd:release-2.59.0
+    command: '--sam.enabled=true --sam.address=0.0.0.0 --sam.port=7656 --loglevel=error'
+    user: root
+    volumes:
+      - ${APP_DATA_DIR}/data/i2pd:/home/i2pd/data
+x-runtipi:
+  schema_version: 2

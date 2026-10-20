@@ -1,0 +1,29 @@
+services:
+  mailarchiver:
+    image: ghcr.io/s1t5/mailarchiver:2610.1
+    volumes:
+      - ${APP_DATA_DIR}/data/data-protection-keys:/app/DataProtection-Keys
+      - ${APP_DATA_DIR}/data/appsettings.json:/app/appsettings.json
+    depends_on:
+      mailarchiver-postgres:
+        condition: service_healthy
+    x-runtipi:
+      internal_port: 5000
+      is_main: true
+  mailarchiver-postgres:
+    image: postgres:18.3-alpine3.23
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/database:/var/lib/postgresql
+    environment:
+      - POSTGRES_DB=mailarchiver
+      - POSTGRES_USER=mailarchiver
+      - POSTGRES_PASSWORD=mailarchiver
+    healthcheck:
+      test: pg_isready -U mailarchiver -d mailarchiver
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+x-runtipi:
+  schema_version: 2

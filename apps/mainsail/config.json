@@ -1,0 +1,27 @@
+{
+  "name": "Mainsail",
+  "available": true,
+  "port": 8070,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "mainsail",
+  "description": "🖨️ A modern and responsive user interface for Klipper. Control and monitor your printer from everywhere, from any device.",
+  "tipi_version": 1,
+  "version": "2.19.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Control and monitor your printer from everywhere, from any device",
+  "author": "Mainsail Crew",
+  "source": "https://github.com/mainsail-crew/mainsail",
+  "website": "https://docs.mainsail.xyz/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501501205,
+  "updated_at": 1792501561205,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

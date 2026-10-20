@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "valorgrid",
+      "image": "ghcr.io/aivm23/valorgrid:v3.36.3",
+      "isMain": true,
+      "internalPort": 1325,
+      "environment": [
+        {
+          "key": "HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "PORT",
+          "value": 1325
+        },
+        {
+          "key": "PORTFOLIO_DB_PATH",
+          "value": "/data/portfolio.sqlite"
+        },
+        {
+          "key": "VALORGRID_BACKUP_DIR",
+          "value": "/data/backups"
+        },
+        {
+          "key": "VALORGRID_AUTH_USER",
+          "value": "valorgrid"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

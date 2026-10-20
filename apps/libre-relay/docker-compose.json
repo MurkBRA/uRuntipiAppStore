@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "libre-relay",
+      "image": "ghcr.io/petertodd/umbrel-bitcoin-libre-relay:libre-relay-v28.0-2",
+      "isMain": true,
+      "internalPort": 3005,
+      "environment": [
+        {
+          "key": "PORT",
+          "value": "3005"
+        },
+        {
+          "key": "BITCOIN_HOST",
+          "value": "libre-relay-bitcoind"
+        },
+        {
+          "key": "RPC_PORT",
+          "value": "8452"
+        },
+        {
+          "key": "BITCOIN_RPC_PORT",
+          "value": "8452"
+        },
+        {
+          "key": "RPC_USER",
+          "value": "${APP_LIBRE_RELAY_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_RPC_USER",
+          "value": "${APP_LIBRE_RELAY_RPC_USER}"
+        },
+        {
+          "key": "RPC_PASSWORD",
+          "value": "${APP_LIBRE_RELAY_RPC_PASS}"
+        },
+        {
+          "key": "BITCOIN_RPC_PASSWORD",
+          "value": "${APP_LIBRE_RELAY_RPC_PASS}"
+        },
+        {
+          "key": "BITCOIN_RPC_HIDDEN_SERVICE",
+          "value": "${APP_LIBRE_RELAY_RPC_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "BITCOIN_P2P_HIDDEN_SERVICE",
+          "value": "${APP_LIBRE_RELAY_P2P_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "BITCOIN_P2P_PORT",
+          "value": "8453"
+        },
+        {
+          "key": "DEVICE_DOMAIN_NAME",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "BITCOIN_DEFAULT_NETWORK",
+          "value": "${BITCOIN_DEFAULT_NETWORK}"
+        },
+        {
+          "key": "BITCOIN_INITIALIZE_WITH_CLEARNET_OVER_TOR",
+          "value": "${BITCOIN_INITIALIZE_WITH_CLEARNET_OVER_TOR}"
+        },
+        {
+          "key": "BITCOIND_IP",
+          "value": "libre-relay-bitcoind"
+        },
+        {
+          "key": "TOR_PROXY_IP",
+          "value": "10.21.22.21"
+        },
+        {
+          "key": "TOR_PROXY_PORT",
+          "value": "9050"
+        },
+        {
+          "key": "TOR_PROXY_CONTROL_PORT",
+          "value": "9051"
+        },
+        {
+          "key": "TOR_PROXY_CONTROL_PASSWORD",
+          "value": "moneyprintergobrrr"
+        },
+        {
+          "key": "I2P_DAEMON_IP",
+          "value": "libre-relay-i2pd_daemon"
+        },
+        {
+          "key": "I2P_DAEMON_PORT",
+          "value": "7656"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/bitcoin",
+          "containerPath": "/bitcoin/.bitcoin"
+        }
+      ],
+      "dependsOn": [
+        "libre-relay-bitcoind"
+      ]
+    },
+    {
+      "name": "libre-relay-bitcoind",
+      "image": "ghcr.io/petertodd/bitcoin:libre-relay-v30.2-2",
+      "user": "1000:1000",
+      "stopGracePeriod": "15m30s",
+      "command": "${APP_LIBRE_RELAY_COMMAND}",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/bitcoin",
+          "containerPath": "/data/.bitcoin"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8453,
+          "containerPort": 8453,
+          "tcp": true
+        },
+        {
+          "hostPort": 8452,
+          "containerPort": 8452,
+          "tcp": true
+        }
+      ]
+    },
+    {
+      "name": "libre-relay-i2pd_daemon",
+      "image": "purplei2p/i2pd:release-2.44.0",
+      "user": "root",
+      "command": "--sam.enabled=true --sam.address=0.0.0.0 --sam.port=7656 --loglevel=error",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/i2pd",
+          "containerPath": "/home/i2pd/data"
+        }
+      ]
+    }
+  ]
+}

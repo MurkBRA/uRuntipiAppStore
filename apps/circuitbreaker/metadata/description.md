@@ -1,0 +1,29 @@
+# Circuit Breaker
+
+> Your Lightning Node's Firewall
+
+It allows nodes to protect themselves from being flooded with HTLCs.  With circuitbreaker a maximum to the number of in-flight HTLCs can be set on a per-peer basis. Known and trusted peers for example can be assigned a higher maximum, while a new channel from a previously unseen node may be limited to only a few pending HTLCs. Furthermore it is possible to apply rate limits to the number of forwarded HTLCs.  This offers protection against DoS/spam attacks that rely on large numbers of fast-resolving HTLCs.  Rate limiting is implemented with a Token bucket.  Via the UI the minimum interval between HTLCs can be specified. Large numbers of HTLCs are also required for probing channel balances.  Reducing the information leakage through probing could be another reason to put in place a rate limit for untrusted peers.
+
+Operating modes
+
+There are multiple modes in which circuitbreaker can operate. A default mode and per-peer overrides can be configured via the web ui:
+
+- fail: Fail back HTLCs when limits are exceeded. This minimizes the lock-up of liquidity on the incoming side, but does affect your reputation as a routing node.
+
+- queue: Queue HTLCs when limits are exceeded. Items are popped from the queue when the number of pending HTLCs is below the maximum and the rate limit allows another forward. This mode penalizes upstream nodes for the bad traffic that the deliver by locking up liquidity along the route. This may push upstream nodes to install a firewall too and constrain the mishaving node.
+Even in case of circuit breaker malfunction, queue mode should never cause channel force closes because of lnd's built-in protection that auto-fails HTLCs that aren't resolved.
+WARNING: Auto-fail is not yet released and scheduled for lnd 0.16. With earlier lnd versions, you risk force-closes!
+
+- queue_peer_initiated: This mode is also queuing HTLCs, but only those that come in through channels for which we aren't the channel open initiator. Not being the initiator means that the remote node is carrying the cost of a potential force-closure with stuck HTLCs. For channels that we initiated, the safer fail mode is used.
+- blocked: This mode blocks all incoming traffic from a peer.
+WARNING: See queue mode warning.
+
+## Inter-App Connections
+
+This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
+
+## Links
+- **Upstream Version**: `v0.5.1-patch.1`
+- **Website**: https://github.com/joostjager
+- **Source Repository**: https://github.com/lightningequipment/circuitbreaker
+- **Support**: https://github.com/lightningequipment/circuitbreaker/issues

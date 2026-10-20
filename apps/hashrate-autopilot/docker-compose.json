@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "hashrate-autopilot",
+      "image": "ghcr.io/rdouma/hashrate-autopilot:1.18.2",
+      "isMain": true,
+      "internalPort": 3010,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "HTTP_PORT",
+          "value": 3010
+        },
+        {
+          "key": "HTTP_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "DB_PATH",
+          "value": "/app/data/state.db"
+        },
+        {
+          "key": "DASHBOARD_STATIC",
+          "value": "packages/dashboard/dist"
+        },
+        {
+          "key": "BITCOIN_RPC_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "BHA_DATUM_API_URL",
+          "value": "http://datum_datum_1:21000"
+        },
+        {
+          "key": "BHA_ELECTRS_HOST",
+          "value": "${APP_ELECTRS_NODE_IP}"
+        },
+        {
+          "key": "BHA_ELECTRS_PORT",
+          "value": "${APP_ELECTRS_NODE_PORT}"
+        },
+        {
+          "key": "BHA_PAYOUT_SOURCE",
+          "value": "electrs"
+        },
+        {
+          "key": "BHA_SECRET_KEY",
+          "value": "${APP_SEED}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "squeaknode",
+      "image": "ghcr.io/squeaknode/squeaknode:v0.3.4",
+      "isMain": true,
+      "internalPort": 12994,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "SQUEAKNODE_BITCOIN_RPC_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "SQUEAKNODE_BITCOIN_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "SQUEAKNODE_BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "SQUEAKNODE_BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "SQUEAKNODE_LIGHTNING_BACKEND",
+          "value": "lnd"
+        },
+        {
+          "key": "SQUEAKNODE_LIGHTNING_LND_RPC_HOST",
+          "value": "${APP_LIGHTNING_NODE_IP}"
+        },
+        {
+          "key": "SQUEAKNODE_LIGHTNING_LND_RPC_PORT",
+          "value": "${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "SQUEAKNODE_LIGHTNING_LND_TLS_CERT_PATH",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "SQUEAKNODE_LIGHTNING_LND_MACAROON_PATH",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        },
+        {
+          "key": "SQUEAKNODE_TOR_PROXY_IP",
+          "value": "${TOR_PROXY_IP}"
+        },
+        {
+          "key": "SQUEAKNODE_TOR_PROXY_PORT",
+          "value": "${TOR_PROXY_PORT}"
+        },
+        {
+          "key": "SQUEAKNODE_WEBADMIN_ENABLED",
+          "value": "true"
+        },
+        {
+          "key": "SQUEAKNODE_WEBADMIN_USERNAME",
+          "value": "umbrel"
+        },
+        {
+          "key": "SQUEAKNODE_WEBADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SQUEAKNODE_NODE_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "SQUEAKNODE_NODE_SQK_DIR_PATH",
+          "value": "/sqk"
+        },
+        {
+          "key": "SQUEAKNODE_NODE_MAX_SQUEAKS",
+          "value": 10000
+        },
+        {
+          "key": "SQUEAKNODE_SERVER_EXTERNAL_ADDRESS",
+          "value": "${APP_SQUEAKNODE_P2P_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "DEBUG",
+          "value": "squeaknode:*"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/sqk",
+          "containerPath": "/sqk"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8994,
+          "containerPort": 8994,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

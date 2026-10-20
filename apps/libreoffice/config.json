@@ -1,0 +1,27 @@
+{
+  "name": "LibreOffice",
+  "available": true,
+  "port": 5001,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "libreoffice",
+  "description": "LibreOffice is a free and powerful office suite, and a successor to OpenOffice.org (commonly known as OpenOffice). Its clean interface and feature-rich tools help you unleash your creativity and enhance your productivity.",
+  "tipi_version": 1,
+  "version": "7.6.7",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Do more - easier, quicker, smarter",
+  "author": "The Document Foundation",
+  "source": "https://www.libreoffice.org/about-us/source-code/",
+  "website": "https://www.libreoffice.org/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501499950,
+  "updated_at": 1792501559950,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

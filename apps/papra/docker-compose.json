@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "papra",
+      "image": "ghcr.io/papra-hq/papra:26.6.2-rootless",
+      "isMain": true,
+      "internalPort": 1221,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "AUTH_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "APP_BASE_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/app-data"
+        }
+      ]
+    }
+  ]
+}

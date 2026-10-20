@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "poznote",
+      "image": "ghcr.io/timothepoznanski/poznote:6.121.0",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "SQLITE_DATABASE",
+          "value": "/var/www/html/data/database/poznote.db"
+        },
+        {
+          "key": "HTTP_WEB_PORT",
+          "value": 80
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/var/www/html/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/umbrel-mcp.php",
+          "containerPath": "/var/www/html/public/umbrel-mcp.php",
+          "readOnly": true
+        }
+      ],
+      "healthCheck": {
+        "test": "wget --quiet --tries=1 --timeout=5 -O /dev/null http://127.0.0.1/api/health",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3,
+        "startPeriod": "10s"
+      }
+    },
+    {
+      "name": "poznote-mcp",
+      "image": "ghcr.io/timothepoznanski/poznote-mcp:6.121.0",
+      "environment": [
+        {
+          "key": "POZNOTE_API_URL",
+          "value": "http://poznote:80/api/v1"
+        },
+        {
+          "key": "POZNOTE_DEBUG",
+          "value": "${POZNOTE_DEBUG}"
+        },
+        {
+          "key": "POZNOTE_MCP_AUTH_TOKEN",
+          "value": "${APP_POZNOTE_MCP_AUTH_TOKEN:?MCP authentication token is required}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/var/www/html/data",
+          "readOnly": true
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8340,
+          "containerPort": 8045,
+          "tcp": true
+        }
+      ],
+      "dependsOn": [
+        "poznote"
+      ]
+    }
+  ]
+}

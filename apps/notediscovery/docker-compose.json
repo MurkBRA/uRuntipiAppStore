@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "notediscovery",
+      "image": "ghcr.io/gamosoft/notediscovery:0.32.1",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "python -c import urllib.request; urllib.request.urlopen('http://localhost:8000/health')",
+        "interval": "60s",
+        "timeout": "3s",
+        "retries": 3,
+        "startPeriod": "5s"
+      }
+    }
+  ]
+}

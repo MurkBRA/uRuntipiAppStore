@@ -1,0 +1,15 @@
+services:
+  urbit:
+    image: mopfelwinrux/urbit-umbrel:v4.6
+    ports:
+      - 34343:34343/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/piers:/data/piers
+      - ${APP_DATA_DIR}/data/keys:/data/keys
+    environment:
+      - APP_PASSWORD=${APP_PASSWORD}
+    x-runtipi:
+      internal_port: 8090
+      is_main: true
+x-runtipi:
+  schema_version: 2

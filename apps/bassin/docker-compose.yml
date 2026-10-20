@@ -1,0 +1,60 @@
+services:
+  bassin:
+    image: halverneus/static-file-server:v1.8.11
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/www:/www:ro
+    environment:
+      - FOLDER=/www
+      - PORT=80
+    depends_on:
+      - bassin-ui
+    x-runtipi:
+      internal_port: 80
+      add_to_main_network: true
+      is_main: true
+  bassin-init:
+    image: alpine:3.22.1
+    entrypoint: |-
+      /bin/sh -c '
+        apk add --no-cache envsubst &&
+        if [ ! -f /config/ckpool.conf ]; then
+          envsubst < /config/ckpool.conf.template > /config/ckpool.conf &&
+          chown 1000:1000 /config/ckpool.conf
+        fi
+      '
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/config
+    environment:
+      - APP_BITCOIN_NODE_IP=${APP_BITCOIN_NODE_IP}
+      - APP_BITCOIN_RPC_PORT=${APP_BITCOIN_RPC_PORT}
+      - APP_BITCOIN_RPC_USER=${APP_BITCOIN_RPC_USER}
+      - APP_BITCOIN_RPC_PASS=${APP_BITCOIN_RPC_PASS}
+      - APP_BITCOIN_ZMQ_HASHBLOCK_PORT=${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}
+    x-runtipi:
+      add_to_main_network: true
+  bassin-ckpool:
+    image: ghcr.io/getumbrel/docker-ckpool-solo:v1.1.1
+    command: '-k -B -c /config/ckpool.conf'
+    user: '1000:1000'
+    ports:
+      - 3456:3333/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/config:ro
+      - ${APP_DATA_DIR}/data/www:/www
+    depends_on:
+      bassin-init:
+        condition: service_completed_successfully
+    stop_grace_period: 30s
+    x-runtipi:
+      add_to_main_network: true
+  bassin-ui:
+    image: ghcr.io/blockdyor/bassin-ui:0e779e6
+    entrypoint: /bin/sh -c "cp -r /ui/* /www/"
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/www:/www
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

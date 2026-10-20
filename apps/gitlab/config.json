@@ -1,0 +1,34 @@
+{
+  "name": "GitLab",
+  "available": true,
+  "port": 8929,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "gitlab",
+  "description": "⚠️ This app is RAM-intensive (+6GB recommended) and can take 15-20 minutes to start after installation on low-powered devices.",
+  "tipi_version": 1,
+  "version": "19.5.0",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "Software. Faster.",
+  "author": "GitLab",
+  "source": "https://gitlab.com/gitlab-org/omnibus-gitlab/tree/master/docker",
+  "website": "https://about.gitlab.com",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "GitLab password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501496766,
+  "updated_at": 1792501556766,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

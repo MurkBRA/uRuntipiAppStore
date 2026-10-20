@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "super-productivity",
+      "image": "johannesjo/super-productivity:v19.2.0",
+      "isMain": true,
+      "internalPort": 80
+    }
+  ]
+}

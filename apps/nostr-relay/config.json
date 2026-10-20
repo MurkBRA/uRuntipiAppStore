@@ -1,0 +1,28 @@
+{
+  "name": "Nostr Relay",
+  "available": true,
+  "port": 4848,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "nostr-relay",
+  "description": "Introducing Nostr Relay — an official app by Umbrel.",
+  "tipi_version": 1,
+  "version": "v1.1.0",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Backup all your Nostr activity with your private relay",
+  "author": "Umbrel",
+  "source": "https://github.com/getumbrel/umbrel-nostr-relay",
+  "website": "https://umbrel.com",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501503119,
+  "updated_at": 1792501563119,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "Wealthfolio",
+  "available": true,
+  "port": 19334,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "wealthfolio",
+  "description": "Wealthfolio is an open source investment portfolio tracker for monitoring holdings, accounts, performance, and market activity from your own server. It is designed for private wealth tracking, with a browser-based dashboard and local SQLite storage for portfolio data.",
+  "tipi_version": 1,
+  "version": "3.10.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Private investment portfolio tracking",
+  "author": "Wealthfolio",
+  "source": "https://github.com/wealthfolio/wealthfolio",
+  "website": "https://wealthfolio.app/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Wealthfolio secret key",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_WEALTHFOLIO_SECRET_KEY"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501512621,
+  "updated_at": 1792501572621,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

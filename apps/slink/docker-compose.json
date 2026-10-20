@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "slink",
+      "image": "anirdev/slink:v1.14.2",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "UTC"
+        },
+        {
+          "key": "ORIGIN",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "PROTOCOL_HEADER",
+          "value": "x-forwarded-proto"
+        },
+        {
+          "key": "REQUIRE_SSL",
+          "value": "false"
+        },
+        {
+          "key": "USER_APPROVAL_REQUIRED",
+          "value": "false"
+        },
+        {
+          "key": "USER_PASSWORD_MIN_LENGTH",
+          "value": 8
+        },
+        {
+          "key": "USER_PASSWORD_REQUIREMENTS",
+          "value": 15
+        },
+        {
+          "key": "IMAGE_MAX_SIZE",
+          "value": "15M"
+        },
+        {
+          "key": "IMAGE_STRIP_EXIF_METADATA",
+          "value": "true"
+        },
+        {
+          "key": "IMAGE_COMPRESSION_QUALITY",
+          "value": 80
+        },
+        {
+          "key": "STORAGE_PROVIDER",
+          "value": "local"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server.js",
+          "containerPath": "/services/client/svelte-kit/server.js",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/var",
+          "containerPath": "/app/var/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/images",
+          "containerPath": "/app/slink/images"
+        }
+      ]
+    }
+  ]
+}

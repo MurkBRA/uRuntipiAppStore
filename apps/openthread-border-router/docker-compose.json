@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "openthread-border-router",
+      "image": "ghcr.io/ownbee/hass-otbr-docker:v0.4.0",
+      "isMain": true,
+      "internalPort": 7586,
+      "privileged": true,
+      "stopGracePeriod": "1m",
+      "entrypoint": [
+        "/bin/bash",
+        "-c",
+        "set -uo pipefail\nSETTINGS=/data/settings.env\nload_settings() {\n  CONFIGURED=0; DEVICE=\"\"; BAUDRATE=\"\"; FLOW_CONTROL=\"\"; BACKBONE_IF=\"\"\n  FIREWALL=\"\"; NAT64=\"\"; AUTOFLASH_FIRMWARE=\"\"\n  [ -f \"$$SETTINGS\" ] || return\n  while IFS='=' read -r key val; do\n    case \"$$key\" in\n      DEVICE|BAUDRATE|FLOW_CONTROL|BACKBONE_IF|FIREWALL|NAT64|AUTOFLASH_FIRMWARE|CONFIGURED)\n        export \"$$key=$$val\" ;;\n    esac\n  done < \"$$SETTINGS\"\n}\necho \"[otbr] waiting for first-run setup to complete (open the app to configure)...\"\nwhile true; do\n  load_settings\n  if [ \"$${CONFIGURED:-0}\" = \"1\" ] && [ -n \"$${DEVICE:-}\" ] && [ -e \"$${DEVICE:-/nonexistent}\" ]; then\n    break\n  fi\n  echo \"[otbr] not configured yet — retrying in 5s\"\n  sleep 5\ndone\necho \"[otbr] configured (DEVICE=$$DEVICE BACKBONE_IF=$${BACKBONE_IF:-}) — starting border router\"\n# Record the settings we are launching with so the wizard can tell when\n# the live border router matches the saved config (vs. a pending restart).\ncat \"$$SETTINGS\" > /data/.applied 2>/dev/null || true\nfind / -type f -name app.js -path '*frontend/res/js/*' 2>/dev/null \\\n  | xargs -r sed -i \"s/restServerPort = '8081'/restServerPort = '$${OTBR_REST_PORT:-8081}'/\"\n# s6-overlay must run as PID 1, so exec it. A background watcher restarts\n# the container when settings change: it asks s6 to shut down with a\n# non-zero exit code (via s6's container-results file), which restart:\n# on-failure then brings back up to re-read the new settings. A normal\n# Umbrel stop exits 0, so it is not restarted.\n(\n  ref=\"$$(cat \"$$SETTINGS\" 2>/dev/null)\"\n  while sleep 5; do\n    if [ \"$$(cat \"$$SETTINGS\" 2>/dev/null)\" != \"$$ref\" ]; then\n      echo \"[otbr] settings changed — restarting to apply\"\n      echo 1 > /run/s6-linux-init-container-results/exitcode 2>/dev/null || true\n      kill -TERM 1 2>/dev/null || true\n      exit 0\n    fi\n  done\n) &\nexec /init\n"
+      ],
+      "environment": [
+        {
+          "key": "OTBR_WEB_PORT",
+          "value": "7587"
+        },
+        {
+          "key": "OTBR_REST_PORT",
+          "value": "8083"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "/dev",
+          "containerPath": "/dev"
+        }
+      ],
+      "dependsOn": [
+        "openthread-border-router-setup"
+      ]
+    },
+    {
+      "name": "openthread-border-router-setup",
+      "image": "python:3.12-alpine",
+      "networkMode": "host",
+      "stopGracePeriod": "10s",
+      "command": [
+        "python3",
+        "/app/server.py"
+      ],
+      "environment": [
+        {
+          "key": "SETUP_PORT",
+          "value": "7586"
+        },
+        {
+          "key": "OTBR_WEB_PORT",
+          "value": "7587"
+        },
+        {
+          "key": "OTBR_REST_PORT",
+          "value": "8083"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server.py",
+          "containerPath": "/app/server.py",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "/dev",
+          "containerPath": "/dev",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

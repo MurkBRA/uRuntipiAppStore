@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bitfeed",
+      "image": "ghcr.io/bitfeed-project/bitfeed-client:v2.3.4",
+      "isMain": true,
+      "internalPort": 80,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "TARGET",
+          "value": "umbrel"
+        },
+        {
+          "key": "BACKEND_HOST",
+          "value": "bitfeed-api"
+        },
+        {
+          "key": "BACKEND_PORT",
+          "value": 8315
+        }
+      ],
+      "dependsOn": [
+        "bitfeed-api"
+      ]
+    },
+    {
+      "name": "bitfeed-api",
+      "image": "ghcr.io/bitfeed-project/bitfeed-server:v2.3.4",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "PORT",
+          "value": 8315
+        },
+        {
+          "key": "BITCOIN_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_ZMQ_RAWTX_PORT",
+          "value": "${APP_BITCOIN_ZMQ_RAWTX_PORT}"
+        },
+        {
+          "key": "BITCOIN_ZMQ_RAWBLOCK_PORT",
+          "value": "${APP_BITCOIN_ZMQ_RAWBLOCK_PORT}"
+        },
+        {
+          "key": "BITCOIN_ZMQ_SEQUENCE_PORT",
+          "value": "${APP_BITCOIN_ZMQ_SEQUENCE_PORT}"
+        },
+        {
+          "key": "BITCOIN_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "TARGET",
+          "value": "umbrel"
+        },
+        {
+          "key": "RPC_POOLS",
+          "value": "1"
+        },
+        {
+          "key": "RPC_POOL_SIZE",
+          "value": "16"
+        },
+        {
+          "key": "LOG_LEVEL",
+          "value": "info"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

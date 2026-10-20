@@ -1,0 +1,36 @@
+services:
+  squeaknode:
+    image: ghcr.io/squeaknode/squeaknode:v0.3.4
+    user: '1000:1000'
+    ports:
+      - 8994:8994/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/sqk:/sqk
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    environment:
+      - SQUEAKNODE_BITCOIN_RPC_HOST=${APP_BITCOIN_NODE_IP}
+      - SQUEAKNODE_BITCOIN_RPC_PORT=${APP_BITCOIN_RPC_PORT}
+      - SQUEAKNODE_BITCOIN_RPC_USER=${APP_BITCOIN_RPC_USER}
+      - SQUEAKNODE_BITCOIN_RPC_PASS=${APP_BITCOIN_RPC_PASS}
+      - SQUEAKNODE_LIGHTNING_BACKEND=lnd
+      - SQUEAKNODE_LIGHTNING_LND_RPC_HOST=${APP_LIGHTNING_NODE_IP}
+      - SQUEAKNODE_LIGHTNING_LND_RPC_PORT=${APP_LIGHTNING_NODE_GRPC_PORT}
+      - SQUEAKNODE_LIGHTNING_LND_TLS_CERT_PATH=/lnd/tls.cert
+      - SQUEAKNODE_LIGHTNING_LND_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - SQUEAKNODE_TOR_PROXY_IP=${TOR_PROXY_IP}
+      - SQUEAKNODE_TOR_PROXY_PORT=${TOR_PROXY_PORT}
+      - SQUEAKNODE_WEBADMIN_ENABLED=true
+      - SQUEAKNODE_WEBADMIN_USERNAME=umbrel
+      - SQUEAKNODE_WEBADMIN_PASSWORD=${APP_PASSWORD}
+      - SQUEAKNODE_NODE_NETWORK=${APP_BITCOIN_NETWORK}
+      - SQUEAKNODE_NODE_SQK_DIR_PATH=/sqk
+      - SQUEAKNODE_NODE_MAX_SQUEAKS=10000
+      - SQUEAKNODE_SERVER_EXTERNAL_ADDRESS=${APP_SQUEAKNODE_P2P_HIDDEN_SERVICE}
+      - DEBUG=squeaknode:*
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 12994
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

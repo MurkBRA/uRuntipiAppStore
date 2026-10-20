@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "hermes-agent",
+      "image": "ghcr.io/getumbrel/hermes-agent-umbrel:v2026.9.24",
+      "isMain": true,
+      "internalPort": 18789,
+      "stopGracePeriod": "1m",
+      "command": [
+        "gateway",
+        "run"
+      ],
+      "environment": [
+        {
+          "key": "HERMES_UID",
+          "value": "1000"
+        },
+        {
+          "key": "HERMES_GID",
+          "value": "1000"
+        },
+        {
+          "key": "HERMES_DASHBOARD",
+          "value": "1"
+        },
+        {
+          "key": "HERMES_DASHBOARD_PORT",
+          "value": "18789"
+        },
+        {
+          "key": "HERMES_UMBREL_APP_PROXY_AUTH",
+          "value": "1"
+        },
+        {
+          "key": "HERMES_TUI_DIR",
+          "value": "/app/umbrel-tui"
+        },
+        {
+          "key": "HERMES_UPSTREAM_TUI_ENTRY",
+          "value": "/opt/hermes/ui-tui/dist/entry.js"
+        },
+        {
+          "key": "HERMES_GATEWAY_BOOTSTRAP_STATE",
+          "value": "running"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/hermes",
+          "containerPath": "/opt/data"
+        }
+      ]
+    }
+  ]
+}

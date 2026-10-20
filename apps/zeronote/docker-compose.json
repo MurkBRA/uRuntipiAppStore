@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "zeronote",
+      "image": "ghcr.io/besoeasy/zeronote:1.0.12",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "stopGracePeriod": "5m",
+      "environment": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        }
+      ]
+    }
+  ]
+}

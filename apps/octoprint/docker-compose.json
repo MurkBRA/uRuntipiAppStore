@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "octoprint",
+      "image": "octoprint/octoprint:1.11.8",
+      "isMain": true,
+      "internalPort": 5000,
+      "privileged": true,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/octoprint"
+        },
+        {
+          "hostPath": "/dev",
+          "containerPath": "/dev"
+        }
+      ]
+    }
+  ]
+}

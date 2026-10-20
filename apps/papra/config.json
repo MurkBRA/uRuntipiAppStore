@@ -1,0 +1,38 @@
+{
+  "name": "Papra",
+  "available": true,
+  "port": 23892,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "papra",
+  "description": "Papra is a minimalistic document management and archiving platform. It is designed to be simple to use and accessible to everyone.",
+  "tipi_version": 1,
+  "version": "26.6.2-rootless",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "The minimalistic document archiving platform",
+  "author": "Papra",
+  "source": "https://github.com/papra-hq/papra",
+  "website": "https://papra.app",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Papra seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504721,
+  "updated_at": 1792501564721,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

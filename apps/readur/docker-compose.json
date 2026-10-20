@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "readur",
+      "image": "ghcr.io/readur/readur:3.1.0",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://readur:readur_password@readur-postgres:5432/readur"
+        },
+        {
+          "key": "JWT_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "SERVER_ADDRESS",
+          "value": "0.0.0.0:8000"
+        },
+        {
+          "key": "UPLOAD_PATH",
+          "value": "/app/uploads"
+        },
+        {
+          "key": "WATCH_FOLDER",
+          "value": "/app/watch"
+        },
+        {
+          "key": "ALLOWED_FILE_TYPES",
+          "value": "pdf,png,jpg,jpeg,tiff,bmp,gif,txt,rtf,doc,docx"
+        },
+        {
+          "key": "WATCH_INTERVAL_SECONDS",
+          "value": 30
+        },
+        {
+          "key": "FILE_STABILITY_CHECK_MS",
+          "value": 500
+        },
+        {
+          "key": "MAX_FILE_AGE_HOURS",
+          "value": 168
+        },
+        {
+          "key": "OCR_LANGUAGE",
+          "value": "eng"
+        },
+        {
+          "key": "CONCURRENT_OCR_JOBS",
+          "value": 4
+        },
+        {
+          "key": "OCR_TIMEOUT_SECONDS",
+          "value": 300
+        },
+        {
+          "key": "MAX_FILE_SIZE_MB",
+          "value": 50
+        },
+        {
+          "key": "MEMORY_LIMIT_MB",
+          "value": 512
+        },
+        {
+          "key": "CPU_PRIORITY",
+          "value": "normal"
+        },
+        {
+          "key": "ADMIN_PASSWORD",
+          "value": "readur2024"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/app/uploads"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/watch",
+          "containerPath": "/app/watch"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:8000/api/health",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3,
+        "startPeriod": "40s"
+      },
+      "dependsOn": {
+        "readur-postgres": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "readur-postgres",
+      "image": "postgres:17.5",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "readur"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "readur_password"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "readur"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres_data",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U readur",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+services:
+  torq:
+    image: lncapital/torq:2.2.9
+    command:
+      - '--torq.port'
+      - '7028'
+      - '--db.host'
+      - torq-db
+      - '--db.password'
+      - moneyprintergobrrr
+      - '--torq.password'
+      - ${APP_PASSWORD}
+      - '--lnd.url'
+      - ${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}
+      - '--lnd.macaroon-path'
+      - /lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - '--lnd.tls-path'
+      - /lnd/tls.cert
+      - '--torq.auto-login'
+      - start
+    user: '1000:1000'
+    volumes:
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 7028
+      add_to_main_network: true
+      is_main: true
+  torq-db:
+    image: timescale/timescaledb:2.8.1-pg14
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/torq:/var/lib/postgresql/data
+      - ${APP_DATA_DIR}/data/passwd:/etc/passwd:ro
+    environment:
+      - POSTGRES_PASSWORD=moneyprintergobrrr
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

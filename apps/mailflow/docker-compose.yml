@@ -1,0 +1,73 @@
+services:
+  mailflow:
+    image: ghcr.io/maathimself/mailflow-frontend:4.0.2
+    depends_on:
+      mailflow-backend:
+        condition: service_healthy
+    healthcheck:
+      test: wget -qO/dev/null http://127.0.0.1:80/ || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+  mailflow-backend:
+    image: ghcr.io/maathimself/mailflow-backend:4.0.2
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - APP_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - FRONTEND_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - SESSION_SECRET=${APP_SEED}
+      - ENCRYPTION_KEY=${APP_SEED}
+      - DB_HOST=mailflow-postgres
+      - DB_PORT=5432
+      - DB_NAME=mailflow
+      - DB_USER=mailflow
+      - DB_PASSWORD=mailflow
+      - REDIS_URL=redis://mailflow-redis:6379
+      - TRUST_PROXY_HOPS=2
+    depends_on:
+      mailflow-postgres:
+        condition: service_healthy
+      mailflow-redis:
+        condition: service_healthy
+    healthcheck:
+      test: wget -qO- http://localhost:3000/api/health || exit 1
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    stop_grace_period: 1m
+  mailflow-postgres:
+    image: postgres:16-alpine
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=mailflow
+      - POSTGRES_USER=mailflow
+      - POSTGRES_PASSWORD=mailflow
+    healthcheck:
+      test: pg_isready -U mailflow -d mailflow
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+  mailflow-redis:
+    image: redis:7-alpine
+    command: redis-server --save 60 1 --loglevel warning
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+x-runtipi:
+  schema_version: 2

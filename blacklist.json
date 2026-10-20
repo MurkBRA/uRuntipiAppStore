@@ -1,0 +1,6739 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
+  "generated_at": "2026-10-20T09:43:00-03:00",
+  "stats": {
+    "runtipi_official_total": 270,
+    "umbrel_total_packages": 396,
+    "umbrel_active_packages": 370,
+    "umbrel_disabled_packages": 26,
+    "umbrel_overlapping_with_runtipi_total": 127,
+    "umbrel_overlapping_active": 121,
+    "umbrel_overlapping_disabled": 6,
+    "umbrel_id_alias_mappings_count": 29,
+    "total_unique_blacklisted_umbrel_ids": 147,
+    "net_new_port_candidates_from_umbrel": 249
+  },
+  "matching_rules": {
+    "check_exact_id": true,
+    "check_alias_map": true,
+    "check_normalized_repo_url": true,
+    "check_normalized_main_image": true,
+    "ignored_sidecar_images_for_matching": [
+      "postgres",
+      "redis",
+      "mariadb",
+      "mysql",
+      "mongo",
+      "valkey/valkey",
+      "bitnami/redis",
+      "bitnami/postgresql",
+      "bitnami/mariadb",
+      "memcached",
+      "meilisearch",
+      "getmeili/meilisearch",
+      "typesense/typesense",
+      "qdrant/qdrant",
+      "chromadb/chroma",
+      "pgvector/pgvector",
+      "tensorchord/pgvecto-rs",
+      "busybox",
+      "alpine",
+      "nginx",
+      "caddy",
+      "traefik",
+      "filebrowser/filebrowser",
+      "onlyoffice/documentserver",
+      "gotenberg/gotenberg",
+      "guacamole/guacd"
+    ]
+  },
+  "blacklisted_umbrel_ids": [
+    "activepieces",
+    "actual",
+    "adguard-home",
+    "affine",
+    "alby-nostr-wallet-connect",
+    "archivebox",
+    "audiobookshelf",
+    "autobrr",
+    "back-that-mac-up",
+    "baikal",
+    "bazarr",
+    "bitcoin",
+    "bitmagnet",
+    "bookstack",
+    "budibase",
+    "calibre-web",
+    "changedetection-io",
+    "chatbot-ui",
+    "chatpad-ai",
+    "chromium",
+    "cloudflared",
+    "code-server",
+    "databag",
+    "dockge",
+    "docmost",
+    "duplicati",
+    "electrs",
+    "emby",
+    "esphome",
+    "excalidraw",
+    "file-browser",
+    "file-drop",
+    "firefly-iii",
+    "firefly-iii-importer",
+    "firefox",
+    "flaresolverr",
+    "flatnotes",
+    "forgejo",
+    "freshrss",
+    "ghost",
+    "ghostfolio",
+    "gitea",
+    "grafana",
+    "grocy",
+    "heimdall",
+    "homarr",
+    "home-assistant",
+    "homebox",
+    "homebridge",
+    "immich",
+    "invidious",
+    "invoice-ninja",
+    "itchysats",
+    "ittools",
+    "jackett",
+    "jellyfin",
+    "jellyseerr",
+    "karakeep",
+    "kimai",
+    "kiwix",
+    "kollider",
+    "libreddit",
+    "librephotos",
+    "librespeed",
+    "libretranslate",
+    "lidarr",
+    "lightning-shell",
+    "linkstack",
+    "linkwarden",
+    "llama-gpt",
+    "lndboss",
+    "lnmarkets",
+    "lnplus",
+    "lobe-chat",
+    "lubelogger",
+    "matter-server",
+    "mealie",
+    "memos",
+    "mempool",
+    "metube",
+    "minio",
+    "monero",
+    "mosquitto",
+    "mqttx-web",
+    "mstream",
+    "n8n",
+    "navidrome",
+    "nextcloud",
+    "nitter",
+    "nocodb",
+    "node-red",
+    "node-red-standalone",
+    "nolooking",
+    "ntfy",
+    "oak-node",
+    "ollama",
+    "onedev",
+    "open-webui",
+    "openclaw",
+    "outline",
+    "overseerr",
+    "owncloud",
+    "palmr",
+    "paperless",
+    "penpot",
+    "photoprism",
+    "pi-hole",
+    "pinchflat",
+    "pingvin-share",
+    "planka",
+    "plausible",
+    "plex",
+    "portainer",
+    "privatebin",
+    "prowlarr",
+    "qbittorrent",
+    "radarr",
+    "readarr",
+    "romm",
+    "sabnzbd",
+    "samba",
+    "searxng",
+    "sonarr",
+    "stalwart",
+    "stirling-pdf",
+    "syncthing",
+    "tailscale",
+    "tallycoin-connect",
+    "tandoor",
+    "tautulli",
+    "teamspeak",
+    "transmission",
+    "trilium-notes",
+    "tubearchivist",
+    "umami",
+    "uptime-kuma",
+    "vaultwarden",
+    "vikunja",
+    "wallos",
+    "watch-your-lan",
+    "whoogle-search",
+    "wikijs",
+    "wireguard",
+    "wizarr",
+    "wordpress",
+    "zerotier",
+    "zigbee2mqtt"
+  ],
+  "umbrel_id_aliases_to_runtipi": {
+    "actual": "actual-budget",
+    "adguard-home": "adguard",
+    "bitcoin": "bitcoind",
+    "changedetection-io": "changedetection",
+    "chatpad-ai": "chatpad",
+    "file-browser": "filebrowser",
+    "firefly-iii-importer": "firefly-iii-data-importer",
+    "homarr": "homarr-1",
+    "home-assistant": "homeassistant-1",
+    "ittools": "it-tools",
+    "karakeep": "hoarder",
+    "kiwix": "kiwix-serve",
+    "mealie": "mealie-1",
+    "monero": "monerod",
+    "mosquitto": "eclipse-mosquitto",
+    "mqttx-web": "mqttx",
+    "n8n": "n8n-2",
+    "node-red": "nodered",
+    "node-red-standalone": "nodered",
+    "ollama": "ollama-amd",
+    "paperless": "paperless-ngx",
+    "pi-hole": "pihole",
+    "plausible": "plausible-ce",
+    "stalwart": "stalwart-mail",
+    "trilium-notes": "trilium",
+    "umami": "umami-analytics",
+    "watch-your-lan": "watchyourlan",
+    "whoogle-search": "whoogle",
+    "wireguard": "wg-easy-1"
+  },
+  "umbrel_to_runtipi_duplicates": [
+    {
+      "umbrel_id": "activepieces",
+      "umbrel_name": "Activepieces",
+      "runtipi_id": "activepieces",
+      "runtipi_name": "Activepieces",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "actual",
+      "umbrel_name": "Actual",
+      "runtipi_id": "actual-budget",
+      "runtipi_name": "Actual Budget",
+      "match_reason": "repo_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "adguard-home",
+      "umbrel_name": "AdGuard Home",
+      "runtipi_id": "adguard",
+      "runtipi_name": "Adguard",
+      "match_reason": "image (adguard/adguardhome)",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "affine",
+      "umbrel_name": "Affine",
+      "runtipi_id": "affine",
+      "runtipi_name": "AFFiNE",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "archivebox",
+      "umbrel_name": "ArchiveBox",
+      "runtipi_id": "archivebox",
+      "runtipi_name": "ArchiveBox",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "audiobookshelf",
+      "umbrel_name": "Audiobookshelf",
+      "runtipi_id": "audiobookshelf",
+      "runtipi_name": "Audiobookshelf",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "autobrr",
+      "umbrel_name": "autobrr",
+      "runtipi_id": "autobrr",
+      "runtipi_name": "autobrr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "baikal",
+      "umbrel_name": "Baikal",
+      "runtipi_id": "baikal",
+      "runtipi_name": "Baïkal",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "bazarr",
+      "umbrel_name": "Bazarr",
+      "runtipi_id": "bazarr",
+      "runtipi_name": "Bazarr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "bitcoin",
+      "umbrel_name": "Bitcoin Node",
+      "runtipi_id": "bitcoind",
+      "runtipi_name": "Bitcoin",
+      "match_reason": "semantic_equivalent (Bitcoin Node / bitcoind)",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "bitmagnet",
+      "umbrel_name": "Bitmagnet",
+      "runtipi_id": "bitmagnet",
+      "runtipi_name": "Bitmagnet",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "bookstack",
+      "umbrel_name": "BookStack",
+      "runtipi_id": "bookstack",
+      "runtipi_name": "Bookstack",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "budibase",
+      "umbrel_name": "Budibase",
+      "runtipi_id": "budibase",
+      "runtipi_name": "Budibase",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "calibre-web",
+      "umbrel_name": "Calibre Web",
+      "runtipi_id": "calibre-web",
+      "runtipi_name": "Calibre-Web - EBook Reader",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "changedetection-io",
+      "umbrel_name": "changedetection.io",
+      "runtipi_id": "changedetection",
+      "runtipi_name": "ChangeDetection",
+      "match_reason": "repo_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "chatpad-ai",
+      "umbrel_name": "Chatpad AI",
+      "runtipi_id": "chatpad",
+      "runtipi_name": "Chatpad AI",
+      "match_reason": "exact_name",
+      "umbrel_disabled": true
+    },
+    {
+      "umbrel_id": "cloudflared",
+      "umbrel_name": "Cloudflare Tunnel",
+      "runtipi_id": "cloudflared",
+      "runtipi_name": "Cloudflared",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "code-server",
+      "umbrel_name": "code-server",
+      "runtipi_id": "code-server",
+      "runtipi_name": "Code Server",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "databag",
+      "umbrel_name": "Databag",
+      "runtipi_id": "databag",
+      "runtipi_name": "Databag",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "dockge",
+      "umbrel_name": "Dockge",
+      "runtipi_id": "dockge",
+      "runtipi_name": "Dockge",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "docmost",
+      "umbrel_name": "Docmost",
+      "runtipi_id": "docmost",
+      "runtipi_name": "Docmost",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "duplicati",
+      "umbrel_name": "Duplicati",
+      "runtipi_id": "duplicati",
+      "runtipi_name": "Duplicati",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "electrs",
+      "umbrel_name": "Electrs",
+      "runtipi_id": "electrs",
+      "runtipi_name": "Electrs",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "emby",
+      "umbrel_name": "Emby",
+      "runtipi_id": "emby",
+      "runtipi_name": "Emby",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "esphome",
+      "umbrel_name": "ESPHome",
+      "runtipi_id": "esphome",
+      "runtipi_name": "ESP Home",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "excalidraw",
+      "umbrel_name": "Excalidraw",
+      "runtipi_id": "excalidraw",
+      "runtipi_name": "Excalidraw",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "file-browser",
+      "umbrel_name": "File Browser",
+      "runtipi_id": "filebrowser",
+      "runtipi_name": "File Browser",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "firefly-iii",
+      "umbrel_name": "Firefly III",
+      "runtipi_id": "firefly-iii",
+      "runtipi_name": "Firefly III",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "firefly-iii-importer",
+      "umbrel_name": "Firefly III Importer",
+      "runtipi_id": "firefly-iii-data-importer",
+      "runtipi_name": "Firefly III Data Importer",
+      "match_reason": "repo_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "flaresolverr",
+      "umbrel_name": "flaresolverr",
+      "runtipi_id": "flaresolverr",
+      "runtipi_name": "Flaresolverr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "flatnotes",
+      "umbrel_name": "flatnotes",
+      "runtipi_id": "flatnotes",
+      "runtipi_name": "flatnotes",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "forgejo",
+      "umbrel_name": "Forgejo",
+      "runtipi_id": "forgejo",
+      "runtipi_name": "Forgejo",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "freshrss",
+      "umbrel_name": "FreshRSS",
+      "runtipi_id": "freshrss",
+      "runtipi_name": "FreshRSS",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "ghost",
+      "umbrel_name": "Ghost",
+      "runtipi_id": "ghost",
+      "runtipi_name": "Ghost Production",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "ghostfolio",
+      "umbrel_name": "Ghostfolio",
+      "runtipi_id": "ghostfolio",
+      "runtipi_name": "Ghostfolio",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "gitea",
+      "umbrel_name": "Gitea",
+      "runtipi_id": "gitea",
+      "runtipi_name": "Gitea",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "grafana",
+      "umbrel_name": "Grafana",
+      "runtipi_id": "grafana",
+      "runtipi_name": "Grafana",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "grocy",
+      "umbrel_name": "Grocy",
+      "runtipi_id": "grocy",
+      "runtipi_name": "Grocy",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "heimdall",
+      "umbrel_name": "Heimdall",
+      "runtipi_id": "heimdall",
+      "runtipi_name": "Heimdall",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "homarr",
+      "umbrel_name": "Homarr",
+      "runtipi_id": "homarr-1",
+      "runtipi_name": "Homarr",
+      "match_reason": "exact_name",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "home-assistant",
+      "umbrel_name": "Home Assistant",
+      "runtipi_id": "homeassistant-1",
+      "runtipi_name": "Home Assistant",
+      "match_reason": "exact_name",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "homebox",
+      "umbrel_name": "HomeBox",
+      "runtipi_id": "homebox",
+      "runtipi_name": "HomeBox",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "homebridge",
+      "umbrel_name": "Homebridge",
+      "runtipi_id": "homebridge",
+      "runtipi_name": "Home Bridge",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "immich",
+      "umbrel_name": "Immich",
+      "runtipi_id": "immich",
+      "runtipi_name": "Immich",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "invidious",
+      "umbrel_name": "Invidious",
+      "runtipi_id": "invidious",
+      "runtipi_name": "Invidious",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "invoice-ninja",
+      "umbrel_name": "Invoice Ninja",
+      "runtipi_id": "invoice-ninja",
+      "runtipi_name": "Invoice Ninja",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "ittools",
+      "umbrel_name": "IT-Tools",
+      "runtipi_id": "it-tools",
+      "runtipi_name": "IT-Tools",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "jackett",
+      "umbrel_name": "Jackett",
+      "runtipi_id": "jackett",
+      "runtipi_name": "Jackett",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "jellyfin",
+      "umbrel_name": "Jellyfin",
+      "runtipi_id": "jellyfin",
+      "runtipi_name": "Jellyfin",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "jellyseerr",
+      "umbrel_name": "Seerr",
+      "runtipi_id": "jellyseerr",
+      "runtipi_name": "Jellyseerr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "karakeep",
+      "umbrel_name": "Karakeep",
+      "runtipi_id": "hoarder",
+      "runtipi_name": "Hoarder",
+      "match_reason": "image (karakeep-app/karakeep-chrome)",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "kimai",
+      "umbrel_name": "Kimai",
+      "runtipi_id": "kimai",
+      "runtipi_name": "Kimai",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "kiwix",
+      "umbrel_name": "Kiwix",
+      "runtipi_id": "kiwix-serve",
+      "runtipi_name": "Kiwix Server",
+      "match_reason": "repo_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "librephotos",
+      "umbrel_name": "LibrePhotos",
+      "runtipi_id": "librephotos",
+      "runtipi_name": "LibrePhotos",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "librespeed",
+      "umbrel_name": "LibreSpeed",
+      "runtipi_id": "librespeed",
+      "runtipi_name": "LibreSpeed",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "libretranslate",
+      "umbrel_name": "LibreTranslate",
+      "runtipi_id": "libretranslate",
+      "runtipi_name": "LibreTranslate",
+      "match_reason": "exact_id",
+      "umbrel_disabled": true
+    },
+    {
+      "umbrel_id": "lidarr",
+      "umbrel_name": "Lidarr",
+      "runtipi_id": "lidarr",
+      "runtipi_name": "Lidarr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "linkstack",
+      "umbrel_name": "LinkStack",
+      "runtipi_id": "linkstack",
+      "runtipi_name": "LinkStack",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "linkwarden",
+      "umbrel_name": "Linkwarden",
+      "runtipi_id": "linkwarden",
+      "runtipi_name": "Linkwarden",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "lobe-chat",
+      "umbrel_name": "Lobe Hub",
+      "runtipi_id": "lobe-chat",
+      "runtipi_name": "Lobe Chat",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "lubelogger",
+      "umbrel_name": "LubeLogger",
+      "runtipi_id": "lubelogger",
+      "runtipi_name": "LubeLogger",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "matter-server",
+      "umbrel_name": "Matter Server",
+      "runtipi_id": "matter-server",
+      "runtipi_name": "Matter Server",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "mealie",
+      "umbrel_name": "Mealie",
+      "runtipi_id": "mealie-1",
+      "runtipi_name": "Mealie",
+      "match_reason": "exact_name",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "memos",
+      "umbrel_name": "Memos",
+      "runtipi_id": "memos",
+      "runtipi_name": "Memos",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "mempool",
+      "umbrel_name": "mempool",
+      "runtipi_id": "mempool",
+      "runtipi_name": "Mempool",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "metube",
+      "umbrel_name": "MeTube",
+      "runtipi_id": "metube",
+      "runtipi_name": "MeTube",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "minio",
+      "umbrel_name": "MinIO",
+      "runtipi_id": "minio",
+      "runtipi_name": "Minio",
+      "match_reason": "exact_id",
+      "umbrel_disabled": true
+    },
+    {
+      "umbrel_id": "monero",
+      "umbrel_name": "Monero Node",
+      "runtipi_id": "monerod",
+      "runtipi_name": "Monero Daemon",
+      "match_reason": "semantic_equivalent (Monero Node / monerod)",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "mosquitto",
+      "umbrel_name": "Mosquitto",
+      "runtipi_id": "eclipse-mosquitto",
+      "runtipi_name": "Eclipse Mosquitto",
+      "match_reason": "website_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "mqttx-web",
+      "umbrel_name": "MQTTX Web",
+      "runtipi_id": "mqttx",
+      "runtipi_name": "MQTTX",
+      "match_reason": "repo_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "mstream",
+      "umbrel_name": "mStream",
+      "runtipi_id": "mstream",
+      "runtipi_name": "mStream Music",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "n8n",
+      "umbrel_name": "n8n",
+      "runtipi_id": "n8n-2",
+      "runtipi_name": "n8n",
+      "match_reason": "exact_name",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "navidrome",
+      "umbrel_name": "Navidrome",
+      "runtipi_id": "navidrome",
+      "runtipi_name": "Navidrome",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "nextcloud",
+      "umbrel_name": "Nextcloud",
+      "runtipi_id": "nextcloud",
+      "runtipi_name": "Nextcloud",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "nitter",
+      "umbrel_name": "Nitter",
+      "runtipi_id": "nitter",
+      "runtipi_name": "Nitter",
+      "match_reason": "exact_id",
+      "umbrel_disabled": true
+    },
+    {
+      "umbrel_id": "nocodb",
+      "umbrel_name": "NocoDB",
+      "runtipi_id": "nocodb",
+      "runtipi_name": "NocoDB",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "node-red",
+      "umbrel_name": "Node-RED (Bitcoin)",
+      "runtipi_id": "nodered",
+      "runtipi_name": "Node-RED",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "node-red-standalone",
+      "umbrel_name": "Node-RED",
+      "runtipi_id": "nodered",
+      "runtipi_name": "Node-RED",
+      "match_reason": "exact_name",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "ntfy",
+      "umbrel_name": "ntfy",
+      "runtipi_id": "ntfy",
+      "runtipi_name": "Ntfy",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "ollama",
+      "umbrel_name": "Ollama",
+      "runtipi_id": "ollama-amd",
+      "runtipi_name": "Ollama - AMD",
+      "match_reason": "repo_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "onedev",
+      "umbrel_name": "OneDev",
+      "runtipi_id": "onedev",
+      "runtipi_name": "OneDev",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "open-webui",
+      "umbrel_name": "Open WebUI",
+      "runtipi_id": "open-webui",
+      "runtipi_name": "Open WebUI",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "openclaw",
+      "umbrel_name": "OpenClaw",
+      "runtipi_id": "openclaw",
+      "runtipi_name": "OpenClaw",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "outline",
+      "umbrel_name": "Outline",
+      "runtipi_id": "outline",
+      "runtipi_name": "Outline",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "overseerr",
+      "umbrel_name": "Overseerr",
+      "runtipi_id": "overseerr",
+      "runtipi_name": "Overseerr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": true
+    },
+    {
+      "umbrel_id": "owncloud",
+      "umbrel_name": "ownCloud",
+      "runtipi_id": "owncloud",
+      "runtipi_name": "Owncloud",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "paperless",
+      "umbrel_name": "Paperless-ngx",
+      "runtipi_id": "paperless-ngx",
+      "runtipi_name": "Paperless-ngx",
+      "match_reason": "exact_name",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "penpot",
+      "umbrel_name": "Penpot",
+      "runtipi_id": "penpot",
+      "runtipi_name": "Penpot",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "photoprism",
+      "umbrel_name": "PhotoPrism",
+      "runtipi_id": "photoprism",
+      "runtipi_name": "PhotoPrism",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "pi-hole",
+      "umbrel_name": "Pi-hole",
+      "runtipi_id": "pihole",
+      "runtipi_name": "Pi-hole",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "pinchflat",
+      "umbrel_name": "Pinchflat",
+      "runtipi_id": "pinchflat",
+      "runtipi_name": "Pinchflat",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "pingvin-share",
+      "umbrel_name": "Pingvin Share",
+      "runtipi_id": "pingvin-share",
+      "runtipi_name": "Pingvin Share",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "planka",
+      "umbrel_name": "Planka",
+      "runtipi_id": "planka",
+      "runtipi_name": "Planka",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "plausible",
+      "umbrel_name": "Plausible Analytics",
+      "runtipi_id": "plausible-ce",
+      "runtipi_name": "Plausible CE",
+      "match_reason": "image (clickhouse/clickhouse-server)",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "plex",
+      "umbrel_name": "Plex",
+      "runtipi_id": "plex",
+      "runtipi_name": "Plex",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "portainer",
+      "umbrel_name": "Portainer",
+      "runtipi_id": "portainer",
+      "runtipi_name": "Portainer",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "privatebin",
+      "umbrel_name": "PrivateBin",
+      "runtipi_id": "privatebin",
+      "runtipi_name": "PrivateBin",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "prowlarr",
+      "umbrel_name": "Prowlarr",
+      "runtipi_id": "prowlarr",
+      "runtipi_name": "Prowlarr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "qbittorrent",
+      "umbrel_name": "qBittorrent",
+      "runtipi_id": "qbittorrent",
+      "runtipi_name": "qBittorrent",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "radarr",
+      "umbrel_name": "Radarr",
+      "runtipi_id": "radarr",
+      "runtipi_name": "Radarr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "readarr",
+      "umbrel_name": "Readarr",
+      "runtipi_id": "readarr",
+      "runtipi_name": "Readarr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": true
+    },
+    {
+      "umbrel_id": "romm",
+      "umbrel_name": "RomM",
+      "runtipi_id": "romm",
+      "runtipi_name": "RomM",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "sabnzbd",
+      "umbrel_name": "SABnzbd",
+      "runtipi_id": "sabnzbd",
+      "runtipi_name": "SABnzbd",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "searxng",
+      "umbrel_name": "SearXNG",
+      "runtipi_id": "searxng",
+      "runtipi_name": "SearXNG",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "sonarr",
+      "umbrel_name": "Sonarr",
+      "runtipi_id": "sonarr",
+      "runtipi_name": "Sonarr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "stalwart",
+      "umbrel_name": "Stalwart",
+      "runtipi_id": "stalwart-mail",
+      "runtipi_name": "Stalwart Mail",
+      "match_reason": "website_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "stirling-pdf",
+      "umbrel_name": "Stirling PDF",
+      "runtipi_id": "stirling-pdf",
+      "runtipi_name": "Stirling-PDF",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "syncthing",
+      "umbrel_name": "Syncthing",
+      "runtipi_id": "syncthing",
+      "runtipi_name": "Syncthing",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "tailscale",
+      "umbrel_name": "Tailscale",
+      "runtipi_id": "tailscale",
+      "runtipi_name": "Tailscale",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "tandoor",
+      "umbrel_name": "Tandoor Recipes",
+      "runtipi_id": "tandoor",
+      "runtipi_name": "Tandoor",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "tautulli",
+      "umbrel_name": "tautulli",
+      "runtipi_id": "tautulli",
+      "runtipi_name": "Tautulli",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "transmission",
+      "umbrel_name": "Transmission",
+      "runtipi_id": "transmission",
+      "runtipi_name": "Transmission",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "trilium-notes",
+      "umbrel_name": "Trilium Notes",
+      "runtipi_id": "trilium",
+      "runtipi_name": "Trilium",
+      "match_reason": "repo_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "tubearchivist",
+      "umbrel_name": "Tube Archivist",
+      "runtipi_id": "tubearchivist",
+      "runtipi_name": "Tube Archivist",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "umami",
+      "umbrel_name": "Umami",
+      "runtipi_id": "umami-analytics",
+      "runtipi_name": "Umami Analytics",
+      "match_reason": "repo_url",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "uptime-kuma",
+      "umbrel_name": "Uptime Kuma",
+      "runtipi_id": "uptime-kuma",
+      "runtipi_name": "Uptime Kuma",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "vaultwarden",
+      "umbrel_name": "Vaultwarden",
+      "runtipi_id": "vaultwarden",
+      "runtipi_name": "VaultWarden",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "vikunja",
+      "umbrel_name": "Vikunja",
+      "runtipi_id": "vikunja",
+      "runtipi_name": "Vikunja",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "wallos",
+      "umbrel_name": "Wallos",
+      "runtipi_id": "wallos",
+      "runtipi_name": "Wallos",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "watch-your-lan",
+      "umbrel_name": "WatchYourLAN",
+      "runtipi_id": "watchyourlan",
+      "runtipi_name": "WatchYourLAN",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "whoogle-search",
+      "umbrel_name": "Whoogle Search",
+      "runtipi_id": "whoogle",
+      "runtipi_name": "Whoogle Search",
+      "match_reason": "exact_name",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "wikijs",
+      "umbrel_name": "WikiJS",
+      "runtipi_id": "wikijs",
+      "runtipi_name": "WikiJS",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "wireguard",
+      "umbrel_name": "WireGuard",
+      "runtipi_id": "wg-easy-1",
+      "runtipi_name": "Wireguard",
+      "match_reason": "exact_name",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "wizarr",
+      "umbrel_name": "Wizarr",
+      "runtipi_id": "wizarr",
+      "runtipi_name": "Wizarr",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "wordpress",
+      "umbrel_name": "WordPress",
+      "runtipi_id": "wordpress",
+      "runtipi_name": "WordPress",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "zerotier",
+      "umbrel_name": "ZeroTier",
+      "runtipi_id": "zerotier",
+      "runtipi_name": "ZeroTier",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    },
+    {
+      "umbrel_id": "zigbee2mqtt",
+      "umbrel_name": "Zigbee2MQTT",
+      "runtipi_id": "zigbee2mqtt",
+      "runtipi_name": "Zigbee2MQTT",
+      "match_reason": "exact_id",
+      "umbrel_disabled": false
+    }
+  ],
+  "umbrel_disabled_apps": [
+    {
+      "id": "alby-nostr-wallet-connect",
+      "name": "Nostr Wallet Connect",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "back-that-mac-up",
+      "name": "Back That Mac Up",
+      "category": "files",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "chatbot-ui",
+      "name": "ChatBot UI",
+      "category": "ai",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "chatpad-ai",
+      "name": "Chatpad AI",
+      "category": "ai",
+      "also_in_runtipi": true
+    },
+    {
+      "id": "chromium",
+      "name": "Chromium",
+      "category": "networking",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "file-drop",
+      "name": "File Drop",
+      "category": "files",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "firefox",
+      "name": "Firefox",
+      "category": "networking",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "itchysats",
+      "name": "ItchySats",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "kollider",
+      "name": "Kollider",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "libreddit",
+      "name": "LibReddit",
+      "category": "social",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "libretranslate",
+      "name": "LibreTranslate",
+      "category": "ai",
+      "also_in_runtipi": true
+    },
+    {
+      "id": "lightning-shell",
+      "name": "Lightning Shell",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "llama-gpt",
+      "name": "LlamaGPT",
+      "category": "ai",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "lndboss",
+      "name": "LndBoss",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "lnmarkets",
+      "name": "LN Markets",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "lnplus",
+      "name": "Lightning Network+",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "minio",
+      "name": "MinIO",
+      "category": "developer",
+      "also_in_runtipi": true
+    },
+    {
+      "id": "nitter",
+      "name": "Nitter",
+      "category": "social",
+      "also_in_runtipi": true
+    },
+    {
+      "id": "nolooking",
+      "name": "nolooking",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "oak-node",
+      "name": "Oak Node",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "overseerr",
+      "name": "Overseerr",
+      "category": "media",
+      "also_in_runtipi": true
+    },
+    {
+      "id": "palmr",
+      "name": "Palmr",
+      "category": "files",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "readarr",
+      "name": "Readarr",
+      "category": "media",
+      "also_in_runtipi": true
+    },
+    {
+      "id": "samba",
+      "name": "Samba",
+      "category": "networking",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "tallycoin-connect",
+      "name": "Tallycoin Connect",
+      "category": "bitcoin",
+      "also_in_runtipi": false
+    },
+    {
+      "id": "teamspeak",
+      "name": "TeamSpeak",
+      "category": "social",
+      "also_in_runtipi": false
+    }
+  ],
+  "runtipi_official_apps": [
+    {
+      "id": "2fauth",
+      "name": "2FAuth",
+      "port": 8235,
+      "categories": [
+        "security"
+      ],
+      "source": "https://github.com/Bubka/2FAuth",
+      "website": "https://docs.2fauth.app/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "2fauth/2fauth:8.0.2"
+      ]
+    },
+    {
+      "id": "activepieces",
+      "name": "Activepieces",
+      "port": 8605,
+      "categories": [
+        "automation"
+      ],
+      "source": "https://github.com/activepieces/activepieces",
+      "website": "https://www.activepieces.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "activepieces/activepieces:0.92.3",
+        "postgres:14",
+        "redis:7"
+      ]
+    },
+    {
+      "id": "actual-budget",
+      "name": "Actual Budget",
+      "port": 8011,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/actualbudget/actual",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "actualbudget/actual-server:26.10.0"
+      ]
+    },
+    {
+      "id": "adguard",
+      "name": "Adguard",
+      "port": 8104,
+      "categories": [
+        "network",
+        "security"
+      ],
+      "source": "https://github.com/AdguardTeam",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "adguard/adguardhome:v0.107.79"
+      ]
+    },
+    {
+      "id": "adguardhome-sync",
+      "name": "Adguard Home Sync",
+      "port": 8436,
+      "categories": [
+        "network",
+        "utilities"
+      ],
+      "source": "https://github.com/bakito/adguardhome-sync",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/bakito/adguardhome-sync:v0.9.4"
+      ]
+    },
+    {
+      "id": "affine",
+      "name": "AFFiNE",
+      "port": 3010,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/toeverything/affine",
+      "website": "https://affine.pro",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/toeverything/affine:stable",
+        "redis",
+        "postgres:16"
+      ]
+    },
+    {
+      "id": "anse",
+      "name": "Anse",
+      "port": 8014,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/anse-app/anse",
+      "website": "https://anse.app",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ddiu8081/anse:v1.1.11"
+      ]
+    },
+    {
+      "id": "archivebox",
+      "name": "ArchiveBox",
+      "port": 8015,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/ArchiveBox/ArchiveBox",
+      "website": "https://archivebox.io",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "archivebox/archivebox:0.9.73"
+      ]
+    },
+    {
+      "id": "atuin",
+      "name": "Atuin Server",
+      "port": 8392,
+      "categories": [
+        "utilities",
+        "development"
+      ],
+      "source": "https://github.com/atuinsh/atuin",
+      "website": "https://atuin.sh",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/atuinsh/atuin:18.24.1",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "audiobookshelf",
+      "name": "Audiobookshelf",
+      "port": 13378,
+      "categories": [
+        "books",
+        "media"
+      ],
+      "source": "https://github.com/advplyr/audiobookshelf",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/advplyr/audiobookshelf:2.37.1"
+      ]
+    },
+    {
+      "id": "authentik-1",
+      "name": "Authentik",
+      "port": 9000,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/goauthentik/authentik",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/goauthentik/server:2026.8.4",
+        "ghcr.io/goauthentik/server:2026.8.4",
+        "postgres:18-alpine"
+      ]
+    },
+    {
+      "id": "autobrr",
+      "name": "autobrr",
+      "port": 8158,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/autobrr/autobrr",
+      "website": "https://autobrr.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/autobrr/autobrr:v1.88.0"
+      ]
+    },
+    {
+      "id": "baikal",
+      "name": "Baïkal",
+      "port": 6556,
+      "categories": [
+        "data",
+        "utilities"
+      ],
+      "source": "https://github.com/aalmenar/baikal-docker",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/aalmenar/baikal:0.12.1"
+      ]
+    },
+    {
+      "id": "barrage",
+      "name": "Barrage",
+      "port": 8145,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/maulik9898/barrage",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "maulik9898/barrage:0.3.0"
+      ]
+    },
+    {
+      "id": "bazarr",
+      "name": "Bazarr",
+      "port": 6767,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/morpheus65535/bazarr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/bazarr:1.6.2"
+      ]
+    },
+    {
+      "id": "beszel",
+      "name": "Beszel",
+      "port": 8999,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/henrygd/beszel",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "henrygd/beszel:0.21.0"
+      ]
+    },
+    {
+      "id": "beszel-agent",
+      "name": "Beszel Agent",
+      "port": 45876,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/henrygd/beszel",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "henrygd/beszel-agent:0.21.0"
+      ]
+    },
+    {
+      "id": "bewcloud",
+      "name": "bewCloud",
+      "port": 8053,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/bewcloud/bewcloud",
+      "website": "https://bewcloud.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/bewcloud/bewcloud:v1.9.2",
+        "postgres:15"
+      ]
+    },
+    {
+      "id": "bitcoind",
+      "name": "Bitcoin",
+      "port": 8333,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/lncm/docker-bitcoind",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lncm/bitcoind:v28.0"
+      ]
+    },
+    {
+      "id": "bitmagnet",
+      "name": "Bitmagnet",
+      "port": 3335,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/bitmagnet-io/bitmagnet",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/bitmagnet-io/bitmagnet:v0.10.1",
+        "postgres:17-alpine",
+        "redis:alpine"
+      ]
+    },
+    {
+      "id": "booksonic",
+      "name": "Booksonic",
+      "port": 8040,
+      "categories": [
+        "books",
+        "media"
+      ],
+      "source": "https://github.com/popeen/Booksonic-Air",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/booksonic-air:2201.1.0"
+      ]
+    },
+    {
+      "id": "bookstack",
+      "name": "Bookstack",
+      "port": 8119,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/BookStackApp/BookStack",
+      "website": "https://www.bookstackapp.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/bookstack:26.09.20260929",
+        "lscr.io/linuxserver/mariadb"
+      ]
+    },
+    {
+      "id": "budibase",
+      "name": "Budibase",
+      "port": 8268,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/Budibase/budibase",
+      "website": "https://budibase.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "budibase/budibase:v3.49.0"
+      ]
+    },
+    {
+      "id": "calcom",
+      "name": "Cal.com",
+      "port": 8294,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/calcom/cal.com",
+      "website": "https://cal.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "calcom/cal.com:v6.2.0",
+        "postgres:16.1"
+      ]
+    },
+    {
+      "id": "calibre-web",
+      "name": "Calibre-Web - EBook Reader",
+      "port": 8100,
+      "categories": [
+        "books"
+      ],
+      "source": "https://github.com/janeczku/calibre-web",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/calibre-web:0.6.27"
+      ]
+    },
+    {
+      "id": "changedetection",
+      "name": "ChangeDetection",
+      "port": 8257,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/dgtlmoon/changedetection.io",
+      "website": "https://changedetection.io/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/dgtlmoon/changedetection.io:0.60.9"
+      ]
+    },
+    {
+      "id": "chatgpt-ui",
+      "name": "ChatGPT UI",
+      "port": 8200,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/WongSaang/chatgpt-ui",
+      "website": "",
+      "available": true,
+      "deprecated": true,
+      "images": [
+        "wongsaang/chatgpt-ui-client:v2.5.9",
+        "wongsaang/chatgpt-ui-wsgi-server:v2.5.2",
+        "wongsaang/chatgpt-ui-web-server:v2.5.2",
+        "lscr.io/linuxserver/mariadb:latest"
+      ]
+    },
+    {
+      "id": "chatpad",
+      "name": "Chatpad AI",
+      "port": 8179,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/deiucanta/chatpad",
+      "website": "https://chatpad.ai/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/deiucanta/chatpad:latest"
+      ]
+    },
+    {
+      "id": "cheshire-cat-ai",
+      "name": "Cheshire Cat AI",
+      "port": 1865,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/cheshire-cat-ai/core",
+      "website": "https://cheshirecat.ai",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/cheshire-cat-ai/core:1.9.2"
+      ]
+    },
+    {
+      "id": "cloudflare-ddns",
+      "name": "Cloudflare DDNS",
+      "port": null,
+      "categories": [
+        "network"
+      ],
+      "source": "https://github.com/joshuaavalon/docker-cloudflare",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/joshuaavalon/cloudflare-ddns:3.3.0"
+      ]
+    },
+    {
+      "id": "cloudflared",
+      "name": "Cloudflared",
+      "port": 14333,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/WisdomSky/Cloudflared-web",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "wisdomsky/cloudflared-web:2026.10.1"
+      ]
+    },
+    {
+      "id": "code-server",
+      "name": "Code Server",
+      "port": 8138,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/coder/code-server",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/code-server:4.141.0"
+      ]
+    },
+    {
+      "id": "codex-docs",
+      "name": "CodeX.docs",
+      "port": 8101,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/codex-team/codex.docs",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/codex-team/codex.docs:v2.3",
+        "mongo:latest"
+      ]
+    },
+    {
+      "id": "crafty",
+      "name": "Crafty",
+      "port": 8456,
+      "categories": [
+        "gaming"
+      ],
+      "source": "https://gitlab.com/crafty-controller/crafty-4",
+      "website": "https://craftycontrol.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "registry.gitlab.com/crafty-controller/crafty-4:4.11.0"
+      ]
+    },
+    {
+      "id": "cross-seed",
+      "name": "Cross-Seed",
+      "port": null,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/cross-seed/cross-seed",
+      "website": "https://www.cross-seed.org",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/cross-seed/cross-seed:6.13.7"
+      ]
+    },
+    {
+      "id": "crowdsec",
+      "name": "Crowdsec",
+      "port": 8679,
+      "categories": [
+        "security",
+        "utilities"
+      ],
+      "source": "https://github.com/crowdsecurity/crowdsec",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "crowdsecurity/crowdsec:v1.7.8",
+        "fbonalair/traefik-crowdsec-bouncer:v1.6.8",
+        "metabase/metabase"
+      ]
+    },
+    {
+      "id": "ctfd",
+      "name": "CTFd",
+      "port": 8546,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/CTFd/CTFd",
+      "website": "https://ctfd.io/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ctfd/ctfd:3.8.8",
+        "mariadb:10.4.12",
+        "redis:4"
+      ]
+    },
+    {
+      "id": "cup",
+      "name": "Cup",
+      "port": 8465,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/sergi0g/cup",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/sergi0g/cup:v3.5.1"
+      ]
+    },
+    {
+      "id": "cyberchef",
+      "name": "CyberChef",
+      "port": 9080,
+      "categories": [
+        "utilities",
+        "security"
+      ],
+      "source": "https://github.com/gchq/CyberChef",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/gchq/cyberchef:11.5.0"
+      ]
+    },
+    {
+      "id": "dailytxt",
+      "name": "DailyTxT",
+      "port": 8156,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/PhiTux/DailyTxT",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "phitux/dailytxt:2.6.4"
+      ]
+    },
+    {
+      "id": "dashdot",
+      "name": "Dash.",
+      "port": 8173,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/MauriceNino/dashdot",
+      "website": "https://getdashdot.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "mauricenino/dashdot:6.3.4"
+      ]
+    },
+    {
+      "id": "dashy",
+      "name": "Dashy",
+      "port": 8205,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/lissy93/dashy",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/lissy93/dashy:4.8.7"
+      ]
+    },
+    {
+      "id": "databag",
+      "name": "Databag",
+      "port": 8201,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/balzack/databag",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "balzack/databag:latest"
+      ]
+    },
+    {
+      "id": "ddns-updater",
+      "name": "DDNS Updater",
+      "port": 8356,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/qdm12/ddns-updater",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "qmcgaw/ddns-updater:v2.10.0"
+      ]
+    },
+    {
+      "id": "deemix",
+      "name": "Deemix",
+      "port": 6595,
+      "categories": [
+        "media",
+        "music"
+      ],
+      "source": "https://gitlab.com/Bockiii/deemix-docker",
+      "website": "https://deemix.app/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "registry.gitlab.com/bockiii/deemix-docker:latest"
+      ]
+    },
+    {
+      "id": "deluge",
+      "name": "Deluge",
+      "port": 8144,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/linuxserver/docker-deluge",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/deluge:18.04.1"
+      ]
+    },
+    {
+      "id": "dockge",
+      "name": "Dockge",
+      "port": 8768,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/louislam/dockge",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "louislam/dockge:1.5.0"
+      ]
+    },
+    {
+      "id": "docmost",
+      "name": "Docmost",
+      "port": 9713,
+      "categories": [
+        "data",
+        "utilities"
+      ],
+      "source": "https://github.com/docmost/docmost",
+      "website": "https://docmost.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "docmost/docmost:0.96.0",
+        "postgres:16-alpine",
+        "redis:7.2-alpine"
+      ]
+    },
+    {
+      "id": "dokuwiki",
+      "name": "DokuWiki",
+      "port": 8149,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/dokuwiki/dokuwiki",
+      "website": "https://www.dokuwiki.org/dokuwiki",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/dokuwiki:2024-02-06b-ls250"
+      ]
+    },
+    {
+      "id": "dozzle",
+      "name": "Dozzle",
+      "port": 8013,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/amir20/dozzle",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "amir20/dozzle:v11.3.3"
+      ]
+    },
+    {
+      "id": "drawio",
+      "name": "Draw.io",
+      "port": 8734,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/jgraph/drawio",
+      "website": "https://www.drawio.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "jgraph/drawio:32.4.1"
+      ]
+    },
+    {
+      "id": "duckdns",
+      "name": "Duck DNS",
+      "port": 8026,
+      "categories": [
+        "network"
+      ],
+      "source": "https://github.com/linuxserver/docker-duckdns",
+      "website": "https://docs.linuxserver.io/images/docker-duckdns/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/duckdns:b14c520a-ls8"
+      ]
+    },
+    {
+      "id": "duplicati",
+      "name": "Duplicati",
+      "port": 8159,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/linuxserver/docker-duplicati",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/duplicati:2.4.0"
+      ]
+    },
+    {
+      "id": "eclipse-mosquitto",
+      "name": "Eclipse Mosquitto",
+      "port": 8288,
+      "categories": [
+        "utilities",
+        "automation"
+      ],
+      "source": "https://github.com/eclipse/mosquitto/",
+      "website": "https://mosquitto.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "eclipse-mosquitto:2.0.22",
+        "cedalo/management-center:2"
+      ]
+    },
+    {
+      "id": "electrs",
+      "name": "Electrs",
+      "port": 3006,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/romanz/electrs",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/montejojorge/electrs-ui:v0.10.9",
+        "getumbrel/electrs:v0.12.0"
+      ]
+    },
+    {
+      "id": "email-oauth2-proxy",
+      "name": "Email OAuth2 Proxy",
+      "port": 1999,
+      "categories": [
+        "utilities",
+        "security"
+      ],
+      "source": "https://github.com/simonrob/email-oauth2-proxy",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/blacktirion/email-oauth2-proxy-docker:2026.01.06"
+      ]
+    },
+    {
+      "id": "emby",
+      "name": "Emby",
+      "port": 8325,
+      "categories": [
+        "media"
+      ],
+      "source": "https://emby.media",
+      "website": "https://emby.media",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/emby:4.10.1"
+      ]
+    },
+    {
+      "id": "emqx",
+      "name": "EMQX Open Source",
+      "port": 18083,
+      "categories": [
+        "utilities",
+        "automation"
+      ],
+      "source": "https://github.com/emqx/emqx",
+      "website": "https://www.emqx.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "emqx/emqx:6.3.2",
+        "emqx/emqx:6.3.2"
+      ]
+    },
+    {
+      "id": "emulatorjs",
+      "name": "Emulatorjs",
+      "port": 8164,
+      "categories": [
+        "gaming"
+      ],
+      "source": "https://github.com/EmulatorJS/EmulatorJS",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/emulatorjs:1.9.2"
+      ]
+    },
+    {
+      "id": "esphome",
+      "name": "ESP Home",
+      "port": 6052,
+      "categories": [
+        "automation"
+      ],
+      "source": "https://github.com/esphome/esphome",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/esphome/esphome:2026.9.1"
+      ]
+    },
+    {
+      "id": "excalidraw",
+      "name": "Excalidraw",
+      "port": 8172,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/excalidraw/excalidraw",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "excalidraw/excalidraw:latest"
+      ]
+    },
+    {
+      "id": "filebrowser",
+      "name": "File Browser",
+      "port": 8096,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/filebrowser/filebrowser",
+      "website": "https://filebrowser.org/",
+      "available": true,
+      "deprecated": true,
+      "images": [
+        "filebrowser/filebrowser:v2.63.23"
+      ]
+    },
+    {
+      "id": "filebrowser-quantum",
+      "name": "FileBrowser Quantum",
+      "port": 18196,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/gtsteffaniak/filebrowser",
+      "website": "https://filebrowserquantum.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "gtstef/filebrowser:2.0-stable"
+      ]
+    },
+    {
+      "id": "filestash",
+      "name": "Filestash",
+      "port": 8189,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/mickael-kerjean/filestash",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "machines/filestash:latest",
+        "onlyoffice/documentserver:10.0.0.1"
+      ]
+    },
+    {
+      "id": "firefly-iii",
+      "name": "Firefly III",
+      "port": 8115,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/firefly-iii/firefly-iii",
+      "website": "https://www.firefly-iii.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "fireflyiii/core:version-6",
+        "mariadb",
+        "alpine"
+      ]
+    },
+    {
+      "id": "firefly-iii-data-importer",
+      "name": "Firefly III Data Importer",
+      "port": 8150,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/firefly-iii/data-importer",
+      "website": "https://www.firefly-iii.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "fireflyiii/data-importer:version-2"
+      ]
+    },
+    {
+      "id": "fireshare",
+      "name": "Fireshare",
+      "port": 8140,
+      "categories": [
+        "gaming",
+        "media"
+      ],
+      "source": "https://github.com/ShaneIsrael/fireshare",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "shaneisrael/fireshare:1.9.0"
+      ]
+    },
+    {
+      "id": "flaresolverr",
+      "name": "Flaresolverr",
+      "port": 8666,
+      "categories": [
+        "media",
+        "security",
+        "utilities"
+      ],
+      "source": "https://github.com/FlareSolverr/FlareSolverr",
+      "website": "https://github.com/FlareSolverr/FlareSolverr",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/flaresolverr/flaresolverr:v3.5.2"
+      ]
+    },
+    {
+      "id": "flatnotes",
+      "name": "flatnotes",
+      "port": 8137,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/Dullage/flatnotes",
+      "website": "https://demo.flatnotes.io/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "dullage/flatnotes:v5.5.5"
+      ]
+    },
+    {
+      "id": "flightlog",
+      "name": "Flightlog",
+      "port": 8934,
+      "categories": [
+        "utilities",
+        "data"
+      ],
+      "source": "https://github.com/perdian/flightlog/",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "perdian/flightlog:v2.1.14"
+      ]
+    },
+    {
+      "id": "flowise",
+      "name": "Flowise AI",
+      "port": 8009,
+      "categories": [
+        "ai",
+        "automation"
+      ],
+      "source": "https://github.com/FlowiseAI/Flowise",
+      "website": "https://flowiseai.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "flowiseai/flowise:3.1.4"
+      ]
+    },
+    {
+      "id": "forgejo",
+      "name": "Forgejo",
+      "port": 8195,
+      "categories": [
+        "development"
+      ],
+      "source": "https://codeberg.org/forgejo/forgejo/",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "codeberg.org/forgejo/forgejo:17.0.0",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "freshrss",
+      "name": "FreshRSS",
+      "port": 8086,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/FreshRSS/FreshRSS",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/freshrss:1.30.1"
+      ]
+    },
+    {
+      "id": "gandi-livedns",
+      "name": "gandi-livedns",
+      "port": 8134,
+      "categories": [
+        "network"
+      ],
+      "source": "https://github.com/jbbodart/gandi-livedns",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "jbbodart/gandi-livedns:latest"
+      ]
+    },
+    {
+      "id": "ghost",
+      "name": "Ghost Production",
+      "port": 8117,
+      "categories": [
+        "social",
+        "media"
+      ],
+      "source": "https://github.com/TryGhost/Ghost",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghost:5.130.6",
+        "mariadb:latest"
+      ]
+    },
+    {
+      "id": "ghost-dev",
+      "name": "Ghost Development",
+      "port": 8225,
+      "categories": [
+        "social",
+        "media"
+      ],
+      "source": "https://github.com/TryGhost/Ghost",
+      "website": "https://ghost.org",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghost:5.130.6"
+      ]
+    },
+    {
+      "id": "ghostfolio",
+      "name": "Ghostfolio",
+      "port": 3333,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/ghostfolio/ghostfolio",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghostfolio/ghostfolio:3.88.0",
+        "postgres:15.4-alpine",
+        "redis:7-alpine"
+      ]
+    },
+    {
+      "id": "gitea",
+      "name": "Gitea",
+      "port": 8108,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/go-gitea/gitea",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "gitea/gitea:28.1.0",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "gladys",
+      "name": "Gladys Assistant",
+      "port": 8270,
+      "categories": [
+        "automation"
+      ],
+      "source": "https://github.com/gladysassistant/gladys",
+      "website": "https://gladysassistant.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "gladysassistant/gladys:v5.2.1"
+      ]
+    },
+    {
+      "id": "glance",
+      "name": "Glance",
+      "port": 8568,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/glanceapp/glance",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "glanceapp/glance:v0.8.7"
+      ]
+    },
+    {
+      "id": "glances",
+      "name": "Glances",
+      "port": 8420,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/nicolargo/glances",
+      "website": "https://nicolargo.github.io/glances/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "nicolargo/glances:4.5.3.2"
+      ]
+    },
+    {
+      "id": "gotify",
+      "name": "Gotify",
+      "port": 8129,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/gotify/server",
+      "website": "https://gotify.net",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "gotify/server:3.1.1"
+      ]
+    },
+    {
+      "id": "gotosocial",
+      "name": "GoToSocial",
+      "port": 8188,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/superseriousbusiness/gotosocial",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "superseriousbusiness/gotosocial:0.22.2",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "grafana",
+      "name": "Grafana",
+      "port": 8160,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/grafana/grafana",
+      "website": "https://grafana.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "grafana/grafana-oss:13.0.2"
+      ]
+    },
+    {
+      "id": "grampsweb",
+      "name": "Gramps Web",
+      "port": 5000,
+      "categories": [
+        "data",
+        "social"
+      ],
+      "source": "https://github.com/gramps-project/gramps-web",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/gramps-project/grampsweb:26.10.1"
+      ]
+    },
+    {
+      "id": "grav",
+      "name": "Grav",
+      "port": 8161,
+      "categories": [
+        "social",
+        "media"
+      ],
+      "source": "https://github.com/getgrav/grav",
+      "website": "",
+      "available": true,
+      "deprecated": true,
+      "images": [
+        "lscr.io/linuxserver/grav:2.2.10"
+      ]
+    },
+    {
+      "id": "grav-2",
+      "name": "Grav V2",
+      "port": 18161,
+      "categories": [
+        "social",
+        "media"
+      ],
+      "source": "https://github.com/getgrav/grav",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/grav:2.2.10"
+      ]
+    },
+    {
+      "id": "grist",
+      "name": "Grist",
+      "port": 8484,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/gristlabs/grist-core",
+      "website": "https://www.getgrist.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "gristlabs/grist:1.7.21"
+      ]
+    },
+    {
+      "id": "grocy",
+      "name": "Grocy",
+      "port": 8136,
+      "categories": [
+        "automation",
+        "finance"
+      ],
+      "source": "https://github.com/grocy/grocy",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/grocy:4.7.1"
+      ]
+    },
+    {
+      "id": "guacamole",
+      "name": "Guacamole",
+      "port": 8854,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/apache/guacamole-server",
+      "website": "https://guacamole.apache.org",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "guacamole/guacamole:1.6.0",
+        "guacamole/guacd:1.6.0",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "halo",
+      "name": "Halo",
+      "port": 8092,
+      "categories": [
+        "social",
+        "media"
+      ],
+      "source": "https://github.com/halo-dev/halo",
+      "website": "https://halo.run",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "halohub/halo:2.27.0",
+        "postgres:15.4"
+      ]
+    },
+    {
+      "id": "hammond",
+      "name": "Hammond",
+      "port": 8185,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/alfhou/hammond",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "alfhou/hammond:v0.0.24"
+      ]
+    },
+    {
+      "id": "haven",
+      "name": "Haven",
+      "port": 8130,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/havenweb/haven",
+      "website": "https://havenweb.org",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/havenweb/haven:latest",
+        "postgres:13.2-alpine"
+      ]
+    },
+    {
+      "id": "hedgedoc",
+      "name": "HedgeDoc",
+      "port": 8142,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/hedgedoc/hedgedoc",
+      "website": "https://hedgedoc.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "quay.io/hedgedoc/hedgedoc:1.12.0",
+        "postgres:13.4-alpine"
+      ]
+    },
+    {
+      "id": "heimdall",
+      "name": "Heimdall",
+      "port": 8783,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/linuxserver/Heimdall",
+      "website": "https://heimdall.site/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/heimdall:2.8.3"
+      ]
+    },
+    {
+      "id": "hello-world",
+      "name": "Hello World",
+      "port": 8000,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/crccheck/docker-hello-world",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "crccheck/hello-world:latest"
+      ]
+    },
+    {
+      "id": "hoarder",
+      "name": "Hoarder",
+      "port": 8685,
+      "categories": [
+        "utilities",
+        "ai"
+      ],
+      "source": "https://github.com/hoarder-app/hoarder",
+      "website": "https://hoarder.app",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/hoarder-app/hoarder:0.34.0",
+        "ghcr.io/karakeep-app/karakeep-chrome:release",
+        "getmeili/meilisearch:v1.55"
+      ]
+    },
+    {
+      "id": "homarr-1",
+      "name": "Homarr",
+      "port": 8102,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/homarr-labs/homarr",
+      "website": "https://homarr.dev",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/homarr-labs/homarr:v2.6.0"
+      ]
+    },
+    {
+      "id": "homeassistant-1",
+      "name": "Home Assistant",
+      "port": 8209,
+      "categories": [
+        "automation"
+      ],
+      "source": "https://github.com/home-assistant/core",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/home-assistant/home-assistant:2026.10.2"
+      ]
+    },
+    {
+      "id": "homebox",
+      "name": "HomeBox",
+      "port": 7745,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/sysadminsmedia/homebox",
+      "website": "https://homebox.sysadminsmedia.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/sysadminsmedia/homebox:0.27.0"
+      ]
+    },
+    {
+      "id": "homebridge",
+      "name": "Home Bridge",
+      "port": 8581,
+      "categories": [
+        "automation"
+      ],
+      "source": "https://github.com/homebridge/homebridge",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "homebridge/homebridge:2024-05-02"
+      ]
+    },
+    {
+      "id": "homepage",
+      "name": "Homepage",
+      "port": 8756,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/gethomepage/homepage",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/gethomepage/homepage:v2.6.0"
+      ]
+    },
+    {
+      "id": "homer",
+      "name": "Homer",
+      "port": 8562,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/bastienwirtz/homer",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "b4bz/homer:v26.08.3"
+      ]
+    },
+    {
+      "id": "immich",
+      "name": "Immich",
+      "port": 8128,
+      "categories": [
+        "data",
+        "photography"
+      ],
+      "source": "https://github.com/immich-app/immich",
+      "website": "https://www.immich.app/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/immich-app/immich-server:v3.3.3",
+        "ghcr.io/immich-app/immich-machine-learning:v3.3.3",
+        "redis:6.2",
+        "ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0"
+      ]
+    },
+    {
+      "id": "inspircd",
+      "name": "Inspircd",
+      "port": 6697,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/inspircd/inspircd",
+      "website": "https://www.inspircd.org",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "inspircd/inspircd-docker:4.12.1"
+      ]
+    },
+    {
+      "id": "invidious",
+      "name": "Invidious",
+      "port": 8095,
+      "categories": [
+        "media",
+        "social"
+      ],
+      "source": "https://github.com/iv-org/invidious",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "quay.io/invidious/invidious:master",
+        "quay.io/invidious/inv-sig-helper:latest",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "invoice-ninja",
+      "name": "Invoice Ninja",
+      "port": 8881,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/invoiceninja/invoiceninja",
+      "website": "https://invoiceninja.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "invoiceninja/invoiceninja:5.13",
+        "nginx:1.31",
+        "mariadb:10.7",
+        "bash:5.3.20"
+      ]
+    },
+    {
+      "id": "it-tools",
+      "name": "IT-Tools",
+      "port": 8171,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/CorentinTh/it-tools",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "corentinth/it-tools:latest"
+      ]
+    },
+    {
+      "id": "jackett",
+      "name": "Jackett",
+      "port": 8097,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Jackett/Jackett",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/jackett:latest"
+      ]
+    },
+    {
+      "id": "jellyfin",
+      "name": "Jellyfin",
+      "port": 8091,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/jellyfin/jellyfin",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/jellyfin:version-12.2ubu2604"
+      ]
+    },
+    {
+      "id": "jellyfin-vue",
+      "name": "Jellyfin Vue (Beta)",
+      "port": 8202,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/jellyfin/jellyfin-vue",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/jellyfin/jellyfin-vue:unstable.2024-10-14.a47a7d5"
+      ]
+    },
+    {
+      "id": "jellyseerr",
+      "name": "Jellyseerr",
+      "port": 8163,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Fallenbagel/jellyseerr",
+      "website": "",
+      "available": true,
+      "deprecated": true,
+      "images": [
+        "fallenbagel/jellyseerr:2.7.3"
+      ]
+    },
+    {
+      "id": "joplin",
+      "name": "Joplin Server",
+      "port": 8099,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/laurent22/joplin",
+      "website": "https://joplinapp.org",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "joplin/server:3.7.2",
+        "postgres:14.2"
+      ]
+    },
+    {
+      "id": "kanboard",
+      "name": "Kanboard",
+      "port": 8010,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/kanboard/kanboard",
+      "website": "https://kanboard.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "kanboard/kanboard:v1.2.54"
+      ]
+    },
+    {
+      "id": "kapowarr",
+      "name": "Kapowarr",
+      "port": 8194,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Casvt/Kapowarr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "mrcas/kapowarr:v1.3.2"
+      ]
+    },
+    {
+      "id": "kasm-workspaces",
+      "name": "Kasm Workspaces",
+      "port": 8744,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/kasmtech",
+      "website": "https://www.kasmweb.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/kasm:1.120.20221218"
+      ]
+    },
+    {
+      "id": "kavita",
+      "name": "Kavita",
+      "port": 8175,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/Kareadita/Kavita",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "jvmilazz0/kavita:0.9.1"
+      ]
+    },
+    {
+      "id": "kimai",
+      "name": "Kimai",
+      "port": 8003,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/kimai/kimai",
+      "website": "https://www.kimai.org",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "tobybatch/nginx-fpm-reverse-proxy:latest",
+        "kimai/kimai2:fpm-2.19.1-prod",
+        "mysql:5.7"
+      ]
+    },
+    {
+      "id": "kiwix-serve",
+      "name": "Kiwix Server",
+      "port": 8169,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/kiwix/kiwix-tools/",
+      "website": "https://kiwix.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/kiwix/kiwix-serve:3.7.0-2"
+      ]
+    },
+    {
+      "id": "koillection",
+      "name": "Koillection",
+      "port": 8050,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/benjaminjonard/koillection",
+      "website": "https://koillection.github.io/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "koillection/koillection:1.8.4",
+        "postgres:15"
+      ]
+    },
+    {
+      "id": "kometa",
+      "name": "Kometa",
+      "port": 9996,
+      "categories": [
+        "utilities",
+        "media"
+      ],
+      "source": "https://github.com/Kometa-Team/Kometa",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/linuxserver/kometa:2.5.3"
+      ]
+    },
+    {
+      "id": "komga",
+      "name": "Komga",
+      "port": 2560,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/gotson/komga",
+      "website": "https://komga.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/gotson/komga:1.29.1"
+      ]
+    },
+    {
+      "id": "librephotos",
+      "name": "LibrePhotos",
+      "port": 8132,
+      "categories": [
+        "photography"
+      ],
+      "source": "https://github.com/LibrePhotos/librephotos",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "reallibrephotos/librephotos-proxy:2023w48",
+        "postgres:14",
+        "reallibrephotos/librephotos-frontend:2023w48",
+        "reallibrephotos/librephotos:2023w48",
+        "redis:6"
+      ]
+    },
+    {
+      "id": "librespeed",
+      "name": "LibreSpeed",
+      "port": 8084,
+      "categories": [
+        "network",
+        "utilities"
+      ],
+      "source": "https://github.com/librespeed/speedtest",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/librespeed:6.3.0"
+      ]
+    },
+    {
+      "id": "libretranslate",
+      "name": "LibreTranslate",
+      "port": 8121,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/LibreTranslate/LibreTranslate",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "libretranslate/libretranslate:v1.9.6"
+      ]
+    },
+    {
+      "id": "lidarr",
+      "name": "Lidarr",
+      "port": 8131,
+      "categories": [
+        "media",
+        "music"
+      ],
+      "source": "https://github.com/Lidarr/Lidarr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/linuxserver/lidarr:3.1.0"
+      ]
+    },
+    {
+      "id": "lidarr-deemix",
+      "name": "Lidarr on Steroids",
+      "port": 8186,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/youegraillot/lidarr-on-steroids",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "youegraillot/lidarr-on-steroids:1.5.2"
+      ]
+    },
+    {
+      "id": "linkstack",
+      "name": "LinkStack",
+      "port": 8154,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/LinkStackOrg/linkstack-docker",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "linkstackorg/linkstack:latest"
+      ]
+    },
+    {
+      "id": "linkwarden",
+      "name": "Linkwarden",
+      "port": 8199,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/linkwarden/linkwarden",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/linkwarden/linkwarden:v2.16.3",
+        "postgres:16-alpine"
+      ]
+    },
+    {
+      "id": "lobe-chat",
+      "name": "Lobe Chat",
+      "port": 3210,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/lobehub/lobe-chat",
+      "website": "https://github.com/lobehub/lobe-chat",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lobehub/lobe-chat:1.143.3"
+      ]
+    },
+    {
+      "id": "lodestone-core",
+      "name": "Lodestone Core",
+      "port": 16662,
+      "categories": [
+        "gaming"
+      ],
+      "source": "https://github.com/Lodestone-Team/lodestone_core",
+      "website": "https://lodestone.cc",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/lodestone-team/lodestone_core:0.5.1"
+      ]
+    },
+    {
+      "id": "logto",
+      "name": "Logto",
+      "port": 8203,
+      "categories": [
+        "security"
+      ],
+      "source": "https://github.com/logto-io/logto",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "svhd/logto:1.45.0",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "lubelogger",
+      "name": "LubeLogger",
+      "port": 8054,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/hargata/lubelog",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/hargata/lubelogger:v1.7.4",
+        "postgres:16.4-alpine"
+      ]
+    },
+    {
+      "id": "maintainerr",
+      "name": "Maintainerr",
+      "port": 8030,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Maintainerr/Maintainerr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/maintainerr/maintainerr:3.30.2"
+      ]
+    },
+    {
+      "id": "mastodon",
+      "name": "Mastodon",
+      "port": 8210,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/mastodon/mastodon",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/mastodon:4.7.3",
+        "postgres:14-alpine",
+        "redis:7-alpine"
+      ]
+    },
+    {
+      "id": "matrix-conduit",
+      "name": "Conduit",
+      "port": 6167,
+      "categories": [
+        "social"
+      ],
+      "source": "https://gitlab.com/famedly/conduit",
+      "website": "https://matrix.org/docs/projects/server/conduit",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "matrixconduit/matrix-conduit:v0.10.15"
+      ]
+    },
+    {
+      "id": "matter-server",
+      "name": "Matter Server",
+      "port": 9997,
+      "categories": [
+        "utilities",
+        "automation"
+      ],
+      "source": "https://github.com/home-assistant-libs/python-matter-server",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/home-assistant-libs/python-matter-server:8.1.0"
+      ]
+    },
+    {
+      "id": "mdns-repeater",
+      "name": "MDNS Repeater",
+      "port": 9998,
+      "categories": [
+        "utilities",
+        "automation"
+      ],
+      "source": "https://github.com/angelnu/docker-mdns_repeater",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "angelnu/mdns_repeater:latest"
+      ]
+    },
+    {
+      "id": "mealie-1",
+      "name": "Mealie",
+      "port": 8220,
+      "categories": [],
+      "source": "https://github.com/hay-kot/mealie",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/mealie-recipes/mealie:v3.29.0"
+      ]
+    },
+    {
+      "id": "memos",
+      "name": "Memos",
+      "port": 5230,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/usememos/memos",
+      "website": "https://usememos.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "neosmemo/memos:0.31.0"
+      ]
+    },
+    {
+      "id": "mempool",
+      "name": "Mempool",
+      "port": 2200,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/mempool/mempool",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "mempool/frontend:v3.3.1",
+        "mempool/backend:v3.3.1",
+        "mariadb:10.5.21"
+      ]
+    },
+    {
+      "id": "metabase",
+      "name": "Metabase",
+      "port": 8680,
+      "categories": [
+        "data",
+        "utilities"
+      ],
+      "source": "https://github.com/metabase/metabase",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "metabase/metabase:v0.64.2"
+      ]
+    },
+    {
+      "id": "metube",
+      "name": "MeTube",
+      "port": 8250,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/alexta69/metube",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/alexta69/metube:latest"
+      ]
+    },
+    {
+      "id": "mind",
+      "name": "Mind",
+      "port": 8143,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/Casvt/MIND",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "mrcas/mind:v1.4.1"
+      ]
+    },
+    {
+      "id": "minecraft-server",
+      "name": "Minecraft Server",
+      "port": 25565,
+      "categories": [
+        "gaming"
+      ],
+      "source": "https://github.com/itzg/docker-minecraft-server",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "itzg/minecraft-server:latest"
+      ]
+    },
+    {
+      "id": "minio",
+      "name": "Minio",
+      "port": 8001,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/minio/minio",
+      "website": "https://min.io",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/golithus/minio:latest"
+      ]
+    },
+    {
+      "id": "mixpost",
+      "name": "Mixpost",
+      "port": 8167,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/inovector/mixpost",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "inovector/mixpost:v2.6.0",
+        "mysql/mysql-server:8.0",
+        "redis:latest"
+      ]
+    },
+    {
+      "id": "mixpost-pro",
+      "name": "Mixpost Pro",
+      "port": 8191,
+      "categories": [
+        "social",
+        "utilities"
+      ],
+      "source": "https://github.com/inovector/mixpost",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "inovector/mixpost-pro-team:latest",
+        "mysql/mysql-server:8.0",
+        "redis:latest"
+      ]
+    },
+    {
+      "id": "moneroblock",
+      "name": "Moneroblock",
+      "port": 31312,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/duggavo/MoneroBlock",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "sethsimmons/moneroblock:v0.1.2"
+      ]
+    },
+    {
+      "id": "monerod",
+      "name": "Monero Daemon",
+      "port": 18080,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/sethforprivacy/simple-monerod-docker",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "sethsimmons/simple-monerod:v0.18.3.4"
+      ]
+    },
+    {
+      "id": "mongo",
+      "name": "MongoDB",
+      "port": 27017,
+      "categories": [
+        "development",
+        "data"
+      ],
+      "source": "https://github.com/mongodb/mongo",
+      "website": "https://www.mongodb.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "mongo:7.0.45"
+      ]
+    },
+    {
+      "id": "mongo-express",
+      "name": "Mongo Express",
+      "port": 8087,
+      "categories": [
+        "development",
+        "data"
+      ],
+      "source": "https://github.com/mongo-express/mongo-express",
+      "website": "https://www.mongodb.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "mongo-express:1.0.2"
+      ]
+    },
+    {
+      "id": "monica",
+      "name": "Monica",
+      "port": 3291,
+      "categories": [
+        "data",
+        "social"
+      ],
+      "source": "https://github.com/monicahq/monica",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "monica:4.1.2",
+        "mariadb:10.6.11"
+      ]
+    },
+    {
+      "id": "moodist",
+      "name": "Moodist",
+      "port": 8221,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/remvze/moodist",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/remvze/moodist:v3.1.1"
+      ]
+    },
+    {
+      "id": "movary",
+      "name": "Movary",
+      "port": 8155,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/leepeuker/movary",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "leepeuker/movary:0.80.0",
+        "leepeuker/movary:0.80.0",
+        "mysql:8.0"
+      ]
+    },
+    {
+      "id": "mqttx",
+      "name": "MQTTX",
+      "port": 8217,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/emqx/MQTTX/",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "emqx/mqttx-web:v1.13.1"
+      ]
+    },
+    {
+      "id": "mstream",
+      "name": "mStream Music",
+      "port": 8162,
+      "categories": [
+        "music",
+        "media"
+      ],
+      "source": "https://github.com/IrosTheBeggar/mStream",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/mstream:v5.12.2-ls190"
+      ]
+    },
+    {
+      "id": "mylar3",
+      "name": "Mylar3",
+      "port": 8174,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/mylar3/mylar3",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/mylar3:v0.7.1-ls84"
+      ]
+    },
+    {
+      "id": "n8n-2",
+      "name": "n8n",
+      "port": 5678,
+      "categories": [
+        "automation"
+      ],
+      "source": "https://github.com/n8n-io/n8n",
+      "website": "https://n8n.io/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "n8nio/n8n:2.44.4",
+        "postgres:18",
+        "bash:5.3.20"
+      ]
+    },
+    {
+      "id": "navidrome",
+      "name": "Navidrome",
+      "port": 4533,
+      "categories": [
+        "media",
+        "music"
+      ],
+      "source": "https://github.com/navidrome/navidrome/",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "deluan/navidrome:0.64.2"
+      ]
+    },
+    {
+      "id": "netbootxyz",
+      "name": "Netboot.xyz",
+      "port": 8675,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/netbootxyz/netboot.xyz",
+      "website": "https://netboot.xyz/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/netbootxyz/netbootxyz:0.7.6-nbxyz18"
+      ]
+    },
+    {
+      "id": "netdata",
+      "name": "Netdata",
+      "port": 19999,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/netdata/netdata",
+      "website": "https://www.netdata.cloud/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "netdata/netdata:v2.12.1"
+      ]
+    },
+    {
+      "id": "nextcloud",
+      "name": "Nextcloud",
+      "port": 8083,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/nextcloud/server",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "nextcloud:35.0.2",
+        "postgres:14.2",
+        "redis:6.2.6",
+        "nextcloud:35.0.2"
+      ]
+    },
+    {
+      "id": "nextcloud-mini",
+      "name": "Nextcloud Mini",
+      "port": 8564,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/nextcloud/server",
+      "website": "https://nextcloud.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "nextcloud:35.0.2",
+        "postgres:16"
+      ]
+    },
+    {
+      "id": "nextgba",
+      "name": "NextGBA",
+      "port": 8435,
+      "categories": [
+        "gaming"
+      ],
+      "source": "https://github.com/nicotsx/nextgba",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/nicotsx/nextgba:v0.1.0"
+      ]
+    },
+    {
+      "id": "nginx",
+      "name": "Nginx",
+      "port": 8754,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/nginx/nginx",
+      "website": "https://www.nginx.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "nginx:1.31.7"
+      ]
+    },
+    {
+      "id": "nitter",
+      "name": "Nitter",
+      "port": 8106,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/zedeus/nitter",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "zedeus/nitter:latest",
+        "redis:alpine"
+      ]
+    },
+    {
+      "id": "nocodb",
+      "name": "NocoDB",
+      "port": 8146,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/nocodb/nocodb",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "nocodb/nocodb:2026.09.1",
+        "postgres:16",
+        "redis:alpine"
+      ]
+    },
+    {
+      "id": "nodered",
+      "name": "Node-RED",
+      "port": 8111,
+      "categories": [
+        "automation"
+      ],
+      "source": "https://github.com/node-red/node-red",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "nodered/node-red:5.0.8"
+      ]
+    },
+    {
+      "id": "notemark",
+      "name": "Notemark",
+      "port": 8567,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/enchant97/note-mark/",
+      "website": "https://notemark.docs.enchantedcode.co.uk/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/enchant97/note-mark-frontend:0.19.5",
+        "ghcr.io/enchant97/note-mark-backend:0.19.5",
+        "nginx:alpine"
+      ]
+    },
+    {
+      "id": "ntfy",
+      "name": "Ntfy",
+      "port": 8166,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/binwiederhier/ntfy",
+      "website": "https://ntfy.sh/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "binwiederhier/ntfy:v2.31.1"
+      ]
+    },
+    {
+      "id": "obsidian-livesync",
+      "name": "Obsidian LiveSync",
+      "port": 5984,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/vrtmrz/self-hosted-livesync-server",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "couchdb:3.5.3"
+      ]
+    },
+    {
+      "id": "octobot",
+      "name": "Octobot",
+      "port": 8825,
+      "categories": [
+        "automation",
+        "finance"
+      ],
+      "source": "https://github.com/Drakkar-Software/OctoBot",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "drakkarsoftware/octobot:2.1.13"
+      ]
+    },
+    {
+      "id": "odoo",
+      "name": "Odoo",
+      "port": 8017,
+      "categories": [
+        "utilities",
+        "finance"
+      ],
+      "source": "https://github.com/odoo/odoo",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "postgres:15",
+        "odoo:20"
+      ]
+    },
+    {
+      "id": "olivetin",
+      "name": "Olivetin",
+      "port": 1337,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/OliveTin/OliveTin",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "jamesread/olivetin:latest"
+      ]
+    },
+    {
+      "id": "ollama-amd",
+      "name": "Ollama - AMD",
+      "port": 11434,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/ollama/ollama",
+      "website": "https://ollama.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ollama/ollama:0.40.6"
+      ]
+    },
+    {
+      "id": "ollama-cpu",
+      "name": "Ollama - CPU",
+      "port": 11436,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/ollama/ollama",
+      "website": "https://ollama.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ollama/ollama:0.40.6"
+      ]
+    },
+    {
+      "id": "ollama-nvidia",
+      "name": "Ollama - Nvidia",
+      "port": 11435,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/ollama/ollama",
+      "website": "https://ollama.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ollama/ollama:0.40.6"
+      ]
+    },
+    {
+      "id": "onedev",
+      "name": "OneDev",
+      "port": 6610,
+      "categories": [
+        "development"
+      ],
+      "source": "https://code.onedev.io/onedev/server",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "1dev/server:16.9.4",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "open-webui",
+      "name": "Open WebUI",
+      "port": 8536,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/open-webui/open-webui",
+      "website": "https://openwebui.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/open-webui/open-webui:v0.12.3"
+      ]
+    },
+    {
+      "id": "openbooks",
+      "name": "openbooks",
+      "port": 8152,
+      "categories": [
+        "media",
+        "books"
+      ],
+      "source": "https://github.com/evan-buss/openbooks",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "evanbuss/openbooks:4.5.0"
+      ]
+    },
+    {
+      "id": "openclaw",
+      "name": "OpenClaw",
+      "port": 18789,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/openclaw/openclaw",
+      "website": "https://openclaw.ai",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/openclaw/openclaw:latest"
+      ]
+    },
+    {
+      "id": "outline",
+      "name": "Outline",
+      "port": 8404,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/outline/outline",
+      "website": "https://getoutline.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "outlinewiki/outline:1.11.0",
+        "postgres:16-alpine",
+        "redis:7-alpine",
+        "ghcr.io/sergi0g/oidc-provider:v0.2.0",
+        "nginx:alpine"
+      ]
+    },
+    {
+      "id": "overseerr",
+      "name": "Overseerr",
+      "port": 8116,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/sct/overseerr",
+      "website": "",
+      "available": true,
+      "deprecated": true,
+      "images": [
+        "ghcr.io/linuxserver/overseerr:1.35.0"
+      ]
+    },
+    {
+      "id": "owncast",
+      "name": "Owncast",
+      "port": 8198,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/owncast/owncast",
+      "website": "https://owncast.online/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "owncast/owncast:0.3.0"
+      ]
+    },
+    {
+      "id": "owncloud",
+      "name": "Owncloud",
+      "port": 8151,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/owncloud/core",
+      "website": "https://owncloud.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "owncloud/server:11.0.1",
+        "mariadb:10.6",
+        "redis:6"
+      ]
+    },
+    {
+      "id": "pairdrop",
+      "name": "PairDrop",
+      "port": 8182,
+      "categories": [
+        "media",
+        "data",
+        "utilities"
+      ],
+      "source": "https://github.com/schlagmichdoch/PairDrop",
+      "website": "https://pairdrop.net/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/pairdrop:1.11.2"
+      ]
+    },
+    {
+      "id": "paperless-ngx",
+      "name": "Paperless-ngx",
+      "port": 8012,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/paperless-ngx/paperless-ngx",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/paperless-ngx/paperless-ngx:3.3.2",
+        "redis:7",
+        "postgres:17",
+        "gotenberg/gotenberg:8.38",
+        "apache/tika:latest"
+      ]
+    },
+    {
+      "id": "penpot",
+      "name": "Penpot",
+      "port": 8645,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/penpot/penpot",
+      "website": "https://penpot.app",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "penpotapp/frontend:latest",
+        "penpotapp/backend:latest",
+        "penpotapp/exporter:latest",
+        "postgres:14",
+        "redis:7"
+      ]
+    },
+    {
+      "id": "peppermint",
+      "name": "Peppermint",
+      "port": 8216,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/Peppermint-Lab/peppermint",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "pepperlabs/peppermint:latest",
+        "postgres:latest"
+      ]
+    },
+    {
+      "id": "photoprism",
+      "name": "PhotoPrism",
+      "port": 8110,
+      "categories": [
+        "photography"
+      ],
+      "source": "https://github.com/photoprism/photoprism",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "photoprism/photoprism:latest",
+        "mariadb:10.8"
+      ]
+    },
+    {
+      "id": "pihole",
+      "name": "Pi-hole",
+      "port": 8081,
+      "categories": [
+        "network",
+        "security"
+      ],
+      "source": "https://github.com/pi-hole/pi-hole",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "pihole/pihole:2026.10.0"
+      ]
+    },
+    {
+      "id": "pinchflat",
+      "name": "Pinchflat",
+      "port": 8945,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/kieraneglin/pinchflat",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "keglin/pinchflat:v2025.6.6"
+      ]
+    },
+    {
+      "id": "pingvin-share",
+      "name": "Pingvin Share",
+      "port": 8654,
+      "categories": [
+        "data",
+        "utilities"
+      ],
+      "source": "https://github.com/stonith404/pingvin-share",
+      "website": "https://pingvin-share.dev.eliasschneider.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "stonith404/pingvin-share:v1.13.0"
+      ]
+    },
+    {
+      "id": "planka",
+      "name": "Planka",
+      "port": 8016,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/plankanban/planka",
+      "website": "https://docs.planka.cloud/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/plankanban/planka:1.26.3",
+        "postgres:14-alpine"
+      ]
+    },
+    {
+      "id": "planning-poker",
+      "name": "Planning Poker",
+      "port": 8880,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/axeleroy/self-host-planning-poker",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "axeleroy/self-host-planning-poker:1.2.1"
+      ]
+    },
+    {
+      "id": "plausible-ce",
+      "name": "Plausible CE",
+      "port": 8193,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/plausible/community-edition",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/plausible/community-edition:v2.1.5",
+        "postgres:16-alpine",
+        "clickhouse/clickhouse-server:26.9.22.3"
+      ]
+    },
+    {
+      "id": "plex",
+      "name": "Plex",
+      "port": 32400,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/plexinc/pms-docker",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/plex:1.43.4"
+      ]
+    },
+    {
+      "id": "podfetch",
+      "name": "PodFetch",
+      "port": 8177,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/SamTV12345/PodFetch",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "samuel19982/podfetch:latest"
+      ]
+    },
+    {
+      "id": "portainer",
+      "name": "Portainer",
+      "port": 9443,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/portainer/portainer",
+      "website": "https://www.portainer.io",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "portainer/portainer-ce:2.45.2"
+      ]
+    },
+    {
+      "id": "postfix-relay",
+      "name": "Postfix Mail Relay",
+      "port": 2525,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/shamil/docker-postfix-relay",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "simenduev/postfix-relay:1.4.0"
+      ]
+    },
+    {
+      "id": "privatebin",
+      "name": "PrivateBin",
+      "port": 8122,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/PrivateBin/PrivateBin",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "privatebin/nginx-fpm-alpine:2.0.6"
+      ]
+    },
+    {
+      "id": "prowlarr",
+      "name": "Prowlarr",
+      "port": 8109,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Prowlarr/Prowlarr/",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/linuxserver/prowlarr:2.6.5"
+      ]
+    },
+    {
+      "id": "qbittorrent",
+      "name": "qBittorrent",
+      "port": 8133,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/qbittorrent/qBittorrent",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/qbittorrent:5.2.4"
+      ]
+    },
+    {
+      "id": "qdirstat",
+      "name": "qDirStat",
+      "port": 7125,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/linuxserver/docker-qdirstat",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/qdirstat:1.8.1-ls82"
+      ]
+    },
+    {
+      "id": "radarr",
+      "name": "Radarr",
+      "port": 8088,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Radarr/Radarr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/linuxserver/radarr:6.4.4"
+      ]
+    },
+    {
+      "id": "rallly",
+      "name": "Rallly",
+      "port": 8208,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/lukevella/rallly",
+      "website": "https://rallly.co",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lukevella/rallly:4.15.5",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "readarr",
+      "name": "Readarr",
+      "port": 8112,
+      "categories": [
+        "books",
+        "media"
+      ],
+      "source": "https://github.com/Readarr/Readarr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/readarr:0.4.19"
+      ]
+    },
+    {
+      "id": "recyclarr",
+      "name": "Recyclarr",
+      "port": 1111,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/recyclarr/recyclarr",
+      "website": "https://recyclarr.dev",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/recyclarr/recyclarr:8.8.0"
+      ]
+    },
+    {
+      "id": "resilio-sync",
+      "name": "Resilio",
+      "port": 8113,
+      "categories": [
+        "data",
+        "utilities"
+      ],
+      "source": "https://github.com/bt-sync",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/resilio-sync:3.1.2"
+      ]
+    },
+    {
+      "id": "romm",
+      "name": "RomM",
+      "port": 8178,
+      "categories": [
+        "gaming"
+      ],
+      "source": "https://github.com/rommapp/romm",
+      "website": "https://romm.app",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/rommapp/romm:5.4.0",
+        "lscr.io/linuxserver/mariadb:11.4.5"
+      ]
+    },
+    {
+      "id": "rss",
+      "name": "RSS",
+      "port": 8141,
+      "categories": [
+        "utilities",
+        "media"
+      ],
+      "source": "https://github.com/ssddanbrown/rss",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "codeberg.org/danb/rss:v2.2.3"
+      ]
+    },
+    {
+      "id": "rsshub",
+      "name": "RSSHub",
+      "port": 8223,
+      "categories": [
+        "utilities",
+        "media"
+      ],
+      "source": "https://github.com/DIYgod/RSSHub",
+      "website": "https://docs.rsshub.app/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "diygod/rsshub:2026-04-17",
+        "browserless/chrome",
+        "redis:alpine"
+      ]
+    },
+    {
+      "id": "sabnzbd",
+      "name": "SABnzbd",
+      "port": 8168,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/sabnzbd/sabnzbd",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/sabnzbd:5.1.3"
+      ]
+    },
+    {
+      "id": "scrypted",
+      "name": "Scrypted",
+      "port": 10443,
+      "categories": [
+        "security"
+      ],
+      "source": "https://github.com/koush/scrypted",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "koush/scrypted:20"
+      ]
+    },
+    {
+      "id": "searxng",
+      "name": "SearXNG",
+      "port": 8127,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/searxng/searxng",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "searxng/searxng:latest"
+      ]
+    },
+    {
+      "id": "seedsync",
+      "name": "SeedSync",
+      "port": 8800,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/ipsingh06/seedsync",
+      "website": "https://ipsingh06.github.io/seedsync/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ipsingh06/seedsync:0.8.6"
+      ]
+    },
+    {
+      "id": "seerr",
+      "name": "Seerr",
+      "port": 5055,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/seerr-team/seerr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/seerr-team/seerr:v3.5.0"
+      ]
+    },
+    {
+      "id": "semaphore",
+      "name": "Semaphore",
+      "port": 8526,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/semaphoreui/semaphore",
+      "website": "https://semaphoreui.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "semaphoreui/semaphore:v2.19.17",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "send",
+      "name": "Send",
+      "port": 8126,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://gitlab.com/timvisee/send",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "registry.gitlab.com/timvisee/send:latest",
+        "redis:alpine"
+      ]
+    },
+    {
+      "id": "serge",
+      "name": "Serge",
+      "port": 8008,
+      "categories": [
+        "ai"
+      ],
+      "source": "https://github.com/serge-chat/serge",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/serge-chat/serge:0.9.0"
+      ]
+    },
+    {
+      "id": "sftpgo",
+      "name": "SFTPGo",
+      "port": 8002,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/drakkan/sftpgo",
+      "website": "https://sftpgo.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "drakkan/sftpgo:v2.7.6",
+        "postgres:17.2-alpine"
+      ]
+    },
+    {
+      "id": "shlink",
+      "name": "Shlink",
+      "port": 8207,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/shlinkio/shlink",
+      "website": "https://shlink.io/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/shlinkio/shlink:5.1.7",
+        "postgres:17.2-alpine"
+      ]
+    },
+    {
+      "id": "silverbullet",
+      "name": "Silverbullet",
+      "port": 8214,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/silverbulletmd/silverbullet",
+      "website": "https://silverbullet.md",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "zefhemel/silverbullet:2.12.1"
+      ]
+    },
+    {
+      "id": "simplex-smp",
+      "name": "SimpleX SMP",
+      "port": 5223,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/simplex-chat/simplexmq",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "simplexchat/smp-server:v7.0.1"
+      ]
+    },
+    {
+      "id": "siyuan",
+      "name": "SiYuan",
+      "port": 6806,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/siyuan-note/siyuan",
+      "website": "https://b3log.org/siyuan/en/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "b3log/siyuan:v3.8.8"
+      ]
+    },
+    {
+      "id": "slskd",
+      "name": "SLSKD",
+      "port": 5030,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/slskd/slskd",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "slskd/slskd:0.26.1"
+      ]
+    },
+    {
+      "id": "smallweb",
+      "name": "Smallweb",
+      "port": 7777,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/pomdtr/smallweb",
+      "website": "https://smallweb.run",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/pomdtr/smallweb:0.28.4"
+      ]
+    },
+    {
+      "id": "sonarr",
+      "name": "Sonarr",
+      "port": 8098,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Sonarr/Sonarr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/sonarr:4.0.20"
+      ]
+    },
+    {
+      "id": "spacedrive",
+      "name": "Spacedrive",
+      "port": 9300,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/spacedriveapp/spacedrive",
+      "website": "https://spacedrive.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/spacedriveapp/spacedrive/server:0.4.2"
+      ]
+    },
+    {
+      "id": "speedtest-tracker",
+      "name": "Speedtest Tracker",
+      "port": 8211,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/alexjustesen/speedtest-tracker",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/speedtest-tracker:1.15.0",
+        "postgres:15"
+      ]
+    },
+    {
+      "id": "spoolman",
+      "name": "Spoolman",
+      "port": 7912,
+      "categories": [
+        "utilities",
+        "automation"
+      ],
+      "source": "https://github.com/Donkie/Spoolman",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/donkie/spoolman:0.27.0"
+      ]
+    },
+    {
+      "id": "sshwifty",
+      "name": "Sshwifty",
+      "port": 8274,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/nirui/sshwifty",
+      "website": "https://sshwifty-demo.nirui.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "niruix/sshwifty:0.4.12"
+      ]
+    },
+    {
+      "id": "stalwart-mail",
+      "name": "Stalwart Mail",
+      "port": 8677,
+      "categories": [
+        "media",
+        "network",
+        "utilities"
+      ],
+      "source": "https://github.com/stalwartlabs",
+      "website": "https://stalw.art",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/stalwartlabs/stalwart:v0.16.27"
+      ]
+    },
+    {
+      "id": "stirling-pdf",
+      "name": "Stirling-PDF",
+      "port": 8234,
+      "categories": [
+        "data",
+        "utilities"
+      ],
+      "source": "https://github.com/Frooodle/Stirling-PDF/",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "stirlingtools/stirling-pdf:3.2.0"
+      ]
+    },
+    {
+      "id": "suwayomi",
+      "name": "Suwayomi",
+      "port": 4567,
+      "categories": [
+        "books",
+        "media"
+      ],
+      "source": "https://github.com/Suwayomi/docker-tachidesk",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/suwayomi/tachidesk:v2.4.2422"
+      ]
+    },
+    {
+      "id": "syncthing",
+      "name": "Syncthing",
+      "port": 8090,
+      "categories": [
+        "data",
+        "utilities"
+      ],
+      "source": "https://github.com/syncthing",
+      "website": "https://syncthing.net",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "syncthing/syncthing:2.1.6"
+      ]
+    },
+    {
+      "id": "tailscale",
+      "name": "Tailscale",
+      "port": 8093,
+      "categories": [
+        "network",
+        "security"
+      ],
+      "source": "https://github.com/tailscale/tailscale",
+      "website": "https://tailscale.com/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "tailscale/tailscale:v1.104.1"
+      ]
+    },
+    {
+      "id": "tandoor",
+      "name": "Tandoor",
+      "port": 8341,
+      "categories": [
+        "data"
+      ],
+      "source": "https://github.com/TandoorRecipes/recipes",
+      "website": "https://tandoor.dev/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/tandoorrecipes/recipes:2.6.15",
+        "postgres:15-alpine"
+      ]
+    },
+    {
+      "id": "tasks-md",
+      "name": "Tasks.md",
+      "port": 8157,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/BaldissaraMatheus/Tasks.md",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "baldissaramatheus/tasks.md:3.3.0"
+      ]
+    },
+    {
+      "id": "tautulli",
+      "name": "Tautulli",
+      "port": 8181,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Tautulli/Tautulli",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/tautulli:2.18.2"
+      ]
+    },
+    {
+      "id": "tinyauth",
+      "name": "Tinyauth",
+      "port": 8357,
+      "categories": [
+        "security"
+      ],
+      "source": "https://github.com/tinyauthapp/tinyauth",
+      "website": "https://tinyauth.app",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/tinyauthapp/tinyauth:v5.2.0"
+      ]
+    },
+    {
+      "id": "tooljet",
+      "name": "Tooljet",
+      "port": 9876,
+      "categories": [
+        "automation"
+      ],
+      "source": "https://github.com/ToolJet/ToolJet",
+      "website": "https://www.tooljet.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "tooljet/tooljet-client-ce:v2.4.2",
+        "tooljet/tooljet-server-ce:v2.24.0",
+        "postgres:11"
+      ]
+    },
+    {
+      "id": "traefik-certs-dumper",
+      "name": "Traefik Certs Dumper",
+      "port": 9999,
+      "categories": [
+        "utilities",
+        "security"
+      ],
+      "source": "https://github.com/kereis/traefik-certs-dumper",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "humenius/traefik-certs-dumper:1.6.1-alpine"
+      ]
+    },
+    {
+      "id": "transmission",
+      "name": "Transmission",
+      "port": 8089,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/transmission/transmission",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "lscr.io/linuxserver/transmission:4.1.3"
+      ]
+    },
+    {
+      "id": "transmission-vpn",
+      "name": "Transmission (VPN)",
+      "port": 9091,
+      "categories": [
+        "utilities",
+        "security"
+      ],
+      "source": "https://github.com/haugene/docker-transmission-openvpn",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "haugene/transmission-openvpn:5.5.2"
+      ]
+    },
+    {
+      "id": "trilium",
+      "name": "Trilium",
+      "port": 8267,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/TriliumNext/Trilium",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/triliumnext/trilium:v0.106.0"
+      ]
+    },
+    {
+      "id": "tubearchivist",
+      "name": "Tube Archivist",
+      "port": 8120,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/tubearchivist/tubearchivist",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "bbilly1/tubearchivist:v0.5.12",
+        "redislabs/rejson:latest",
+        "elasticsearch:8.18.0"
+      ]
+    },
+    {
+      "id": "umami-analytics",
+      "name": "Umami Analytics",
+      "port": 8153,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/umami-software/umami",
+      "website": "https://umami.is",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/umami-software/umami:3.4.0",
+        "postgres:15-alpine"
+      ]
+    },
+    {
+      "id": "unmanic",
+      "name": "Unmanic",
+      "port": 8256,
+      "categories": [
+        "utilities",
+        "data",
+        "media"
+      ],
+      "source": "https://github.com/Unmanic/unmanic",
+      "website": "https://docs.unmanic.app/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "josh5/unmanic:staging"
+      ]
+    },
+    {
+      "id": "uptime-kuma",
+      "name": "Uptime Kuma",
+      "port": 8125,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/louislam/uptime-kuma",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "louislam/uptime-kuma:2"
+      ]
+    },
+    {
+      "id": "vaultwarden",
+      "name": "VaultWarden",
+      "port": 8107,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/dani-garcia/vaultwarden",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "vaultwarden/server:1.37.4"
+      ]
+    },
+    {
+      "id": "viewtube",
+      "name": "ViewTube",
+      "port": 8180,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/ViewTube/viewtube",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "mauriceo/viewtube:0.17.0",
+        "mongo:5",
+        "redis:7"
+      ]
+    },
+    {
+      "id": "vikunja",
+      "name": "Vikunja",
+      "port": 8135,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://kolaente.dev/vikunja",
+      "website": "https://vikunja.io",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "vikunja/vikunja:2.7.0",
+        "postgres:14"
+      ]
+    },
+    {
+      "id": "wallos",
+      "name": "Wallos",
+      "port": 8222,
+      "categories": [
+        "finance"
+      ],
+      "source": "https://github.com/ellite/Wallos",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "bellamy/wallos:5.10.0"
+      ]
+    },
+    {
+      "id": "watchyourlan",
+      "name": "WatchYourLAN",
+      "port": 8840,
+      "categories": [
+        "network",
+        "utilities"
+      ],
+      "source": "https://github.com/aceberg/WatchYourLAN",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "aceberg/watchyourlan:2.1.4"
+      ]
+    },
+    {
+      "id": "wekan",
+      "name": "Wekan",
+      "port": 8678,
+      "categories": [
+        "development"
+      ],
+      "source": "https://github.com/wekan/wekan",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/wekan/wekan:v12.52",
+        "mongo:6"
+      ]
+    },
+    {
+      "id": "wg-easy-1",
+      "name": "Wireguard",
+      "port": 8882,
+      "categories": [
+        "network"
+      ],
+      "source": "https://github.com/wg-easy/wg-easy",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/wg-easy/wg-easy:15.4.0"
+      ]
+    },
+    {
+      "id": "whisparr",
+      "name": "Whisparr",
+      "port": 6969,
+      "categories": [
+        "media",
+        "utilities"
+      ],
+      "source": "https://github.com/Whisparr/Whisparr",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/hotio/whisparr:nightly-2.0.0.548"
+      ]
+    },
+    {
+      "id": "whoami",
+      "name": "Whoami",
+      "port": 8382,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/traefik/whoami",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "traefik/whoami:v1.12.0"
+      ]
+    },
+    {
+      "id": "whoogle",
+      "name": "Whoogle Search",
+      "port": 8255,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/benbusby/whoogle-search",
+      "website": "",
+      "available": true,
+      "deprecated": true,
+      "images": [
+        "benbusby/whoogle-search:1.2.4"
+      ]
+    },
+    {
+      "id": "wikijs",
+      "name": "WikiJS",
+      "port": 8148,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/requarks/wiki",
+      "website": "https://js.wiki/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/requarks/wiki:2.5.316",
+        "postgres:11-alpine"
+      ]
+    },
+    {
+      "id": "windows",
+      "name": "Windows",
+      "port": 8006,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/dockur/windows/",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "dockurr/windows:6.06"
+      ]
+    },
+    {
+      "id": "wizarr",
+      "name": "Wizarr",
+      "port": 5690,
+      "categories": [
+        "utilities"
+      ],
+      "source": "https://github.com/Wizarrrr/wizarr",
+      "website": "https://docs.wizarr.dev/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/wizarrrr/wizarr:v2026.10.1"
+      ]
+    },
+    {
+      "id": "wordpress",
+      "name": "WordPress",
+      "port": 8213,
+      "categories": [
+        "social"
+      ],
+      "source": "https://github.com/WordPress/WordPress",
+      "website": "https://wordpress.org",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "wordpress:7.1.3",
+        "mariadb:11.1.3"
+      ]
+    },
+    {
+      "id": "write-freely",
+      "name": "Write-Freely",
+      "port": 8574,
+      "categories": [
+        "social"
+      ],
+      "source": "https://hub.docker.com/r/nephatrine/write-freely",
+      "website": "https://writefreely.org/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "nephatrine/write-freely:0.17"
+      ]
+    },
+    {
+      "id": "your-spotify",
+      "name": "Your Spotify",
+      "port": 8103,
+      "categories": [
+        "music",
+        "utilities"
+      ],
+      "source": "https://github.com/Yooooomi/your_spotify",
+      "website": "",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "yooooomi/your_spotify_client:1.20.0",
+        "yooooomi/your_spotify_server",
+        "mongo:4.4.30"
+      ]
+    },
+    {
+      "id": "zerotier",
+      "name": "ZeroTier",
+      "port": 9993,
+      "categories": [
+        "network",
+        "security"
+      ],
+      "source": "https://github.com/zerotier/ZeroTierOne",
+      "website": "https://www.zerotier.com",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "zerotier/zerotier:1.14.2"
+      ]
+    },
+    {
+      "id": "zigbee2mqtt",
+      "name": "Zigbee2MQTT",
+      "port": 8290,
+      "categories": [
+        "utilities",
+        "automation"
+      ],
+      "source": "https://github.com/Koenkk/zigbee2mqtt",
+      "website": "https://www.zigbee2mqtt.io/",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "koenkk/zigbee2mqtt:2.14.2"
+      ]
+    },
+    {
+      "id": "zipline-1",
+      "name": "Zipline",
+      "port": 9318,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/diced/zipline",
+      "website": "https://zipline.diced.sh",
+      "available": true,
+      "deprecated": false,
+      "images": [
+        "ghcr.io/diced/zipline:4.8.0",
+        "postgres:18"
+      ]
+    }
+  ],
+  "reserved_runtipi_ports": [
+    {
+      "port": 1111,
+      "runtipi_id": "recyclarr"
+    },
+    {
+      "port": 1337,
+      "runtipi_id": "olivetin"
+    },
+    {
+      "port": 1865,
+      "runtipi_id": "cheshire-cat-ai"
+    },
+    {
+      "port": 1999,
+      "runtipi_id": "email-oauth2-proxy"
+    },
+    {
+      "port": 2200,
+      "runtipi_id": "mempool"
+    },
+    {
+      "port": 2525,
+      "runtipi_id": "postfix-relay"
+    },
+    {
+      "port": 2560,
+      "runtipi_id": "komga"
+    },
+    {
+      "port": 3006,
+      "runtipi_id": "electrs"
+    },
+    {
+      "port": 3010,
+      "runtipi_id": "affine"
+    },
+    {
+      "port": 3210,
+      "runtipi_id": "lobe-chat"
+    },
+    {
+      "port": 3291,
+      "runtipi_id": "monica"
+    },
+    {
+      "port": 3333,
+      "runtipi_id": "ghostfolio"
+    },
+    {
+      "port": 3335,
+      "runtipi_id": "bitmagnet"
+    },
+    {
+      "port": 4533,
+      "runtipi_id": "navidrome"
+    },
+    {
+      "port": 4567,
+      "runtipi_id": "suwayomi"
+    },
+    {
+      "port": 5000,
+      "runtipi_id": "grampsweb"
+    },
+    {
+      "port": 5030,
+      "runtipi_id": "slskd"
+    },
+    {
+      "port": 5055,
+      "runtipi_id": "seerr"
+    },
+    {
+      "port": 5223,
+      "runtipi_id": "simplex-smp"
+    },
+    {
+      "port": 5230,
+      "runtipi_id": "memos"
+    },
+    {
+      "port": 5678,
+      "runtipi_id": "n8n-2"
+    },
+    {
+      "port": 5690,
+      "runtipi_id": "wizarr"
+    },
+    {
+      "port": 5984,
+      "runtipi_id": "obsidian-livesync"
+    },
+    {
+      "port": 6052,
+      "runtipi_id": "esphome"
+    },
+    {
+      "port": 6167,
+      "runtipi_id": "matrix-conduit"
+    },
+    {
+      "port": 6556,
+      "runtipi_id": "baikal"
+    },
+    {
+      "port": 6595,
+      "runtipi_id": "deemix"
+    },
+    {
+      "port": 6610,
+      "runtipi_id": "onedev"
+    },
+    {
+      "port": 6697,
+      "runtipi_id": "inspircd"
+    },
+    {
+      "port": 6767,
+      "runtipi_id": "bazarr"
+    },
+    {
+      "port": 6806,
+      "runtipi_id": "siyuan"
+    },
+    {
+      "port": 6969,
+      "runtipi_id": "whisparr"
+    },
+    {
+      "port": 7125,
+      "runtipi_id": "qdirstat"
+    },
+    {
+      "port": 7745,
+      "runtipi_id": "homebox"
+    },
+    {
+      "port": 7777,
+      "runtipi_id": "smallweb"
+    },
+    {
+      "port": 7912,
+      "runtipi_id": "spoolman"
+    },
+    {
+      "port": 8000,
+      "runtipi_id": "hello-world"
+    },
+    {
+      "port": 8001,
+      "runtipi_id": "minio"
+    },
+    {
+      "port": 8002,
+      "runtipi_id": "sftpgo"
+    },
+    {
+      "port": 8003,
+      "runtipi_id": "kimai"
+    },
+    {
+      "port": 8006,
+      "runtipi_id": "windows"
+    },
+    {
+      "port": 8008,
+      "runtipi_id": "serge"
+    },
+    {
+      "port": 8009,
+      "runtipi_id": "flowise"
+    },
+    {
+      "port": 8010,
+      "runtipi_id": "kanboard"
+    },
+    {
+      "port": 8011,
+      "runtipi_id": "actual-budget"
+    },
+    {
+      "port": 8012,
+      "runtipi_id": "paperless-ngx"
+    },
+    {
+      "port": 8013,
+      "runtipi_id": "dozzle"
+    },
+    {
+      "port": 8014,
+      "runtipi_id": "anse"
+    },
+    {
+      "port": 8015,
+      "runtipi_id": "archivebox"
+    },
+    {
+      "port": 8016,
+      "runtipi_id": "planka"
+    },
+    {
+      "port": 8017,
+      "runtipi_id": "odoo"
+    },
+    {
+      "port": 8026,
+      "runtipi_id": "duckdns"
+    },
+    {
+      "port": 8030,
+      "runtipi_id": "maintainerr"
+    },
+    {
+      "port": 8040,
+      "runtipi_id": "booksonic"
+    },
+    {
+      "port": 8050,
+      "runtipi_id": "koillection"
+    },
+    {
+      "port": 8053,
+      "runtipi_id": "bewcloud"
+    },
+    {
+      "port": 8054,
+      "runtipi_id": "lubelogger"
+    },
+    {
+      "port": 8081,
+      "runtipi_id": "pihole"
+    },
+    {
+      "port": 8083,
+      "runtipi_id": "nextcloud"
+    },
+    {
+      "port": 8084,
+      "runtipi_id": "librespeed"
+    },
+    {
+      "port": 8086,
+      "runtipi_id": "freshrss"
+    },
+    {
+      "port": 8087,
+      "runtipi_id": "mongo-express"
+    },
+    {
+      "port": 8088,
+      "runtipi_id": "radarr"
+    },
+    {
+      "port": 8089,
+      "runtipi_id": "transmission"
+    },
+    {
+      "port": 8090,
+      "runtipi_id": "syncthing"
+    },
+    {
+      "port": 8091,
+      "runtipi_id": "jellyfin"
+    },
+    {
+      "port": 8092,
+      "runtipi_id": "halo"
+    },
+    {
+      "port": 8093,
+      "runtipi_id": "tailscale"
+    },
+    {
+      "port": 8095,
+      "runtipi_id": "invidious"
+    },
+    {
+      "port": 8096,
+      "runtipi_id": "filebrowser"
+    },
+    {
+      "port": 8097,
+      "runtipi_id": "jackett"
+    },
+    {
+      "port": 8098,
+      "runtipi_id": "sonarr"
+    },
+    {
+      "port": 8099,
+      "runtipi_id": "joplin"
+    },
+    {
+      "port": 8100,
+      "runtipi_id": "calibre-web"
+    },
+    {
+      "port": 8101,
+      "runtipi_id": "codex-docs"
+    },
+    {
+      "port": 8102,
+      "runtipi_id": "homarr-1"
+    },
+    {
+      "port": 8103,
+      "runtipi_id": "your-spotify"
+    },
+    {
+      "port": 8104,
+      "runtipi_id": "adguard"
+    },
+    {
+      "port": 8106,
+      "runtipi_id": "nitter"
+    },
+    {
+      "port": 8107,
+      "runtipi_id": "vaultwarden"
+    },
+    {
+      "port": 8108,
+      "runtipi_id": "gitea"
+    },
+    {
+      "port": 8109,
+      "runtipi_id": "prowlarr"
+    },
+    {
+      "port": 8110,
+      "runtipi_id": "photoprism"
+    },
+    {
+      "port": 8111,
+      "runtipi_id": "nodered"
+    },
+    {
+      "port": 8112,
+      "runtipi_id": "readarr"
+    },
+    {
+      "port": 8113,
+      "runtipi_id": "resilio-sync"
+    },
+    {
+      "port": 8115,
+      "runtipi_id": "firefly-iii"
+    },
+    {
+      "port": 8116,
+      "runtipi_id": "overseerr"
+    },
+    {
+      "port": 8117,
+      "runtipi_id": "ghost"
+    },
+    {
+      "port": 8119,
+      "runtipi_id": "bookstack"
+    },
+    {
+      "port": 8120,
+      "runtipi_id": "tubearchivist"
+    },
+    {
+      "port": 8121,
+      "runtipi_id": "libretranslate"
+    },
+    {
+      "port": 8122,
+      "runtipi_id": "privatebin"
+    },
+    {
+      "port": 8125,
+      "runtipi_id": "uptime-kuma"
+    },
+    {
+      "port": 8126,
+      "runtipi_id": "send"
+    },
+    {
+      "port": 8127,
+      "runtipi_id": "searxng"
+    },
+    {
+      "port": 8128,
+      "runtipi_id": "immich"
+    },
+    {
+      "port": 8129,
+      "runtipi_id": "gotify"
+    },
+    {
+      "port": 8130,
+      "runtipi_id": "haven"
+    },
+    {
+      "port": 8131,
+      "runtipi_id": "lidarr"
+    },
+    {
+      "port": 8132,
+      "runtipi_id": "librephotos"
+    },
+    {
+      "port": 8133,
+      "runtipi_id": "qbittorrent"
+    },
+    {
+      "port": 8134,
+      "runtipi_id": "gandi-livedns"
+    },
+    {
+      "port": 8135,
+      "runtipi_id": "vikunja"
+    },
+    {
+      "port": 8136,
+      "runtipi_id": "grocy"
+    },
+    {
+      "port": 8137,
+      "runtipi_id": "flatnotes"
+    },
+    {
+      "port": 8138,
+      "runtipi_id": "code-server"
+    },
+    {
+      "port": 8140,
+      "runtipi_id": "fireshare"
+    },
+    {
+      "port": 8141,
+      "runtipi_id": "rss"
+    },
+    {
+      "port": 8142,
+      "runtipi_id": "hedgedoc"
+    },
+    {
+      "port": 8143,
+      "runtipi_id": "mind"
+    },
+    {
+      "port": 8144,
+      "runtipi_id": "deluge"
+    },
+    {
+      "port": 8145,
+      "runtipi_id": "barrage"
+    },
+    {
+      "port": 8146,
+      "runtipi_id": "nocodb"
+    },
+    {
+      "port": 8148,
+      "runtipi_id": "wikijs"
+    },
+    {
+      "port": 8149,
+      "runtipi_id": "dokuwiki"
+    },
+    {
+      "port": 8150,
+      "runtipi_id": "firefly-iii-data-importer"
+    },
+    {
+      "port": 8151,
+      "runtipi_id": "owncloud"
+    },
+    {
+      "port": 8152,
+      "runtipi_id": "openbooks"
+    },
+    {
+      "port": 8153,
+      "runtipi_id": "umami-analytics"
+    },
+    {
+      "port": 8154,
+      "runtipi_id": "linkstack"
+    },
+    {
+      "port": 8155,
+      "runtipi_id": "movary"
+    },
+    {
+      "port": 8156,
+      "runtipi_id": "dailytxt"
+    },
+    {
+      "port": 8157,
+      "runtipi_id": "tasks-md"
+    },
+    {
+      "port": 8158,
+      "runtipi_id": "autobrr"
+    },
+    {
+      "port": 8159,
+      "runtipi_id": "duplicati"
+    },
+    {
+      "port": 8160,
+      "runtipi_id": "grafana"
+    },
+    {
+      "port": 8161,
+      "runtipi_id": "grav"
+    },
+    {
+      "port": 8162,
+      "runtipi_id": "mstream"
+    },
+    {
+      "port": 8163,
+      "runtipi_id": "jellyseerr"
+    },
+    {
+      "port": 8164,
+      "runtipi_id": "emulatorjs"
+    },
+    {
+      "port": 8166,
+      "runtipi_id": "ntfy"
+    },
+    {
+      "port": 8167,
+      "runtipi_id": "mixpost"
+    },
+    {
+      "port": 8168,
+      "runtipi_id": "sabnzbd"
+    },
+    {
+      "port": 8169,
+      "runtipi_id": "kiwix-serve"
+    },
+    {
+      "port": 8171,
+      "runtipi_id": "it-tools"
+    },
+    {
+      "port": 8172,
+      "runtipi_id": "excalidraw"
+    },
+    {
+      "port": 8173,
+      "runtipi_id": "dashdot"
+    },
+    {
+      "port": 8174,
+      "runtipi_id": "mylar3"
+    },
+    {
+      "port": 8175,
+      "runtipi_id": "kavita"
+    },
+    {
+      "port": 8177,
+      "runtipi_id": "podfetch"
+    },
+    {
+      "port": 8178,
+      "runtipi_id": "romm"
+    },
+    {
+      "port": 8179,
+      "runtipi_id": "chatpad"
+    },
+    {
+      "port": 8180,
+      "runtipi_id": "viewtube"
+    },
+    {
+      "port": 8181,
+      "runtipi_id": "tautulli"
+    },
+    {
+      "port": 8182,
+      "runtipi_id": "pairdrop"
+    },
+    {
+      "port": 8185,
+      "runtipi_id": "hammond"
+    },
+    {
+      "port": 8186,
+      "runtipi_id": "lidarr-deemix"
+    },
+    {
+      "port": 8188,
+      "runtipi_id": "gotosocial"
+    },
+    {
+      "port": 8189,
+      "runtipi_id": "filestash"
+    },
+    {
+      "port": 8191,
+      "runtipi_id": "mixpost-pro"
+    },
+    {
+      "port": 8193,
+      "runtipi_id": "plausible-ce"
+    },
+    {
+      "port": 8194,
+      "runtipi_id": "kapowarr"
+    },
+    {
+      "port": 8195,
+      "runtipi_id": "forgejo"
+    },
+    {
+      "port": 8198,
+      "runtipi_id": "owncast"
+    },
+    {
+      "port": 8199,
+      "runtipi_id": "linkwarden"
+    },
+    {
+      "port": 8200,
+      "runtipi_id": "chatgpt-ui"
+    },
+    {
+      "port": 8201,
+      "runtipi_id": "databag"
+    },
+    {
+      "port": 8202,
+      "runtipi_id": "jellyfin-vue"
+    },
+    {
+      "port": 8203,
+      "runtipi_id": "logto"
+    },
+    {
+      "port": 8205,
+      "runtipi_id": "dashy"
+    },
+    {
+      "port": 8207,
+      "runtipi_id": "shlink"
+    },
+    {
+      "port": 8208,
+      "runtipi_id": "rallly"
+    },
+    {
+      "port": 8209,
+      "runtipi_id": "homeassistant-1"
+    },
+    {
+      "port": 8210,
+      "runtipi_id": "mastodon"
+    },
+    {
+      "port": 8211,
+      "runtipi_id": "speedtest-tracker"
+    },
+    {
+      "port": 8213,
+      "runtipi_id": "wordpress"
+    },
+    {
+      "port": 8214,
+      "runtipi_id": "silverbullet"
+    },
+    {
+      "port": 8216,
+      "runtipi_id": "peppermint"
+    },
+    {
+      "port": 8217,
+      "runtipi_id": "mqttx"
+    },
+    {
+      "port": 8220,
+      "runtipi_id": "mealie-1"
+    },
+    {
+      "port": 8221,
+      "runtipi_id": "moodist"
+    },
+    {
+      "port": 8222,
+      "runtipi_id": "wallos"
+    },
+    {
+      "port": 8223,
+      "runtipi_id": "rsshub"
+    },
+    {
+      "port": 8225,
+      "runtipi_id": "ghost-dev"
+    },
+    {
+      "port": 8234,
+      "runtipi_id": "stirling-pdf"
+    },
+    {
+      "port": 8235,
+      "runtipi_id": "2fauth"
+    },
+    {
+      "port": 8250,
+      "runtipi_id": "metube"
+    },
+    {
+      "port": 8255,
+      "runtipi_id": "whoogle"
+    },
+    {
+      "port": 8256,
+      "runtipi_id": "unmanic"
+    },
+    {
+      "port": 8257,
+      "runtipi_id": "changedetection"
+    },
+    {
+      "port": 8267,
+      "runtipi_id": "trilium"
+    },
+    {
+      "port": 8268,
+      "runtipi_id": "budibase"
+    },
+    {
+      "port": 8270,
+      "runtipi_id": "gladys"
+    },
+    {
+      "port": 8274,
+      "runtipi_id": "sshwifty"
+    },
+    {
+      "port": 8288,
+      "runtipi_id": "eclipse-mosquitto"
+    },
+    {
+      "port": 8290,
+      "runtipi_id": "zigbee2mqtt"
+    },
+    {
+      "port": 8294,
+      "runtipi_id": "calcom"
+    },
+    {
+      "port": 8325,
+      "runtipi_id": "emby"
+    },
+    {
+      "port": 8333,
+      "runtipi_id": "bitcoind"
+    },
+    {
+      "port": 8341,
+      "runtipi_id": "tandoor"
+    },
+    {
+      "port": 8356,
+      "runtipi_id": "ddns-updater"
+    },
+    {
+      "port": 8357,
+      "runtipi_id": "tinyauth"
+    },
+    {
+      "port": 8382,
+      "runtipi_id": "whoami"
+    },
+    {
+      "port": 8392,
+      "runtipi_id": "atuin"
+    },
+    {
+      "port": 8404,
+      "runtipi_id": "outline"
+    },
+    {
+      "port": 8420,
+      "runtipi_id": "glances"
+    },
+    {
+      "port": 8435,
+      "runtipi_id": "nextgba"
+    },
+    {
+      "port": 8436,
+      "runtipi_id": "adguardhome-sync"
+    },
+    {
+      "port": 8456,
+      "runtipi_id": "crafty"
+    },
+    {
+      "port": 8465,
+      "runtipi_id": "cup"
+    },
+    {
+      "port": 8484,
+      "runtipi_id": "grist"
+    },
+    {
+      "port": 8526,
+      "runtipi_id": "semaphore"
+    },
+    {
+      "port": 8536,
+      "runtipi_id": "open-webui"
+    },
+    {
+      "port": 8546,
+      "runtipi_id": "ctfd"
+    },
+    {
+      "port": 8562,
+      "runtipi_id": "homer"
+    },
+    {
+      "port": 8564,
+      "runtipi_id": "nextcloud-mini"
+    },
+    {
+      "port": 8567,
+      "runtipi_id": "notemark"
+    },
+    {
+      "port": 8568,
+      "runtipi_id": "glance"
+    },
+    {
+      "port": 8574,
+      "runtipi_id": "write-freely"
+    },
+    {
+      "port": 8581,
+      "runtipi_id": "homebridge"
+    },
+    {
+      "port": 8605,
+      "runtipi_id": "activepieces"
+    },
+    {
+      "port": 8645,
+      "runtipi_id": "penpot"
+    },
+    {
+      "port": 8654,
+      "runtipi_id": "pingvin-share"
+    },
+    {
+      "port": 8666,
+      "runtipi_id": "flaresolverr"
+    },
+    {
+      "port": 8675,
+      "runtipi_id": "netbootxyz"
+    },
+    {
+      "port": 8677,
+      "runtipi_id": "stalwart-mail"
+    },
+    {
+      "port": 8678,
+      "runtipi_id": "wekan"
+    },
+    {
+      "port": 8679,
+      "runtipi_id": "crowdsec"
+    },
+    {
+      "port": 8680,
+      "runtipi_id": "metabase"
+    },
+    {
+      "port": 8685,
+      "runtipi_id": "hoarder"
+    },
+    {
+      "port": 8734,
+      "runtipi_id": "drawio"
+    },
+    {
+      "port": 8744,
+      "runtipi_id": "kasm-workspaces"
+    },
+    {
+      "port": 8754,
+      "runtipi_id": "nginx"
+    },
+    {
+      "port": 8756,
+      "runtipi_id": "homepage"
+    },
+    {
+      "port": 8768,
+      "runtipi_id": "dockge"
+    },
+    {
+      "port": 8783,
+      "runtipi_id": "heimdall"
+    },
+    {
+      "port": 8800,
+      "runtipi_id": "seedsync"
+    },
+    {
+      "port": 8825,
+      "runtipi_id": "octobot"
+    },
+    {
+      "port": 8840,
+      "runtipi_id": "watchyourlan"
+    },
+    {
+      "port": 8854,
+      "runtipi_id": "guacamole"
+    },
+    {
+      "port": 8880,
+      "runtipi_id": "planning-poker"
+    },
+    {
+      "port": 8881,
+      "runtipi_id": "invoice-ninja"
+    },
+    {
+      "port": 8882,
+      "runtipi_id": "wg-easy-1"
+    },
+    {
+      "port": 8934,
+      "runtipi_id": "flightlog"
+    },
+    {
+      "port": 8945,
+      "runtipi_id": "pinchflat"
+    },
+    {
+      "port": 8999,
+      "runtipi_id": "beszel"
+    },
+    {
+      "port": 9000,
+      "runtipi_id": "authentik-1"
+    },
+    {
+      "port": 9080,
+      "runtipi_id": "cyberchef"
+    },
+    {
+      "port": 9091,
+      "runtipi_id": "transmission-vpn"
+    },
+    {
+      "port": 9300,
+      "runtipi_id": "spacedrive"
+    },
+    {
+      "port": 9318,
+      "runtipi_id": "zipline-1"
+    },
+    {
+      "port": 9443,
+      "runtipi_id": "portainer"
+    },
+    {
+      "port": 9713,
+      "runtipi_id": "docmost"
+    },
+    {
+      "port": 9876,
+      "runtipi_id": "tooljet"
+    },
+    {
+      "port": 9993,
+      "runtipi_id": "zerotier"
+    },
+    {
+      "port": 9996,
+      "runtipi_id": "kometa"
+    },
+    {
+      "port": 9997,
+      "runtipi_id": "matter-server"
+    },
+    {
+      "port": 9998,
+      "runtipi_id": "mdns-repeater"
+    },
+    {
+      "port": 9999,
+      "runtipi_id": "traefik-certs-dumper"
+    },
+    {
+      "port": 10443,
+      "runtipi_id": "scrypted"
+    },
+    {
+      "port": 11434,
+      "runtipi_id": "ollama-amd"
+    },
+    {
+      "port": 11435,
+      "runtipi_id": "ollama-nvidia"
+    },
+    {
+      "port": 11436,
+      "runtipi_id": "ollama-cpu"
+    },
+    {
+      "port": 13378,
+      "runtipi_id": "audiobookshelf"
+    },
+    {
+      "port": 14333,
+      "runtipi_id": "cloudflared"
+    },
+    {
+      "port": 16662,
+      "runtipi_id": "lodestone-core"
+    },
+    {
+      "port": 18080,
+      "runtipi_id": "monerod"
+    },
+    {
+      "port": 18083,
+      "runtipi_id": "emqx"
+    },
+    {
+      "port": 18161,
+      "runtipi_id": "grav-2"
+    },
+    {
+      "port": 18196,
+      "runtipi_id": "filebrowser-quantum"
+    },
+    {
+      "port": 18789,
+      "runtipi_id": "openclaw"
+    },
+    {
+      "port": 19999,
+      "runtipi_id": "netdata"
+    },
+    {
+      "port": 25565,
+      "runtipi_id": "minecraft-server"
+    },
+    {
+      "port": 27017,
+      "runtipi_id": "mongo"
+    },
+    {
+      "port": 31312,
+      "runtipi_id": "moneroblock"
+    },
+    {
+      "port": 32400,
+      "runtipi_id": "plex"
+    },
+    {
+      "port": 45876,
+      "runtipi_id": "beszel-agent"
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "MailFlow",
+  "available": true,
+  "port": 3395,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "mailflow",
+  "description": "MailFlow is a self-hosted unified webmail client. Connect multiple IMAP/SMTP accounts such as Gmail, iCloud, Outlook, or custom mail servers and read them in one web interface.",
+  "tipi_version": 1,
+  "version": "4.0.2",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Unified self-hosted webmail client",
+  "author": "maathimself",
+  "source": "https://github.com/maathimself/mailflow",
+  "website": "https://mailflow.sh",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "MailFlow seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501501136,
+  "updated_at": 1792501561136,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

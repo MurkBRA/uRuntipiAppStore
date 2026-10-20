@@ -1,0 +1,36 @@
+{
+  "name": "InfluxDB",
+  "available": true,
+  "port": 8888,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "influxdb",
+  "description": "InfluxDB is an open-source, high-performance time series database packaged with Chronograf, the official web-based visualization tool. Built specifically for handling high-frequency data, InfluxDB excels at managing and analyzing large volumes of timestamped information.",
+  "tipi_version": 1,
+  "version": "1.11.4",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "High performance time series database",
+  "author": "InfluxData",
+  "source": "https://github.com/influxdata/influxdb",
+  "website": "https://www.influxdata.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "InfluxDB password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501498202,
+  "updated_at": 1792501558202,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

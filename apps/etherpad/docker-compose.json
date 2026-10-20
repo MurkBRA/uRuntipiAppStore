@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "etherpad",
+      "image": "etherpad/etherpad:3.3.9",
+      "isMain": true,
+      "internalPort": 9001,
+      "user": "5001:0",
+      "environment": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "CI",
+          "value": "true"
+        },
+        {
+          "key": "ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "DB_CHARSET",
+          "value": "utf8mb4"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "etherpad-postgres"
+        },
+        {
+          "key": "DB_NAME",
+          "value": "etherpad"
+        },
+        {
+          "key": "DB_PASS",
+          "value": "admin"
+        },
+        {
+          "key": "DB_PORT",
+          "value": 5432
+        },
+        {
+          "key": "DB_TYPE",
+          "value": "postgres"
+        },
+        {
+          "key": "DB_USER",
+          "value": "admin"
+        },
+        {
+          "key": "DISABLE_IP_LOGGING",
+          "value": "false"
+        },
+        {
+          "key": "LOGLEVEL",
+          "value": "INFO"
+        },
+        {
+          "key": "ALLOW_UNKNOWN_FILE_ENDS",
+          "value": "true"
+        },
+        {
+          "key": "TRUST_PROXY",
+          "value": "true"
+        },
+        {
+          "key": "SKIN_NAME",
+          "value": "colibris"
+        },
+        {
+          "key": "SKIN_VARIANTS",
+          "value": "super-light-toolbar super-light-editor light-background"
+        },
+        {
+          "key": "SHOW_SETTINGS_IN_ADMIN_PAGE",
+          "value": "true"
+        },
+        {
+          "key": "SUPPRESS_ERRORS_IN_PAD_TEXT",
+          "value": "false"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/plugins",
+          "containerPath": "/opt/etherpad-lite/src/plugin_packages"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/etherpad-var",
+          "containerPath": "/opt/etherpad-lite/var"
+        }
+      ],
+      "dependsOn": [
+        "etherpad-postgres"
+      ]
+    },
+    {
+      "name": "etherpad-postgres",
+      "image": "postgres:15-alpine",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "etherpad"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "admin"
+        },
+        {
+          "key": "POSTGRES_PORT",
+          "value": 5432
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "admin"
+        },
+        {
+          "key": "PGDATA",
+          "value": "/var/lib/postgresql/data/pgdata"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres_data",
+          "containerPath": "/var/lib/postgresql/data/pgdata"
+        }
+      ]
+    }
+  ]
+}

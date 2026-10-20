@@ -1,0 +1,51 @@
+services:
+  lightning:
+    image: getumbrel/umbrel-lightning:v1.3.2
+    volumes:
+      - ${APP_DATA_DIR}/data/data/lnd:/data/.lnd
+      - ${APP_DATA_DIR}/data/lightning:/data
+    environment:
+      - PORT=3006
+      - TOR_PROXY_IP=${TOR_PROXY_IP}
+      - TOR_PROXY_PORT=${TOR_PROXY_PORT}
+      - BITCOIN_HOST=${APP_BITCOIN_NODE_IP}
+      - RPC_PORT=${APP_BITCOIN_RPC_PORT}
+      - RPC_USER=${APP_BITCOIN_RPC_USER}
+      - RPC_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - LND_NETWORK=${APP_BITCOIN_NETWORK}
+      - LND_HOST=lightning-lnd
+      - LND_REST_HIDDEN_SERVICE=${APP_LIGHTNING_REST_HIDDEN_SERVICE}
+      - LND_GRPC_HIDDEN_SERVICE=${APP_LIGHTNING_GRPC_HIDDEN_SERVICE}
+      - TLS_FILE=/data/.lnd/tls.cert
+      - MACAROON_DIR=/data/.lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/
+      - CHANNEL_BACKUP_FILE=/data/.lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/channel.backup
+      - BACKUP_STATUS_FILE=/statuses/backup-status.json
+      - JSON_STORE_FILE=/data/state.json
+      - JSON_SETTINGS_FILE=/data/settings.json
+      - UMBREL_LND_CONF_FILEPATH=/data/.lnd/umbrel-lnd.conf
+      - LND_CONF_FILEPATH=/data/.lnd/lnd.conf
+      - LND_INITIALIZE_WITH_TOR_ONLY=${LND_INITIALIZE_WITH_TOR_ONLY}
+      - DEVICE_DOMAIN_NAME=${APP_DOMAIN}
+      - EXPLORER_PORT=${APP_MEMPOOL_PORT}
+      - EXPLORER_HIDDEN_SERVICE=${APP_MEMPOOL_HIDDEN_SERVICE}
+    x-runtipi:
+      internal_port: 3006
+      add_to_main_network: true
+      is_main: true
+  lightning-lnd:
+    image: lightninglabs/lnd:v0.21.4-beta
+    command: ${APP_LIGHTNING_COMMAND}
+    user: '1000:1000'
+    hostname: ${APP_DOMAIN}
+    ports:
+      - 9735:9735/tcp
+      - 8080:8080/tcp
+      - 10009:10009/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/data/lnd:/data/.lnd
+    environment:
+      - HOME=/data
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

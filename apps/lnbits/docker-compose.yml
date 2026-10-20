@@ -1,0 +1,28 @@
+services:
+  lnbits:
+    image: lnbits/lnbits:v1.6.2
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    environment:
+      - LNBITS_HOST=0.0.0.0
+      - LNBITS_PORT=3007
+      - LNBITS_DATA_FOLDER=/data
+      - LNBITS_EXTENSIONS_PATH=/data
+      - AUTH_HTTPS_ONLY=false
+      - LNBITS_BACKEND_WALLET_CLASS=LndRestWallet
+      - LND_REST_ENDPOINT=https://${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_REST_PORT}/
+      - LND_REST_CERT=/lnd/tls.cert
+      - LND_REST_MACAROON=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - LNBITS_SITE_TITLE=LNbits - Umbrel
+      - LNBITS_DEFAULT_WALLET_NAME=LNbits wallet
+      - LNBITS_DISABLED_EXTENSIONS=amilk
+      - LNBITS_ADMIN_EXTENSIONS=ngrok
+      - LNBITS_ADMIN_UI=true
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3007
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

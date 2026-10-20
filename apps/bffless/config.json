@@ -1,0 +1,35 @@
+{
+  "name": "BFFless",
+  "available": true,
+  "port": 5537,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bffless",
+  "description": "BFFless is a self-hosted platform for hosting static websites and build artifacts from CI/CD pipelines.",
+  "tipi_version": 1,
+  "version": "umbrel",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "Self-hosted static site hosting platform",
+  "author": "BFFless",
+  "source": "https://github.com/bffless/ce",
+  "website": "https://docs.bffless.app/deployment/umbrel/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "BFFless seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501489208,
+  "updated_at": 1792501549208,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,320 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "wger",
+      "image": "nginx:alpine3.22",
+      "isMain": true,
+      "internalPort": 80,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config/nginx.conf",
+          "containerPath": "/etc/nginx/conf.d/default.conf",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/static",
+          "containerPath": "/wger/static",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/media",
+          "containerPath": "/wger/media",
+          "readOnly": true
+        }
+      ],
+      "healthCheck": {
+        "test": "wget --quiet --tries=1 --spider http://127.0.0.1:80/",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      },
+      "dependsOn": [
+        "wger-web",
+        "wger-powersync"
+      ]
+    },
+    {
+      "name": "wger-web",
+      "image": "wger/server:2.7",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "CSRF_TRUSTED_ORIGINS",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:8450,${ips_with_port}"
+        },
+        {
+          "key": "SITE_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "MEDIA_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}/media/"
+        },
+        {
+          "key": "PS_DATABASE_URI",
+          "value": "postgres://wger:wger@db:5432/wger"
+        },
+        {
+          "key": "PS_STORAGE_PG_URI",
+          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+        },
+        {
+          "key": "POWERSYNC_URL_PATH",
+          "value": "ps"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/static",
+          "containerPath": "/home/wger/static"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/media",
+          "containerPath": "/home/wger/media"
+        }
+      ],
+      "healthCheck": {
+        "test": "wget --no-verbose --tries=1 -O /dev/null http://localhost:8000/api/v2/version/",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "300s"
+      },
+      "dependsOn": {
+        "wger-db": {
+          "condition": "service_healthy"
+        },
+        "wger-cache": {
+          "condition": "service_healthy"
+        },
+        "wger-powersync_setup": {
+          "condition": "service_completed_successfully"
+        }
+      }
+    },
+    {
+      "name": "wger-powersync_setup",
+      "image": "wger/server:2.7",
+      "user": "1000:1000",
+      "command": "./manage.py setup-powersync-storage",
+      "environment": [
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "PS_DATABASE_URI",
+          "value": "postgres://wger:wger@db:5432/wger"
+        },
+        {
+          "key": "PS_STORAGE_PG_URI",
+          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+        }
+      ],
+      "dependsOn": {
+        "wger-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "wger-powersync",
+      "image": "journeyapps/powersync-service:1.22.0",
+      "command": [
+        "start",
+        "-r",
+        "unified"
+      ],
+      "environment": [
+        {
+          "key": "POWERSYNC_CONFIG_PATH",
+          "value": "/config/powersync.yaml"
+        },
+        {
+          "key": "PS_JWKS_URL",
+          "value": "http://wger-web:8000/api/v2/powersync-keys"
+        },
+        {
+          "key": "PS_DATABASE_URI",
+          "value": "postgres://wger:wger@db:5432/wger"
+        },
+        {
+          "key": "PS_STORAGE_PG_URI",
+          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+        },
+        {
+          "key": "PS_PORT",
+          "value": 8080
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/powersync.yaml",
+          "containerPath": "/config/powersync.yaml",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/sync_rules.yaml",
+          "containerPath": "/config/sync_rules.yaml",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": {
+        "wger-db": {
+          "condition": "service_healthy"
+        },
+        "wger-web": {
+          "condition": "service_healthy"
+        },
+        "wger-powersync_setup": {
+          "condition": "service_completed_successfully"
+        }
+      }
+    },
+    {
+      "name": "wger-db",
+      "image": "postgres:17.5-alpine",
+      "user": "1000:1000",
+      "shmSize": "256mb",
+      "command": [
+        "postgres",
+        "-c",
+        "wal_level=logical",
+        "-c",
+        "shared_buffers=256MB",
+        "-c",
+        "effective_cache_size=768MB",
+        "-c",
+        "work_mem=8MB",
+        "-c",
+        "random_page_cost=1.1",
+        "-c",
+        "max_connections=30"
+      ],
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "wger"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "wger"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "wger"
+        },
+        {
+          "key": "TZ",
+          "value": "Europe/Berlin"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres-data",
+          "containerPath": "/var/lib/postgresql/data/"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U wger",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      }
+    },
+    {
+      "name": "wger-cache",
+      "image": "redis:8.0.3-alpine",
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis-data",
+          "containerPath": "/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "redis-cli ping",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      }
+    },
+    {
+      "name": "wger-celery_worker",
+      "image": "wger/server:2.7",
+      "user": "1000:1000",
+      "command": "/start-worker",
+      "environment": [
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "PS_DATABASE_URI",
+          "value": "postgres://wger:wger@db:5432/wger"
+        },
+        {
+          "key": "PS_STORAGE_PG_URI",
+          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/media",
+          "containerPath": "/home/wger/media"
+        }
+      ],
+      "healthCheck": {
+        "test": "celery -A wger inspect ping",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      },
+      "dependsOn": {
+        "wger-web": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "wger-celery_beat",
+      "image": "wger/server:2.7",
+      "user": "1000:1000",
+      "command": "/start-beat",
+      "environment": [
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "PS_DATABASE_URI",
+          "value": "postgres://wger:wger@db:5432/wger"
+        },
+        {
+          "key": "PS_STORAGE_PG_URI",
+          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/celery-beat",
+          "containerPath": "${APP_DATA_DIR}/beat/"
+        }
+      ],
+      "dependsOn": {
+        "wger-celery_worker": {
+          "condition": "service_healthy"
+        }
+      }
+    }
+  ]
+}

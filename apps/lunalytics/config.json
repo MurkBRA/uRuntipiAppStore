@@ -1,0 +1,28 @@
+{
+  "name": "Lunalytics",
+  "available": true,
+  "port": 8183,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "lunalytics",
+  "description": "🔍 Lunalytics offers a rich set of features designed to give you full visibility into the health of your services. It continuously monitors HTTP and TCP endpoints and provides detailed uptime and latency statistics with precise response time tracking.",
+  "tipi_version": 1,
+  "version": "0.10.23",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "A monitoring tool for teams",
+  "author": "KSJaay",
+  "source": "https://github.com/KSJaay/Lunalytics",
+  "website": "https://lunalytics.xyz/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500991,
+  "updated_at": 1792501560991,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

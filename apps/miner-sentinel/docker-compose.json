@@ -1,0 +1,167 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "miner-sentinel",
+      "image": "dcbert/minersentinel-frontend:v1.2.0",
+      "isMain": true,
+      "internalPort": 80,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "VITE_API_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        }
+      ],
+      "dependsOn": [
+        "miner-sentinel-backend"
+      ]
+    },
+    {
+      "name": "miner-sentinel-db",
+      "image": "postgres:17.7",
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "minersentinel"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "minersentinel"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "minersentinel"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U minersentinel",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    },
+    {
+      "name": "miner-sentinel-backend",
+      "image": "dcbert/minersentinel-backend:v1.2.0",
+      "stopGracePeriod": "1m",
+      "command": "sh -c \"\n  python manage.py migrate &&\n  python manage.py collectstatic --noinput &&\n  (python manage.py createsuperuser --no-input ||\n  echo 'Superuser already exists or created — winning!') &&\n  gunicorn minersentinel.wsgi:application --bind 0.0.0.0:8000 --workers 2 --timeout 120\n\"",
+      "environment": [
+        {
+          "key": "POSTGRES_HOST",
+          "value": "miner-sentinel-db"
+        },
+        {
+          "key": "POSTGRES_PORT",
+          "value": 5432
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "minersentinel"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "minersentinel"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "minersentinel"
+        },
+        {
+          "key": "DJANGO_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DJANGO_DEBUG",
+          "value": "False"
+        },
+        {
+          "key": "ALLOWED_HOSTS",
+          "value": "*"
+        },
+        {
+          "key": "CORS_ALLOWED_ORIGINS",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://*.ts.net:3082"
+        },
+        {
+          "key": "CSRF_TRUSTED_ORIGINS",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://*.ts.net:3082"
+        },
+        {
+          "key": "DJANGO_SUPERUSER_USERNAME",
+          "value": "admin"
+        },
+        {
+          "key": "DJANGO_SUPERUSER_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "DJANGO_SUPERUSER_EMAIL",
+          "value": "admin@umbrel.local"
+        },
+        {
+          "key": "API_BASE_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        }
+      ],
+      "dependsOn": [
+        "miner-sentinel-db"
+      ]
+    },
+    {
+      "name": "miner-sentinel-data-service",
+      "image": "dcbert/minersentinel-data-service:v1.2.0",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "POSTGRES_HOST",
+          "value": "miner-sentinel-db"
+        },
+        {
+          "key": "POSTGRES_PORT",
+          "value": 5432
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "minersentinel"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "minersentinel"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "minersentinel"
+        },
+        {
+          "key": "BACKEND_URL",
+          "value": "http://miner-sentinel-backend:8000"
+        },
+        {
+          "key": "BITAXE_POLL_INTERVAL",
+          "value": 60
+        },
+        {
+          "key": "AVALON_POLL_INTERVAL",
+          "value": 60
+        },
+        {
+          "key": "POOL_POLL_INTERVAL",
+          "value": 300
+        }
+      ],
+      "dependsOn": [
+        "miner-sentinel-db",
+        "miner-sentinel-backend"
+      ]
+    }
+  ]
+}

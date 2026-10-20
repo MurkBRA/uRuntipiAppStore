@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "mazanoke",
+      "image": "ghcr.io/civilblur/mazanoke:v1.1.7",
+      "isMain": true,
+      "internalPort": 80,
+      "healthCheck": {
+        "test": "nc -z 127.0.0.1 80 || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "90s"
+      }
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+services:
+  nostr-vpn:
+    image: ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.18
+    command:
+      - '--listen'
+      - 0.0.0.0:38080
+      - '--behind-trusted-proxy'
+      - '--config'
+      - /data/config/nvpn/config.toml
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - HOME=/data/home
+      - XDG_CONFIG_HOME=/data/config
+      - NVPN_CLI_PATH=/usr/local/bin/nvpn
+      - NVPN_DAEMON_STATUS_MODE=state-file
+      - NVPN_EXTERNAL_DAEMON=true
+      - RUST_LOG=info
+    depends_on:
+      - nostr-vpn-daemon
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 38080
+      is_main: true
+  nostr-vpn-daemon:
+    image: ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.18
+    command:
+      - daemon
+      - '--config'
+      - /data/config/nvpn/config.toml
+    entrypoint:
+      - /usr/local/bin/nvpn
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - HOME=/data/home
+      - XDG_CONFIG_HOME=/data/config
+      - RUST_LOG=info
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+    stop_grace_period: 1m
+    devices:
+      - /dev/net/tun:/dev/net/tun
+x-runtipi:
+  schema_version: 2

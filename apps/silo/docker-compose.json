@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "silo",
+      "image": "pgsty/silo:RELEASE.2026-10-18T00-00-00Z",
+      "isMain": true,
+      "internalPort": 9001,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "command": "server /data --console-address :9001",
+      "environment": [
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/objects",
+          "containerPath": "/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 9131,
+          "containerPort": 9000,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

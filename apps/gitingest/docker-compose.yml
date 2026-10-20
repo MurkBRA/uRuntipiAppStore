@@ -1,0 +1,11 @@
+services:
+  gitingest:
+    image: ghcr.io/coderamp-labs/gitingest:v0.3.1
+    user: '1000:1000'
+    environment:
+      - ALLOWED_HOSTS=${APP_DOMAIN},${LOCAL_DOMAIN},${local_ips}
+    x-runtipi:
+      internal_port: 8000
+      is_main: true
+x-runtipi:
+  schema_version: 2

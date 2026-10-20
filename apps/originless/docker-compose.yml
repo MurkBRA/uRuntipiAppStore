@@ -1,0 +1,18 @@
+services:
+  originless:
+    image: ghcr.io/besoeasy/originless:0.1.0
+    user: '1000:1000'
+    ports:
+      - 4003:4001/tcp
+      - 4003:4001/udp
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - NODE_ENV=production
+      - STORAGE_MAX=${STORAGE_MAX}
+    stop_grace_period: 5m
+    x-runtipi:
+      internal_port: 3232
+      is_main: true
+x-runtipi:
+  schema_version: 2

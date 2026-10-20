@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "meshchatx",
+      "image": "ghcr.io/quad4-software/meshchatx:4.10.7",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "MESHCHAT_NO_HTTPS",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/config"
+        }
+      ],
+      "healthCheck": {
+        "test": "python -c import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/api/v1/status')",
+        "interval": "30s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "90s"
+      }
+    }
+  ]
+}

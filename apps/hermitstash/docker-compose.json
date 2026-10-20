@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "hermitstash",
+      "image": "ghcr.io/dotcoocoo/hermitstash:1.15.9",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "shmSize": "256m",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "UMASK",
+          "value": "022"
+        },
+        {
+          "key": "TZ",
+          "value": "Etc/UTC"
+        },
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "TRUST_PROXY",
+          "value": "10.21.0.0/16"
+        },
+        {
+          "key": "RP_ORIGIN",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "EMAIL_VERIFICATION",
+          "value": "false"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/app/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/app/uploads"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/custom",
+          "containerPath": "/app/public/img/custom"
+        }
+      ],
+      "healthCheck": {
+        "test": "node -e require('http').get('http://localhost:3000/health',function(r){process.exit(r.statusCode===200?0:1)}).on('error',function(){process.exit(1)})",
+        "interval": "30s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "30s"
+      },
+      "capDrop": [
+        "ALL"
+      ],
+      "securityOpt": [
+        "no-new-privileges:true"
+      ]
+    }
+  ]
+}

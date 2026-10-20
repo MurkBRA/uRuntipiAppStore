@@ -1,0 +1,16 @@
+services:
+  home-assistant-fusion-ui:
+    image: ghcr.io/matt8707/ha-fusion:2024.10.1
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/fusion:/app/data
+    environment:
+      - HASS_URL=http://${APP_DOMAIN}:8123
+    extra_hosts:
+      - ${APP_DOMAIN}:${APP_HAFUSION_MACHINE_IP}
+    x-runtipi:
+      internal_port: 5023
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

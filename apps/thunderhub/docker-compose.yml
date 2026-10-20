@@ -1,0 +1,21 @@
+services:
+  thunderhub:
+    image: apotdevin/thunderhub:0.19.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - MASTER_PASSWORD_OVERRIDE=${APP_PASSWORD}
+      - NO_VERSION_CHECK=true
+      - LOG_LEVEL=debug
+      - ACCOUNT_CONFIG_PATH=/data/thubConfig.yaml
+      - YML_ENV_1=${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}
+      - TOR_PROXY_SERVER=socks://${TOR_PROXY_IP}:${TOR_PROXY_PORT}
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3000
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

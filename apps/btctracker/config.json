@@ -1,0 +1,37 @@
+{
+  "name": "BTC Tracker",
+  "available": true,
+  "port": 3947,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "btctracker",
+  "description": "BTC Tracker is a user-friendly yet powerful application designed for managing and analyzing Bitcoin investments. It was created to offer a privacy-focused and straightforward alternative to existing tracking tools, which are often cluttered with unnecessary features, complicated to set up, or designed for managing large, diversified portfolios. Many of those tools require connections to external services and the sharing of sensitive information such as wallet addresses or transaction histories.",
+  "tipi_version": 1,
+  "version": "0.8.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A simple, privacy-focused Bitcoin investment tracker",
+  "author": "wilqq-the",
+  "source": "https://github.com/wilqq-the/BTC-Tracker",
+  "website": "https://github.com/wilqq-the",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "BTC Tracker seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501491749,
+  "updated_at": 1792501551749,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

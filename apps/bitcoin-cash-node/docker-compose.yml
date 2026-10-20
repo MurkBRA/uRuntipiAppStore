@@ -1,0 +1,50 @@
+services:
+  bitcoin-cash-node:
+    image: ghcr.io/danhaus93-ops/bchn-dashboard:8bb17f3689d837dbd370ac0d35e4a158ea12b75a
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/bitcoind:/nodedata
+    environment:
+      - PORT=3000
+      - APP_VERSION=v29.1.37
+      - TOR_IP=10.21.22.50
+      - RPC_HOST=bitcoind
+      - RPC_PORT=8332
+      - RPC_USER=umbrel
+      - RPC_PASS=${APP_BITCOIN_CASH_NODE_RPC_PASS}
+      - PUBLIC_HOST=${APP_DOMAIN}
+    depends_on:
+      - bitcoin-cash-node-bitcoind
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  bitcoin-cash-node-bitcoind:
+    image: mainnet/bitcoin-cash-node:v29.0.0
+    command:
+      - '-datadir=/data'
+      - '-printtoconsole'
+      - '-server=1'
+      - '-listen=1'
+      - '-port=8335'
+      - '-rpcbind=0.0.0.0'
+      - '-rpcallowip=0.0.0.0/0'
+      - '-rpcuser=umbrel'
+      - '-rpcpassword=${APP_BITCOIN_CASH_NODE_RPC_PASS}'
+      - '-rpcworkqueue=512'
+      - '-rpcthreads=64'
+      - '-dbcache=512'
+      - '-maxmempool=300'
+      - '-txindex=1'
+      - '-disablewallet=1'
+      - '-maxconnections=64'
+      - '-zmqpubhashblock=tcp://0.0.0.0:28332'
+    entrypoint:
+      - bitcoind
+    user: '1000:1000'
+    ports:
+      - 8335:8335/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/bitcoind:/data
+    stop_grace_period: 1m
+x-runtipi:
+  schema_version: 2

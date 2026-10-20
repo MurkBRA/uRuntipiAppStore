@@ -1,0 +1,28 @@
+{
+  "name": "Toshi Moto",
+  "available": true,
+  "port": 8021,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "toshi-moto",
+  "description": "Toshi Moto is a watch-only Bitcoin wallet designed for secure portfolio monitoring and transaction tracking.",
+  "tipi_version": 1,
+  "version": "1.37.3",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Secure Bitcoin portfolio monitoring with privacy-first design",
+  "author": "Toshi Moto",
+  "source": "https://github.com/toshimoto821/toshi-moto",
+  "website": "https://toshimoto.app",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511610,
+  "updated_at": 1792501571610,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

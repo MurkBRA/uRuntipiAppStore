@@ -1,0 +1,183 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "librechat",
+      "image": "ghcr.io/danny-avila/librechat:v0.8.7",
+      "isMain": true,
+      "internalPort": 3080,
+      "user": "1000:1000",
+      "command": "npm run backend",
+      "environment": [
+        {
+          "key": "HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "MONGO_URI",
+          "value": "mongodb://librechat-mongodb:27017/LibreChat"
+        },
+        {
+          "key": "MEILI_HOST",
+          "value": "http://librechat-meilisearch:7700"
+        },
+        {
+          "key": "RAG_PORT",
+          "value": "8000"
+        },
+        {
+          "key": "RAG_API_URL",
+          "value": "http://librechat-rag_api:8000"
+        },
+        {
+          "key": "OPENAI_API_KEY",
+          "value": "user_provided"
+        },
+        {
+          "key": "GOOGLE_KEY",
+          "value": "user_provided"
+        },
+        {
+          "key": "ANTHROPIC_API_KEY",
+          "value": "user_provided"
+        },
+        {
+          "key": "ASSISTANTS_API_KEY",
+          "value": "user_provided"
+        },
+        {
+          "key": "CREDS_KEY",
+          "value": "f34be427ebb29de8d88c107a71546019685ed8b241d8f2ed00c3df97ad2566f0"
+        },
+        {
+          "key": "CREDS_IV",
+          "value": "e2341419ec3dd3d19b13a1a87fafcbfb"
+        },
+        {
+          "key": "JWT_SECRET",
+          "value": "16f8c0ef4a5d391b26034086c628469d3f9f497f08163ab9b40137092f2909ef"
+        },
+        {
+          "key": "JWT_REFRESH_SECRET",
+          "value": "eaa5191f2914e30b9387fd84e254e4ba6fc51b4654968a9b0803b456a54b8418"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/api/librechat.yaml",
+          "containerPath": "/app/librechat.yaml"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/api/images",
+          "containerPath": "/app/client/public/images"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/api/uploads",
+          "containerPath": "/app/uploads"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/api/logs",
+          "containerPath": "/app/api/logs"
+        }
+      ],
+      "dependsOn": [
+        "librechat-mongodb",
+        "librechat-rag_api"
+      ]
+    },
+    {
+      "name": "librechat-mongodb",
+      "image": "mongo:8.0.10",
+      "user": "1000:1000",
+      "command": "mongod --noauth",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/data/db"
+        }
+      ]
+    },
+    {
+      "name": "librechat-meilisearch",
+      "image": "getmeili/meilisearch:v1.12.3",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "MEILI_HOST",
+          "value": "http://librechat-meilisearch:7700"
+        },
+        {
+          "key": "MEILI_NO_ANALYTICS",
+          "value": "true"
+        },
+        {
+          "key": "MEILI_MASTER_KEY",
+          "value": "DrhYf7zENyR6AlUCKmnz0eYASOQdl6zxH7s7MKFSfFCt"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/meilisearch",
+          "containerPath": "/meili_data"
+        }
+      ]
+    },
+    {
+      "name": "librechat-vectordb",
+      "image": "ankane/pgvector:v0.5.1",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "mydatabase"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "myuser"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "mypassword"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/vectordb",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ]
+    },
+    {
+      "name": "librechat-rag_api",
+      "image": "ghcr.io/danny-avila/librechat-rag-api-dev-lite:v0.7.3",
+      "environment": [
+        {
+          "key": "DB_HOST",
+          "value": "librechat-vectordb"
+        },
+        {
+          "key": "RAG_PORT",
+          "value": "8000"
+        },
+        {
+          "key": "OPENAI_API_KEY",
+          "value": "user_provided"
+        },
+        {
+          "key": "GOOGLE_KEY",
+          "value": "user_provided"
+        },
+        {
+          "key": "ANTHROPIC_API_KEY",
+          "value": "user_provided"
+        },
+        {
+          "key": "ASSISTANTS_API_KEY",
+          "value": "user_provided"
+        }
+      ],
+      "dependsOn": [
+        "librechat-vectordb"
+      ]
+    }
+  ]
+}

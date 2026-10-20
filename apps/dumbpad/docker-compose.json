@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "dumbpad",
+      "image": "dumbwareio/dumbpad:1.0.4",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "SITE_TITLE",
+          "value": "DumbPad"
+        },
+        {
+          "key": "BASE_URL",
+          "value": "http://${APP_DOMAIN}:3000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

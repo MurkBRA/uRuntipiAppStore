@@ -1,0 +1,26 @@
+{
+  "name": "LocalAI",
+  "available": true,
+  "port": 8793,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "localai",
+  "description": "LocalAI is the free, Open Source OpenAI alternative. LocalAI act as a drop-in replacement REST API that's compatible with OpenAI API specifications for local inferencing.",
+  "tipi_version": 1,
+  "version": "v4.11.0",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "Drop-in OpenAI replacement",
+  "author": "Ettore Di Giacinto",
+  "source": "https://github.com/mudler/LocalAI",
+  "website": "https://localai.io/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500868,
+  "updated_at": 1792501560868,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

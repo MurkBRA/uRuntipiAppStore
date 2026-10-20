@@ -1,0 +1,26 @@
+services:
+  btc-rpc-explorer:
+    image: getumbrel/btc-rpc-explorer:v3.5.1
+    environment:
+      - BTCEXP_HOST=0.0.0.0
+      - BTCEXP_PORT=8080
+      - BTCEXP_BITCOIND_HOST=${APP_BITCOIN_NODE_IP}
+      - BTCEXP_BITCOIND_PORT=${APP_BITCOIN_RPC_PORT}
+      - BTCEXP_BITCOIND_USER=${APP_BITCOIN_RPC_USER}
+      - BTCEXP_BITCOIND_PASS=${APP_BITCOIN_RPC_PASS}
+      - BTCEXP_ADDRESS_API=electrumx
+      - BTCEXP_ELECTRUMX_SERVERS=tcp://${APP_ELECTRS_NODE_IP}:${APP_ELECTRS_NODE_PORT}
+      - DEBUG=btcexp:*,electrumClient
+      - BTCEXP_SLOW_DEVICE_MODE=true
+      - BTCEXP_NO_INMEMORY_RPC_CACHE=true
+      - BTCEXP_PRIVACY_MODE=true
+      - BTCEXP_NO_RATES=true
+      - BTCEXP_RPC_ALLOWALL=false
+      - BTCEXP_BASIC_AUTH_PASSWORD=${APP_PASSWORD}
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8080
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

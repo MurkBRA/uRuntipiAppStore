@@ -1,0 +1,17 @@
+# Zen
+
+> A simple app for focused and private note-taking
+
+📒 Zen is a minimalist note-taking application focused on providing a simple and efficient way to capture and manage information. It allows users to create notes using Markdown, supporting a wide range of formatting options such as tables, checklists, code blocks, and text highlighting. All notes are stored locally in a lightweight SQLite database, ensuring that your data remains private and fully under your control.
+
+The application offers a clean and distraction-free interface designed for ease of use on both desktop and mobile devices. It includes a powerful full-text search function that enables users to quickly find relevant notes as they type, and uses tags instead of traditional folders to organize content flexibly. Users can upload and preview images directly within their notes, helping to enrich the information stored.
+
+Zen also provides features like soft-delete and archiving, which help keep your workspace organized without permanently losing information. Keyboard shortcuts improve productivity by allowing fast navigation and editing without relying solely on the mouse. The app supports offline use through its progressive web app functionality, so you can access and edit your notes even without an internet connection.
+
+Overall, Zen serves as a lightweight, fast, and privacy-focused tool for personal knowledge management, journaling, or simple note-taking, giving you full control over your data in a user-friendly environment.
+
+## Links
+- **Upstream Version**: `1.5.0-patch.1`
+- **Website**: https://www.sheshbabu.com/zen/
+- **Source Repository**: https://github.com/sheshbabu/zen
+- **Support**: https://github.com/sheshbabu/zen/issues

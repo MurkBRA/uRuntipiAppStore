@@ -1,0 +1,18 @@
+services:
+  robosats:
+    image: recksato/robosats-client:v0.8.7-alpha
+    command:
+      - sh
+      - '-ec'
+      - |
+        sed -i 's/listen 12596 ssl;/listen 12596;/' /etc/nginx/nginx.conf
+        exec sh robosats-client.sh
+    environment:
+      - TOR_PROXY_IP=${TOR_PROXY_IP}
+      - TOR_PROXY_PORT=${TOR_PROXY_PORT}
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 12596
+      is_main: true
+x-runtipi:
+  schema_version: 2

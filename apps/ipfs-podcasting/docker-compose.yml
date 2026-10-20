@@ -1,0 +1,15 @@
+services:
+  ipfs-podcasting:
+    image: ipfspodcasting/podcastnode:v0.6
+    user: '1000:1000'
+    ports:
+      - 4001:4001/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/ipfs:/ipfs-podcasting/ipfs
+      - ${APP_DATA_DIR}/data/cfg:/ipfs-podcasting/cfg
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8675
+      is_main: true
+x-runtipi:
+  schema_version: 2

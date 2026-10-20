@@ -1,0 +1,21 @@
+services:
+  termix:
+    image: ghcr.io/lukegus/termix:release-2.9.2
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    environment:
+      - GUACD_HOST=guacd
+      - GUACD_TUNNEL_HOST=web
+      - GUACD_RECORDING_PATH=/termix-data/session_recordings/guacamole
+      - ENABLE_TELEMETRY=false
+    depends_on:
+      - termix-guacd
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+  termix-guacd:
+    image: guacamole/guacd:1.6.0
+    volumes:
+      - ${APP_DATA_DIR}/data:/termix-data
+x-runtipi:
+  schema_version: 2

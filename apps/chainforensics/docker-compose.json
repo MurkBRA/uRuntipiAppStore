@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "chainforensics",
+      "image": "dirtmcgrit/chainforensics-web:1.2.0",
+      "isMain": true,
+      "internalPort": 80,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "dependsOn": [
+        "chainforensics-api"
+      ]
+    },
+    {
+      "name": "chainforensics-api",
+      "image": "dirtmcgrit/chainforensics:1.2.0",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "DEBUG",
+          "value": "false"
+        },
+        {
+          "key": "API_PORT",
+          "value": "3000"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "sqlite+aiosqlite:////data/chainforensics.db"
+        },
+        {
+          "key": "BITCOIN_RPC_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_RPC_PORT",
+          "value": "8332"
+        },
+        {
+          "key": "BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "BITCOIN_RPC_TIMEOUT",
+          "value": "120"
+        },
+        {
+          "key": "FULCRUM_HOST",
+          "value": "${APP_FULCRUM_NODE_IP}"
+        },
+        {
+          "key": "FULCRUM_PORT",
+          "value": "50002"
+        },
+        {
+          "key": "MAX_TRACE_DEPTH",
+          "value": "50"
+        },
+        {
+          "key": "DEFAULT_TRACE_DEPTH",
+          "value": "10"
+        },
+        {
+          "key": "ENABLE_BACKGROUND_INDEXER",
+          "value": "true"
+        },
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

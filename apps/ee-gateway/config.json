@@ -1,0 +1,26 @@
+{
+  "name": "EE Gateway",
+  "available": true,
+  "port": 26231,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "ee-gateway",
+  "description": "EE Gateway turns your Umbrel into a self-hosted Bluetooth gateway for open BLE networks.",
+  "tipi_version": 1,
+  "version": "0.6.5",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Self-hosted Bluetooth gateway for open BLE networks",
+  "author": "encryptedenergy.com",
+  "source": "https://github.com/Encrypted-Energy/gateway",
+  "website": "https://encryptedenergy.com",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501494848,
+  "updated_at": 1792501554848,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

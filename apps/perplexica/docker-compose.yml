@@ -1,0 +1,11 @@
+services:
+  perplexica:
+    image: itzcrazykns1337/vane:v1.12.2
+    volumes:
+      - ${APP_DATA_DIR}/data/app_data:/home/perplexica/data
+      - ${APP_DATA_DIR}/data/uploads:/home/perplexica/uploads
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+x-runtipi:
+  schema_version: 2

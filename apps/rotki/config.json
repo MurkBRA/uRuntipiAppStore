@@ -1,0 +1,26 @@
+{
+  "name": "rotki",
+  "available": true,
+  "port": 23617,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "rotki",
+  "description": "rotki is an open source portfolio tracking, analytics, accounting and tax reporting tool that protects your privacy.",
+  "tipi_version": 1,
+  "version": "1.44.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Portfolio tracking, analytics, accounting and tax reporting",
+  "author": "Rotki",
+  "source": "https://github.com/rotki/rotki",
+  "website": "https://rotki.com",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506966,
+  "updated_at": 1792501566966,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

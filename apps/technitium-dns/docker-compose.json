@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "technitium-dns",
+      "image": "technitium/dns-server:15.6.2",
+      "isMain": true,
+      "internalPort": 5380,
+      "environment": [
+        {
+          "key": "DNS_SERVER_DOMAIN",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "DNS_SERVER_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/etc/dns"
+        }
+      ]
+    }
+  ]
+}

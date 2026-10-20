@@ -1,0 +1,28 @@
+{
+  "name": "InfluxDB 2",
+  "available": true,
+  "port": 8886,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "influxdb2",
+  "description": "Purpose built for real-time analytics at any scale.",
+  "tipi_version": 1,
+  "version": "2.9.1-alpine",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "The leading platform for time series data",
+  "author": "InfluxData",
+  "source": "https://github.com/influxdata/influxdb",
+  "website": "https://www.influxdata.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501498352,
+  "updated_at": 1792501558352,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,27 @@
+{
+  "name": "OpenResty Manager",
+  "available": true,
+  "port": 34567,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "openresty-manager",
+  "description": "Expose your apps to the internet easily and securely.",
+  "tipi_version": 1,
+  "version": "2.4.6",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "Expose your services easily and securely",
+  "author": "UUSEC",
+  "source": "https://github.com/Safe3/openresty-manager",
+  "website": "https://om.uusec.com/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504304,
+  "updated_at": 1792501564304,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,56 @@
+services:
+  suredbits-wallet:
+    image: bitcoinscala/wallet-server-ui:1.9.7
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/wallet:/bitcoin-s
+      - ${APP_DATA_DIR}/data/log:/log
+    environment:
+      - LOG_PATH=/log/
+      - BITCOIN_S_HOME=/bitcoin-s/
+      - WALLET_SERVER_API_URL=http://suredbits-wallet-walletserver:9999/
+      - WALLET_SERVER_WS=ws://suredbits-wallet-walletserver:19999/events
+      - TOR_PROXY=socks5://${TOR_PROXY_IP}:${TOR_PROXY_PORT}
+      - DEFAULT_UI_PASSWORD=none
+      - BITCOIN_S_SERVER_RPC_PASSWORD=${APP_PASSWORD}
+    depends_on:
+      - suredbits-wallet-walletserver
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3002
+      add_to_main_network: true
+      is_main: true
+  suredbits-wallet-walletserver:
+    image: bitcoinscala/bitcoin-s-server:1.9.7
+    entrypoint:
+      - /opt/docker/bin/bitcoin-s-server
+      - '--datadir'
+      - /bitcoin-s
+      - '--conf'
+      - /opt/docker/docker-application.conf
+    user: '1000:1000'
+    ports:
+      - 2862:2862/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/wallet:/bitcoin-s
+    environment:
+      - BITCOIN_S_NODE_MODE=bitcoind
+      - BITCOIN_S_NETWORK=${APP_BITCOIN_NETWORK}
+      - BITCOIN_S_KEYMANAGER_ENTROPY=${APP_SEED}
+      - BITCOIN_S_PROXY_ENABLED=false
+      - BITCOIN_S_TOR_ENABLED=false
+      - BITCOIN_S_TOR_PROVIDED=true
+      - BITCOIN_S_DLCNODE_PROXY_ENABLED=true
+      - BITCOIN_S_DLCNODE_PROXY_SOCKS5=${TOR_PROXY_IP}:${TOR_PROXY_PORT}
+      - BITCOIN_S_DLCNODE_EXTERNAL_IP=${APP_SUREDBITS_WALLET_P2P_HIDDEN_SERVICE}
+      - BITCOIN_S_BITCOIND_HOST=${APP_BITCOIN_NODE_IP}
+      - BITCOIN_S_BITCOIND_PORT=${APP_BITCOIN_RPC_PORT}
+      - BITCOIN_S_BITCOIND_USER=${APP_BITCOIN_RPC_USER}
+      - BITCOIN_S_BITCOIND_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - BITCOIN_S_SERVER_RPC_PASSWORD=${APP_PASSWORD}
+      - JAVA_OPTS=-Xmx756m
+      - DISABLE_JLINK=1
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

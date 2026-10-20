@@ -1,0 +1,58 @@
+{
+  "name": "Sphinx Relay",
+  "available": true,
+  "port": 3300,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "sphinx-relay",
+  "description": "Sphinx Relay turns your Lightning node into a personal communication server. Messages are end-to-end encrypted and transmitted over the Bitcoin Lightning Network. Download Sphinx on your phone from https://sphinx.chat and pair it with Sphinx Relay on Umbrel.",
+  "tipi_version": 1,
+  "version": "v2.5.2",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Chat and pay over the Lightning Network",
+  "author": "Stakwork",
+  "source": "https://github.com/stakwork/sphinx-relay",
+  "website": "https://sphinx.chat",
+  "url_suffix": "connect",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501509735,
+  "updated_at": 1792501569735,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

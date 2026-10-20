@@ -1,0 +1,20 @@
+services:
+  music-assistant:
+    image: ghcr.io/music-assistant/server:2.10.7
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data/
+      - ${APP_DATA_DIR}/data/downloads:/media
+    environment:
+      - XDG_CACHE_HOME=/data/.cache
+      - TORCH_HOME=/data/.cache/torch
+    cap_add:
+      - SYS_ADMIN
+      - DAC_READ_SEARCH
+    security_opt:
+      - apparmor=unconfined
+    x-runtipi:
+      internal_port: 8896
+      is_main: true
+x-runtipi:
+  schema_version: 2

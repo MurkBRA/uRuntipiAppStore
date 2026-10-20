@@ -1,0 +1,35 @@
+{
+  "name": "Technitium DNS Server",
+  "available": true,
+  "port": 5380,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "technitium-dns",
+  "description": "Technitium DNS Server is an open source authoritative, as well as recursive, DNS server that can be used for self hosting a DNS server for privacy & security. It works out-of-the-box with no or minimal configuration.",
+  "tipi_version": 1,
+  "version": "15.6.2",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "Block ads & malware at the DNS level for your entire network",
+  "author": "Technitium",
+  "source": "https://github.com/TechnitiumSoftware/DnsServer",
+  "website": "https://technitium.com/dns/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Technitium DNS Server password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501510948,
+  "updated_at": 1792501570948,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,25 @@
+services:
+  wavelog:
+    image: ghcr.io/wavelog/wavelog:3.2.4
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/var/www/html/application/config/docker
+      - ${APP_DATA_DIR}/data/uploads:/var/www/html/uploads
+      - ${APP_DATA_DIR}/data/userdata:/var/www/html/userdata
+    environment:
+      - CI_ENV=docker
+    depends_on:
+      - wavelog-wavelog-db
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+  wavelog-wavelog-db:
+    image: mariadb:11.4
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/mysql
+    environment:
+      - MARIADB_RANDOM_ROOT_PASSWORD=yes
+      - MARIADB_DATABASE=wavelog
+      - MARIADB_USER=wavelog
+      - MARIADB_PASSWORD=wavelog
+x-runtipi:
+  schema_version: 2

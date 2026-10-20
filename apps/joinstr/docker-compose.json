@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "joinstr",
+      "image": "ghcr.io/1440000bytes/joinstr-web:0.1.2",
+      "isMain": true,
+      "internalPort": 5000,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "JOINSTR_MANAGED",
+          "value": "1"
+        },
+        {
+          "key": "JOINSTR_WALLET",
+          "value": "joinstr"
+        },
+        {
+          "key": "JOINSTR_DATA_DIR",
+          "value": "/app/data"
+        },
+        {
+          "key": "BITCOIN_RPC_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

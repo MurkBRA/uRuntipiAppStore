@@ -1,0 +1,27 @@
+{
+  "name": "Tor Snowflake Proxy",
+  "available": true,
+  "port": 3800,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "snowflake",
+  "description": "Snowflake is a system to defeat internet censorship. People who are censored can use Snowflake to access the internet. Their connection goes through Snowflake proxies, which are run by volunteers.",
+  "tipi_version": 1,
+  "version": "v1.6.0",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "Help defeat internet censorship",
+  "author": "The Tor Project, Inc.",
+  "source": "https://gitlab.torproject.org/tpo/anti-censorship/pluggable-transports/snowflake/-/tree/main",
+  "website": "https://snowflake.torproject.org/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501509327,
+  "updated_at": 1792501569327,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

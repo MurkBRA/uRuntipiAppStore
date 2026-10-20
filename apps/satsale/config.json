@@ -1,0 +1,64 @@
+{
+  "name": "SatSale",
+  "available": true,
+  "port": 22702,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "satsale",
+  "description": "SatSale is a simple, easily deployable, lightweight Bitcoin payment processor that connects to your own Bitcoin node. You can use SatSale to instantly turn your Umbrel into a point-of-sale (settings under /admin). SatSale can process donations from your supporters, facilitating direct peer-to-peer payments without any middleman and greater privacy than reusing donation addresses.",
+  "tipi_version": 1,
+  "version": "0.1.13",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Lightweight Bitcoin payment processor",
+  "author": "Nick Farrow",
+  "source": "https://github.com/nickfarrow/SatSale/",
+  "website": "https://satsale.org",
+  "url_suffix": "admin",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "random",
+      "label": "SatSale password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501507723,
+  "updated_at": 1792501567723,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

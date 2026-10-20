@@ -1,0 +1,30 @@
+{
+  "name": "Slink",
+  "available": true,
+  "port": 8811,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "slink",
+  "description": "📸 Slink is a modern and privacy-focused image sharing application designed to give users complete control over how their images are stored, managed, and shared. It provides a sleek and user-friendly interface that makes uploading and organizing visual content both simple and efficient. Instead of depending on third-party services, Slink puts the user in charge of their own image collection, ensuring that every upload remains private and secure unless shared intentionally.",
+  "tipi_version": 1,
+  "version": "1.14.2",
+  "categories": [
+    "photography",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A powerful, privacy-first image sharing platform",
+  "author": "Andrii Kryvoviaz",
+  "source": "https://github.com/andrii-kryvoviaz/slink",
+  "website": "https://docs.slinkapp.io/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501509064,
+  "updated_at": 1792501569064,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

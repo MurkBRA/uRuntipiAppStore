@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "wealthfolio",
+      "image": "wealthfolio/wealthfolio:3.10.0",
+      "isMain": true,
+      "internalPort": 8088,
+      "user": "1000:1000",
+      "readOnly": true,
+      "environment": [
+        {
+          "key": "WF_LISTEN_ADDR",
+          "value": "0.0.0.0:8088"
+        },
+        {
+          "key": "WF_DB_PATH",
+          "value": "/data/wealthfolio.db"
+        },
+        {
+          "key": "WF_AUTH_REQUIRED",
+          "value": "false"
+        },
+        {
+          "key": "WF_AUTH_TOKEN_TTL_MINUTES",
+          "value": "60"
+        },
+        {
+          "key": "WF_REQUEST_TIMEOUT_MS",
+          "value": "30000"
+        },
+        {
+          "key": "WF_SECRET_KEY",
+          "value": "${APP_WEALTHFOLIO_SECRET_KEY}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "wget --quiet --tries=1 --spider http://127.0.0.1:8088/api/v1/healthz",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 3,
+        "startPeriod": "15s"
+      },
+      "securityOpt": [
+        "no-new-privileges:true"
+      ]
+    }
+  ]
+}

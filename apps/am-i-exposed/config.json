@@ -1,0 +1,65 @@
+{
+  "name": "am-i.exposed",
+  "available": true,
+  "port": 4080,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "am-i-exposed",
+  "description": "Paste a Bitcoin address, transaction ID, xpub or descriptor, or an unsigned PSBT and get a privacy score from 0 to 100 with clear findings and fixes. The engine runs 34 heuristics and 10 chain analysis modules covering address reuse, change detection, CoinJoin detection (Whirlpool, WabiSabi, JoinMarket), script types, timing, wallet fingerprinting and entity proximity, plus Boltzmann entropy computed on-device and an interactive transaction graph explorer.",
+  "tipi_version": 1,
+  "version": "0.43.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Bitcoin privacy scanner - see what the blockchain reveals about you",
+  "author": "Copexit",
+  "source": "https://github.com/Copexit/am-i-exposed",
+  "website": "https://am-i.exposed",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Mempool Host / IP",
+      "required": false,
+      "default": "mempool",
+      "env_variable": "APP_MEMPOOL_IP"
+    },
+    {
+      "type": "number",
+      "label": "Mempool HTTP Port",
+      "required": false,
+      "default": 3006,
+      "env_variable": "APP_MEMPOOL_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Mempool Hostname / Onion Address",
+      "required": false,
+      "default": "mempool.local",
+      "env_variable": "APP_MEMPOOL_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501488311,
+  "updated_at": 1792501548311,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

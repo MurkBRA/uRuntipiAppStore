@@ -1,0 +1,51 @@
+{
+  "name": "Helipad",
+  "available": true,
+  "port": 2112,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "helipad",
+  "description": "Helipad shows boosts and boostagram messages coming in to your Lightning node from your listeners who are using Podcasting 2.0 apps.",
+  "tipi_version": 1,
+  "version": "0.2.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "View boosts & boostagrams from Podcasting 2.0 apps",
+  "author": "Podcastindex.org",
+  "source": "https://github.com/Podcastindex-org/helipad",
+  "website": "https://podcastindex.org",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501497392,
+  "updated_at": 1792501557392,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fedimint-gateway",
+      "image": "fedimint/gatewayd:v0.12.2",
+      "isMain": true,
+      "internalPort": 8178,
+      "addToMainNetwork": true,
+      "entrypoint": [
+        "/bin/sh",
+        "-c",
+        "set -e\nFM_GATEWAY_BCRYPT_PASSWORD_HASH=$$(gateway-cli create-password-hash \"$$APP_PASSWORD\" | tr -d '\"')\nexport FM_GATEWAY_BCRYPT_PASSWORD_HASH\nexec gatewayd lnd\n"
+      ],
+      "environment": [
+        {
+          "key": "FM_GATEWAY_DATA_DIR",
+          "value": "/data"
+        },
+        {
+          "key": "FM_GATEWAY_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK_ELECTRS}"
+        },
+        {
+          "key": "FM_GATEWAY_LISTEN_ADDR",
+          "value": "0.0.0.0:8178"
+        },
+        {
+          "key": "FM_GATEWAY_IROH_LISTEN_ADDR",
+          "value": "0.0.0.0:8177"
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "FM_LND_RPC_ADDR",
+          "value": "https://${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "FM_LND_TLS_CERT",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "FM_LND_MACAROON",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        },
+        {
+          "key": "FM_BITCOIND_USERNAME",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "FM_BITCOIND_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "FM_BITCOIND_URL",
+          "value": "http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8177,
+          "containerPort": 8177,
+          "udp": true,
+          "tcp": false
+        }
+      ]
+    }
+  ]
+}

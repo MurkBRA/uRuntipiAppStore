@@ -1,0 +1,13 @@
+services:
+  ersatztv-legacy:
+    image: ghcr.io/ersatztv/legacy:v26.11.3
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/config
+      - ${APP_DATA_DIR}/data/transcode:/transcode
+      - ${APP_DATA_DIR}/data/downloads:/media:ro
+    x-runtipi:
+      internal_port: 8409
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,72 @@
+{
+  "name": "Lightning Mate",
+  "available": true,
+  "port": 3742,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "lightningmate",
+  "description": "Lightning Mate manages your Lightning node so you don't have to babysit it. It connects automatically to your Umbrel Lightning (LND) node.",
+  "tipi_version": 1,
+  "version": "0.7.7",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Profit-aware management & autopilot for your Lightning node",
+  "author": "opensourceminers.de",
+  "source": "https://github.com/opensourceminers/lightningmate",
+  "website": "https://opensourceminers.de",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "random",
+      "label": "Lightning Mate password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "random",
+      "label": "Lightning Mate seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500297,
+  "updated_at": 1792501560297,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

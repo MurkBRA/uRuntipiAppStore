@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "torbrowser",
+      "image": "dennysubke/torbrowser:15.0.17",
+      "isMain": true,
+      "internalPort": 5800,
+      "environment": [
+        {
+          "key": "DARK_MODE",
+          "value": "1"
+        },
+        {
+          "key": "WEB_AUDIO",
+          "value": "1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config"
+        }
+      ]
+    }
+  ]
+}

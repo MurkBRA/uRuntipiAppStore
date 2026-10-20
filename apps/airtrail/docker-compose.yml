@@ -1,0 +1,34 @@
+services:
+  airtrail:
+    image: johly/airtrail:v3.13.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/uploads:/app/uploads
+    environment:
+      - UPLOAD_LOCATION=/app/uploads
+      - DB_URL=postgres://airtrail:itworkslocally@airtrail-postgres:5432/airtrail
+    depends_on:
+      airtrail-postgres:
+        condition: service_healthy
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  airtrail-postgres:
+    image: postgres:18.3-alpine
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/data
+    environment:
+      - POSTGRES_DB=airtrail
+      - POSTGRES_USER=airtrail
+      - POSTGRES_PASSWORD=itworkslocally
+      - PGDATA=/data/pgdata
+    healthcheck:
+      test: pg_isready -U airtrail -h localhost -d airtrail
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    stop_grace_period: 1m
+x-runtipi:
+  schema_version: 2

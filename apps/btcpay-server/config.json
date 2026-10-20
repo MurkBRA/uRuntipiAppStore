@@ -1,0 +1,109 @@
+{
+  "name": "BTCPay Server",
+  "available": true,
+  "port": 3003,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "btcpay-server",
+  "description": "BTCPay Server is a payment processor that allows you to receive payments in Bitcoin (and altcoins) directly, with no fees, transaction cost or a middleman. It is a non-custodial invoicing system which eliminates the involvement of a third-party.",
+  "tipi_version": 1,
+  "version": "2.4.5",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Accept Bitcoin payments with 0 fees & no 3rd party",
+  "author": "BTCPay Server Foundation",
+  "source": "https://github.com/btcpayserver/btcpayserver",
+  "website": "https://btcpayserver.org",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin P2P Port",
+      "required": false,
+      "default": 8333,
+      "env_variable": "APP_BITCOIN_P2P_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) REST Port",
+      "required": false,
+      "default": 8080,
+      "env_variable": "APP_LIGHTNING_NODE_REST_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501491490,
+  "updated_at": 1792501551490,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

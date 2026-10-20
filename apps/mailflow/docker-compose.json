@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "mailflow",
+      "image": "ghcr.io/maathimself/mailflow-frontend:4.0.2",
+      "isMain": true,
+      "internalPort": 80,
+      "stopGracePeriod": "1m",
+      "healthCheck": {
+        "test": "wget -qO/dev/null http://127.0.0.1:80/ || exit 1",
+        "interval": "15s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "20s"
+      },
+      "dependsOn": {
+        "mailflow-backend": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "mailflow-backend",
+      "image": "ghcr.io/maathimself/mailflow-backend:4.0.2",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "PORT",
+          "value": 3000
+        },
+        {
+          "key": "APP_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "FRONTEND_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "SESSION_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "ENCRYPTION_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "mailflow-postgres"
+        },
+        {
+          "key": "DB_PORT",
+          "value": 5432
+        },
+        {
+          "key": "DB_NAME",
+          "value": "mailflow"
+        },
+        {
+          "key": "DB_USER",
+          "value": "mailflow"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "mailflow"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://mailflow-redis:6379"
+        },
+        {
+          "key": "TRUST_PROXY_HOPS",
+          "value": 2
+        }
+      ],
+      "healthCheck": {
+        "test": "wget -qO- http://localhost:3000/api/health || exit 1",
+        "interval": "15s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "30s"
+      },
+      "dependsOn": {
+        "mailflow-postgres": {
+          "condition": "service_healthy"
+        },
+        "mailflow-redis": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "mailflow-postgres",
+      "image": "postgres:16-alpine",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "mailflow"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "mailflow"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "mailflow"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U mailflow -d mailflow",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "20s"
+      }
+    },
+    {
+      "name": "mailflow-redis",
+      "image": "redis:7-alpine",
+      "user": "1000:1000",
+      "command": "redis-server --save 60 1 --loglevel warning",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "redis-cli ping",
+        "interval": "10s",
+        "timeout": "3s",
+        "retries": 5,
+        "startPeriod": "10s"
+      }
+    }
+  ]
+}

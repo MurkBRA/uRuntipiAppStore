@@ -1,0 +1,28 @@
+{
+  "name": "Route96",
+  "available": true,
+  "port": 25904,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "route96",
+  "description": "Route96 is a self-hosted media server for the Nostr ecosystem, implementing the Blossom protocol and NIP-96 standard so that you can store and serve files directly from your own node.",
+  "tipi_version": 1,
+  "version": "0.7.0",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Blossom/NIP-96 media server for Nostr",
+  "author": "v0l",
+  "source": "https://github.com/v0l/route96",
+  "website": "https://github.com/v0l/route96",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501507025,
+  "updated_at": 1792501567025,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

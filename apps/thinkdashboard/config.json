@@ -1,0 +1,29 @@
+{
+  "name": "ThinkDashboard",
+  "available": true,
+  "port": 8229,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "thinkdashboard",
+  "description": "ThinkDashboard is a lightweight, self-hosted bookmark dashboard with keyboard shortcuts.",
+  "tipi_version": 1,
+  "version": "v0.7.6",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A lightweight, bookmark dashboard with keyboard shortcuts",
+  "author": "MatiasDesuu",
+  "source": "https://github.com/MatiasDesuu/ThinkDashboard",
+  "website": "https://github.com/MatiasDesuu/ThinkDashboard",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511200,
+  "updated_at": 1792501571200,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "cashu-me",
+      "image": "rstmsn/cashu-me:0.1.1",
+      "isMain": true,
+      "internalPort": 80,
+      "stopGracePeriod": "1m"
+    }
+  ]
+}

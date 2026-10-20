@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "lnswitchboard",
+      "image": "ghcr.io/ryleastark/lnswitchboard:0.3.2",
+      "isMain": true,
+      "internalPort": 22121,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "SERVICE_PORT",
+          "value": 22121
+        },
+        {
+          "key": "LND_HOST",
+          "value": "${APP_LIGHTNING_NODE_IP}"
+        },
+        {
+          "key": "LND_GRPC_PORT",
+          "value": "${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "DATA_STORE_PATH",
+          "value": "/app/data/lnswitchboard.db"
+        },
+        {
+          "key": "NOSTR_ZAP_SECRET_PATH",
+          "value": "/app/data/nostr_zap_signer.hex"
+        },
+        {
+          "key": "LND_TLS_PATH",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "LND_MACAROON_PATH",
+          "value": "/lnd/invoice.macaroon"
+        },
+        {
+          "key": "LND_READONLY_MACAROON_PATH",
+          "value": "/lnd/readonly.macaroon"
+        },
+        {
+          "key": "TRUSTED_PROXY_CIDRS",
+          "value": "${INTERNAL_IP}/16"
+        },
+        {
+          "key": "TRUSTED_HOSTS",
+          "value": "*"
+        },
+        {
+          "key": "DEP_ENV",
+          "value": "UMBREL"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/invoice.macaroon",
+          "containerPath": "/lnd/invoice.macaroon",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon",
+          "containerPath": "/lnd/readonly.macaroon",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}/tls.cert",
+          "containerPath": "/lnd/tls.cert",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

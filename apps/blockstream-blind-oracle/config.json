@@ -1,0 +1,40 @@
+{
+  "name": "Blockstream Blind Oracle",
+  "available": true,
+  "port": 3344,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "blockstream-blind-oracle",
+  "description": "Run a personal blind oracle to encrypt the wallet material on your  Blockstream Jade.",
+  "tipi_version": 1,
+  "version": "v0.0.36",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Encrypt your wallet on Blockstream Jade",
+  "author": "Blockstream",
+  "source": "https://github.com/Blockstream/blind_pin_server",
+  "website": "https://blockstream.com",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Blockstream Blind Oracle pinserver hidden service",
+      "min": 32,
+      "env_variable": "APP_PINSERVER_HIDDEN_SERVICE"
+    },
+    {
+      "type": "random",
+      "label": "Blockstream Blind Oracle tailscale url",
+      "min": 32,
+      "env_variable": "APP_TAILSCALE_URL"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501490707,
+  "updated_at": 1792501550707,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

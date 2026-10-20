@@ -1,0 +1,26 @@
+{
+  "name": "Cashu.me Wallet",
+  "available": true,
+  "port": 3194,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "cashu-me",
+  "description": "🥜 Cashu.me is a free and open-source Bitcoin wallet built on the Cashu ecash protocol. It combines the speed and efficiency of ecash with the power of Bitcoin — ensuring your financial privacy like never before. ## 🚀 Why Use Cashu.me?",
+  "tipi_version": 1,
+  "version": "0.1.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "An open-source Bitcoin ecash wallet",
+  "author": "cashubtc",
+  "source": "https://github.com/cashubtc/cashu.me",
+  "website": "https://cashu.space",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501492166,
+  "updated_at": 1792501552166,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

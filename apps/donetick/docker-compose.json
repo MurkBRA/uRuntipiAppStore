@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "donetick",
+      "image": "donetick/donetick:v0.1.83",
+      "isMain": true,
+      "internalPort": 2021,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "DT_ENV",
+          "value": "selfhosted"
+        },
+        {
+          "key": "DT_JWT_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DT_SQLITE_PATH",
+          "value": "/donetick-data/donetick.db"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/donetick-data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config"
+        }
+      ]
+    }
+  ]
+}

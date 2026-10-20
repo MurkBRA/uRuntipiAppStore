@@ -1,0 +1,105 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bleskomat-server",
+      "image": "bleskomat/bleskomat-server:1.3.4",
+      "isMain": true,
+      "internalPort": 3333,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "DEBUG",
+          "value": "bleskomat-server*,lnurl*"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_PORT",
+          "value": 3333
+        },
+        {
+          "key": "BLESKOMAT_SERVER_URL",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_ENDPOINT",
+          "value": "/u"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_AUTH_API_KEYS",
+          "value": "[]"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_LIGHTNING",
+          "value": "{\"backend\":\"lnd\",\"config\":{\"cert\":\"/lnd/tls.cert\",\"protocol\":\"https\",\"hostname\":\"${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_REST_PORT}\",\"macaroon\":\"/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon\"}}"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_STORE",
+          "value": "{\"backend\":\"knex\",\"config\":{\"client\":\"postgres\",\"connection\":{\"host\":\"bleskomat-server-db\",\"port\":5432,\"user\":\"bleskomat_server\",\"password\":\"moneyprintergobrrr\",\"database\":\"bleskomat_server\"}}}"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_COINRATES_DEFAULTS_PROVIDER",
+          "value": "coinbase"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_ADMIN_WEB",
+          "value": "true"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_ADMIN_PASSWORD_PLAINTEXT",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "BLESKOMAT_SERVER_ENV_FILEPATH",
+          "value": "./data/.env"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "$APP_DATA_DIR/data/web",
+          "containerPath": "/usr/src/app/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": [
+        "bleskomat-server-db"
+      ]
+    },
+    {
+      "name": "bleskomat-server-db",
+      "image": "postgres:10.20-stretch",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "bleskomat_server"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "bleskomat_server"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "moneyprintergobrrr"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "$APP_DATA_DIR/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ]
+    }
+  ]
+}

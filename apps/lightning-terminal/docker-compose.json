@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "lightning-terminal",
+      "image": "lightninglabs/lightning-terminal:v0.17.6",
+      "isMain": true,
+      "internalPort": 3004,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "command": [
+        "--uipassword_env=APP_PASSWORD",
+        "--insecure-httplisten=0.0.0.0:3004",
+        "--network=\"${APP_BITCOIN_NETWORK}\"",
+        "--lnd-mode=\"remote\"",
+        "--remote.lnd.rpcserver=${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}",
+        "--remote.lnd.macaroonpath=\"/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon\"",
+        "--remote.lnd.tlscertpath=\"/lnd/tls.cert\""
+      ],
+      "environment": [
+        {
+          "key": "HOME",
+          "value": "/data"
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "LIT_AUTO_MIGRATE_TO_SQL",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

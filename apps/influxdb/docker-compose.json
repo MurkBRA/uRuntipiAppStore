@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "influxdb",
+      "image": "chronograf:1.11.4",
+      "isMain": true,
+      "internalPort": 8888,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "INFLUXDB_URL",
+          "value": "http://influxdb-influxdb-sidecar:8086"
+        },
+        {
+          "key": "INFLUXDB_USERNAME",
+          "value": "admin"
+        },
+        {
+          "key": "INFLUXDB_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/chronograf",
+          "containerPath": "/var/lib/chronograf"
+        }
+      ],
+      "dependsOn": [
+        "influxdb-influxdb-sidecar"
+      ]
+    },
+    {
+      "name": "influxdb-influxdb-sidecar",
+      "image": "influxdb:1.13.1",
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "INFLUXDB_ADMIN_USER",
+          "value": "admin"
+        },
+        {
+          "key": "INFLUXDB_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "INFLUXDB_HTTP_AUTH_ENABLED",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/influxdb",
+          "containerPath": "/var/lib/influxdb"
+        }
+      ]
+    }
+  ]
+}

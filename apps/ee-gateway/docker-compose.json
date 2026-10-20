@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "ee-gateway",
+      "image": "encryptedenergy/ee-gateway-ui:0.6.5",
+      "isMain": true,
+      "internalPort": 8080,
+      "environment": [
+        {
+          "key": "EE_DATA_DIR",
+          "value": "/data"
+        },
+        {
+          "key": "EE_UI_PORT",
+          "value": 8080
+        },
+        {
+          "key": "EE_GATEWAY_VERSION",
+          "value": "0.10.7"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ],
+      "dependsOn": {
+        "ee-gateway-init_perms": {
+          "condition": "service_completed_successfully"
+        }
+      }
+    },
+    {
+      "name": "ee-gateway-init_perms",
+      "image": "encryptedenergy/ee-gateway-worker:0.8.1",
+      "user": "0:0",
+      "entrypoint": [
+        "sh",
+        "-c",
+        "chown -R 1000:1000 /data"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "ee-gateway-worker",
+      "image": "encryptedenergy/ee-gateway-worker:0.8.1",
+      "networkMode": "host",
+      "environment": [
+        {
+          "key": "EE_DATA_DIR",
+          "value": "/data"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "/var/run/dbus",
+          "containerPath": "/var/run/dbus",
+          "readOnly": true
+        },
+        {
+          "hostPath": "/dev",
+          "containerPath": "/dev"
+        }
+      ],
+      "dependsOn": {
+        "ee-gateway-init_perms": {
+          "condition": "service_completed_successfully"
+        }
+      },
+      "capAdd": [
+        "NET_ADMIN",
+        "NET_RAW"
+      ]
+    }
+  ]
+}

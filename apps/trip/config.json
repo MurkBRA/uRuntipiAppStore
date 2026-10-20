@@ -1,0 +1,27 @@
+{
+  "name": "Trip",
+  "available": true,
+  "port": 8980,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "trip",
+  "description": "🗺️ TRIP is a self-hostable minimalist Map tracker and Trip planner to visualize your points of interest (POI) and organize your next adventure details.",
+  "tipi_version": 1,
+  "version": "1.50.1",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Minimalist Map Tracker and Trip Planner",
+  "author": "itskovacs",
+  "source": "https://github.com/itskovacs/trip",
+  "website": "https://itskovacs-trip.netlify.app/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511756,
+  "updated_at": 1792501571756,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

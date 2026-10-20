@@ -1,0 +1,44 @@
+{
+  "name": "Endurain",
+  "available": true,
+  "port": 8865,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "endurain",
+  "description": "Endurain is a self-hosted fitness tracking service designed to give users full control over their data and hosting environment.",
+  "tipi_version": 1,
+  "version": "0.19.4",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Fitness tracking, Open Source, Self-Hosted",
+  "author": "João Vitória Silva",
+  "source": "https://github.com/endurain-project/endurain",
+  "website": "https://docs.endurain.com/",
+  "https": true,
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Endurain redis password",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_ENDURAIN_REDIS_PASSWORD"
+    },
+    {
+      "type": "random",
+      "label": "Endurain password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495476,
+  "updated_at": 1792501555476,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

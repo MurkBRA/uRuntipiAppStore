@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "ekko-studio",
+      "image": "ekkoye8888/hermes-web-ui:v0.7.37",
+      "isMain": true,
+      "internalPort": 6060,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "PORT",
+          "value": "6060"
+        },
+        {
+          "key": "HOME",
+          "value": "/home/agent"
+        },
+        {
+          "key": "WORKSPACE_BASE",
+          "value": "/opt/data"
+        },
+        {
+          "key": "HERMES_HOME",
+          "value": "/home/agent/.hermes"
+        },
+        {
+          "key": "HERMES_BIN",
+          "value": "/opt/hermes/.venv/bin/hermes"
+        },
+        {
+          "key": "HERMES_WEB_UI_MANAGED_GATEWAY",
+          "value": "1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/home",
+          "containerPath": "/home/agent"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/hermes",
+          "containerPath": "/home/agent/.hermes"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/studio",
+          "containerPath": "/home/agent/.hermes-web-ui"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/workspace",
+          "containerPath": "/opt/data"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+services:
+  langflow:
+    image: langflowai/langflow:1.12.6
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/app/langflow
+    environment:
+      - LANGFLOW_CONFIG_DIR=/app/langflow
+      - HOME=/app/langflow
+      - DO_NOT_TRACK=true
+      - LANGFLOW_AUTO_LOGIN=true
+      - LANGFLOW_SUPERUSER_PASSWORD=${APP_PASSWORD}
+      - LANGFLOW_DATABASE_URL=postgresql://langflow:langflow@langflow-db:5432/langflow
+    x-runtipi:
+      internal_port: 7860
+      is_main: true
+  langflow-db:
+    image: postgres:16.14-trixie
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=langflow
+      - POSTGRES_PASSWORD=langflow
+      - POSTGRES_DB=langflow
+x-runtipi:
+  schema_version: 2

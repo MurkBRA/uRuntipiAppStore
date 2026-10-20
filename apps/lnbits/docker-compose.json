@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "lnbits",
+      "image": "lnbits/lnbits:v1.6.2",
+      "isMain": true,
+      "internalPort": 3007,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "LNBITS_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "LNBITS_PORT",
+          "value": 3007
+        },
+        {
+          "key": "LNBITS_DATA_FOLDER",
+          "value": "/data"
+        },
+        {
+          "key": "LNBITS_EXTENSIONS_PATH",
+          "value": "/data"
+        },
+        {
+          "key": "AUTH_HTTPS_ONLY",
+          "value": "false"
+        },
+        {
+          "key": "LNBITS_BACKEND_WALLET_CLASS",
+          "value": "LndRestWallet"
+        },
+        {
+          "key": "LND_REST_ENDPOINT",
+          "value": "https://${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_REST_PORT}/"
+        },
+        {
+          "key": "LND_REST_CERT",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "LND_REST_MACAROON",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        },
+        {
+          "key": "LNBITS_SITE_TITLE",
+          "value": "LNbits - Umbrel"
+        },
+        {
+          "key": "LNBITS_DEFAULT_WALLET_NAME",
+          "value": "LNbits wallet"
+        },
+        {
+          "key": "LNBITS_DISABLED_EXTENSIONS",
+          "value": "amilk"
+        },
+        {
+          "key": "LNBITS_ADMIN_EXTENSIONS",
+          "value": "ngrok"
+        },
+        {
+          "key": "LNBITS_ADMIN_UI",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

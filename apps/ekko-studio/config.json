@@ -1,0 +1,28 @@
+{
+  "name": "Ekko Studio",
+  "available": true,
+  "port": 6063,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "ekko-studio",
+  "description": "Ekko Studio is a browser workspace for AI agents, with conversations, file tools, persistent memory, skills, and model settings. It includes both the Ekko and Hermes runtimes so you can choose an agent for each conversation.",
+  "tipi_version": 1,
+  "version": "0.7.37",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "Manage your AI agent from your browser",
+  "author": "EKKOLearnAI",
+  "source": "https://github.com/EKKOLearnAI/ekko-studio",
+  "website": "https://github.com/EKKOLearnAI/ekko-studio",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501494907,
+  "updated_at": 1792501554907,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

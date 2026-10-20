@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "urbit-bitcoin-connector",
+      "image": "matwet/urbit-btc-node:latest",
+      "isMain": true,
+      "internalPort": 9090,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "INTERNAL_IP",
+          "value": "urbit-bitcoin-connector"
+        },
+        {
+          "key": "ELECTRUM_IP",
+          "value": "${APP_ELECTRS_NODE_IP}"
+        },
+        {
+          "key": "ELECTRUM_PORT",
+          "value": "${APP_ELECTRS_NODE_PORT}"
+        },
+        {
+          "key": "BITCOIN_IP",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIN_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_RPC_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "BITCOIN_RPC_AUTH",
+          "value": "${APP_BITCOIN_RPC_AUTH}"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 55555,
+          "containerPort": 55555,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

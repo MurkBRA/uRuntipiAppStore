@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "shopstr",
+      "image": "calvadev/shopstr:v0.7.5",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "PORT",
+          "value": 3000
+        }
+      ]
+    }
+  ]
+}

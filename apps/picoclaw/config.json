@@ -1,0 +1,28 @@
+{
+  "name": "PicoClaw",
+  "available": true,
+  "port": 18800,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "picoclaw",
+  "description": "PicoClaw is an ultra-lightweight personal AI assistant written in Go and designed to run efficiently on low-cost hardware with a small memory footprint and fast startup times.",
+  "tipi_version": 1,
+  "version": "v0.3.1-launcher",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "Ultra-lightweight personal AI assistant",
+  "author": "Sipeed",
+  "source": "https://github.com/sipeed/picoclaw",
+  "website": "https://picoclaw.io",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505242,
+  "updated_at": 1792501565242,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

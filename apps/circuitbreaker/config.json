@@ -1,0 +1,59 @@
+{
+  "name": "Circuit Breaker",
+  "available": true,
+  "port": 9235,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "circuitbreaker",
+  "description": "It allows nodes to protect themselves from being flooded with HTLCs.  With circuitbreaker a maximum to the number of in-flight HTLCs can be set on a per-peer basis. Known and trusted peers for example can be assigned a higher maximum, while a new channel from a previously unseen node may be limited to only a few pending HTLCs. Furthermore it is possible to apply rate limits to the number of forwarded HTLCs.  This offers protection against DoS/spam attacks that rely on large numbers of fast-resolving HTLCs.  Rate limiting is implemented with a Token bucket.  Via the UI the minimum interval between HTLCs can be specified. Large numbers of HTLCs are also required for probing channel balances.  Reducing the information leakage through probing could be another reason to put in place a rate limit for untrusted peers.",
+  "tipi_version": 1,
+  "version": "v0.5.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Your Lightning Node's Firewall",
+  "author": "Joost Jager",
+  "source": "https://github.com/lightningequipment/circuitbreaker",
+  "website": "https://github.com/joostjager",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501492841,
+  "updated_at": 1792501552841,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

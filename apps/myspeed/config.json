@@ -1,0 +1,26 @@
+{
+  "name": "MySpeed",
+  "available": true,
+  "port": 5216,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "myspeed",
+  "description": "MySpeed is a speed test analysis software that stores the speed of your internet for up to 30 days.  This can be useful if you want to know when your network might have drops or if you want to check if your internet  matches the booked values from your contract.",
+  "tipi_version": 1,
+  "version": "1.0.9",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Speed test analysis software that shows your internet speed for up to 30 days",
+  "author": "Mathias Wagner",
+  "source": "https://github.com/gnmyt/myspeed",
+  "website": "https://myspeed.dev",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501502641,
+  "updated_at": 1792501562641,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

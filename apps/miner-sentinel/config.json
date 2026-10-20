@@ -1,0 +1,43 @@
+{
+  "name": "MinerSentinel",
+  "available": true,
+  "port": 3082,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "miner-sentinel",
+  "description": "MinerSentinel is a self-hosted monitoring solution for Bitcoin home miners. It unifies Bitaxe, Avalon, NMAxe, NerdNOS, and other makes into one device registry and dashboard for fleet performance, hardware health, pool stats, cost analysis, Activity alerts, and per-device Controls—with all data stored locally.",
+  "tipi_version": 1,
+  "version": "1.2.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Multi-make Bitcoin mining monitor for home ASIC fleets",
+  "author": "Davide Bert",
+  "source": "https://github.com/dcbert/miner-sentinel",
+  "website": "https://github.com/dcbert/miner-sentinel",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "MinerSentinel seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "random",
+      "label": "MinerSentinel password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501502104,
+  "updated_at": 1792501562104,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

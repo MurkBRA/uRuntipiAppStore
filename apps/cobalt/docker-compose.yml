@@ -1,0 +1,16 @@
+services:
+  cobalt:
+    image: dennysubke/cobalt:11.5
+    user: '1000:1000'
+    ports:
+      - 9013:9000/tcp
+    environment:
+      - API_URL=http://${APP_DOMAIN}:9013/
+      - API_AUTH_REQUIRED=0
+      - DURATION_LIMIT=86400
+    read_only: true
+    x-runtipi:
+      internal_port: 9001
+      is_main: true
+x-runtipi:
+  schema_version: 2

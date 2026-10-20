@@ -1,0 +1,71 @@
+{
+  "name": "ElectrumX",
+  "available": true,
+  "port": 23042,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "electrumx",
+  "description": "Run your personal Electrum server and connect your Electrum-compatible wallet, including BitBoxApp, BlueWallet, Electrum Wallet (Android and Desktop), Nunchuk  (Desktop), Phoenix, and Sparrow Wallet to it instead of using a third-party Electrum server.",
+  "tipi_version": 1,
+  "version": "1.0.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A lightweight Electrum server",
+  "author": "Umbrel",
+  "source": "https://github.com/getumbrel/umbrel-electrumx",
+  "website": "https://umbrel.com/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "ElectrumX rpc hidden service",
+      "min": 32,
+      "env_variable": "APP_ELECTRUMX_RPC_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495153,
+  "updated_at": 1792501555153,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

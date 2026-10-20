@@ -1,0 +1,65 @@
+{
+  "name": "Public Pool's Web",
+  "available": true,
+  "port": 2021,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "public-pool-web",
+  "description": "Public Pool's Web provides a sleek, user-friendly interface for managing and monitoring your Public Pool's data.",
+  "tipi_version": 1,
+  "version": "0.2.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Modern web interface for managing your Public Pool's data",
+  "author": "martinbarilik",
+  "source": "https://github.com/martinbarilik/public-pool-web",
+  "website": "https://github.com/martinbarilik/public-pool-web",
+  "url_suffix": "",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Public Pool's Web app public pool web postgres username",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME"
+    },
+    {
+      "type": "random",
+      "label": "Public Pool's Web app public pool web postgres password",
+      "min": 32,
+      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Public Pool's Web app public pool web postgres host",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_HOST"
+    },
+    {
+      "type": "text",
+      "label": "Public Pool's Web app public pool web postgres port",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Public Pool's Web app public pool web postgres dbname",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506039,
+  "updated_at": 1792501566039,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

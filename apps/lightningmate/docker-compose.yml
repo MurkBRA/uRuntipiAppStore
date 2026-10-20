@@ -1,0 +1,30 @@
+services:
+  lightningmate:
+    image: ghcr.io/opensourceminers/lightningmate:v0.7.7
+    user: '1000:1000'
+    volumes:
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - APP_LIGHTNING_NODE_IP=${APP_LIGHTNING_NODE_IP}
+      - APP_LIGHTNING_NODE_GRPC_PORT=${APP_LIGHTNING_NODE_GRPC_PORT}
+      - LND_SOCKET=${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}
+      - LND_DIR=/lnd
+      - LND_CERT_PATH=/lnd/tls.cert
+      - LND_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon
+      - DATA_DIR=/data
+      - PORT=3001
+      - LM_BIND=0.0.0.0
+      - APP_PASSWORD=${APP_PASSWORD}
+      - APP_SEED=${APP_SEED}
+      - LM_ENABLE_WRITE=true
+      - LND_WRITE_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - LM_SELL_FEE_BPS=100
+      - LM_SELL_FEE_ADDRESS=lightningmate@btcpay.opensourceminers.de
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3001
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,11 @@
+services:
+  telegrapho:
+    image: ghcr.io/egzola/telegrapho:1.0.1
+    environment:
+      - PORT=3712
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3712
+      is_main: true
+x-runtipi:
+  schema_version: 2

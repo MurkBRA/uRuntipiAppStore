@@ -1,0 +1,77 @@
+{
+  "name": "Elements Core",
+  "available": true,
+  "port": 3042,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "elements",
+  "description": "Elements is an open source full node implementation to run the Liquid Network, a Bitcoin layer-2 solution enabling the fast, confidential settlement and issuance of digital assets, such as stablecoins, security tokens, and other financial instruments, on top of the Bitcoin timechain.",
+  "tipi_version": 1,
+  "version": "v0.0.3",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Liquid Network full node",
+  "author": "Elements Core Developers",
+  "source": "https://github.com/ElementsProject/elements",
+  "website": "https://elementsproject.org",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Elements Core elements rpc hidden service",
+      "min": 32,
+      "env_variable": "APP_ELEMENTS_RPC_HIDDEN_SERVICE"
+    },
+    {
+      "type": "random",
+      "label": "Elements Core elements p2p hidden service",
+      "min": 32,
+      "env_variable": "APP_ELEMENTS_P2P_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "random",
+      "label": "Elements Core password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495314,
+  "updated_at": 1792501555314,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

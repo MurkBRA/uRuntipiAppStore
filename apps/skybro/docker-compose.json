@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "skybro",
+      "image": "xdeekay/skybro-dashboard:1.6.2",
+      "isMain": true,
+      "internalPort": 5000,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": [
+        "skybro-tracker"
+      ]
+    },
+    {
+      "name": "skybro-tracker",
+      "image": "xdeekay/skybro-tracker:1.6.2",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

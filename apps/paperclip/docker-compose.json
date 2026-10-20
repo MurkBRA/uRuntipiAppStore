@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "paperclip",
+      "image": "ghcr.io/paperclipai/paperclip:2026.1012.0",
+      "isMain": true,
+      "internalPort": 3100,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "PAPERCLIP_HOME",
+          "value": "/paperclip"
+        },
+        {
+          "key": "PAPERCLIP_PUBLIC_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "PAPERCLIP_API_URL",
+          "value": "http://127.0.0.1:3100"
+        },
+        {
+          "key": "PAPERCLIP_ALLOWED_HOSTNAMES",
+          "value": "${APP_DOMAIN},${APP_DOMAIN}:8860,${LOCAL_DOMAIN},${LOCAL_DOMAIN}:8860,${APP_DOMAIN},${APP_DOMAIN}:8860,${APP_DOMAIN},${local_ips},paperclip"
+        },
+        {
+          "key": "BETTER_AUTH_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "PAPERCLIP_DEPLOYMENT_MODE",
+          "value": "authenticated"
+        },
+        {
+          "key": "PAPERCLIP_DEPLOYMENT_EXPOSURE",
+          "value": "private"
+        },
+        {
+          "key": "PAPERCLIP_TELEMETRY_DISABLED",
+          "value": "1"
+        },
+        {
+          "key": "DO_NOT_TRACK",
+          "value": "1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/paperclip"
+        }
+      ]
+    }
+  ]
+}

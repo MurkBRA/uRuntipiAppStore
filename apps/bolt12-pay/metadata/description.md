@@ -1,0 +1,82 @@
+# BOLT12 Pay
+
+> Self-hosted Lightning payments and identity with BOLT12, BIP353, LNURL, and Nostr
+
+BOLT12 Pay is a self-hosted Lightning payments and identity app for LND nodes.
+It supports BOLT12 Offers, BIP353 and LNURL Lightning Addresses, optional BOLT11 fallback invoices, Nostr identities, NIP-05 and Zaps.
+
+## 🚀 Before you install
+
+- Your LND node must be fully synced and have at least one active channel.
+- LND v0.21 and newer need no manual BOLT12 configuration.
+- Direct BOLT12 Offers work without a domain.
+- Lightning Addresses and public payment pages require your own domain.
+- Cloudflare DNS automation and a Cloudflare Tunnel are optional.
+
+## 🔒 UmbrelOS 2.0
+
+Open BOLT12 Pay at:
+
+https://umbrel.local:8367
+
+On first launch, the setup screen opens automatically.
+
+UmbrelOS 2.0 uses local HTTPS. Install Umbrel's Local HTTPS CA on every computer that opens the app. Allow camera access for the address including port 8367 if you want to use the QR scanner.
+
+For a Cloudflare Tunnel, use https://umbrel.local:8367 as the origin and copy the HTTPS settings from the full guide. Keep TLS verification enabled.
+
+[Full UmbrelOS 2.0 and Cloudflare guide](https://github.com/Alex71btc/lndk-pay/blob/main/README.md#-umbrel-setup)
+
+## 🌍 Domain and public access
+
+Enter your root domain, for example example.com, as the Cloudflare Zone Domain. Do not enter a subdomain such as pay.example.com in that field.
+
+Use your public Tunnel address as the LNURL Base URL. Wallets need this public address to find you and complete payments. Do not protect the entire public domain with an interactive Cloudflare Access login, because wallets cannot pass it.
+
+[Domain setup guide](https://github.com/Alex71btc/lndk-pay/blob/main/README.md#-domain-configuration-bip353-vs-lnurl)
+
+## 🦄 Nostr identity and Zaps
+
+A Nostr Identity connects an alias to a Nostr public key. NIP-05 publishes `alias@domain` as a verifiable Nostr identity. **Zap / Nostr** makes the alias's LNURL Lightning Address able to receive NIP-57 Zaps. BIP353 addresses alone cannot receive Nostr Zaps.
+
+1. Create a Lightning Address alias in the Console, for example `zap`.
+2. Open **Nostr / Identity** under `/pay`.
+3. Enter the same alias, the receiving Nostr profile's npub and its relays.
+4. Save the identity.
+5. Enter the resulting Lightning Address in your Nostr client's Lightning or Zap address field.
+
+To edit an identity later, enter its alias again and then select **Load identity**.
+
+## 🔔 Zap notifications
+
+To receive encrypted Zap notifications by Nostr direct message, enter the `nsec` of the same Nostr profile and select **Initialize Zap Notifications**. BOLT12 Pay encrypts this `nsec` and creates a separate internal signer key pair automatically.
+
+BOLT12 Pay sends each notification as an encrypted NIP-04 self-DM from that same Nostr profile through the relays saved with the Identity. This keeps Zap notifications in the familiar private-message flow without introducing a second visible sender profile. The public Zap receipt still uses the relays requested by the paying client.
+
+LND unlocks both encrypted keys automatically after app or node restarts. The private app-signer `nsec` is never displayed. **Show app signer** reveals only its public `npub`. Existing plaintext Nostr keys are encrypted during this update.
+
+The saved notification `nsec` is never loaded back into the input field. To replace it, enter a new `nsec` and select **Save new notification nsec**. **Regenerate app signer** replaces only the internal signer key pair.
+
+Keep every `nsec` secret. Never share it in support messages, logs or screenshots.
+
+[Full Nostr setup guide](https://github.com/Alex71btc/lndk-pay/blob/main/README.md#-nostr)
+
+## ⚠️ Older LND versions
+
+Only LND v0.20.1 and older versions need the legacy custom-message settings from the full guide. Remove the complete custom protocol block before upgrading to LND v0.21 or newer. Restart LND before performing the update.
+
+BOLT12 support is still evolving and wallet compatibility may vary.
+
+[Support ongoing development](https://geyser.fund/project/bolt12pay)
+
+Made for sovereign Bitcoin users.
+
+## Inter-App Connections
+
+This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
+
+## Links
+- **Upstream Version**: `0.3.14`
+- **Website**: https://github.com/Alex71btc
+- **Source Repository**: https://github.com/Alex71btc/lndk-pay
+- **Support**: https://github.com/Alex71btc/lndk-pay/issues

@@ -1,0 +1,36 @@
+{
+  "name": "Syslog-ng",
+  "available": true,
+  "port": 5142,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "syslog-ng",
+  "description": "Syslog-ng is a flexible, highly scalable syslog server that collects logs from all your network devices. It supports both BSD (RFC3164) and IETF (RFC5424) syslog formats, making it compatible with virtually any router, switch, access point, or server.",
+  "tipi_version": 1,
+  "version": "0.17.1",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Centralized syslog server with real-time web UI",
+  "author": "syslog-ng team",
+  "source": "https://github.com/syslog-ng/syslog-ng",
+  "website": "https://www.syslog-ng.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Syslog-ng password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501510656,
+  "updated_at": 1792501570656,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

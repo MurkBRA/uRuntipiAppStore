@@ -1,0 +1,65 @@
+{
+  "name": "Sparkkiosk",
+  "available": true,
+  "port": 21214,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "sparkkiosk",
+  "description": "Use sparkkiosk to enable lightning payments from printed QR codes in selfservice kiosks / cafés or other places where POS interaction is not needed or an option.",
+  "tipi_version": 1,
+  "version": "v1.0.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Minimal LNURL kiosk",
+  "author": "Jens Gertsen",
+  "source": "https://github.com/jensgertsen/sparkkiosk",
+  "website": "https://github.com/jensgertsen/sparkkiosk",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "random",
+      "label": "Sparkkiosk password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501509576,
+  "updated_at": 1792501569576,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "downtify",
+      "image": "ghcr.io/henriquesebastiao/downtify:3.5.0",
+      "isMain": true,
+      "internalPort": 8000,
+      "stopGracePeriod": "1m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/downloads/downtify",
+          "containerPath": "/downloads"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

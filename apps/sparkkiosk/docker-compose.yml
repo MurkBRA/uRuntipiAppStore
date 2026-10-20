@@ -1,0 +1,22 @@
+services:
+  sparkkiosk:
+    image: jensgertsen/sparkkiosk:v1.0.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    environment:
+      - LND_GRPC_ENDPOINT=${APP_LIGHTNING_NODE_IP}
+      - LND_GRPC_PORT=${APP_LIGHTNING_NODE_GRPC_PORT}
+      - LND_GRPC_CERT=/lnd/tls.cert
+      - LND_GRPC_MACAROON=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - APP_HIDDEN_SERVICE=http://${APP_DOMAIN}
+      - APP_PASSWORD=${APP_PASSWORD}
+      - APP_DOMAIN=$APP_DOMAIN
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 21214
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,37 @@
+{
+  "name": "Silo",
+  "available": true,
+  "port": 9130,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "silo",
+  "description": "Silo is a community-maintained, open-source object storage server with an S3-compatible API and a full web console. Organize files in buckets, upload and download objects, and manage access keys and policies from your browser.",
+  "tipi_version": 1,
+  "version": "RELEASE.2026-10-18T00-00-00Z",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Store your files with an S3-compatible object server",
+  "author": "PGSTY",
+  "source": "https://github.com/pgsty/silo",
+  "website": "https://silo.pgsty.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Silo password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501508756,
+  "updated_at": 1792501568756,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

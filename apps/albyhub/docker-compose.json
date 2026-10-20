@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "albyhub",
+      "image": "ghcr.io/getalby/hub:v1.24.3",
+      "isMain": true,
+      "internalPort": 8080,
+      "user": "1000:1000",
+      "stopGracePeriod": "3m",
+      "environment": [
+        {
+          "key": "LN_BACKEND_TYPE",
+          "value": "${APP_ALBYHUB_LN_BACKEND}"
+        },
+        {
+          "key": "LND_ADDRESS",
+          "value": "10.21.21.9:10009"
+        },
+        {
+          "key": "LND_CERT_FILE",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "LND_MACAROON_FILE",
+          "value": "/lnd/data/chain/bitcoin/mainnet/admin.macaroon"
+        },
+        {
+          "key": "WORK_DIR",
+          "value": "/data/albyhub"
+        },
+        {
+          "key": "COOKIE_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "HIDE_UPDATE_BANNER",
+          "value": "true"
+        },
+        {
+          "key": "LOG_EVENTS",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app-data/lightning/data/lnd",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

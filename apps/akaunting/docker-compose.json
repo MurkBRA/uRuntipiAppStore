@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "akaunting",
+      "image": "akaunting/akaunting:3.1.21",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "AKAUNTING_SETUP",
+          "value": "true"
+        },
+        {
+          "key": "LOCALE",
+          "value": "en-US"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "akaunting-db"
+        },
+        {
+          "key": "DB_PORT",
+          "value": 3306
+        },
+        {
+          "key": "DB_NAME",
+          "value": "akaunting"
+        },
+        {
+          "key": "DB_USERNAME",
+          "value": "admin"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "akaunting_password"
+        },
+        {
+          "key": "DB_PREFIX",
+          "value": "asd_"
+        },
+        {
+          "key": "COMPANY_NAME",
+          "value": "My Company"
+        },
+        {
+          "key": "COMPANY_EMAIL",
+          "value": "my@company.com"
+        },
+        {
+          "key": "ADMIN_EMAIL",
+          "value": "umbrel@umbrel.local"
+        },
+        {
+          "key": "ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "dependsOn": [
+        "akaunting-db"
+      ]
+    },
+    {
+      "name": "akaunting-db",
+      "image": "mariadb:11.8.2",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "akaunting"
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "admin"
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "akaunting_password"
+        },
+        {
+          "key": "MYSQL_RANDOM_ROOT_PASSWORD",
+          "value": "yes"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    }
+  ]
+}

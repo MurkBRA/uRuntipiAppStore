@@ -1,0 +1,26 @@
+{
+  "name": "OpenThread Border Router",
+  "available": true,
+  "port": 7586,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "openthread-border-router",
+  "description": "OpenThread Border Router (OTBR) lets you bridge a Thread mesh network to your local Wi-Fi/Ethernet network using a Thread radio dongle. It enables Home Assistant and Matter-over-Thread devices (locks, sensors, plugs, thermostats) to communicate with your smart home stack without relying on a vendor-specific hub like Apple HomePod, Google Nest Hub, or Amazon eero.",
+  "tipi_version": 1,
+  "version": "0.4.0",
+  "categories": [
+    "automation"
+  ],
+  "short_desc": "Thread border router for Home Assistant and Matter",
+  "author": "ownbee",
+  "source": "https://github.com/ownbee/hass-otbr-docker",
+  "website": "https://github.com/ownbee/hass-otbr-docker",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504379,
+  "updated_at": 1792501564379,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

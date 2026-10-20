@@ -1,0 +1,28 @@
+{
+  "name": "Pastefy",
+  "available": true,
+  "port": 9900,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "pastefy",
+  "description": "Pastefy is a user-friendly online platform that allows you to quickly and securely store and share text, code, or other notes. Perfect for developers, creatives, or anyone who needs to exchange ideas in real time, Pastefy offers a simple way to save and share content without the hassle of sending files back and forth.",
+  "tipi_version": 1,
+  "version": "7.1.6",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "An easy paste for seamless sharing",
+  "author": "InteraApps",
+  "source": "https://github.com/interaapps/pastefy",
+  "website": "https://pastefy.app/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504962,
+  "updated_at": 1792501564962,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

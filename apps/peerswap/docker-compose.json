@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "peerswap",
+      "image": "ghcr.io/impa10r/peerswap-web:v7.0.2",
+      "isMain": true,
+      "internalPort": 1984,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "USER",
+          "value": "peerswap"
+        },
+        {
+          "key": "NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "NO_HTTPS",
+          "value": "true"
+        },
+        {
+          "key": "LND_HOST",
+          "value": "${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "LND_MACAROONPATH",
+          "value": "/home/peerswap/.lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        },
+        {
+          "key": "ELEMENTS_USER",
+          "value": "elements"
+        },
+        {
+          "key": "ELEMENTS_PORT",
+          "value": "${APP_ELEMENTS_NODE_RPC_PORT}"
+        },
+        {
+          "key": "ELEMENTS_HOST",
+          "value": "http://elements_node_1"
+        },
+        {
+          "key": "ELEMENTS_WALLET",
+          "value": "peerswap"
+        },
+        {
+          "key": "ELEMENTS_FOLDER",
+          "value": "/home/elements/.elements"
+        },
+        {
+          "key": "ELEMENTS_FOLDER_MAPPED",
+          "value": "/home/peerswap/.elements"
+        },
+        {
+          "key": "BITCOIN_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIN_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/home/peerswap/.peerswap"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/home/peerswap/.lnd",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${ELEMENTS_DATA_DIR}",
+          "containerPath": "/home/peerswap/.elements",
+          "readOnly": true
+        },
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

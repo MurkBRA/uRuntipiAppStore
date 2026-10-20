@@ -1,0 +1,28 @@
+{
+  "name": "ErsatzTV Legacy",
+  "available": true,
+  "port": 8409,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "ersatztv-legacy",
+  "description": "ErsatzTV Legacy transforms your personal media library into custom live TV channels with IPTV, XMLTV guide data, channel scheduling, and browser playback.",
+  "tipi_version": 1,
+  "version": "26.11.3",
+  "categories": [
+    "media"
+  ],
+  "short_desc": "Build your own live TV channels",
+  "author": "ErsatzTV",
+  "source": "https://github.com/ErsatzTV/legacy",
+  "website": "https://ersatztv.org",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495546,
+  "updated_at": 1792501555546,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

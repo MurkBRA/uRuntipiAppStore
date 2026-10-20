@@ -1,0 +1,18 @@
+services:
+  lunalytics:
+    image: ksjaay/lunalytics:0.10.23
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/lunalytics_data:/app/data
+      - ${APP_DATA_DIR}/data/logs:/app/logs
+    healthcheck:
+      test: nc -z 127.0.0.1 2308 || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+    x-runtipi:
+      internal_port: 2308
+      is_main: true
+x-runtipi:
+  schema_version: 2

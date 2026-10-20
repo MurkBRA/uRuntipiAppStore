@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "gitingest",
+      "image": "ghcr.io/coderamp-labs/gitingest:v0.3.1",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "ALLOWED_HOSTS",
+          "value": "${APP_DOMAIN},${LOCAL_DOMAIN},${local_ips}"
+        }
+      ]
+    }
+  ]
+}

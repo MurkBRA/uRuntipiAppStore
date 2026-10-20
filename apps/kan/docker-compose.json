@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "kan",
+      "image": "ghcr.io/kanbn/kan:0.6.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "environment": [
+        {
+          "key": "NEXT_PUBLIC_BASE_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "BETTER_AUTH_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "POSTGRES_URL",
+          "value": "postgresql://kanuser:kanpassword@kan-db:5432/kan?sslmode=disable"
+        },
+        {
+          "key": "NEXT_PUBLIC_ALLOW_CREDENTIALS",
+          "value": "true"
+        }
+      ],
+      "dependsOn": [
+        "kan-db"
+      ]
+    },
+    {
+      "name": "kan-migrate",
+      "image": "ghcr.io/kanbn/kan-migrate:0.6.0",
+      "environment": [
+        {
+          "key": "POSTGRES_URL",
+          "value": "postgresql://kanuser:kanpassword@kan-db:5432/kan?sslmode=disable"
+        }
+      ],
+      "dependsOn": {
+        "kan-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "kan-db",
+      "image": "postgres:17.3",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "kan"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "kanuser"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "kanpassword"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U kanuser -d kan",
+        "interval": "5s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    }
+  ]
+}

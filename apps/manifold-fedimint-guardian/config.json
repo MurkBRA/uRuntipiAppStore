@@ -1,0 +1,57 @@
+{
+  "name": "Manifold Fedimint Guardian",
+  "available": true,
+  "port": 8483,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "manifold-fedimint-guardian",
+  "description": "Manifold Fedimint Guardian lets you run guardian seats across multiple Fedimint federations from a single machine. Advertise your available capacity, get selected for federations, provision guardian seats locally, and earn fees for the seats you operate. Each seat runs as a distinct guardian with its own fedimintd instance and key, so you can serve multiple communities and earn fees.",
+  "tipi_version": 1,
+  "version": "99d518ffb4c247fd7616783b9f6b20a9dbc1a739",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Run guardian seats across many federations from one machine.",
+  "author": "Fedi",
+  "source": "https://github.com/fedibtc/manifold",
+  "website": "https://manifold.fedi.xyz/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501501284,
+  "updated_at": 1792501561284,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,45 @@
+{
+  "name": "wger",
+  "available": true,
+  "port": 8450,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "wger",
+  "description": "📈 wger is a powerful and flexible open-source fitness management software designed to assist users in planning, tracking, and optimizing their workouts, nutrition, and overall fitness progress. Whether you are an individual looking to improve your training efficiency, a personal trainer managing multiple clients, or a gym owner searching for a digital solution to streamline workout programming, wger provides a feature-rich platform tailored to various fitness needs.",
+  "tipi_version": 1,
+  "version": "alpine3.22",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A fitness tracker for workouts and nutrition",
+  "author": "wger Project",
+  "source": "https://github.com/wger-project/wger",
+  "website": "https://wger.de/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "wger seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "text",
+      "label": "wger ips with port",
+      "required": false,
+      "default": "default",
+      "env_variable": "ips_with_port"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501512912,
+  "updated_at": 1792501572912,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

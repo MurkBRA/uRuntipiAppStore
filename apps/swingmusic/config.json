@@ -1,0 +1,28 @@
+{
+  "name": "Swing Music",
+  "available": true,
+  "port": 1970,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "swingmusic",
+  "description": "🎵 Swing Music is a self-hosted music streaming app — modern, clean, and powerful. It lets you create your own private Spotify-like service at home.",
+  "tipi_version": 1,
+  "version": "v3.0.0",
+  "categories": [
+    "media",
+    "music"
+  ],
+  "short_desc": "Self-hosted music streaming",
+  "author": "Mungai Njoroge",
+  "source": "https://github.com/swingmx/swingmusic",
+  "website": "https://github.com/swingmx/swingmusic",
+  "url_suffix": "",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501510533,
+  "updated_at": 1792501570533,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

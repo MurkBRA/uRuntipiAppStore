@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "dcrpulse",
+      "image": "ghcr.io/karamble/dcrpulse-dashboard:1.0.3",
+      "isMain": true,
+      "internalPort": 8735,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "PORT",
+          "value": 8735
+        },
+        {
+          "key": "DCRD_RPC_HOST",
+          "value": "dcrd"
+        },
+        {
+          "key": "DCRD_RPC_PORT",
+          "value": 9109
+        },
+        {
+          "key": "DCRD_RPC_USER",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRD_RPC_PASS",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRD_RPC_CERT",
+          "value": "/app-data/dcrd/rpc.cert"
+        },
+        {
+          "key": "DCRWALLET_RPC_HOST",
+          "value": "dcrwallet"
+        },
+        {
+          "key": "DCRWALLET_RPC_PORT",
+          "value": 9110
+        },
+        {
+          "key": "DCRWALLET_GRPC_PORT",
+          "value": 9111
+        },
+        {
+          "key": "DCRWALLET_RPC_USER",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRWALLET_RPC_PASS",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRWALLET_RPC_CERT",
+          "value": "/app-data/dcrd/rpc.cert"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app-data",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": {
+        "dcrpulse-dcrd": {
+          "condition": "service_healthy"
+        },
+        "dcrpulse-dcrwallet": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "dcrpulse-dcrd",
+      "image": "ghcr.io/karamble/dcrpulse-dcrd:2.1.3",
+      "user": "1000:1000",
+      "stopGracePeriod": "5m",
+      "command": "--rpcuser=${APP_SEED} --rpcpass=${APP_SEED} --rpclisten=0.0.0.0:9109 --rpccert=/app-data/dcrd/rpc.cert --rpckey=/app-data/dcrd/rpc.key",
+      "environment": [
+        {
+          "key": "DCRD_RPC_USER",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRD_RPC_PASS",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRD_EXTRA_ARGS",
+          "value": "--txindex"
+        },
+        {
+          "key": "TOR_PROXY_IP",
+          "value": "${TOR_PROXY_IP}"
+        },
+        {
+          "key": "TOR_PROXY_PORT",
+          "value": "${TOR_PROXY_PORT}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app-data"
+        }
+      ],
+      "healthCheck": {
+        "test": "sh -c curl -k -u ${APP_SEED}:${APP_SEED} -H 'Content-Type: application/json' -d '{\"jsonrpc\":\"1.0\",\"method\":\"getinfo\",\"params\":[],\"id\":1}' https://127.0.0.1:9109 || exit 1",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 5,
+        "startPeriod": "120s"
+      }
+    },
+    {
+      "name": "dcrpulse-dcrwallet",
+      "image": "ghcr.io/karamble/dcrpulse-dcrwallet:2.1.3",
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "command": "--gaplimit=400",
+      "environment": [
+        {
+          "key": "DCRWALLET_RPC_USER",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRWALLET_RPC_PASS",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRD_RPC_USER",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRD_RPC_PASS",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DCRD_RPC_HOST",
+          "value": "dcrd"
+        },
+        {
+          "key": "DCRWALLET_GAP_LIMIT",
+          "value": 400
+        },
+        {
+          "key": "TOR_PROXY_IP",
+          "value": "${TOR_PROXY_IP}"
+        },
+        {
+          "key": "TOR_PROXY_PORT",
+          "value": "${TOR_PROXY_PORT}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app-data"
+        }
+      ],
+      "healthCheck": {
+        "test": "sh -c nc -z 127.0.0.1 9110 && nc -z 127.0.0.1 9111 || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "10s"
+      },
+      "dependsOn": {
+        "dcrpulse-dcrd": {
+          "condition": "service_healthy"
+        }
+      }
+    }
+  ]
+}

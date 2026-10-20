@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "snapdrop",
+      "image": "linuxserver/snapdrop:version-b8b78cc2",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config"
+        }
+      ]
+    }
+  ]
+}

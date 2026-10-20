@@ -1,0 +1,15 @@
+services:
+  jotty:
+    image: ghcr.io/fccview/jotty:1.28.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/app/data
+      - ${APP_DATA_DIR}/data/config:/app/config
+      - ${APP_DATA_DIR}/data/cache:/app/.next/cache
+    environment:
+      - NODE_ENV=production
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+x-runtipi:
+  schema_version: 2

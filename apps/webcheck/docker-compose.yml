@@ -1,0 +1,10 @@
+services:
+  webcheck:
+    image: ghcr.io/lissy93/web-check:2.3.0
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+x-runtipi:
+  schema_version: 2

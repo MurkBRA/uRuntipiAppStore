@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "satoshi-dashboard",
+      "image": "ghcr.io/satoshi-dashboard/main:v1.1.0",
+      "isMain": true,
+      "internalPort": 8410,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "SERVE_STATIC",
+          "value": "true"
+        },
+        {
+          "key": "API_PORT",
+          "value": 8410
+        },
+        {
+          "key": "API_HOST",
+          "value": "0.0.0.0"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/server/.runtime-cache"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "name": "Reitti",
+  "available": true,
+  "port": 20684,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "reitti",
+  "description": "🗺️ Reitti is an application designed to monitor and record your movements in a comprehensive and automated way. It continuously tracks your location throughout the day and identifies the places you visit, creating a detailed log of your daily activities. By analyzing your movements, it can detect the mode of transportation you use, whether you are walking, cycling, or driving, and provides insights into how you travel between different locations.",
+  "tipi_version": 1,
+  "version": "5.7.0",
+  "categories": [
+    "photography",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A location tracking and analysis application",
+  "author": "Daniel Graf",
+  "source": "https://github.com/dedicatedcode/reitti",
+  "website": "https://www.dedicatedcode.com/projects/reitti/overview/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506577,
+  "updated_at": 1792501566577,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "synapse",
+      "image": "matrixdotorg/synapse:v1.163.0",
+      "isMain": true,
+      "internalPort": 8008,
+      "stopGracePeriod": "1m",
+      "command": "-c './start.py generate && ./start.py migrate_config && echo -e \"\nenable_registration_without_verification: true\" >> /data/homeserver.yaml && exec ./start.py'",
+      "entrypoint": "bash",
+      "environment": [
+        {
+          "key": "UID",
+          "value": "1000"
+        },
+        {
+          "key": "GID",
+          "value": "1000"
+        },
+        {
+          "key": "SYNAPSE_HTTP_PORT",
+          "value": "8008"
+        },
+        {
+          "key": "SYNAPSE_SERVER_NAME",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "SYNAPSE_REPORT_STATS",
+          "value": "yes"
+        },
+        {
+          "key": "SYNAPSE_ENABLE_REGISTRATION",
+          "value": "yes"
+        },
+        {
+          "key": "SYNAPSE_NO_TLS",
+          "value": "yes"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/synapse",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

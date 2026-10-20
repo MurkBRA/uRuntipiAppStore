@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "murmur",
+      "image": "ghcr.io/getumbrel/murmur:v0.6.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "MURMUR_BUILTIN_HERMES_URL",
+          "value": "http://murmur-hermes:9119"
+        },
+        {
+          "key": "MURMUR_BUILTIN_HERMES_USERNAME",
+          "value": "murmur"
+        },
+        {
+          "key": "MURMUR_BUILTIN_HERMES_PASSWORD",
+          "value": "${APP_MURMUR_HERMES_PASSWORD}"
+        },
+        {
+          "key": "MURMUR_FIND_HERMES",
+          "value": "Hermes Agent=http://hermes-agent_web_1:18789"
+        },
+        {
+          "key": "MURMUR_ALLOWED_HOSTS",
+          "value": "*"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/murmur",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "murmur-hermes",
+      "image": "ghcr.io/getumbrel/hermes-agent-umbrel:v0.22.0-4",
+      "stopGracePeriod": "1m",
+      "command": [
+        "gateway",
+        "run"
+      ],
+      "environment": [
+        {
+          "key": "HERMES_UID",
+          "value": "1000"
+        },
+        {
+          "key": "HERMES_GID",
+          "value": "1000"
+        },
+        {
+          "key": "HERMES_DASHBOARD",
+          "value": "1"
+        },
+        {
+          "key": "HERMES_DASHBOARD_BASIC_AUTH_USERNAME",
+          "value": "murmur"
+        },
+        {
+          "key": "HERMES_DASHBOARD_BASIC_AUTH_PASSWORD",
+          "value": "${APP_MURMUR_HERMES_PASSWORD}"
+        },
+        {
+          "key": "HERMES_DASHBOARD_BASIC_AUTH_SECRET",
+          "value": "${APP_MURMUR_HERMES_SECRET}"
+        },
+        {
+          "key": "HERMES_GATEWAY_BOOTSTRAP_STATE",
+          "value": "running"
+        },
+        {
+          "key": "UMBREL_APP_NAME",
+          "value": "Murmur"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/hermes",
+          "containerPath": "/opt/data"
+        }
+      ]
+    }
+  ]
+}

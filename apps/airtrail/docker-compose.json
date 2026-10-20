@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "airtrail",
+      "image": "johly/airtrail:v3.13.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "UPLOAD_LOCATION",
+          "value": "/app/uploads"
+        },
+        {
+          "key": "DB_URL",
+          "value": "postgres://airtrail:itworkslocally@airtrail-postgres:5432/airtrail"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/app/uploads"
+        }
+      ],
+      "dependsOn": {
+        "airtrail-postgres": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "airtrail-postgres",
+      "image": "postgres:18.3-alpine",
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "airtrail"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "airtrail"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "itworkslocally"
+        },
+        {
+          "key": "PGDATA",
+          "value": "/data/pgdata"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U airtrail -h localhost -d airtrail",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      }
+    }
+  ]
+}

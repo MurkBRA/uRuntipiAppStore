@@ -1,0 +1,10 @@
+services:
+  omnitools:
+    image: iib0011/omni-tools:0.6.0
+    security_opt:
+      - no-new-privileges:true
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

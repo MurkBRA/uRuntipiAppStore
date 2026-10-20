@@ -1,0 +1,19 @@
+services:
+  restreamer:
+    image: datarhei/restreamer:2.12.0
+    ports:
+      - 8181:8181/tcp
+      - 1935:1935/tcp
+      - 1936:1936/tcp
+      - 6000:6000/udp
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/core/config
+      - ${APP_DATA_DIR}/data:/core/data
+    environment:
+      - PUID=1000
+      - PGID=1000
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+x-runtipi:
+  schema_version: 2

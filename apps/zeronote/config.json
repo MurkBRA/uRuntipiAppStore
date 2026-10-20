@@ -1,0 +1,30 @@
+{
+  "name": "ZeroNote",
+  "available": true,
+  "port": 18817,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "zeronote",
+  "description": "ZeroNote is an open-source, offline-first unified app that replaces your password manager, bookmark manager, notes app, and 2FA authenticator with a single encrypted note-taking system powered by smart tags, where everything is stored locally on your device with zero-knowledge encryption and optional peer-to-peer or S3 sync.",
+  "tipi_version": 1,
+  "version": "1.0.12",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "All your notes, passwords, bookmarks, and 2FA in one secure, offline-first app",
+  "author": "besoeasy",
+  "source": "https://github.com/besoeasy/zeronote",
+  "website": "https://github.com/besoeasy/zeronote",
+  "url_suffix": "",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501513651,
+  "updated_at": 1792501573651,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

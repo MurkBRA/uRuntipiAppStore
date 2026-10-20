@@ -1,0 +1,12 @@
+services:
+  rotki:
+    image: rotki/rotki:v1.44.1
+    volumes:
+      - ${APP_DATA_DIR}/data/data:/data
+      - ${APP_DATA_DIR}/data/logs:/logs
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,36 @@
+services:
+  kan:
+    image: ghcr.io/kanbn/kan:0.6.0
+    environment:
+      - NEXT_PUBLIC_BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - BETTER_AUTH_SECRET=${APP_SEED}
+      - POSTGRES_URL=postgresql://kanuser:kanpassword@kan-db:5432/kan?sslmode=disable
+      - NEXT_PUBLIC_ALLOW_CREDENTIALS=true
+    depends_on:
+      - kan-db
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  kan-migrate:
+    image: ghcr.io/kanbn/kan-migrate:0.6.0
+    environment:
+      - POSTGRES_URL=postgresql://kanuser:kanpassword@kan-db:5432/kan?sslmode=disable
+    depends_on:
+      kan-db:
+        condition: service_healthy
+  kan-db:
+    image: postgres:17.3
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=kan
+      - POSTGRES_USER=kanuser
+      - POSTGRES_PASSWORD=kanpassword
+    healthcheck:
+      test: pg_isready -U kanuser -d kan
+      interval: 5s
+      timeout: 5s
+      retries: 10
+x-runtipi:
+  schema_version: 2

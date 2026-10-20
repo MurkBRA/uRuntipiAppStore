@@ -1,0 +1,44 @@
+{
+  "name": "Alby Hub ✨",
+  "available": true,
+  "port": 59000,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "albyhub",
+  "description": "Alby Hub is an open-source, self-custodial Bitcoin Lightning wallet, with the easiest-to-use Lightning Network node for everyone. Whether you're an individual, creator, or developer, Alby Hub is your centre for seamless Bitcoin payments.",
+  "tipi_version": 1,
+  "version": "1.24.3",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Self-custodial Lightning wallet with integrated node and app connections",
+  "author": "Alby",
+  "source": "https://github.com/getAlby/hub",
+  "website": "https://albyhub.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Alby Hub ✨ app albyhub ln backend",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_ALBYHUB_LN_BACKEND"
+    },
+    {
+      "type": "random",
+      "label": "Alby Hub ✨ seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501488182,
+  "updated_at": 1792501548182,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,28 @@
+{
+  "name": "Mattermost",
+  "available": true,
+  "port": 8765,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "mattermost",
+  "description": "🚉 Mattermost is an open-source platform designed for secure collaboration throughout the software development lifecycle.",
+  "tipi_version": 1,
+  "version": "12.0.0",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Team Chat, Open Source, Self-Hosted",
+  "author": "Mattermost",
+  "source": "https://github.com/mattermost/mattermost",
+  "website": "https://mattermost.com",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501501469,
+  "updated_at": 1792501561469,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

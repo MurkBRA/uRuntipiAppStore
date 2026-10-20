@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "elements",
+      "image": "ghcr.io/tiero/elements-web:v0.0.3",
+      "isMain": true,
+      "internalPort": 8080,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "RPC_USER",
+          "value": "elements"
+        },
+        {
+          "key": "RPC_PASS",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "RPC_PORT",
+          "value": "7041"
+        },
+        {
+          "key": "RPC_HOST",
+          "value": "elements-node"
+        },
+        {
+          "key": "P2P_PORT",
+          "value": "18332"
+        },
+        {
+          "key": "REMOTE_RPC_HOST",
+          "value": "${APP_ELEMENTS_RPC_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "REMOTE_P2P_HOST",
+          "value": "${APP_ELEMENTS_P2P_HIDDEN_SERVICE}"
+        }
+      ],
+      "dependsOn": [
+        "elements-node"
+      ]
+    },
+    {
+      "name": "elements-node",
+      "image": "ghcr.io/impa10r/elements:23.3.4",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "command": [
+        "-listen=0",
+        "-txindex=1",
+        "-trim_headers=1",
+        "-assumevalid=546a756e0238e8c5c2c8bee43f0395740519f96aaee5994d05ef6569ce2d0821",
+        "-validatepegin=1",
+        "-fallbackfee=0.000001",
+        "-mainchainrpchost=${APP_BITCOIN_NODE_IP}",
+        "-mainchainrpcport=${APP_BITCOIN_RPC_PORT}",
+        "-mainchainrpcuser=${APP_BITCOIN_RPC_USER}",
+        "-mainchainrpcpassword=${APP_BITCOIN_RPC_PASS}",
+        "-rpcuser=elements",
+        "-rpcpassword=${APP_PASSWORD}",
+        "-rpcbind=0.0.0.0",
+        "-rpcallowip=0.0.0.0/0",
+        "-rpcport=7041",
+        "-port=18332",
+        "-blockfilterindex=1",
+        "-peerblockfilters=1",
+        "-creatediscountct=1"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/home/elements/.elements"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 7041,
+          "containerPort": 7041,
+          "tcp": true
+        },
+        {
+          "hostPort": 18332,
+          "containerPort": 18332,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

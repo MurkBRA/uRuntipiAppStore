@@ -1,0 +1,59 @@
+{
+  "name": "ChainForensics",
+  "available": true,
+  "port": 3016,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "chainforensics",
+  "description": "ChainForensics is a powerful, privacy-focused Bitcoin blockchain analysis tool that runs entirely on your own node. Analyze transactions, trace fund flows, detect CoinJoin transactions, and assess the privacy of your UTXOs - all without leaking any data to third parties.",
+  "tipi_version": 1,
+  "version": "1.2.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Privacy-focused Bitcoin blockchain analysis & UTXO privacy scoring",
+  "author": "ChainForensics",
+  "source": "https://github.com/manic-startup/chainforensics-umbrel",
+  "website": "https://github.com/manic-startup/chainforensics-umbrel",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Fulcrum Server Host / IP",
+      "required": false,
+      "default": "fulcrum",
+      "env_variable": "APP_FULCRUM_NODE_IP"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501492295,
+  "updated_at": 1792501552295,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,32 @@
+services:
+  hermitstash:
+    image: ghcr.io/dotcoocoo/hermitstash:1.15.9
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/app/data
+      - ${APP_DATA_DIR}/data/uploads:/app/uploads
+      - ${APP_DATA_DIR}/data/custom:/app/public/img/custom
+    environment:
+      - UMASK=022
+      - TZ=Etc/UTC
+      - NODE_ENV=production
+      - TRUST_PROXY=10.21.0.0/16
+      - RP_ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - EMAIL_VERIFICATION=false
+    healthcheck:
+      test: node -e require('http').get('http://localhost:3000/health',function(r){process.exit(r.statusCode===200?0:1)}).on('error',function(){process.exit(1)})
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    shm_size: 256m
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+x-runtipi:
+  schema_version: 2

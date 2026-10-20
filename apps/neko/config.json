@@ -1,0 +1,34 @@
+{
+  "name": "Neko",
+  "available": true,
+  "port": 3880,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "neko",
+  "description": "🐈 Neko is a self-hosted virtual browser that streams a fully interactive web browsing experience directly to the user's device using WebRTC. It provides access to a secure, sandboxed browser environment that runs independently of the user's local system, ensuring privacy and isolation. The browser is rendered remotely, and all interactions are transmitted in real time, resulting in a smooth and low-latency experience.",
+  "tipi_version": 1,
+  "version": "3.2.0",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "A self-hosted virtual browser powered by WebRTC",
+  "author": "m1k1o",
+  "source": "https://github.com/m1k1o/neko",
+  "website": "https://neko.m1k1o.net/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Neko password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501502737,
+  "updated_at": 1792501562737,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

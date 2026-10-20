@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "krystal-bull",
+      "image": "bitcoinscala/oracle-server-ui:1.9.7",
+      "isMain": true,
+      "internalPort": 3001,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "LOG_PATH",
+          "value": "/log/"
+        },
+        {
+          "key": "BITCOIN_S_HOME",
+          "value": "/bitcoin-s/"
+        },
+        {
+          "key": "ORACLE_SERVER_API_URL",
+          "value": "http://krystal-bull-oracleserver:9998/"
+        },
+        {
+          "key": "TOR_PROXY",
+          "value": "socks5://${TOR_PROXY_IP}:${TOR_PROXY_PORT}"
+        },
+        {
+          "key": "DEFAULT_UI_PASSWORD",
+          "value": "none"
+        },
+        {
+          "key": "BITCOIN_S_ORACLE_RPC_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/oracleserver",
+          "containerPath": "/bitcoin-s"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/log",
+          "containerPath": "/log"
+        }
+      ],
+      "dependsOn": [
+        "krystal-bull-oracleserver"
+      ]
+    },
+    {
+      "name": "krystal-bull-oracleserver",
+      "image": "bitcoinscala/bitcoin-s-oracle-server:1.9.7",
+      "user": "1000:1000",
+      "entrypoint": [
+        "/opt/docker/bin/bitcoin-s-oracle-server",
+        "--datadir",
+        "/bitcoin-s",
+        "--conf",
+        "/opt/docker/docker-application.conf"
+      ],
+      "environment": [
+        {
+          "key": "BITCOIN_S_KEYMANAGER_ENTROPY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "BITCOIN_S_ORACLE_RPC_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "DISABLE_JLINK",
+          "value": "1"
+        },
+        {
+          "key": "JAVA_OPTS",
+          "value": "-Xmx256m"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/oracleserver",
+          "containerPath": "/bitcoin-s"
+        }
+      ]
+    }
+  ]
+}

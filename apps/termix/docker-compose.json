@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "termix",
+      "image": "ghcr.io/lukegus/termix:release-2.9.2",
+      "isMain": true,
+      "internalPort": 8080,
+      "environment": [
+        {
+          "key": "GUACD_HOST",
+          "value": "guacd"
+        },
+        {
+          "key": "GUACD_TUNNEL_HOST",
+          "value": "web"
+        },
+        {
+          "key": "GUACD_RECORDING_PATH",
+          "value": "/termix-data/session_recordings/guacamole"
+        },
+        {
+          "key": "ENABLE_TELEMETRY",
+          "value": "false"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ],
+      "dependsOn": [
+        "termix-guacd"
+      ]
+    },
+    {
+      "name": "termix-guacd",
+      "image": "guacamole/guacd:1.6.0",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/termix-data"
+        }
+      ]
+    }
+  ]
+}

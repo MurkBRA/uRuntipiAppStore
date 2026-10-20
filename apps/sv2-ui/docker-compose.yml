@@ -1,0 +1,52 @@
+services:
+  sv2-ui:
+    image: stratumv2/sv2-ui:v0.7.0
+    volumes:
+      - ${APP_DATA_DIR}/data/docker:/var/run
+      - ${APP_DATA_DIR}/data/config:/app/data/config
+    environment:
+      - HOST_OS=umbrel
+      - STRATUM_HOST=${APP_DOMAIN}
+    depends_on:
+      sv2-ui-docker:
+        condition: service_healthy
+    extra_hosts:
+      - sv2-translator:host-gateway
+      - sv2-jdc:host-gateway
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8080
+      add_to_main_network: true
+      is_main: true
+  sv2-ui-docker:
+    image: docker:28.3.0-dind
+    command: |-
+      dockerd
+        --bridge dind0
+        --data-root /data/data
+        --exec-root /data/exec
+        --host unix:///data/docker.sock
+        --iptables=false
+        --userland-proxy=true
+        --pidfile /data/docker.pid
+    entrypoint: /entrypoint.sh
+    volumes:
+      - ${APP_DATA_DIR}/data/entrypoint.sh:/entrypoint.sh
+      - ${APP_DATA_DIR}/data/docker:/data
+      - ${APP_BITCOIN_DATA_DIR}:/root/.bitcoin:ro
+      - ${APP_DATA_DIR}/data/config:/app/data/config
+    environment:
+      - DOCKER_ENSURE_BRIDGE=dind0:10.32.0.1/16
+    network_mode: host
+    healthcheck:
+      test: docker -H unix:///data/docker.sock volume inspect sv2-config >/dev/null
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 180s
+    privileged: true
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

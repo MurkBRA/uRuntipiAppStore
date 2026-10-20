@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fedimintd",
+      "image": "fedimint/fedimintd:v0.12.2",
+      "isMain": true,
+      "internalPort": 8175,
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "FM_ENABLE_IROH",
+          "value": "true"
+        },
+        {
+          "key": "FM_DATA_DIR",
+          "value": "/data"
+        },
+        {
+          "key": "FM_BITCOIN_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK_ELECTRS}"
+        },
+        {
+          "key": "FM_BITCOIND_USERNAME",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "FM_BITCOIND_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "FM_BITCOIND_URL",
+          "value": "http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "FM_BIND_UI",
+          "value": "0.0.0.0:8175"
+        },
+        {
+          "key": "FM_PASSWORD_UI",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "FM_PASSWORD_API",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8173,
+          "containerPort": 8173,
+          "tcp": true
+        },
+        {
+          "hostPort": 8173,
+          "containerPort": 8173,
+          "udp": true,
+          "tcp": false
+        },
+        {
+          "hostPort": 8174,
+          "containerPort": 8174,
+          "udp": true,
+          "tcp": false
+        }
+      ]
+    }
+  ]
+}

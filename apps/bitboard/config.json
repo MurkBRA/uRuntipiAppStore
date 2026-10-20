@@ -1,0 +1,28 @@
+{
+  "name": "bitBoard",
+  "available": true,
+  "port": 3711,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bitboard",
+  "description": "Monitor cryptocurrency prices in real time with a fast and customizable dashboard running on Umbrel. Build your own watchlist, reorder assets freely, and track the market at a glance. bitBoard features a clean dark interface optimized for desktops, tablets, secondary monitors, and always-on displays. Supports multiple quote currencies with live market refreshes using public pricing data providers.",
+  "tipi_version": 1,
+  "version": "1.0.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A customizable crypto price dashboard for Umbrel",
+  "author": "egzola",
+  "source": "https://github.com/egzola/bitboard",
+  "website": "https://github.com/egzola/bitboard",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501489583,
+  "updated_at": 1792501549583,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

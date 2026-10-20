@@ -1,0 +1,21 @@
+services:
+  rusty-kaspad:
+    image: elldee/kaspa-frontend:v0.4.1
+    depends_on:
+      - rusty-kaspad-kaspad
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 4321
+      is_main: true
+  rusty-kaspad-kaspad:
+    image: kaspanet/rusty-kaspad:v2.1.0
+    ports:
+      - 16110:16110/tcp
+      - 16111:16111/tcp
+      - 17110:17110/tcp
+      - 18110:18110/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/app/data
+    stop_grace_period: 3m
+x-runtipi:
+  schema_version: 2

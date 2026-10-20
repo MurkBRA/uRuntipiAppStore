@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "public-pool-web",
+      "image": "martinbarilik/public-pool-web:0.2.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "RAILS_MASTER_KEY",
+          "value": "dbd1d33e19a5e0ca9b28c2c55803afef"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgres://${APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME}:${APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD}@${APP_PUBLIC_POOL_WEB_POSTGRES_HOST}:${APP_PUBLIC_POOL_WEB_POSTGRES_PORT}/${APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME}"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://public-pool-web-redis:6379/0"
+        },
+        {
+          "key": "PUBLIC_POOL_HOST",
+          "value": "public-pool_server_1"
+        },
+        {
+          "key": "PUBLIC_POOL_PORT",
+          "value": "2019"
+        },
+        {
+          "key": "DONATE_BTC_ADDRESS",
+          "value": "bc1qsn9x9vr9alx33687dqq9rt4cgfcldsrxz90pn4"
+        },
+        {
+          "key": "DONATE_LN_ADDRESS",
+          "value": "martinbarilik@getalby.com"
+        }
+      ],
+      "dependsOn": {
+        "public-pool-web-db": {
+          "condition": "service_healthy"
+        },
+        "public-pool-web-redis": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "public-pool-web-db",
+      "image": "pgautoupgrade/pgautoupgrade:18.4-trixie",
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "public_pool_web"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "SlyRoundaboutWay"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "public_pool_web_production"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql"
+        }
+      ],
+      "healthCheck": {
+        "test": "test ! -f /var/lib/postgresql/PG_VERSION && test ! -f $${PGDATA}/upgrade_in_progress.lock && pg_isready -U public_pool_web -d public_pool_web_production",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30m"
+      }
+    },
+    {
+      "name": "public-pool-web-redis",
+      "image": "valkey/valkey:8",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "healthCheck": {
+        "test": "redis-cli ping",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    },
+    {
+      "name": "public-pool-web-sidekiq",
+      "image": "martinbarilik/public-pool-web:0.2.0",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "command": "bundle exec sidekiq",
+      "environment": [
+        {
+          "key": "RAILS_MASTER_KEY",
+          "value": "dbd1d33e19a5e0ca9b28c2c55803afef"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://public-pool-web-redis:6379/0"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgres://${APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME}:${APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD}@${APP_PUBLIC_POOL_WEB_POSTGRES_HOST}:${APP_PUBLIC_POOL_WEB_POSTGRES_PORT}/${APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME}"
+        },
+        {
+          "key": "PUBLIC_POOL_HOST",
+          "value": "public-pool_server_1"
+        },
+        {
+          "key": "PUBLIC_POOL_PORT",
+          "value": "2019"
+        }
+      ],
+      "dependsOn": [
+        "public-pool-web-redis",
+        "public-pool-web-db",
+        "public-pool-web"
+      ]
+    }
+  ]
+}

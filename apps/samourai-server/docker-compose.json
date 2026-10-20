@@ -1,0 +1,317 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "samourai-server",
+      "image": "nginx:1.21-alpine",
+      "isMain": true,
+      "internalPort": 8081,
+      "addToMainNetwork": true,
+      "command": "/bin/sh -c \"envsubst < /var/www/connect/js/conf.template.js > /var/www/connect/js/conf.js && /wait-for node:8080 --timeout=720 -- nginx\"",
+      "environment": [
+        {
+          "key": "COMMON_BTC_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "DOJO_LOCAL_PORT",
+          "value": "3009"
+        },
+        {
+          "key": "DOJO_HIDDEN_SERVICE",
+          "value": "${APP_SAMOURAI_SERVER_DOJO_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "WHIRLPOOL_HIDDEN_SERVICE",
+          "value": "${APP_SAMOURAI_SERVER_WHIRLPOOL_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "NODE_PREFIX_SUPPORT",
+          "value": "support"
+        },
+        {
+          "key": "NODE_ADMIN_KEY",
+          "value": "${APP_SAMOURAI_SERVER_NODE_ADMIN_KEY}"
+        },
+        {
+          "key": "WHIRLPOOL_API_KEY",
+          "value": "${APP_SAMOURAI_SERVER_WHIRLPOOL_API_KEY}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx/wait-for",
+          "containerPath": "/wait-for"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx/nginx.conf",
+          "containerPath": "/etc/nginx/nginx.conf"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx/${APP_BITCOIN_NETWORK}.conf",
+          "containerPath": "/etc/nginx/sites-enabled/dojo.conf"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx/connect.conf",
+          "containerPath": "/etc/nginx/sites-enabled/connect.conf"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx/connect",
+          "containerPath": "/var/www/connect"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 3009,
+          "containerPort": 80,
+          "tcp": true
+        }
+      ],
+      "dependsOn": [
+        "samourai-server-node"
+      ]
+    },
+    {
+      "name": "samourai-server-db",
+      "image": "louneskmt/dojo-db:1.5.0-low-mem",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "5m",
+      "environment": [
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "samourai-main"
+        },
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "rootpassword"
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "samourai"
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "password"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/mysql/data",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    },
+    {
+      "name": "samourai-server-node",
+      "image": "nmfretz/dojo-nodejs:1.16.1-rpcfix",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "command": "/home/node/app/wait-for-it.sh samourai-server-db:3306 --timeout=720 --strict -- /home/node/app/restart.sh",
+      "environment": [
+        {
+          "key": "COMMON_BTC_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "DOJO_VERSION_TAG",
+          "value": "1.16.1"
+        },
+        {
+          "key": "NET_DOJO_TOR_IPV4",
+          "value": "${TOR_PROXY_IP}"
+        },
+        {
+          "key": "TOR_SOCKS_PORT",
+          "value": "${TOR_PROXY_PORT}"
+        },
+        {
+          "key": "NET_DOJO_MYSQL_IPV4",
+          "value": "samourai-server-db"
+        },
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "samourai-main"
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "samourai"
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "password"
+        },
+        {
+          "key": "NODE_GAP_EXTERNAL",
+          "value": 100
+        },
+        {
+          "key": "NODE_GAP_INTERNAL",
+          "value": 100
+        },
+        {
+          "key": "NODE_ADDR_FILTER_THRESHOLD",
+          "value": 1000
+        },
+        {
+          "key": "NODE_ADDR_DERIVATION_MIN_CHILD",
+          "value": 2
+        },
+        {
+          "key": "NODE_ADDR_DERIVATION_MAX_CHILD",
+          "value": 2
+        },
+        {
+          "key": "NODE_ADDR_DERIVATION_THRESHOLD",
+          "value": 10
+        },
+        {
+          "key": "NODE_TXS_SCHED_MAX_ENTRIES",
+          "value": 10
+        },
+        {
+          "key": "NODE_TXS_SCHED_MAX_DELTA_HEIGHT",
+          "value": 18
+        },
+        {
+          "key": "NODE_JWT_ACCESS_EXPIRES",
+          "value": 900
+        },
+        {
+          "key": "NODE_JWT_REFRESH_EXPIRES",
+          "value": 7200
+        },
+        {
+          "key": "NODE_PREFIX_STATUS",
+          "value": "status"
+        },
+        {
+          "key": "NODE_PREFIX_SUPPORT",
+          "value": "support"
+        },
+        {
+          "key": "NODE_PREFIX_STATUS_PUSHTX",
+          "value": "status"
+        },
+        {
+          "key": "NODE_TRACKER_MEMPOOL_PERIOD",
+          "value": 10000
+        },
+        {
+          "key": "NODE_TRACKER_UNCONF_TXS_PERIOD",
+          "value": 300000
+        },
+        {
+          "key": "NODE_ACTIVE_INDEXER",
+          "value": "local_indexer"
+        },
+        {
+          "key": "NODE_FEE_TYPE",
+          "value": "ECONOMICAL"
+        },
+        {
+          "key": "NODE_API_KEY",
+          "value": "${APP_SAMOURAI_SERVER_NODE_API_KEY}"
+        },
+        {
+          "key": "NODE_ADMIN_KEY",
+          "value": "${APP_SAMOURAI_SERVER_NODE_ADMIN_KEY}"
+        },
+        {
+          "key": "NODE_JWT_SECRET",
+          "value": "${APP_SAMOURAI_SERVER_NODE_JWT_SECRET}"
+        },
+        {
+          "key": "BITCOIND_IP",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIND_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIND_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIND_RPC_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "BITCOIND_ZMQ_RAWTXS",
+          "value": "${APP_BITCOIN_ZMQ_RAWTX_PORT}"
+        },
+        {
+          "key": "BITCOIND_ZMQ_BLK_HASH",
+          "value": "${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}"
+        },
+        {
+          "key": "EXPLORER_INSTALL",
+          "value": "off"
+        },
+        {
+          "key": "INDEXER_IP",
+          "value": "${APP_ELECTRS_NODE_IP}"
+        },
+        {
+          "key": "INDEXER_RPC_PORT",
+          "value": "${APP_ELECTRS_NODE_PORT}"
+        },
+        {
+          "key": "INDEXER_PROTOCOL",
+          "value": "tcp"
+        },
+        {
+          "key": "INDEXER_BATCH_SUPPORT",
+          "value": "inactive"
+        }
+      ],
+      "dependsOn": [
+        "samourai-server-db"
+      ]
+    },
+    {
+      "name": "samourai-server-whirlpool",
+      "image": "louneskmt/whirlpool:0.10.15",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "command": [
+        "--listen",
+        "--cli.apiKey=${APP_SAMOURAI_SERVER_WHIRLPOOL_API_KEY}",
+        "--cli.api.http-enable=true",
+        "--cli.api.http-port=8898",
+        "--cli.tor=true",
+        "--cli.torConfig.coordinator.enabled=true",
+        "--cli.torConfig.coordinator.onion=true",
+        "--cli.torConfig.backend.enabled=false",
+        "--cli.torConfig.backend.onion=false",
+        "--cli.mix.liquidityClient=true",
+        "--cli.mix.clientsPerPool=1",
+        "--resync"
+      ],
+      "environment": [
+        {
+          "key": "WHIRLPOOL_BITCOIN_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "WHIRLPOOL_DOJO",
+          "value": "on"
+        },
+        {
+          "key": "WHIRLPOOL_DOJO_IP",
+          "value": "samourai-server"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/whirlpool",
+          "containerPath": "/home/whirlpool/.whirlpool-cli"
+        }
+      ],
+      "dependsOn": [
+        "samourai-server-node"
+      ]
+    }
+  ]
+}

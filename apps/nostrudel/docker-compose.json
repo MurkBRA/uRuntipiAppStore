@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "nostrudel",
+      "image": "ghcr.io/hzrd149/nostrudel:1.1.0",
+      "isMain": true,
+      "internalPort": 80,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "REQUEST_PROXY",
+          "value": "cors:8080"
+        }
+      ],
+      "dependsOn": [
+        "nostrudel-cors"
+      ]
+    },
+    {
+      "name": "nostrudel-cors",
+      "image": "ghcr.io/hzrd149/docker-cors-anywhere:0.4.5",
+      "environment": [
+        {
+          "key": "CORSANYWHERE_REQUIRE_HEADERS",
+          "value": "host"
+        }
+      ]
+    }
+  ]
+}

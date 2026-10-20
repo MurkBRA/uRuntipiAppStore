@@ -1,0 +1,28 @@
+{
+  "name": "DATUM",
+  "available": true,
+  "port": 21000,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "datum",
+  "description": "⚙️ Please read the important setup instructions at the bottom of this page.",
+  "tipi_version": 1,
+  "version": "v1.14",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Self-sovereign Bitcoin mining",
+  "author": "OCEAN",
+  "source": "https://github.com/OCEAN-xyz/datum_gateway",
+  "website": "https://ocean.xyz",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501493721,
+  "updated_at": 1792501553721,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

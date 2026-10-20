@@ -1,0 +1,24 @@
+services:
+  jam:
+    image: ghcr.io/joinmarket-webui/jam-standalone:v0.4.1-clientserver-v0.9.11
+    volumes:
+      - ${APP_DATA_DIR}/data/joinmarket:/root/.joinmarket
+    environment:
+      - RESTORE_DEFAULT_CONFIG=true
+      - REMOVE_LOCK_FILES=true
+      - ENSURE_WALLET=true
+      - APP_USER=umbrel
+      - APP_PASSWORD=${APP_PASSWORD}
+      - jm_network=${APP_BITCOIN_NETWORK}
+      - jm_rpc_host=${APP_BITCOIN_NODE_IP}
+      - jm_rpc_port=${APP_BITCOIN_RPC_PORT}
+      - jm_rpc_user=${APP_BITCOIN_RPC_USER}
+      - jm_rpc_password=${APP_BITCOIN_RPC_PASS}
+      - jm_rpc_wallet_file=jam_default
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 80
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

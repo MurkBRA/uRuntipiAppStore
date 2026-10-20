@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "convertx",
+      "image": "c4illin/convertx:v0.19.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "HTTP_ALLOWED",
+          "value": "true"
+        },
+        {
+          "key": "ACCOUNT_REGISTRATION",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

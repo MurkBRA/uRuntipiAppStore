@@ -1,0 +1,66 @@
+{
+  "name": "pogolo",
+  "available": true,
+  "port": 5663,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "pogolo",
+  "description": "solo db-less bitcoin-only mining pool, meant for lan swarms, not the internet;",
+  "tipi_version": 1,
+  "version": "v1.x",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Local Go-based SV1+SV2 solo pool",
+  "author": "0xf0xx0",
+  "source": "https://github.com/0xf0xx0/pogolo",
+  "website": "https://github.com/0xf0xx0/pogolo",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Hashblock Port",
+      "required": false,
+      "default": 28334,
+      "env_variable": "APP_BITCOIN_ZMQ_HASHBLOCK_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505650,
+  "updated_at": 1792501565650,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

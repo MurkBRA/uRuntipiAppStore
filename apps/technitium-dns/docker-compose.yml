@@ -1,0 +1,13 @@
+services:
+  technitium-dns:
+    image: technitium/dns-server:15.6.2
+    volumes:
+      - ${APP_DATA_DIR}/data:/etc/dns
+    environment:
+      - DNS_SERVER_DOMAIN=${APP_DOMAIN}
+      - DNS_SERVER_ADMIN_PASSWORD=${APP_PASSWORD}
+    x-runtipi:
+      internal_port: 5380
+      is_main: true
+x-runtipi:
+  schema_version: 2

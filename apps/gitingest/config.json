@@ -1,0 +1,37 @@
+{
+  "name": "Gitingest",
+  "available": true,
+  "port": 8895,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "gitingest",
+  "description": "Gitingest is an open-source tool that converts Git repositories into structured, LLM-friendly text summaries, making it easier to analyze and process code with AI models like ChatGPT and Claude. By simply replacing \"github.com\" with \"gitingest.com\" in any repository URL, users can instantly generate an AI-optimized digest of the codebase. Additionally, a one-click button provides seamless integration with GitHub, ensuring a smooth workflow for developers.",
+  "tipi_version": 1,
+  "version": "0.3.1",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "An effortless way to make Git repositories LLM-friendly",
+  "author": "Romain Courtois",
+  "source": "https://github.com/cyclotruc/gitingest",
+  "website": "https://gitingest.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Gitingest local ips",
+      "required": false,
+      "default": "default",
+      "env_variable": "local_ips"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501496663,
+  "updated_at": 1792501556663,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

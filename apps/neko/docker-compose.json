@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "neko",
+      "image": "ghcr.io/m1k1o/neko/firefox:3.2.0",
+      "isMain": true,
+      "internalPort": 8080,
+      "shmSize": "2gb",
+      "environment": [
+        {
+          "key": "PUID",
+          "value": 1000
+        },
+        {
+          "key": "PGID",
+          "value": 1000
+        },
+        {
+          "key": "NEKO_DESKTOP_SCREEN",
+          "value": "1920x1080@30"
+        },
+        {
+          "key": "NEKO_MEMBER_MULTIUSER_USER_PASSWORD",
+          "value": "neko"
+        },
+        {
+          "key": "NEKO_MEMBER_MULTIUSER_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "NEKO_WEBRTC_EPR",
+          "value": "52000-52100"
+        },
+        {
+          "key": "NEKO_WEBRTC_ICELITE",
+          "value": 0
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 52000,
+          "containerPort": 52000,
+          "udp": true,
+          "tcp": false
+        }
+      ]
+    }
+  ]
+}

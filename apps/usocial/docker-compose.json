@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "usocial",
+      "image": "ghcr.io/ibz/usocial:v0.1.5-buster",
+      "isMain": true,
+      "internalPort": 5000,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "USOCIAL_JOB",
+          "value": "WEB"
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "LND_IP",
+          "value": "${APP_LIGHTNING_NODE_IP}"
+        },
+        {
+          "key": "LND_GRPC_PORT",
+          "value": "${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "LND_DIR",
+          "value": "/lnd"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/instance"
+        }
+      ]
+    },
+    {
+      "name": "usocial-fetcher",
+      "image": "ghcr.io/ibz/usocial:v0.1.7-buster",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "USOCIAL_JOB",
+          "value": "FETCH_FEEDS"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/instance"
+        }
+      ],
+      "dependsOn": [
+        "usocial"
+      ]
+    }
+  ]
+}

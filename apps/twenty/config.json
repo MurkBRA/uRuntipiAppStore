@@ -1,0 +1,29 @@
+{
+  "name": "Twenty",
+  "available": true,
+  "port": 2020,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "twenty",
+  "description": "Twenty is the leading open-source CRM, built by a community of hundreds of contributors to meet the unique needs of your business. Designed for flexibility, it helps businesses of all sizes efficiently manage customer relationships and streamline workflows.",
+  "tipi_version": 1,
+  "version": "2.49.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An adaptable CRM solution for seamless team collaboration and growth",
+  "author": "Twenty.com PBC",
+  "source": "https://github.com/twentyhq/twenty",
+  "website": "https://twenty.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511931,
+  "updated_at": 1792501571931,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

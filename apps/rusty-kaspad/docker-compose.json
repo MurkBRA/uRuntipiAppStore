@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "rusty-kaspad",
+      "image": "elldee/kaspa-frontend:v0.4.1",
+      "isMain": true,
+      "internalPort": 4321,
+      "stopGracePeriod": "1m",
+      "dependsOn": [
+        "rusty-kaspad-kaspad"
+      ]
+    },
+    {
+      "name": "rusty-kaspad-kaspad",
+      "image": "kaspanet/rusty-kaspad:v2.1.0",
+      "stopGracePeriod": "3m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/app/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 16110,
+          "containerPort": 16110,
+          "tcp": true
+        },
+        {
+          "hostPort": 16111,
+          "containerPort": 16111,
+          "tcp": true
+        },
+        {
+          "hostPort": 17110,
+          "containerPort": 17110,
+          "tcp": true
+        },
+        {
+          "hostPort": 18110,
+          "containerPort": 18110,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

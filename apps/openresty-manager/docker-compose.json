@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "openresty-manager",
+      "image": "uusec/openresty-manager:2.4.6",
+      "isMain": true,
+      "internalPort": 34567,
+      "hostname": "openresty-manager",
+      "environment": [
+        {
+          "key": "OM_USE_HTTPS",
+          "value": "no"
+        },
+        {
+          "key": "NGINX_RESOLVER",
+          "value": "resolver 127.0.0.11 valid=30s ipv6=off local=on;"
+        },
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/acme",
+          "containerPath": "/opt/om/acme"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data",
+          "containerPath": "/opt/om/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/conf",
+          "containerPath": "/opt/om/nginx/conf"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/logs",
+          "containerPath": "/opt/om/nginx/logs"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 3080,
+          "containerPort": 80,
+          "tcp": true
+        },
+        {
+          "hostPort": 3443,
+          "containerPort": 443,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

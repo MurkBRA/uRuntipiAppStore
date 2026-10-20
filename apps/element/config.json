@@ -1,0 +1,26 @@
+{
+  "name": "Element",
+  "available": true,
+  "port": 25597,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "element",
+  "description": "Element is a new type of messaging app. You choose where your messages are stored, putting you in control of your data. You can connect it to the Synapse app running on your Umbrel, or to any other Matrix homeserver.",
+  "tipi_version": 1,
+  "version": "1.12.32",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "A glossy Matrix client compatible with Synapse",
+  "author": "New Vector Ltd",
+  "source": "https://github.com/vector-im/element-web",
+  "website": "https://element.io",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495235,
+  "updated_at": 1792501555235,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

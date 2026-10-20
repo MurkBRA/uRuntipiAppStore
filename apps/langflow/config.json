@@ -1,0 +1,36 @@
+{
+  "name": "Langflow",
+  "available": true,
+  "port": 8862,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "langflow",
+  "description": "Langflow is a visual platform for building and deploying AI-powered agents and workflows. It gives developers a drag-and-drop authoring experience, source-code access for custom Python components, an interactive playground for testing flows, and built-in API and MCP servers that turn workflows into tools for other applications.",
+  "tipi_version": 1,
+  "version": "1.12.6",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "Build AI agents and workflows visually",
+  "author": "Langflow",
+  "source": "https://github.com/langflow-ai/langflow",
+  "website": "https://www.langflow.org/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Langflow password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501499589,
+  "updated_at": 1792501559589,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

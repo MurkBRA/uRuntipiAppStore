@@ -1,0 +1,26 @@
+{
+  "name": "Stash",
+  "available": true,
+  "port": 5173,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "stash",
+  "description": "Stash is a private \"save anything\" inbox with a brain. It replaces that Discord channel, Telegram \"Saved Messages\", or notes file where you dump links, screenshots, code snippets, quotes, and reminders — except here everything you save is automatically understood, filed, and answerable.",
+  "tipi_version": 1,
+  "version": "1.0.1",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "Hoard everything, find anything — your private on-device AI inbox",
+  "author": "Stash",
+  "source": "https://github.com/savewithstash/stash",
+  "website": "https://github.com/savewithstash/stash",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501510120,
+  "updated_at": 1792501570120,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

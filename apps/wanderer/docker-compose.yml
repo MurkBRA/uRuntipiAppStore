@@ -1,0 +1,66 @@
+services:
+  wanderer:
+    image: flomp/wanderer-web:v0.21.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/uploads:/app/uploads
+    environment:
+      - ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - BODY_SIZE_LIMIT=Infinity
+      - POCKETBASE_PROXY_SECRET=${APP_SEED}
+      - PUBLIC_POCKETBASE_URL=http://wanderer-db:8090
+      - PUBLIC_DISABLE_SIGNUP=false
+      - UPLOAD_FOLDER=/app/uploads
+      - UPLOAD_USER=admin
+      - UPLOAD_PASSWORD=${APP_PASSWORD}
+      - VALHALLA_URL=https://valhalla1.openstreetmap.de
+      - NOMINATIM_URL=https://nominatim.openstreetmap.org
+      - OVERPASS_API_URL=https://overpass-api.de
+      - PUBLIC_MAP_MAX_POLYLINES=100
+      - MEILI_URL=http://wanderer-search:7700
+      - MEILI_MASTER_KEY=${APP_SEED}
+    depends_on:
+      wanderer-search:
+        condition: service_healthy
+      wanderer-db:
+        condition: service_healthy
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  wanderer-search:
+    image: getmeili/meilisearch:v1.14.0
+    volumes:
+      - ${APP_DATA_DIR}/data/data.ms:/meili_data/data.ms
+    environment:
+      - MEILI_NO_ANALYTICS=true
+      - MEILI_URL=http://wanderer-search:7700
+      - MEILI_MASTER_KEY=${APP_SEED}
+    healthcheck:
+      test: curl --fail http://localhost:7700/health || exit 1
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+  wanderer-db:
+    image: flomp/wanderer-db:v0.21.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/pb_data:/pb_data
+      - ${APP_DATA_DIR}/data/plugins:/data/plugins
+    environment:
+      - POCKETBASE_ENCRYPTION_KEY=${APP_WANDERER_ENCRYPTION_KEY}
+      - POCKETBASE_PROXY_SECRET=${APP_SEED}
+      - MEILI_URL=http://wanderer-search:7700
+      - MEILI_MASTER_KEY=${APP_SEED}
+      - ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+    depends_on:
+      wanderer-search:
+        condition: service_healthy
+    healthcheck:
+      test: /curl --fail http://localhost:8090/health
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 20s
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,28 @@
+{
+  "name": "LibreChat",
+  "available": true,
+  "port": 7050,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "librechat",
+  "description": "Enhanced ChatGPT Clone: Features Agents, DeepSeek, Anthropic, AWS, OpenAI, Assistants API, Azure, Groq, o1, GPT-4o, Mistral, OpenRouter, Vertex AI, Gemini, Artifacts, AI model switching, message search, Code Interpreter, langchain, DALL-E-3, OpenAPI Actions, Functions, Secure Multi-User Auth, Presets, open-source for self-hosting.",
+  "tipi_version": 1,
+  "version": "0.8.7",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "Enhanced ChatGPT Clone",
+  "author": "Danny Avila",
+  "source": "https://github.com/danny-avila/LibreChat",
+  "website": "https://librechat.ai/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501499886,
+  "updated_at": 1792501559886,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,23 @@
+services:
+  hermes-agent:
+    image: ghcr.io/getumbrel/hermes-agent-umbrel:v2026.9.24
+    command:
+      - gateway
+      - run
+    volumes:
+      - ${APP_DATA_DIR}/data/hermes:/opt/data
+    environment:
+      - HERMES_UID=1000
+      - HERMES_GID=1000
+      - HERMES_DASHBOARD=1
+      - HERMES_DASHBOARD_PORT=18789
+      - HERMES_UMBREL_APP_PROXY_AUTH=1
+      - HERMES_TUI_DIR=/app/umbrel-tui
+      - HERMES_UPSTREAM_TUI_ENTRY=/opt/hermes/ui-tui/dist/entry.js
+      - HERMES_GATEWAY_BOOTSTRAP_STATE=running
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 18789
+      is_main: true
+x-runtipi:
+  schema_version: 2

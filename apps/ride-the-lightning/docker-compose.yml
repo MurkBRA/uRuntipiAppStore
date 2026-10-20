@@ -1,0 +1,27 @@
+services:
+  ride-the-lightning:
+    image: shahanafarooqui/rtl:v0.15.13
+    entrypoint: /data/entrypoint.sh
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/rtl:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+      - ${APP_BITCOIN_DATA_DIR}:/bitcoin:ro
+    environment:
+      - APP_PASSWORD=${APP_PASSWORD}
+      - PORT=3001
+      - RTL_CONFIG_PATH=/data
+      - DB_DIRECTORY_PATH=/data
+      - CHANNEL_BACKUP_PATH=/data/backup
+      - LN_IMPLEMENTATION=LND
+      - BLOCK_EXPLORER_URL=${BLOCK_EXPLORER_URL}
+      - LN_SERVER_URL=https://${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_REST_PORT}
+      - MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}
+      - CONFIG_PATH=/lnd/umbrel-lnd.conf
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3001
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

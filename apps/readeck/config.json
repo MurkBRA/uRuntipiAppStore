@@ -1,0 +1,39 @@
+{
+  "name": "Readeck",
+  "available": true,
+  "port": 20887,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "readeck",
+  "description": "Readeck is a simple web application that lets you save the precious readable content of web pages you like and want to keep forever. See it as a bookmark manager and a read later tool.",
+  "tipi_version": 1,
+  "version": "0.23.4",
+  "categories": [
+    "books",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Save web pages to read and keep forever",
+  "author": "Readeck",
+  "source": "https://codeberg.org/readeck/readeck",
+  "website": "https://readeck.org",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Readeck seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506442,
+  "updated_at": 1792501566442,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

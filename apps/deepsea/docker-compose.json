@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "deepsea",
+      "image": "ghcr.io/retropex/custom-dashboard-ocean:v2.0.4",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data/"
+        }
+      ]
+    }
+  ]
+}

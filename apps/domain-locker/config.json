@@ -1,0 +1,29 @@
+{
+  "name": "Domain Locker",
+  "available": true,
+  "port": 8839,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "domain-locker",
+  "description": "Domain Locker is a powerful, open-source platform designed for managing and monitoring domain names across multiple registrars and services. It provides users with a unified interface to organize, track, and safeguard their domain assets with a strong emphasis on automation, security, and data privacy. The tool automatically collects comprehensive information about each domain, including DNS records, SSL certificates, WHOIS data, subdomains, and related IP addresses. This real-time asset tracking ensures users are always aware of the current state and health of their domains.",
+  "tipi_version": 1,
+  "version": "0.3.0",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "An all-in-one tool for keeping track of your domain name portfolio",
+  "author": "Alicia Sykes",
+  "source": "https://github.com/Lissy93/domain-locker",
+  "website": "https://domain-locker.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501494202,
+  "updated_at": 1792501554202,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

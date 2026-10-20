@@ -1,0 +1,9 @@
+services:
+  cashu-me:
+    image: rstmsn/cashu-me:0.1.1
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

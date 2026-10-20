@@ -1,0 +1,14 @@
+services:
+  dumbpad:
+    image: dumbwareio/dumbpad:1.0.4
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    environment:
+      - SITE_TITLE=DumbPad
+      - BASE_URL=http://${APP_DOMAIN}:3000
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "sv2-ui",
+      "image": "stratumv2/sv2-ui:v0.7.0",
+      "isMain": true,
+      "internalPort": 8080,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "HOST_OS",
+          "value": "umbrel"
+        },
+        {
+          "key": "STRATUM_HOST",
+          "value": "${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/var/run"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/app/data/config"
+        }
+      ],
+      "dependsOn": {
+        "sv2-ui-docker": {
+          "condition": "service_healthy"
+        }
+      },
+      "extraHosts": [
+        "sv2-translator:host-gateway",
+        "sv2-jdc:host-gateway"
+      ]
+    },
+    {
+      "name": "sv2-ui-docker",
+      "image": "docker:28.3.0-dind",
+      "addToMainNetwork": true,
+      "networkMode": "host",
+      "privileged": true,
+      "stopGracePeriod": "1m",
+      "command": "dockerd\n  --bridge dind0\n  --data-root /data/data\n  --exec-root /data/exec\n  --host unix:///data/docker.sock\n  --iptables=false\n  --userland-proxy=true\n  --pidfile /data/docker.pid",
+      "entrypoint": "/entrypoint.sh",
+      "environment": [
+        {
+          "key": "DOCKER_ENSURE_BRIDGE",
+          "value": "dind0:10.32.0.1/16"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/entrypoint.sh",
+          "containerPath": "/entrypoint.sh"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_BITCOIN_DATA_DIR}",
+          "containerPath": "/root/.bitcoin",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/app/data/config"
+        }
+      ],
+      "healthCheck": {
+        "test": "docker -H unix:///data/docker.sock volume inspect sv2-config >/dev/null",
+        "interval": "5s",
+        "timeout": "5s",
+        "retries": 10,
+        "startPeriod": "180s"
+      }
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "kokoro",
+      "image": "ghcr.io/remsky/kokoro-fastapi-cpu:v0.9.0",
+      "isMain": true,
+      "internalPort": 8880,
+      "user": "1000:1000"
+    }
+  ]
+}

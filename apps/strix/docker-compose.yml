@@ -1,0 +1,10 @@
+services:
+  strix:
+    image: eduard256/strix:2.2.0
+    user: '1000:1000'
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 4567
+      is_main: true
+x-runtipi:
+  schema_version: 2

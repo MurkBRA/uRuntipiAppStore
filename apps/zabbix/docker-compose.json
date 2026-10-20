@@ -1,0 +1,107 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "zabbix",
+      "image": "zabbix/zabbix-web-nginx-pgsql:7.4.15-alpine",
+      "isMain": true,
+      "internalPort": 8080,
+      "hostname": "zabbix-frontend",
+      "environment": [
+        {
+          "key": "DB_SERVER_HOST",
+          "value": "zabbix-database"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "zabbix"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "zabbix"
+        },
+        {
+          "key": "ZBX_SERVER_HOST",
+          "value": "zabbix-server"
+        },
+        {
+          "key": "PHP_TZ",
+          "value": "UTC"
+        }
+      ],
+      "dependsOn": [
+        "zabbix-zabbix-server",
+        "zabbix-zabbix-database"
+      ]
+    },
+    {
+      "name": "zabbix-zabbix-server",
+      "image": "zabbix/zabbix-server-pgsql:7.4.15-alpine",
+      "hostname": "zabbix-server",
+      "environment": [
+        {
+          "key": "DB_SERVER_HOST",
+          "value": "zabbix-database"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "zabbix"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "zabbix"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 10050,
+          "containerPort": 10050,
+          "tcp": true
+        }
+      ],
+      "dependsOn": [
+        "zabbix-zabbix-database"
+      ]
+    },
+    {
+      "name": "zabbix-zabbix-agent",
+      "image": "zabbix/zabbix-agent2:7.4.15-alpine",
+      "hostname": "zabbix-agent",
+      "environment": [
+        {
+          "key": "ZBX_HOSTNAME",
+          "value": "zabbix-agent"
+        },
+        {
+          "key": "ZBX_SERVER_HOST",
+          "value": "zabbix-server"
+        }
+      ]
+    },
+    {
+      "name": "zabbix-zabbix-database",
+      "image": "postgres:13.18-alpine3.20",
+      "hostname": "zabbix-database",
+      "environment": [
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "zabbix"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "zabbix"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "zabbix"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ]
+    }
+  ]
+}

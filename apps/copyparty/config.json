@@ -1,0 +1,30 @@
+{
+  "name": "copyparty",
+  "available": true,
+  "port": 3923,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "copyparty",
+  "description": "📼 copyparty is a lightweight yet incredibly powerful file sharing platform designed to give you complete control over your data. It transforms any environment into a personal and fully featured file hub where you can upload, download, edit, and organize files directly through an intuitive web interface. Everything happens in the browser without the need for additional software, making it fast, convenient, and accessible from virtually anywhere.",
+  "tipi_version": 1,
+  "version": "1.20.26",
+  "categories": [
+    "books",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A versatile all-in-one file server for everything",
+  "author": "9001",
+  "source": "https://github.com/9001/copyparty",
+  "website": "https://github.com/9001/copyparty",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501493402,
+  "updated_at": 1792501553402,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

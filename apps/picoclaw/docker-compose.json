@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "picoclaw",
+      "image": "docker.io/sipeed/picoclaw:v0.3.1-launcher",
+      "isMain": true,
+      "internalPort": 18800,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "PICOCLAW_HOME",
+          "value": "/data"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

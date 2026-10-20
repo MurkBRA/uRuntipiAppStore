@@ -1,0 +1,44 @@
+{
+  "name": "Murmur",
+  "available": true,
+  "port": 18793,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "murmur",
+  "description": "Murmur is a calm, beautiful home for your Hermes agents. Open it on your phone or computer and just talk. Murmur comes with Hermes built in, so there's nothing else to install.",
+  "tipi_version": 1,
+  "version": "0.6.0",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "A beautiful home for your Hermes agents",
+  "author": "Umbrel",
+  "source": "https://github.com/getumbrel/murmur",
+  "website": "https://umbrel.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Murmur hermes password",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_MURMUR_HERMES_PASSWORD"
+    },
+    {
+      "type": "random",
+      "label": "Murmur hermes secret",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_MURMUR_HERMES_SECRET"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501502335,
+  "updated_at": 1792501562335,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,40 @@
+services:
+  blinko:
+    image: blinkospace/blinko:1.8.8
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/app/.blinko
+    environment:
+      - NODE_ENV=production
+      - NEXTAUTH_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - NEXT_PUBLIC_BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - NEXTAUTH_SECRET=${APP_SEED}
+      - DATABASE_URL=postgresql://blinkouser:blinkopass@blinko-db:5432/blinko
+    depends_on:
+      blinko-db:
+        condition: service_healthy
+    healthcheck:
+      test: curl -f http://localhost:1111
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    x-runtipi:
+      internal_port: 1111
+      is_main: true
+  blinko-db:
+    image: postgres:17.3
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=blinko
+      - POSTGRES_USER=blinkouser
+      - POSTGRES_PASSWORD=blinkopass
+    healthcheck:
+      test: pg_isready -q -d blinko -U blinkouser
+      interval: 10s
+      timeout: 45s
+      retries: 10
+x-runtipi:
+  schema_version: 2

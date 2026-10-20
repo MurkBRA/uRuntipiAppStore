@@ -1,0 +1,65 @@
+{
+  "name": "Lightning Terminal",
+  "available": true,
+  "port": 3004,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "lightning-terminal",
+  "description": "Lightning Terminal is the easiest way to manage inbound and outbound liquidity on the Lightning Network. Keep your channels open and the funds flowing. It provides a visual interface for interacting with your channels and balances using Loop.",
+  "tipi_version": 1,
+  "version": "0.17.6",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "The easiest way to manage channel liquidity",
+  "author": "Lightning Labs",
+  "source": "https://github.com/lightninglabs/lightning-terminal",
+  "website": "https://lightning.engineering",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "random",
+      "label": "Lightning Terminal password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500228,
+  "updated_at": 1792501560228,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

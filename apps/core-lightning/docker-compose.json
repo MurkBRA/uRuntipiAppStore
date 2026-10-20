@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "core-lightning",
+      "image": "ghcr.io/elementsproject/cln-application:26.09",
+      "isMain": true,
+      "internalPort": 2103,
+      "addToMainNetwork": true,
+      "command": "npm run start",
+      "environment": [
+        {
+          "key": "APP_SINGLE_SIGN_ON",
+          "value": "true"
+        },
+        {
+          "key": "APP_HOST",
+          "value": "core-lightning"
+        },
+        {
+          "key": "APP_PORT",
+          "value": "2103"
+        },
+        {
+          "key": "BITCOIN_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "LIGHTNING_HOST",
+          "value": "core-lightning-lightningd"
+        },
+        {
+          "key": "LIGHTNING_TOR_HOST",
+          "value": "${APP_CORE_LIGHTNING_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "LIGHTNING_WS_HOST",
+          "value": "core-lightning-lightningd"
+        },
+        {
+          "key": "LIGHTNING_WS_TOR_HOST",
+          "value": "${APP_CORE_LIGHTNING_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "APP_CONNECT",
+          "value": "COMMANDO"
+        },
+        {
+          "key": "APP_MODE",
+          "value": "production"
+        },
+        {
+          "key": "LIGHTNING_DATA_DIR",
+          "value": "/root/.lightning"
+        },
+        {
+          "key": "APP_CONFIG_FILE",
+          "value": "/data/app/config.json"
+        },
+        {
+          "key": "LIGHTNING_VARS_FILE",
+          "value": "/root/.lightning/.commando-env"
+        },
+        {
+          "key": "LIGHTNING_WS_PROTOCOL",
+          "value": "ws"
+        },
+        {
+          "key": "LIGHTNING_WS_PORT",
+          "value": "2106"
+        },
+        {
+          "key": "LIGHTNING_WS_CLIENT_KEY_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/client-key.pem"
+        },
+        {
+          "key": "LIGHTNING_WS_CLIENT_CERT_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/client.pem"
+        },
+        {
+          "key": "LIGHTNING_WS_CA_CERT_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/ca.pem"
+        },
+        {
+          "key": "LIGHTNING_REST_PROTOCOL",
+          "value": "https"
+        },
+        {
+          "key": "LIGHTNING_REST_HOST",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "LIGHTNING_REST_TOR_HOST",
+          "value": "${APP_CORE_LIGHTNING_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "LIGHTNING_REST_PORT",
+          "value": "2107"
+        },
+        {
+          "key": "LIGHTNING_REST_CLIENT_KEY_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/client-key.pem"
+        },
+        {
+          "key": "LIGHTNING_REST_CLIENT_CERT_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/client.pem"
+        },
+        {
+          "key": "LIGHTNING_REST_CA_CERT_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/ca.pem"
+        },
+        {
+          "key": "LIGHTNING_GRPC_HOST",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "LIGHTNING_GRPC_TOR_HOST",
+          "value": "${APP_CORE_LIGHTNING_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "LIGHTNING_GRPC_PORT",
+          "value": "2110"
+        },
+        {
+          "key": "LIGHTNING_GRPC_PROTO_PATH",
+          "value": "https://github.com/ElementsProject/lightning/tree/master/cln-grpc/proto"
+        },
+        {
+          "key": "LIGHTNING_GRPC_CLIENT_KEY_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/client-key.pem"
+        },
+        {
+          "key": "LIGHTNING_GRPC_CLIENT_CERT_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/client.pem"
+        },
+        {
+          "key": "LIGHTNING_GRPC_CA_CERT_FILE",
+          "value": "/root/.lightning/${APP_BITCOIN_NETWORK}/ca.pem"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/data/app"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data/lightningd",
+          "containerPath": "/root/.lightning"
+        }
+      ]
+    },
+    {
+      "name": "core-lightning-lightningd",
+      "image": "elementsproject/lightningd:v26.06.9",
+      "addToMainNetwork": true,
+      "command": [
+        "--bitcoin-rpcconnect=${APP_BITCOIN_NODE_IP}",
+        "--bitcoin-rpcuser=${APP_BITCOIN_RPC_USER}",
+        "--bitcoin-rpcpassword=${APP_BITCOIN_RPC_PASS}",
+        "--bitcoin-rpcport=${APP_BITCOIN_RPC_PORT}",
+        "--lightning-dir=/root/.lightning",
+        "--proxy=${TOR_PROXY_IP}:${TOR_PROXY_PORT}",
+        "--bind-addr=core-lightning-lightningd:9735",
+        "--bind-addr=ws:core-lightning-lightningd:2106",
+        "--addr=statictor:${TOR_PROXY_IP}:29051",
+        "--tor-service-password=${TOR_PASSWORD}",
+        "--network=${APP_BITCOIN_NETWORK}",
+        "--database-upgrade=true",
+        "--grpc-host=core-lightning-lightningd",
+        "--grpc-port=2110",
+        "--clnrest-host=core-lightning-lightningd",
+        "--clnrest-port=2107"
+      ],
+      "environment": [
+        {
+          "key": "LIGHTNINGD_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data/lightningd",
+          "containerPath": "/root/.lightning"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 9736,
+          "containerPort": 9735,
+          "tcp": true
+        },
+        {
+          "hostPort": 2106,
+          "containerPort": 2106,
+          "tcp": true
+        },
+        {
+          "hostPort": 2107,
+          "containerPort": 2107,
+          "tcp": true
+        },
+        {
+          "hostPort": 2110,
+          "containerPort": 2110,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

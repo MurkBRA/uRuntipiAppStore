@@ -1,0 +1,91 @@
+{
+  "name": "Core Lightning",
+  "available": true,
+  "port": 2103,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "core-lightning",
+  "description": "Get started with the Lightning network today with Core Lightning - a Lightning Network implementation focusing on spec compliance and performance.",
+  "tipi_version": 1,
+  "version": "26.09",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Run your personal Core Lightning node",
+  "author": "Core Lightning",
+  "source": "https://github.com/ElementsProject/cln-application",
+  "website": "https://blockstream.com/lightning/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Core Lightning hidden service",
+      "min": 32,
+      "env_variable": "APP_CORE_LIGHTNING_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    },
+    {
+      "type": "random",
+      "label": "Tor Control Password",
+      "min": 32,
+      "env_variable": "TOR_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501493504,
+  "updated_at": 1792501553504,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

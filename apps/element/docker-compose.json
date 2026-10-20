@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "element",
+      "image": "vectorim/element-web:v1.12.32",
+      "isMain": true,
+      "internalPort": 80,
+      "user": "nginx:nginx",
+      "stopGracePeriod": "1m"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Downtify",
+  "available": true,
+  "port": 8789,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "downtify",
+  "description": "Downtify allows you to download music by copy-pasting the Spotify link for a song, album, etc. The songs are downloaded from YouTube, along with album art, lyrics, and other metadata about the songs. As soon as your downloads are complete you will be notified!",
+  "tipi_version": 1,
+  "version": "3.5.0",
+  "categories": [
+    "media",
+    "music"
+  ],
+  "short_desc": "Download Spotify music with album art and metadata",
+  "author": "Henrique Sebastião",
+  "source": "https://github.com/henriquesebastiao/downtify",
+  "website": "https://github.com/henriquesebastiao/downtify",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501494467,
+  "updated_at": 1792501554467,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

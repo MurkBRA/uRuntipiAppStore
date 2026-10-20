@@ -1,0 +1,59 @@
+{
+  "name": "lnSwitchboard",
+  "available": true,
+  "port": 22121,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "lnswitchboard",
+  "description": "Host your own Lightning Addresses directly from your node. lnSwitchboard exposes only the public LNURL-pay endpoint while keeping its dashboard and admin routes local on port 22121.",
+  "tipi_version": 1,
+  "version": "0.3.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Self-Hosted Lightning Addresses for Your Domain",
+  "author": "RyleaStark",
+  "source": "https://github.com/RyleaStark/lnSwitchboard",
+  "website": "https://github.com/RyleaStark/lnSwitchboard",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500762,
+  "updated_at": 1792501560762,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

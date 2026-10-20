@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "route96",
+      "image": "voidic/route96:v0.7.0",
+      "isMain": true,
+      "internalPort": 8002,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "RUST_LOG",
+          "value": "info"
+        },
+        {
+          "key": "APP_PUBLIC_URL",
+          "value": "http://${APP_DOMAIN}:8002"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/app/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config.yaml",
+          "containerPath": "/app/config.yaml"
+        }
+      ],
+      "dependsOn": [
+        "route96-db"
+      ]
+    },
+    {
+      "name": "route96-db",
+      "image": "mariadb:11.2.4",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "moneyprintergobrrr"
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "route96"
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "moneyprintergobrrr"
+        },
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "route96"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    }
+  ]
+}

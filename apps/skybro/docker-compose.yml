@@ -1,0 +1,18 @@
+services:
+  skybro:
+    image: xdeekay/skybro-dashboard:1.6.2
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - /etc/localtime:/etc/localtime:ro
+    depends_on:
+      - skybro-tracker
+    x-runtipi:
+      internal_port: 5000
+      is_main: true
+  skybro-tracker:
+    image: xdeekay/skybro-tracker:1.6.2
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - /etc/localtime:/etc/localtime:ro
+x-runtipi:
+  schema_version: 2

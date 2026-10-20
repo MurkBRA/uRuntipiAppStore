@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "anything-llm",
+      "image": "mintplexlabs/anythingllm:1.18.0",
+      "isMain": true,
+      "internalPort": 3001,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "SERVER_PORT",
+          "value": 3001
+        },
+        {
+          "key": "STORAGE_DIR",
+          "value": "/app/server/storage"
+        },
+        {
+          "key": "UID",
+          "value": 1000
+        },
+        {
+          "key": "GID",
+          "value": 1000
+        },
+        {
+          "key": "DISABLE_TELEMETRY",
+          "value": "true"
+        },
+        {
+          "key": "JWT_SECRET",
+          "value": "${APP_ANYTHING_LLM_JWT_SECRET}"
+        },
+        {
+          "key": "SIG_KEY",
+          "value": "${APP_ANYTHING_LLM_SIG_KEY}"
+        },
+        {
+          "key": "SIG_SALT",
+          "value": "${APP_ANYTHING_LLM_SIG_SALT}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/.env",
+          "containerPath": "/app/server/.env"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server-storage",
+          "containerPath": "/app/server/storage"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/collector-hotdir",
+          "containerPath": "/app/collector/hotdir"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/collector-outputs",
+          "containerPath": "/app/collector/outputs"
+        }
+      ],
+      "capAdd": [
+        "SYS_ADMIN"
+      ],
+      "extraHosts": [
+        "host.docker.internal:host-gateway"
+      ]
+    }
+  ]
+}

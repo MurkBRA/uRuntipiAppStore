@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "nostr-vpn",
+      "image": "ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.18",
+      "isMain": true,
+      "internalPort": 38080,
+      "stopGracePeriod": "1m",
+      "command": [
+        "--listen",
+        "0.0.0.0:38080",
+        "--behind-trusted-proxy",
+        "--config",
+        "/data/config/nvpn/config.toml"
+      ],
+      "environment": [
+        {
+          "key": "HOME",
+          "value": "/data/home"
+        },
+        {
+          "key": "XDG_CONFIG_HOME",
+          "value": "/data/config"
+        },
+        {
+          "key": "NVPN_CLI_PATH",
+          "value": "/usr/local/bin/nvpn"
+        },
+        {
+          "key": "NVPN_DAEMON_STATUS_MODE",
+          "value": "state-file"
+        },
+        {
+          "key": "NVPN_EXTERNAL_DAEMON",
+          "value": "true"
+        },
+        {
+          "key": "RUST_LOG",
+          "value": "info"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ],
+      "dependsOn": [
+        "nostr-vpn-daemon"
+      ]
+    },
+    {
+      "name": "nostr-vpn-daemon",
+      "image": "ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.18",
+      "networkMode": "host",
+      "stopGracePeriod": "1m",
+      "command": [
+        "daemon",
+        "--config",
+        "/data/config/nvpn/config.toml"
+      ],
+      "entrypoint": [
+        "/usr/local/bin/nvpn"
+      ],
+      "environment": [
+        {
+          "key": "HOME",
+          "value": "/data/home"
+        },
+        {
+          "key": "XDG_CONFIG_HOME",
+          "value": "/data/config"
+        },
+        {
+          "key": "RUST_LOG",
+          "value": "info"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ],
+      "capAdd": [
+        "NET_ADMIN"
+      ],
+      "devices": [
+        "/dev/net/tun:/dev/net/tun"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,279 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bffless",
+      "image": "ghcr.io/bffless/ce-nginx:umbrel",
+      "isMain": true,
+      "internalPort": 5537,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "30s",
+      "environment": [
+        {
+          "key": "DEVICE_DOMAIN_NAME",
+          "value": "${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/app/config",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/frontend",
+          "containerPath": "/usr/share/nginx/html/app",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx",
+          "containerPath": "/etc/nginx/sites-enabled"
+        }
+      ],
+      "dependsOn": [
+        "bffless-backend",
+        "bffless-frontend"
+      ]
+    },
+    {
+      "name": "bffless-postgres",
+      "image": "pgvector/pgvector:0.8.2-pg17",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "30s",
+      "command": "postgres -c shared_buffers=64MB -c effective_cache_size=128MB -c work_mem=4MB -c maintenance_work_mem=32MB -c max_connections=20 -c wal_buffers=4MB",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "postgres"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "staticfilesgobrrrr"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "assethost"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db/init-databases.sql",
+          "containerPath": "/docker-entrypoint-initdb.d/init.sql",
+          "readOnly": true
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U postgres",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    },
+    {
+      "name": "bffless-supertokens",
+      "image": "supertokens/supertokens-postgresql:9.3",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "30s",
+      "environment": [
+        {
+          "key": "POSTGRESQL_HOST",
+          "value": "bffless-postgres"
+        },
+        {
+          "key": "POSTGRESQL_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "POSTGRESQL_USER",
+          "value": "postgres"
+        },
+        {
+          "key": "POSTGRESQL_PASSWORD",
+          "value": "staticfilesgobrrrr"
+        },
+        {
+          "key": "POSTGRESQL_DATABASE_NAME",
+          "value": "supertokens"
+        },
+        {
+          "key": "JAVA_OPTS",
+          "value": "-Xmx192m -Xms96m -XX:+UseSerialGC -XX:MaxMetaspaceSize=64m"
+        },
+        {
+          "key": "POSTGRESQL_CONNECTION_POOL_SIZE",
+          "value": "3"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:3567/hello",
+        "interval": "15s",
+        "timeout": "10s",
+        "retries": 8,
+        "startPeriod": "45s"
+      },
+      "dependsOn": {
+        "bffless-postgres": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "bffless-backend",
+      "image": "ghcr.io/bffless/ce-backend:umbrel",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "30s",
+      "environment": [
+        {
+          "key": "NODE_OPTIONS",
+          "value": "--max-old-space-size=128"
+        },
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "PORT",
+          "value": "3000"
+        },
+        {
+          "key": "LOG_LEVEL",
+          "value": "error,warn,log"
+        },
+        {
+          "key": "APP_SEED",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "APP_DATA_DIR",
+          "value": "${APP_DATA_DIR:-/data}"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://postgres:staticfilesgobrrrr@bffless-postgres:5432/assethost"
+        },
+        {
+          "key": "STORAGE_TYPE",
+          "value": "local"
+        },
+        {
+          "key": "ENABLE_MINIO",
+          "value": "false"
+        },
+        {
+          "key": "CACHE_TYPE",
+          "value": "memory"
+        },
+        {
+          "key": "ENABLE_REDIS",
+          "value": "false"
+        },
+        {
+          "key": "SUPERTOKENS_MODE",
+          "value": "local"
+        },
+        {
+          "key": "SUPERTOKENS_CONNECTION_URI",
+          "value": "http://bffless-supertokens:3567"
+        },
+        {
+          "key": "PRIMARY_DOMAIN",
+          "value": "localhost"
+        },
+        {
+          "key": "FRONTEND_URL",
+          "value": "http://localhost:5537"
+        },
+        {
+          "key": "API_DOMAIN",
+          "value": "http://localhost:5537"
+        },
+        {
+          "key": "ADMIN_DOMAIN",
+          "value": "localhost"
+        },
+        {
+          "key": "COOKIE_SECURE",
+          "value": "false"
+        },
+        {
+          "key": "COOKIE_DOMAIN",
+          "value": "umbrel.local"
+        },
+        {
+          "key": "NGINX_SITES_PATH",
+          "value": "/etc/nginx/sites-enabled"
+        },
+        {
+          "key": "NGINX_RELOAD_WAIT_MS",
+          "value": "3000"
+        },
+        {
+          "key": "NGINX_LISTEN_PORT",
+          "value": "5537"
+        },
+        {
+          "key": "BACKEND_HOST",
+          "value": "backend"
+        },
+        {
+          "key": "PROXY_MODE",
+          "value": "cloudflare-tunnel"
+        },
+        {
+          "key": "FEATURE_WILDCARD_SSL",
+          "value": "false"
+        },
+        {
+          "key": "FEATURE_WILDCARD_SSL_BANNER",
+          "value": "false"
+        },
+        {
+          "key": "FEATURE_DOMAIN_SSL_TOGGLE",
+          "value": "false"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/app/apps/backend/uploads"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/app/config",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx",
+          "containerPath": "/etc/nginx/sites-enabled"
+        }
+      ],
+      "dependsOn": {
+        "bffless-postgres": {
+          "condition": "service_healthy"
+        },
+        "bffless-supertokens": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "bffless-frontend",
+      "image": "ghcr.io/bffless/ce-frontend:umbrel",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "30s",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/frontend",
+          "containerPath": "/app/dist"
+        }
+      ],
+      "dependsOn": [
+        "bffless-backend"
+      ]
+    }
+  ]
+}

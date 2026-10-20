@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bentopdf",
+      "image": "ghcr.io/alam00000/bentopdf:v2.8.10",
+      "isMain": true,
+      "internalPort": 8080
+    }
+  ]
+}

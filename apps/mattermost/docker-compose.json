@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "mattermost",
+      "image": "alexlack/mattermost-app:v12.0.0",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "MM_USERNAME",
+          "value": "admin"
+        },
+        {
+          "key": "MM_PASSWORD",
+          "value": "admin"
+        },
+        {
+          "key": "MM_DBNAME",
+          "value": "mattermost"
+        },
+        {
+          "key": "MM_SQLSETTINGS_DATASOURCE",
+          "value": "postgres://admin:admin@mattermost-db:5432/mattermost?sslmode=disable&connect_timeout=10"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app/mattermost/config",
+          "containerPath": "/mattermost/config"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app/mattermost/data",
+          "containerPath": "/mattermost/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app/mattermost/logs",
+          "containerPath": "/mattermost/logs"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app/mattermost/plugins",
+          "containerPath": "/mattermost/plugins"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app/mattermost/client-plugins",
+          "containerPath": "/mattermost/client/plugins"
+        },
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8443,
+          "containerPort": 8443,
+          "tcp": true
+        },
+        {
+          "hostPort": 8443,
+          "containerPort": 8443,
+          "udp": true,
+          "tcp": false
+        }
+      ],
+      "dependsOn": {
+        "mattermost-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "mattermost-db",
+      "image": "alexlack/mattermost-db:v11.11.1",
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "MM_USERNAME",
+          "value": "admin"
+        },
+        {
+          "key": "MM_PASSWORD",
+          "value": "admin"
+        },
+        {
+          "key": "MM_DBNAME",
+          "value": "mattermost"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        },
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U admin -d mattermost",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    }
+  ]
+}

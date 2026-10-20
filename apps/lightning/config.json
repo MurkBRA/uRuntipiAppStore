@@ -1,0 +1,120 @@
+{
+  "name": "Lightning Node",
+  "available": true,
+  "port": 2101,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "lightning",
+  "description": "Run your personal Lightning Network node, and join the future of Bitcoin today.",
+  "tipi_version": 1,
+  "version": "v1.3.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Run your personal Lightning Network node",
+  "author": "Umbrel",
+  "source": "https://github.com/getumbrel/umbrel-lightning",
+  "website": "https://umbrel.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Lightning Node lightning command",
+      "min": 32,
+      "env_variable": "APP_LIGHTNING_COMMAND"
+    },
+    {
+      "type": "random",
+      "label": "Lightning Node lightning rest hidden service",
+      "min": 32,
+      "env_variable": "APP_LIGHTNING_REST_HIDDEN_SERVICE"
+    },
+    {
+      "type": "random",
+      "label": "Lightning Node lightning grpc hidden service",
+      "min": 32,
+      "env_variable": "APP_LIGHTNING_GRPC_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning Node lnd initialize with tor only",
+      "required": false,
+      "default": "default",
+      "env_variable": "LND_INITIALIZE_WITH_TOR_ONLY"
+    },
+    {
+      "type": "number",
+      "label": "Mempool HTTP Port",
+      "required": false,
+      "default": 3006,
+      "env_variable": "APP_MEMPOOL_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Mempool Hostname / Onion Address",
+      "required": false,
+      "default": "mempool.local",
+      "env_variable": "APP_MEMPOOL_HIDDEN_SERVICE"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500084,
+  "updated_at": 1792501560084,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

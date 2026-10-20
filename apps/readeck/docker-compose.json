@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "readeck",
+      "image": "codeberg.org/readeck/readeck:0.23.4",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "READECK_LOG_LEVEL",
+          "value": "info"
+        },
+        {
+          "key": "READECK_SERVER_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "READECK_SERVER_PORT",
+          "value": 8000
+        },
+        {
+          "key": "READECK_LOG_FORMAT",
+          "value": "text"
+        },
+        {
+          "key": "READECK_SECRET_KEY",
+          "value": "${APP_SEED}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/readeck"
+        }
+      ],
+      "healthCheck": {
+        "test": "/bin/readeck healthcheck -config config.toml",
+        "interval": "30s",
+        "timeout": "2s",
+        "retries": 3
+      }
+    }
+  ]
+}

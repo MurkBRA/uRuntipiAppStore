@@ -1,0 +1,15 @@
+services:
+  swingmusic:
+    image: ghcr.io/swingmx/swingmusic:v3.0.0
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/config
+      - ${APP_DATA_DIR}/data/music:/music
+      - ${APP_DATA_DIR}/data/downloads:/downloads
+    environment:
+      - PUID=1000
+      - PGID=1000
+    x-runtipi:
+      internal_port: 1970
+      is_main: true
+x-runtipi:
+  schema_version: 2

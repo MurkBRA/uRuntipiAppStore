@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "mailarchiver",
+      "image": "ghcr.io/s1t5/mailarchiver:2610.1",
+      "isMain": true,
+      "internalPort": 5000,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data-protection-keys",
+          "containerPath": "/app/DataProtection-Keys"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/appsettings.json",
+          "containerPath": "/app/appsettings.json"
+        }
+      ],
+      "dependsOn": {
+        "mailarchiver-postgres": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "mailarchiver-postgres",
+      "image": "postgres:18.3-alpine3.23",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "mailarchiver"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "mailarchiver"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "mailarchiver"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/database",
+          "containerPath": "/var/lib/postgresql"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U mailarchiver -d mailarchiver",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "10s"
+      }
+    }
+  ]
+}

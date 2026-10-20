@@ -1,0 +1,34 @@
+services:
+  fedimint-gateway:
+    image: fedimint/gatewayd:v0.12.2
+    entrypoint:
+      - /bin/sh
+      - '-c'
+      - |
+        set -e
+        FM_GATEWAY_BCRYPT_PASSWORD_HASH=$$(gateway-cli create-password-hash "$$APP_PASSWORD" | tr -d '"')
+        export FM_GATEWAY_BCRYPT_PASSWORD_HASH
+        exec gatewayd lnd
+    ports:
+      - 8177:8177/udp
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    environment:
+      - FM_GATEWAY_DATA_DIR=/data
+      - FM_GATEWAY_NETWORK=${APP_BITCOIN_NETWORK_ELECTRS}
+      - FM_GATEWAY_LISTEN_ADDR=0.0.0.0:8178
+      - FM_GATEWAY_IROH_LISTEN_ADDR=0.0.0.0:8177
+      - APP_PASSWORD=${APP_PASSWORD}
+      - FM_LND_RPC_ADDR=https://${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}
+      - FM_LND_TLS_CERT=/lnd/tls.cert
+      - FM_LND_MACAROON=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - FM_BITCOIND_USERNAME=${APP_BITCOIN_RPC_USER}
+      - FM_BITCOIND_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - FM_BITCOIND_URL=http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}
+    x-runtipi:
+      internal_port: 8178
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

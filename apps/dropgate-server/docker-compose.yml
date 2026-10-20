@@ -1,0 +1,23 @@
+services:
+  dropgate-server:
+    image: willtda/dropgate-server:3.0.13
+    volumes:
+      - ${APP_DATA_DIR}/data/uploads:/usr/src/app/uploads
+    environment:
+      - SERVER_PORT=52443
+      - SERVER_NAME=Dropgate Server
+      - ENABLE_WEB_UI=true
+      - ENABLE_UPLOAD=true
+      - UPLOAD_ENABLE_E2EE=true
+      - UPLOAD_PRESERVE_UPLOADS=false
+      - UPLOAD_MAX_FILE_SIZE_MB=100
+      - UPLOAD_MAX_STORAGE_GB=10
+      - UPLOAD_MAX_FILE_LIFETIME_HOURS=24
+      - UPLOAD_MAX_FILE_DOWNLOADS=1
+      - ENABLE_P2P=true
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 52443
+      is_main: true
+x-runtipi:
+  schema_version: 2

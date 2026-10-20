@@ -1,0 +1,72 @@
+{
+  "name": "Ordinals",
+  "available": true,
+  "port": 4000,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "ordinals",
+  "description": "Run your own index, block explorer, and command-line wallet for Ordinals. The app automatically connects to your Bitcoin node on umbrelOS for trustless operation. Simply install the app and wait for Ordinals to index inscriptions and runes.",
+  "tipi_version": 1,
+  "version": "0.27.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Run your own index, block explorer, and command-line wallet for Ordinals",
+  "author": "Casey Rodarmor",
+  "source": "https://github.com/casey/ord",
+  "website": "https://ordinals.com/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Data Directory Path",
+      "required": false,
+      "default": "/data/bitcoin",
+      "env_variable": "APP_BITCOIN_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504448,
+  "updated_at": 1792501564448,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

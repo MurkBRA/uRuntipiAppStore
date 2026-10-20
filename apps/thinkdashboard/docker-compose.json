@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "thinkdashboard",
+      "image": "ghcr.io/matiasdesuu/thinkdashboard:v0.7.6",
+      "isMain": true,
+      "internalPort": 8080,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "PORT",
+          "value": "8080"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Snapdrop",
+  "available": true,
+  "port": 22763,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "snapdrop",
+  "description": "Snapdrop - local file sharing in your browser. Inspired by Apple's Airdrop.",
+  "tipi_version": 1,
+  "version": "version-b8b78cc2",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Opensource Airdrop Alternative",
+  "author": "RobinLinus",
+  "source": "https://github.com/RobinLinus/snapdrop",
+  "website": "https://snapdrop.net/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501509130,
+  "updated_at": 1792501569130,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

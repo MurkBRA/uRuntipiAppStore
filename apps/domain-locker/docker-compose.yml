@@ -1,0 +1,38 @@
+services:
+  domain-locker:
+    image: lissy93/domain-locker:0.3.0
+    user: '1000:1000'
+    environment:
+      - DL_ENV_TYPE=selfHosted
+      - DL_PG_HOST=domain-locker-postgres
+      - DL_PG_PORT=5432
+      - DL_PG_USER=postgres
+      - DL_PG_PASSWORD=domain-locker
+      - DL_PG_NAME=domain_locker
+    depends_on:
+      - domain-locker-postgres
+    healthcheck:
+      test: wget --spider -q http://localhost:3000/api/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  domain-locker-postgres:
+    image: postgres:17.4
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=domain_locker
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=domain-locker
+    healthcheck:
+      test: pg_isready -U postgres -d domain_locker
+      interval: 10s
+      timeout: 5s
+      retries: 5
+x-runtipi:
+  schema_version: 2

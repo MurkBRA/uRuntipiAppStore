@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "passky-client",
+      "image": "rabbitcompany/passky-client:8.1.1",
+      "isMain": true,
+      "internalPort": 80,
+      "stopGracePeriod": "1m"
+    }
+  ]
+}

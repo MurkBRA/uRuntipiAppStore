@@ -1,0 +1,35 @@
+{
+  "name": "Passky Server",
+  "available": true,
+  "port": 5050,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "passky-server",
+  "description": "With Passky, you can easily and securely store all of your passwords in one place.",
+  "tipi_version": 1,
+  "version": "8.1.8",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Simple, modern, lightweight, open source and secure password manager",
+  "author": "Rabbit Company LLC",
+  "source": "https://github.com/Rabbit-Company/Passky-Server",
+  "website": "https://passky.org",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Passky Server password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504858,
+  "updated_at": 1792501564858,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

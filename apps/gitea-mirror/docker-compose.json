@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "gitea-mirror",
+      "image": "ghcr.io/raylabshq/gitea-mirror:v3.41.0",
+      "isMain": true,
+      "internalPort": 4321,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "BETTER_AUTH_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "BETTER_AUTH_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "BETTER_AUTH_TRUSTED_ORIGINS",
+          "value": "*"
+        },
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "file:data/gitea-mirror.db"
+        },
+        {
+          "key": "HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "PORT",
+          "value": "4321"
+        },
+        {
+          "key": "PUBLIC_BETTER_AUTH_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "MIRROR_ISSUE_CONCURRENCY",
+          "value": "3"
+        },
+        {
+          "key": "MIRROR_PULL_REQUEST_CONCURRENCY",
+          "value": "5"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "wget --no-verbose --tries=3 --spider http://localhost:4321/api/health",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 5,
+        "startPeriod": "15s"
+      }
+    }
+  ]
+}

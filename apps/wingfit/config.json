@@ -1,0 +1,27 @@
+{
+  "name": "Wingfit",
+  "available": true,
+  "port": 8950,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "wingfit",
+  "description": "🦾 Wingfit is a focused and thoughtfully designed fitness application that enables users to take full control of their workout routines and long-term training progress. At its core, the app provides a seamless way to create, customize, and log workouts, whether you're engaged in weightlifting, running, calisthenics, or any other type of physical activity. Users can define their own exercises and organize them into workout sessions that reflect their unique training style. Every detail of a workout can be recorded, including sets, repetitions, weights, distances, times, rest periods, and notes, allowing for precise and meaningful tracking.",
+  "tipi_version": 1,
+  "version": "5.3.1",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An open-source minimalist fitness app",
+  "author": "Kovacs",
+  "source": "https://github.com/itskovacs/wingfit",
+  "website": "https://wingfit.fr/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501513043,
+  "updated_at": 1792501573043,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

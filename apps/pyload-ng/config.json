@@ -1,0 +1,27 @@
+{
+  "name": "pyload-ng",
+  "available": true,
+  "port": 26317,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "pyload-ng",
+  "description": "Pyload is a powerful, open-source download manager designed to simplify your file downloads. All common video-sites, one-click-hosters, container formats and well known web standards are supported to allow you to download your files.",
+  "tipi_version": 1,
+  "version": "0.5.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "The free and open-source Download Manager",
+  "author": "pyload",
+  "source": "https://github.com/pyload/pyload/",
+  "website": "https://pyload.net/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506348,
+  "updated_at": 1792501566348,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

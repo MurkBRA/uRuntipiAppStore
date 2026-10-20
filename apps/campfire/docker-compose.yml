@@ -1,0 +1,27 @@
+services:
+  campfire:
+    image: ghcr.io/basecamp/once-campfire:1.5.4
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/rails/storage
+    environment:
+      - RAILS_ENV=production
+      - SECRET_KEY_BASE=${APP_SEED}
+      - REDIS_URL=redis://campfire-redis:6379
+      - DISABLE_SSL=true
+      - VAPID_PUBLIC_KEY=${VAPID_PUBLIC_KEY}
+      - VAPID_PRIVATE_KEY=${VAPID_PRIVATE_KEY}
+      - SENTRY_DSN=${SENTRY_DSN}
+    depends_on:
+      - campfire-redis
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+  campfire-redis:
+    image: redis:7-alpine
+    command: redis-server --save 60 1 --save 300 10 --save 900 100 --appendonly yes --loglevel warning
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+x-runtipi:
+  schema_version: 2

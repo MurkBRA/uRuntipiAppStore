@@ -1,0 +1,32 @@
+services:
+  rustdesk-server:
+    image: nginx:1.27
+    volumes:
+      - ${APP_DATA_DIR}/data/www:/usr/share/nginx/html:ro
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+  rustdesk-server-hbbs:
+    image: rustdesk/rustdesk-server:1.1.16
+    command: hbbs
+    ports:
+      - 21115:21115/tcp
+      - 21116:21116/tcp
+      - 21116:21116/udp
+      - 21118:21118/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/hbbs:/root
+    depends_on:
+      - rustdesk-server-hbbr
+    network_mode: host
+  rustdesk-server-hbbr:
+    image: rustdesk/rustdesk-server:1.1.16
+    command: hbbr
+    ports:
+      - 21117:21117/tcp
+      - 21119:21119/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/hbbr:/root
+    network_mode: host
+x-runtipi:
+  schema_version: 2

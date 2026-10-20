@@ -1,0 +1,27 @@
+{
+  "name": "RustDesk Server",
+  "available": true,
+  "port": 21080,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "rustdesk-server",
+  "description": "RustDesk is an open-source, self-hosted, and secure remote desktop solution that allows users to access and control computers remotely. It provides functionality similar to other remote desktop tools like TeamViewer and AnyDesk but with the key advantage of being open-source, meaning users can inspect the code, contribute to its development, and even self-host the software on their own servers. This allows for greater control over the remote access environment and better privacy, as all communication can be routed through a server that the user owns or operates, rather than relying on a third-party provider.",
+  "tipi_version": 1,
+  "version": "1.27",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "A fast and reliable solution for remote access",
+  "author": "RustDesk Team",
+  "source": "https://github.com/rustdesk/rustdesk-server",
+  "website": "https://rustdesk.com",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501507119,
+  "updated_at": 1792501567119,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

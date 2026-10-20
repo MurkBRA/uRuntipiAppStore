@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "satsbook",
+      "image": "ghcr.io/satsbook/satsbook:2.1.0",
+      "isMain": true,
+      "internalPort": 3017,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "SATSBOOK_LND_HOST",
+          "value": "${APP_LIGHTNING_NODE_IP}"
+        },
+        {
+          "key": "SATSBOOK_LND_PORT",
+          "value": "${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "SATSBOOK_LND_MACAROON_PATH",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon"
+        },
+        {
+          "key": "SATSBOOK_LND_TLS_CERT_PATH",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "SATSBOOK_DATABASE_PATH",
+          "value": "/data/satsbook.db"
+        },
+        {
+          "key": "SATSBOOK_APP_PORT",
+          "value": 3017
+        },
+        {
+          "key": "SATSBOOK_LOG_LEVEL",
+          "value": "info"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

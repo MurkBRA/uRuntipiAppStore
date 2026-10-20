@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "netbird",
+      "image": "nginx:1.27",
+      "isMain": true,
+      "internalPort": 80,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/www",
+          "containerPath": "/usr/share/nginx/html",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "netbird-app",
+      "image": "ghcr.io/netbirdio/netbird:0.81.3-rootless",
+      "networkMode": "host",
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app_data",
+          "containerPath": "/var/lib/netbird"
+        }
+      ],
+      "capAdd": [
+        "NET_ADMIN",
+        "SYS_ADMIN",
+        "SYS_RESOURCE"
+      ]
+    }
+  ]
+}

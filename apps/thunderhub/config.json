@@ -1,0 +1,71 @@
+{
+  "name": "ThunderHub",
+  "available": true,
+  "port": 24188,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "thunderhub",
+  "description": "ThunderHub allows you to take full control of your Lightning node with a slick and awesome UI. Explore all the options that ThunderHub has to offer, from sending and receiving Lightning payments, to checking your node's health statistics, and even more advanced options like channel rebalancing and multi-path lightning payments.",
+  "tipi_version": 1,
+  "version": "0.19.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Take full control of your Lightning node",
+  "author": "Anthony Potdevin",
+  "source": "https://github.com/apotdevin/thunderhub",
+  "website": "https://thunderhub.io/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "ThunderHub password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511383,
+  "updated_at": 1792501571383,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

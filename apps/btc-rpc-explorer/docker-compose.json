@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "btc-rpc-explorer",
+      "image": "getumbrel/btc-rpc-explorer:v3.5.1",
+      "isMain": true,
+      "internalPort": 8080,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "BTCEXP_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "BTCEXP_PORT",
+          "value": 8080
+        },
+        {
+          "key": "BTCEXP_BITCOIND_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BTCEXP_BITCOIND_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BTCEXP_BITCOIND_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BTCEXP_BITCOIND_PASS",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "BTCEXP_ADDRESS_API",
+          "value": "electrumx"
+        },
+        {
+          "key": "BTCEXP_ELECTRUMX_SERVERS",
+          "value": "tcp://${APP_ELECTRS_NODE_IP}:${APP_ELECTRS_NODE_PORT}"
+        },
+        {
+          "key": "DEBUG",
+          "value": "btcexp:*,electrumClient"
+        },
+        {
+          "key": "BTCEXP_SLOW_DEVICE_MODE",
+          "value": "true"
+        },
+        {
+          "key": "BTCEXP_NO_INMEMORY_RPC_CACHE",
+          "value": "true"
+        },
+        {
+          "key": "BTCEXP_PRIVACY_MODE",
+          "value": "true"
+        },
+        {
+          "key": "BTCEXP_NO_RATES",
+          "value": "true"
+        },
+        {
+          "key": "BTCEXP_RPC_ALLOWALL",
+          "value": "false"
+        },
+        {
+          "key": "BTCEXP_BASIC_AUTH_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ]
+    }
+  ]
+}

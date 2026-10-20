@@ -1,0 +1,62 @@
+{
+  "name": "Ride The Lightning (Core Lightning)",
+  "available": true,
+  "port": 3100,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "core-lightning-rtl",
+  "description": "This version of RTL is specifically configured to use your Core Lightning node. RTL provides a full function, device agnostic, web user interface to help manage lightning node operation. It enables full control over your lightning node with rich functionality for Bitcoin base layer and Lightning Network. Some cool features available on RTL are:",
+  "tipi_version": 1,
+  "version": "v0.15.13",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Manage your Core Lightning node with RTL",
+  "author": "Shahana and Suheb",
+  "source": "https://github.com/Ride-The-Lightning/RTL",
+  "website": "https://github.com/Ride-The-Lightning/RTL",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Ride The Lightning (Core Lightning) password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Core Lightning Daemon Host / IP",
+      "required": false,
+      "default": "core-lightning",
+      "env_variable": "APP_CORE_LIGHTNING_DAEMON_IP"
+    },
+    {
+      "type": "number",
+      "label": "Core Lightning REST Port",
+      "required": false,
+      "default": 3010,
+      "env_variable": "CORE_LIGHTNING_REST_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Ride The Lightning (Core Lightning) block explorer url",
+      "required": false,
+      "default": "default",
+      "env_variable": "BLOCK_EXPLORER_URL"
+    },
+    {
+      "type": "text",
+      "label": "Core Lightning Data Directory",
+      "required": false,
+      "default": "/data/core-lightning",
+      "env_variable": "APP_CORE_LIGHTNING_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501493622,
+  "updated_at": 1792501553622,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

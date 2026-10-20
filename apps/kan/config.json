@@ -1,0 +1,38 @@
+{
+  "name": "kan",
+  "available": true,
+  "port": 8373,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "kan",
+  "description": "Kan is a modern, open-source alternative to Trello designed for seamless project and task management. It offers a clean, intuitive interface and a wide range of powerful features.",
+  "tipi_version": 1,
+  "version": "0.6.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "The open source Trello alternative",
+  "author": "kanbn",
+  "source": "https://github.com/kanbn/kan",
+  "website": "https://kan.bn/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "kan seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501498981,
+  "updated_at": 1792501558981,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

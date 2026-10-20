@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "pogolo",
+      "image": "0xf0xx0/pogolo-umbrel-webui:v1.x",
+      "isMain": true,
+      "internalPort": 5663,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POGOLO_API_URL",
+          "value": "http://pogolo-pogolo-sidecar:5662"
+        },
+        {
+          "key": "POGOLO_LOG",
+          "value": "/data/pogolo.log"
+        },
+        {
+          "key": "POGOLO_DIR",
+          "value": "/data"
+        },
+        {
+          "key": "DEVICE_DOMAIN_NAME",
+          "value": "${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "pogolo-pogolo-sidecar",
+      "image": "0xf0xx0/pogolo:v1.x",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "30s",
+      "command": [
+        "/pogolo",
+        "--conf",
+        "/data/pogolo.toml",
+        "--logfile",
+        "/data/pogolo.log"
+      ],
+      "environment": [
+        {
+          "key": "POGOLO_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "POGOLO_BACKEND_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "POGOLO_BACKEND_RPCAUTH",
+          "value": "${APP_BITCOIN_RPC_USER}:${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "POGOLO_BACKEND_ZMQHOST",
+          "value": "tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}"
+        },
+        {
+          "key": "FORCE_COLOR",
+          "value": 1
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 5661,
+          "containerPort": 5661,
+          "tcp": true
+        },
+        {
+          "hostPort": 5662,
+          "containerPort": 5662,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

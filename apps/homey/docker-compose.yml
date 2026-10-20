@@ -1,0 +1,11 @@
+services:
+  homey:
+    image: ghcr.io/athombv/homey-shs:13.5.2
+    volumes:
+      - ${APP_DATA_DIR}/data:/homey/user
+    privileged: true
+    x-runtipi:
+      internal_port: 4859
+      is_main: true
+x-runtipi:
+  schema_version: 2

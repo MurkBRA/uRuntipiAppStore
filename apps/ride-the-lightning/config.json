@@ -1,0 +1,79 @@
+{
+  "name": "Ride The Lightning",
+  "available": true,
+  "port": 3001,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "ride-the-lightning",
+  "description": "RTL is a full function, device agnostic, web user interface to help manage lightning node operation. It enables full control over your lightning node with rich functionality for Bitcoin base layer and Lightning Network. Some cool features available on RTL are:",
+  "tipi_version": 1,
+  "version": "v0.15.13",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A powerful dashboard for the Lightning Network",
+  "author": "Shahana and Suheb",
+  "source": "https://github.com/Ride-The-Lightning/RTL",
+  "website": "https://github.com/Ride-The-Lightning/RTL",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Ride The Lightning password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Ride The Lightning block explorer url",
+      "required": false,
+      "default": "default",
+      "env_variable": "BLOCK_EXPLORER_URL"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) REST Port",
+      "required": false,
+      "default": 8080,
+      "env_variable": "APP_LIGHTNING_NODE_REST_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Data Directory Path",
+      "required": false,
+      "default": "/data/bitcoin",
+      "env_variable": "APP_BITCOIN_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506848,
+  "updated_at": 1792501566848,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

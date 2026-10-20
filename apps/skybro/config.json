@@ -1,0 +1,26 @@
+{
+  "name": "SkyBro",
+  "available": true,
+  "port": 7437,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "skybro",
+  "description": "SkyBro is a real-time sky tracker for your home. It runs silently in the background 24/7 and alerts you the moment something interesting is overhead.",
+  "tipi_version": 1,
+  "version": "1.6.2",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Live aircraft, satellite, weather & astronomy tracker",
+  "author": "xDeeKay",
+  "source": "https://github.com/xDeeKay/SkyBro",
+  "website": "https://github.com/xDeeKay/SkyBro",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501508966,
+  "updated_at": 1792501568966,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

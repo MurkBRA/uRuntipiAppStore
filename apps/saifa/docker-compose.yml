@@ -1,0 +1,37 @@
+services:
+  saifa:
+    image: patranakamo/saifa-fe:v1.3.2
+    depends_on:
+      - saifa-backend
+    x-runtipi:
+      internal_port: 80
+      add_to_main_network: true
+      is_main: true
+  saifa-backend:
+    image: patranakamo/saifa-be:v1.3.3
+    ports:
+      - 9988:80/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/var/www/html/lnd:ro
+    environment:
+      - HOME=/data
+      - APP_PASSWORD=${APP_PASSWORD}
+      - BITCOIN_NETWORK=${APP_BITCOIN_NETWORK}
+      - LN_SERVER_URL=https://${LND_IP}:${LND_REST_PORT}
+      - REDIS_HOST=saifa-redis
+    depends_on:
+      - saifa-redis
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+  saifa-redis:
+    image: redis:7.2.4
+    volumes:
+      - ${APP_DATA_DIR}/data/redis_data:/data/redis_data
+    environment:
+      - HOME=/data/redis_data
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

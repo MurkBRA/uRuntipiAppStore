@@ -1,0 +1,59 @@
+{
+  "name": "BlueWallet Lightning",
+  "available": true,
+  "port": 3008,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bluewallet",
+  "description": "Run BlueWallet in the most private and secure way possible by removing 3rd parties and connecting it directly to your Umbrel's Lightning node.",
+  "tipi_version": 1,
+  "version": "v1.4.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Connect BlueWallet to your Lightning node",
+  "author": "BlueWallet",
+  "source": "https://github.com/BlueWallet/LndHub",
+  "website": "https://lndhub.io",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501490848,
+  "updated_at": 1792501550848,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

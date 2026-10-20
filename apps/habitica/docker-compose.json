@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "habitica",
+      "image": "awinterstein/habitica-server:5.50.6",
+      "isMain": true,
+      "internalPort": 3000,
+      "command": "sh -c \"perl -0pi -e 's/upgradeInsecureRequests: IS_PROD \\\\? \\\\[\\\\] : null,?/upgradeInsecureRequests: null/g' /var/lib/habitica/website/server/middlewares/index.js /var/lib/habitica/website/transpiled-babel/middlewares/index.js && printenv | grep -v 'no_proxy' >> /etc/environment && /etc/init.d/cron start && node /var/lib/habitica/website/transpiled-babel/index.js\"",
+      "environment": [
+        {
+          "key": "NODE_DB_URI",
+          "value": "mongodb://habitica-mongo/habitica"
+        },
+        {
+          "key": "BASE_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "INVITE_ONLY",
+          "value": "false"
+        }
+      ],
+      "dependsOn": [
+        "habitica-mongo"
+      ]
+    },
+    {
+      "name": "habitica-mongo",
+      "image": "mongo:8.0.11",
+      "command": [
+        "--replSet",
+        "rs",
+        "--bind_ip_all",
+        "--port",
+        "27017"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/data/db"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/dbconf",
+          "containerPath": "/data/configdb"
+        }
+      ],
+      "healthCheck": {
+        "test": "echo \"try { rs.status() } catch (err) { rs.initiate({ _id: 'rs', members: [{ _id: 0, host: 'habitica-mongo:27017' }] }) }\" | mongosh --port 27017 --quiet",
+        "interval": "10s",
+        "timeout": "30s",
+        "retries": 30,
+        "startPeriod": "0s",
+        "startInterval": "1s"
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "Zoraxy",
+  "available": true,
+  "port": 8400,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "zoraxy",
+  "description": "Expose your apps to the internet easily and securely.",
+  "tipi_version": 1,
+  "version": "v3.3.4",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "An efficient reverse proxy server with automated SSL management",
+  "author": "Toby Chui",
+  "source": "https://github.com/tobychui/zoraxy",
+  "website": "https://zoraxy.aroz.org/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501513730,
+  "updated_at": 1792501573730,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,12 @@
+services:
+  octoprint:
+    image: octoprint/octoprint:1.11.8
+    volumes:
+      - ${APP_DATA_DIR}/data:/octoprint
+      - /dev:/dev
+    privileged: true
+    x-runtipi:
+      internal_port: 5000
+      is_main: true
+x-runtipi:
+  schema_version: 2

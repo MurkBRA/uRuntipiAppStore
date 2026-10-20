@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "transmute",
+      "image": "ghcr.io/transmute-app/transmute:2.1.1",
+      "isMain": true,
+      "internalPort": 3313,
+      "environment": [
+        {
+          "key": "AUTH_SECRET_KEY",
+          "value": "${APP_SEED}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

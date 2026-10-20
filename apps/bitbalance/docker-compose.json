@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bitbalance",
+      "image": "ghcr.io/egzola/bitbalance:1.0.18",
+      "isMain": true,
+      "internalPort": 3710,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "PORT",
+          "value": 3710
+        },
+        {
+          "key": "ELECTRUM_HOST",
+          "value": "${APP_ELECTRS_NODE_IP}"
+        },
+        {
+          "key": "ELECTRUM_PORT",
+          "value": "${APP_ELECTRS_NODE_PORT}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

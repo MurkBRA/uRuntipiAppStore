@@ -1,0 +1,36 @@
+{
+  "name": "JupyterLab",
+  "available": true,
+  "port": 8899,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "jupyterlab",
+  "description": "JupyterLab is a next-generation web-based user interface for Project Jupyter.",
+  "tipi_version": 1,
+  "version": "lab-4.6.4",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "Next-generation web interface for interactive computing and data science",
+  "author": "jupyterlab",
+  "source": "https://github.com/jupyterlab/jupyterlab",
+  "website": "https://jupyterlab.readthedocs.io/en/latest/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "JupyterLab password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501498815,
+  "updated_at": 1792501558815,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,40 @@
+services:
+  satwatch:
+    image: ghcr.io/jpcummins/sat.watch:1.1.8
+    user: '1000:1000'
+    environment:
+      - DATABASE_URL=postgresql://satwatch:satwatch@satwatch-db:5432/satwatch?sslmode=disable
+      - ELECTRUM_HOST=${APP_ELECTRS_NODE_IP}
+      - ELECTRUM_PORT=${APP_ELECTRS_NODE_PORT}
+      - URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - ZMQ_HOST=${APP_BITCOIN_NODE_IP}
+      - ZMQ_PORT=${APP_BITCOIN_ZMQ_RAWTX_PORT}
+      - RPCHOST=http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}
+      - RPCUSER=${APP_BITCOIN_RPC_USER}
+      - RPCPASSWORD=${APP_BITCOIN_RPC_PASS}
+    depends_on:
+      satwatch-db:
+        condition: service_healthy
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8080
+      add_to_main_network: true
+      is_main: true
+  satwatch-db:
+    image: docker.io/library/postgres:17
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=satwatch
+      - POSTGRES_PASSWORD=satwatch
+      - POSTGRES_DB=satwatch
+    healthcheck:
+      test: pg_isready -U satwatch -h localhost -d satwatch
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

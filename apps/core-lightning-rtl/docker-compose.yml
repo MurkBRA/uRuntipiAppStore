@@ -1,0 +1,23 @@
+services:
+  core-lightning-rtl:
+    image: shahanafarooqui/rtl:v0.15.13
+    volumes:
+      - ${APP_DATA_DIR}/data/rtl:/data
+      - ${APP_CORE_LIGHTNING_DATA_DIR}:/root/.lightning:ro
+    environment:
+      - PORT=3000
+      - APP_PASSWORD=${APP_PASSWORD}
+      - LN_IMPLEMENTATION=CLN
+      - lnImplementation=CLN
+      - LN_SERVER_URL=https://${APP_CORE_LIGHTNING_DAEMON_IP}:${CORE_LIGHTNING_REST_PORT}
+      - RUNE_PATH=/root/.lightning/.commando-env
+      - RTL_CONFIG_PATH=/data
+      - DB_DIRECTORY_PATH=/data
+      - RTL_COOKIE_PATH=/data/.cookie
+      - BLOCK_EXPLORER_URL=${BLOCK_EXPLORER_URL}
+    x-runtipi:
+      internal_port: 3000
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,44 @@
+{
+  "name": "bitBalance",
+  "available": true,
+  "port": 3710,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bitbalance",
+  "description": "Track your Bitcoin wallets privately from your own Umbrel.",
+  "tipi_version": 1,
+  "version": "1.0.18",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Track your Bitcoin wallets privately",
+  "author": "egzola",
+  "source": "https://github.com/egzola/bitbalance",
+  "website": "https://github.com/egzola/bitbalance",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Electrs Server Host / IP",
+      "required": false,
+      "default": "electrs",
+      "env_variable": "APP_ELECTRS_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Electrs Server Port",
+      "required": false,
+      "default": 50001,
+      "env_variable": "APP_ELECTRS_NODE_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501489459,
+  "updated_at": 1792501549459,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

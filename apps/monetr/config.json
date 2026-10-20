@@ -1,0 +1,58 @@
+{
+  "name": "Monetr",
+  "available": true,
+  "port": 8379,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "monetr",
+  "description": "💸 Monetr is a personal finance application that helps users understand their spending and manage their money with clarity. It focuses on presenting a clear picture of available funds by showing how much remains after accounting for upcoming expenses and savings goals. The application allows users to organise their finances around real obligations and planned costs rather than relying on a simple monthly view. It supports recurring expenses of any interval and uses these to calculate what must be set aside so that future payments are always covered.",
+  "tipi_version": 1,
+  "version": "1.19.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A budgeting application focused on planning for recurring expenses",
+  "author": "Monetr LLC.",
+  "source": "https://github.com/monetr/monetr",
+  "website": "https://monetr.app/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Allow User Sign Up",
+      "required": false,
+      "default": "true",
+      "env_variable": "MONETR_ALLOW_SIGN_UP"
+    },
+    {
+      "type": "text",
+      "label": "Enable Proof of Work on Sign Up",
+      "required": false,
+      "default": "false",
+      "env_variable": "MONETR_PROOF_OF_WORK_ENABLED"
+    },
+    {
+      "type": "text",
+      "label": "Enable File Storage",
+      "required": false,
+      "default": "true",
+      "env_variable": "MONETR_STORAGE_ENABLED"
+    },
+    {
+      "type": "text",
+      "label": "Storage Provider",
+      "required": false,
+      "default": "filesystem",
+      "env_variable": "MONETR_STORAGE_PROVIDER"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501502184,
+  "updated_at": 1792501562184,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

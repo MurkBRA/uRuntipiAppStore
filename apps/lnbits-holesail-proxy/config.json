@@ -1,0 +1,26 @@
+{
+  "name": "LNbits Holesail Proxy",
+  "available": true,
+  "port": 3107,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "lnbits-holesail-proxy",
+  "description": "Running Umbrel behind a home router (NAT) without a public domain? TOR is too slow? This app will allow you (and your friends) to connect remotely to your LNbits, using a Holesail - an instant P2P tunnel to bypass any network, firewall, NAT restrictions.",
+  "tipi_version": 1,
+  "version": "v1.0.7",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A Holesail proxy to connect remotely to your LNbits",
+  "author": "oren-z0",
+  "source": "https://github.com/oren-z0/holesail-server-manager",
+  "website": "https://github.com/oren-z0/holesail-server-manager",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500483,
+  "updated_at": 1792501560483,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

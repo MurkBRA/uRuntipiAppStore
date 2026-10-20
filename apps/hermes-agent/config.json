@@ -1,0 +1,27 @@
+{
+  "name": "Hermes Agent",
+  "available": true,
+  "port": 18790,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "hermes-agent",
+  "description": "Hermes Agent is an AI agent that gets better the more you use it by creating its own skills, storing user preferences, and updating its memory.",
+  "tipi_version": 1,
+  "version": "2026.9.24",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "The AI agent that grows with you",
+  "author": "Nous Research",
+  "source": "https://github.com/NousResearch/hermes-agent",
+  "website": "https://hermes-agent.nousresearch.com",
+  "url_suffix": "chat",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501497466,
+  "updated_at": 1792501557466,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,38 @@
+{
+  "name": "Solidtime",
+  "available": true,
+  "port": 8770,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "solidtime",
+  "description": "🕒 Solidtime is a simple, secure, and private time tracking app that helps you keep track of your time and stay productive. It's designed to be easy to use and respects your privacy by storing your data locally.",
+  "tipi_version": 1,
+  "version": "0.22.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A simple, secure, and private time tracking app",
+  "author": "Solidtime",
+  "source": "https://github.com/solidtime-io/solidtime",
+  "website": "https://www.solidtime.io/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Solidtime local ips",
+      "required": false,
+      "default": "default",
+      "env_variable": "local_ips"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501509439,
+  "updated_at": 1792501569439,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

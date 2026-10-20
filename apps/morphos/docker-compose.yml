@@ -1,0 +1,9 @@
+services:
+  morphos:
+    image: ghcr.io/danvergara/morphos-server:0.6.0
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+x-runtipi:
+  schema_version: 2

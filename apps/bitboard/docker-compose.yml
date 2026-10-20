@@ -1,0 +1,14 @@
+services:
+  bitboard:
+    image: ghcr.io/egzola/bitboard:1.0.2
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - PORT=3711
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3711
+      is_main: true
+x-runtipi:
+  schema_version: 2

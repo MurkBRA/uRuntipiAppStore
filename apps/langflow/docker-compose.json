@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "langflow",
+      "image": "langflowai/langflow:1.12.6",
+      "isMain": true,
+      "internalPort": 7860,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "LANGFLOW_CONFIG_DIR",
+          "value": "/app/langflow"
+        },
+        {
+          "key": "HOME",
+          "value": "/app/langflow"
+        },
+        {
+          "key": "DO_NOT_TRACK",
+          "value": "true"
+        },
+        {
+          "key": "LANGFLOW_AUTO_LOGIN",
+          "value": "true"
+        },
+        {
+          "key": "LANGFLOW_SUPERUSER_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "LANGFLOW_DATABASE_URL",
+          "value": "postgresql://langflow:langflow@langflow-db:5432/langflow"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/app/langflow"
+        }
+      ]
+    },
+    {
+      "name": "langflow-db",
+      "image": "postgres:16.14-trixie",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "langflow"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "langflow"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "langflow"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ]
+    }
+  ]
+}

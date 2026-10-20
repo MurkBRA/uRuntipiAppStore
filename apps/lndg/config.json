@@ -1,0 +1,69 @@
+{
+  "name": "LNDg",
+  "available": true,
+  "port": 8889,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "lndg",
+  "description": "LNDg is your command center for running a profitable and efficient routing node. From quickly viewing your node's health, automated rebalancing, selecting new potential peers and much more.",
+  "tipi_version": 1,
+  "version": "v1.11.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Analyze and automate your Lightning node management",
+  "author": "cryptosharks131",
+  "source": "https://github.com/cryptosharks131/lndg",
+  "website": "https://github.com/cryptosharks131",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "LNDg csrf trusted origins",
+      "min": 32,
+      "env_variable": "APP_LNDG_CSRF_TRUSTED_ORIGINS"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "random",
+      "label": "LNDg password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500677,
+  "updated_at": 1792501560677,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

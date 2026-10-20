@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "cobalt",
+      "image": "dennysubke/cobalt:11.5",
+      "isMain": true,
+      "internalPort": 9001,
+      "user": "1000:1000",
+      "readOnly": true,
+      "environment": [
+        {
+          "key": "API_URL",
+          "value": "http://${APP_DOMAIN}:9013/"
+        },
+        {
+          "key": "API_AUTH_REQUIRED",
+          "value": 0
+        },
+        {
+          "key": "DURATION_LIMIT",
+          "value": 86400
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 9013,
+          "containerPort": 9000,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

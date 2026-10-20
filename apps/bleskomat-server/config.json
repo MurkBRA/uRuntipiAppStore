@@ -1,0 +1,65 @@
+{
+  "name": "Bleskomat Server",
+  "available": true,
+  "port": 25049,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bleskomat-server",
+  "description": "The Bleskomat ATM is the next generation Bitcoin Lightning ATM. This app will allow you to easily connect your Bleskomat ATM to the Lightning node on your Umbrel. A simple web interface is provided which you can use to manage and authorize one or more Bleskomat ATMs as well as view a list of recent payments handled by the server.",
+  "tipi_version": 1,
+  "version": "1.3.4",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Connect a Bleskomat ATM to your Lightning node",
+  "author": "Bleskomat",
+  "source": "https://github.com/samotari/bleskomat-server",
+  "website": "https://www.bleskomat.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) REST Port",
+      "required": false,
+      "default": 8080,
+      "env_variable": "APP_LIGHTNING_NODE_REST_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "random",
+      "label": "Bleskomat Server password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501490462,
+  "updated_at": 1792501550462,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

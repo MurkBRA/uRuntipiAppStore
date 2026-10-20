@@ -1,0 +1,27 @@
+{
+  "name": "Nginx Proxy Manager",
+  "available": true,
+  "port": 4498,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "nginx-proxy-manager",
+  "description": "Expose your apps to the internet easily and securely.",
+  "tipi_version": 1,
+  "version": "2.16.0",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "Expose your services easily and securely",
+  "author": "Jamie Curnow",
+  "source": "https://github.com/NginxProxyManager/nginx-proxy-manager",
+  "website": "https://nginxproxymanager.com/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501502986,
+  "updated_at": 1792501562986,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

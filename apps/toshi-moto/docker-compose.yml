@@ -1,0 +1,37 @@
+services:
+  toshi-moto:
+    image: toshimoto821/toshi-moto:1.37.3
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/proxy/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    environment:
+      - PORT=8021
+    depends_on:
+      - toshi-moto-api_web
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8021
+      add_to_main_network: true
+      is_main: true
+  toshi-moto-api_web:
+    image: toshimoto821/toshi-moto-api:1.8.4
+    user: '1000:1000'
+    environment:
+      - PORT=8121
+      - MONGODB_URI=mongodb://toshi-moto-mongodb:27017/toshi-moto
+    depends_on:
+      - toshi-moto-mongodb
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+  toshi-moto-mongodb:
+    image: mongo:8.0.10
+    command: mongod --noauth
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/data/db
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

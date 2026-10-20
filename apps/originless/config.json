@@ -1,0 +1,39 @@
+{
+  "name": "Originless",
+  "available": true,
+  "port": 3232,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "originless",
+  "description": "One all-in-one storage backend you can drop into anything: your own apps, screenshot tools, pastebin-style pastes, Nostr clients, Reddit posts, forum embeds-anything that needs durable, anonymous file hosting. Built on IPFS with 95% bandwidth reduction compared to previous versions.",
+  "tipi_version": 1,
+  "version": "0.1.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Private, decentralized file sharing for Nostr and the web",
+  "author": "besoeasy",
+  "source": "https://github.com/besoeasy/Originless",
+  "website": "https://github.com/besoeasy/Originless",
+  "url_suffix": "",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Maximum Storage Size",
+      "required": false,
+      "default": "10G",
+      "env_variable": "STORAGE_MAX"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504544,
+  "updated_at": 1792501564544,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

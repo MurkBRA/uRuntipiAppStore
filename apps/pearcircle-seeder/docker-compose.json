@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "pearcircle-seeder",
+      "image": "ghcr.io/peerloomllc/pearcircle-seeder:1.1.4",
+      "isMain": true,
+      "internalPort": 8730,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "SEEDER_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "SEEDER_PORT",
+          "value": "8730"
+        },
+        {
+          "key": "SEEDER_NO_AUTH",
+          "value": "1"
+        },
+        {
+          "key": "SEEDER_NO_UPDATE_CHECK",
+          "value": "1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ],
+      "securityOpt": [
+        "no-new-privileges:true"
+      ]
+    }
+  ]
+}

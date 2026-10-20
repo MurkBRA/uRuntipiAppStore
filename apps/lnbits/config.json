@@ -1,0 +1,57 @@
+{
+  "name": "LNbits",
+  "available": true,
+  "port": 3007,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "lnbits",
+  "description": "LNbits is a simple multi-user and account system for Lightning Network that can be used for creating separate Lightning wallets for friends and family members. You can also create multiple accounts for yourself to mitigate the risk of exposing applications to your full balance via unique API keys for each wallet.",
+  "tipi_version": 1,
+  "version": "1.6.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Multi-user wallet management system",
+  "author": "LNbits",
+  "source": "https://github.com/lnbits/lnbits-legend",
+  "website": "https://github.com/lnbits/lnbits-legend",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) REST Port",
+      "required": false,
+      "default": 8080,
+      "env_variable": "APP_LIGHTNING_NODE_REST_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500430,
+  "updated_at": 1792501560430,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

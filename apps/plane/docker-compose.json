@@ -1,0 +1,257 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "plane",
+      "image": "nginx:alpine3.23",
+      "isMain": true,
+      "internalPort": 8762,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config/nginx.conf",
+          "containerPath": "/etc/nginx/conf.d/default.conf",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": [
+        "plane-web"
+      ]
+    },
+    {
+      "name": "plane-db",
+      "image": "postgres:17.9-alpine",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    },
+    {
+      "name": "plane-redis",
+      "image": "valkey/valkey:7.2.12-alpine",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "plane-rabbitmq",
+      "image": "rabbitmq:3.13.7-management-alpine",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/rabbitmq",
+          "containerPath": "/var/lib/rabbitmq"
+        }
+      ]
+    },
+    {
+      "name": "plane-minio",
+      "image": "alpine/minio:RELEASE.2025-10-15T17-29-55Z",
+      "user": "1000:1000",
+      "command": "server /export --console-address \":8763\"",
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/export"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8763,
+          "containerPort": 8763,
+          "tcp": true
+        }
+      ]
+    },
+    {
+      "name": "plane-api",
+      "image": "makeplane/plane-backend:v1.4.2",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "dependsOn": {
+        "plane-db": {
+          "condition": "service_healthy"
+        },
+        "plane-redis": {
+          "condition": "service_started"
+        },
+        "plane-rabbitmq": {
+          "condition": "service_started"
+        }
+      }
+    },
+    {
+      "name": "plane-worker",
+      "image": "makeplane/plane-backend:v1.4.2",
+      "user": "1000:1000",
+      "command": [
+        "sh",
+        "-c",
+        "celery -A plane worker --loglevel=info"
+      ],
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "dependsOn": {
+        "plane-api": {
+          "condition": "service_started"
+        },
+        "plane-redis": {
+          "condition": "service_started"
+        },
+        "plane-rabbitmq": {
+          "condition": "service_started"
+        }
+      }
+    },
+    {
+      "name": "plane-beat-worker",
+      "image": "makeplane/plane-backend:v1.4.2",
+      "user": "1000:1000",
+      "command": [
+        "sh",
+        "-c",
+        "celery -A plane beat --loglevel=info"
+      ],
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "dependsOn": {
+        "plane-api": {
+          "condition": "service_started"
+        },
+        "plane-redis": {
+          "condition": "service_started"
+        },
+        "plane-rabbitmq": {
+          "condition": "service_started"
+        },
+        "plane-migrator": {
+          "condition": "service_completed_successfully"
+        }
+      }
+    },
+    {
+      "name": "plane-migrator",
+      "image": "makeplane/plane-backend:v1.4.2",
+      "user": "1000:1000",
+      "command": [
+        "sh",
+        "-c",
+        "python manage.py wait_for_db && python manage.py migrate"
+      ],
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "dependsOn": {
+        "plane-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "plane-web",
+      "image": "makeplane/plane-frontend:v1.4.2",
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "dependsOn": [
+        "plane-api"
+      ]
+    },
+    {
+      "name": "plane-live",
+      "image": "makeplane/plane-live:v1.4.2",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "dependsOn": [
+        "plane-api"
+      ]
+    },
+    {
+      "name": "plane-space",
+      "image": "makeplane/plane-space:v1.4.2",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "healthCheck": {
+        "test": "node -e \"require('http').get('http://127.0.0.1:3000/', (r) => process.exit(r.statusCode < 500 ? 0 : 1)).on('error', () => process.exit(1))\"",
+        "interval": "30s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "10s"
+      },
+      "dependsOn": [
+        "plane-api"
+      ]
+    },
+    {
+      "name": "plane-admin",
+      "image": "makeplane/plane-admin:v1.4.2",
+      "environment": [
+        {
+          "key": "<<",
+          "value": "[object Object]"
+        }
+      ],
+      "dependsOn": [
+        "plane-api"
+      ]
+    }
+  ]
+}

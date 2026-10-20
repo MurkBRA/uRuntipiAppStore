@@ -1,0 +1,32 @@
+services:
+  poznote:
+    image: ghcr.io/timothepoznanski/poznote:6.121.0
+    volumes:
+      - ${APP_DATA_DIR}/data:/var/www/html/data
+      - ${APP_DATA_DIR}/data/umbrel-mcp.php:/var/www/html/public/umbrel-mcp.php:ro
+    environment:
+      - SQLITE_DATABASE=/var/www/html/data/database/poznote.db
+      - HTTP_WEB_PORT=80
+    healthcheck:
+      test: wget --quiet --tries=1 --timeout=5 -O /dev/null http://127.0.0.1/api/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+  poznote-mcp:
+    image: ghcr.io/timothepoznanski/poznote-mcp:6.121.0
+    ports:
+      - 8340:8045/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data:/var/www/html/data:ro
+    environment:
+      - POZNOTE_API_URL=http://poznote:80/api/v1
+      - POZNOTE_DEBUG=${POZNOTE_DEBUG}
+      - POZNOTE_MCP_AUTH_TOKEN=${APP_POZNOTE_MCP_AUTH_TOKEN:?MCP authentication token is required}
+    depends_on:
+      - poznote
+x-runtipi:
+  schema_version: 2

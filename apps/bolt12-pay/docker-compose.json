@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bolt12-pay",
+      "image": "alex71btc/bolt12-pay:0.3.14",
+      "isMain": true,
+      "internalPort": 8081,
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "APP_DATA_DIR",
+          "value": "/data"
+        },
+        {
+          "key": "APP_CONFIG_PATH",
+          "value": "/data/config.json"
+        },
+        {
+          "key": "CONFIG_JSON_PATH",
+          "value": "/data/config.json"
+        },
+        {
+          "key": "SECRETS_JSON_PATH",
+          "value": "/data/config/secrets.json"
+        },
+        {
+          "key": "PAY_UI_SESSION_TTL",
+          "value": "1800"
+        },
+        {
+          "key": "CORS_ORIGINS",
+          "value": "*"
+        },
+        {
+          "key": "LNDK_CLI",
+          "value": "/usr/local/bin/lndk-cli"
+        },
+        {
+          "key": "LNDK_NETWORK",
+          "value": "bitcoin"
+        },
+        {
+          "key": "LNDK_GRPC_HOST",
+          "value": "https://lndk"
+        },
+        {
+          "key": "LNDK_GRPC_PORT",
+          "value": "7000"
+        },
+        {
+          "key": "LNDK_CERT_PATH",
+          "value": "/data/lndk/tls-cert.pem"
+        },
+        {
+          "key": "LNDK_MACAROON_PATH",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        },
+        {
+          "key": "LNDK_INVOICE_TIMEOUT_SECONDS",
+          "value": "60"
+        },
+        {
+          "key": "LNDK_TIMEOUT_SECONDS",
+          "value": "75"
+        },
+        {
+          "key": "ALLOW_PAY_OFFER",
+          "value": "true"
+        },
+        {
+          "key": "LND_REST_URL",
+          "value": "https://lightning_lnd_1:8080"
+        },
+        {
+          "key": "LND_TLS_CERT_PATH",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "LND_MACAROON_PATH",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        },
+        {
+          "key": "LND_REST_INSECURE",
+          "value": "true"
+        },
+        {
+          "key": "LNURL_MIN_SENDABLE_MSAT",
+          "value": "1000"
+        },
+        {
+          "key": "LNURL_MAX_SENDABLE_MSAT",
+          "value": "1000000000"
+        },
+        {
+          "key": "LNURL_COMMENT_ALLOWED",
+          "value": "120"
+        },
+        {
+          "key": "LNURL_ALIAS_MODE",
+          "value": "shared"
+        },
+        {
+          "key": "LNURL_SHARED_DESCRIPTION",
+          "value": "LNURL payment"
+        },
+        {
+          "key": "LNURL_DEFAULT_DESCRIPTION",
+          "value": "Lightning payment"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": [
+        "bolt12-pay-lndk"
+      ]
+    },
+    {
+      "name": "bolt12-pay-lndk",
+      "image": "alex71btc/lndk:bolt12-pay-89a06db-multiarch",
+      "addToMainNetwork": true,
+      "command": [
+        "echo \"Waiting for LND TLS + macaroon...\"\nwhile [ ! -f /lnd/tls.cert ] || [ ! -f /lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon ]; do\n  echo \"Waiting for cert/macaroon...\"\n  sleep 5\ndone\n\necho \"Starting LNDK with retry loop...\"\nwhile true; do\n  lndk --address=https://lightning_lnd_1:10009 --cert-path=/lnd/tls.cert --macaroon-path=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon --data-dir=/data/lndk --grpc-host=0.0.0.0 --grpc-port=7000\n  echo \"LNDK exited or failed. Retrying in 10s...\"\n  sleep 10\ndone\n"
+      ],
+      "entrypoint": [
+        "/bin/sh",
+        "-c"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

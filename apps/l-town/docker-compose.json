@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "l-town",
+      "image": "ghcr.io/besoeasy/l-town:20260621",
+      "isMain": true,
+      "internalPort": 30300,
+      "user": "1000:1000"
+    }
+  ]
+}

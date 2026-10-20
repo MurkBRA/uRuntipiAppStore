@@ -1,0 +1,81 @@
+{
+  "name": "sat.watch",
+  "available": true,
+  "port": 3883,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "satwatch",
+  "description": "sat.watch provides real-time monitoring of your Bitcoin. Features:   - Monitor Bitcoin addresses, xpubs, or descriptors   - Alerts for funds sent or received   - Monitors the mempool and confirmed blocks   - Total balance summary for all addresses monitored   - Email and webhook notifications   - PGP encrypted email",
+  "tipi_version": 1,
+  "version": "1.1.8",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Bitcoin monitoring and real-time alerts",
+  "author": "J.P. Cummins",
+  "source": "https://github.com/jpcummins/sat.watch",
+  "website": "https://sat.watch",
+  "url_suffix": "app",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Electrs Server Host / IP",
+      "required": false,
+      "default": "electrs",
+      "env_variable": "APP_ELECTRS_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Electrs Server Port",
+      "required": false,
+      "default": 50001,
+      "env_variable": "APP_ELECTRS_NODE_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Rawtx Port",
+      "required": false,
+      "default": 28333,
+      "env_variable": "APP_BITCOIN_ZMQ_RAWTX_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501508006,
+  "updated_at": 1792501568006,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

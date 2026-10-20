@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "home-assistant-fusion-ui",
+      "image": "ghcr.io/matt8707/ha-fusion:2024.10.1",
+      "isMain": true,
+      "internalPort": 5023,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "HASS_URL",
+          "value": "http://${APP_DOMAIN}:8123"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/fusion",
+          "containerPath": "/app/data"
+        }
+      ],
+      "extraHosts": [
+        "${APP_DOMAIN}:${APP_HAFUSION_MACHINE_IP}"
+      ]
+    }
+  ]
+}

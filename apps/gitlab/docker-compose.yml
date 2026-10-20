@@ -1,0 +1,25 @@
+services:
+  gitlab:
+    image: gitlab/gitlab-ce:19.5.0-ce.0
+    hostname: ${APP_DOMAIN}:8929
+    ports:
+      - 2424:22/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/etc/gitlab
+      - ${APP_DATA_DIR}/data/logs:/var/log/gitlab
+      - ${APP_DATA_DIR}/data/data:/var/opt/gitlab
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - |-
+        GITLAB_OMNIBUS_CONFIG=# Add any other gitlab.rb configuration here, each on its own line
+        gitlab_rails['initial_root_password'] = '${APP_PASSWORD}'
+        gitlab_rails['gitlab_shell_ssh_port'] = 2424
+        nginx['listen_port'] = 8929
+        nginx['listen_https'] = false
+    shm_size: 256m
+    x-runtipi:
+      internal_port: 8929
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "nostr-relay",
+      "image": "getumbrel/umbrel-nostr-relay:v1.1.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "RELAY_HOST",
+          "value": "nostr-relay-relay"
+        },
+        {
+          "key": "RELAY_PORT",
+          "value": "8080"
+        },
+        {
+          "key": "RELAY_PROXY_HOST",
+          "value": "nostr-relay-relay-proxy"
+        },
+        {
+          "key": "RELAY_PROXY_PORT",
+          "value": "80"
+        }
+      ]
+    },
+    {
+      "name": "nostr-relay-relay",
+      "image": "getumbrel/nostr-rs-relay:0.8.1",
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/relay/config.toml",
+          "containerPath": "/app/config.toml"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/relay/db",
+          "containerPath": "/app/db"
+        }
+      ]
+    },
+    {
+      "name": "nostr-relay-relay-proxy",
+      "image": "getumbrel/umbrel-nostr-relay-proxy:v1.1.0",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "RELAY_HOST",
+          "value": "nostr-relay-relay"
+        },
+        {
+          "key": "RELAY_PORT",
+          "value": "8080"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/relay-proxy",
+          "containerPath": "/app/data"
+        }
+      ],
+      "dependsOn": [
+        "nostr-relay-relay"
+      ]
+    }
+  ]
+}

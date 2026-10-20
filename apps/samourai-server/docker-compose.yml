@@ -1,0 +1,115 @@
+services:
+  samourai-server:
+    image: nginx:1.21-alpine
+    command: /bin/sh -c "envsubst < /var/www/connect/js/conf.template.js > /var/www/connect/js/conf.js && /wait-for node:8080 --timeout=720 -- nginx"
+    ports:
+      - 3009:80/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/nginx/wait-for:/wait-for
+      - ${APP_DATA_DIR}/data/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ${APP_DATA_DIR}/data/nginx/${APP_BITCOIN_NETWORK}.conf:/etc/nginx/sites-enabled/dojo.conf
+      - ${APP_DATA_DIR}/data/nginx/connect.conf:/etc/nginx/sites-enabled/connect.conf
+      - ${APP_DATA_DIR}/data/nginx/connect:/var/www/connect
+    environment:
+      - COMMON_BTC_NETWORK=${APP_BITCOIN_NETWORK}
+      - DOJO_LOCAL_PORT=3009
+      - DOJO_HIDDEN_SERVICE=${APP_SAMOURAI_SERVER_DOJO_HIDDEN_SERVICE}
+      - WHIRLPOOL_HIDDEN_SERVICE=${APP_SAMOURAI_SERVER_WHIRLPOOL_HIDDEN_SERVICE}
+      - NODE_PREFIX_SUPPORT=support
+      - NODE_ADMIN_KEY=${APP_SAMOURAI_SERVER_NODE_ADMIN_KEY}
+      - WHIRLPOOL_API_KEY=${APP_SAMOURAI_SERVER_WHIRLPOOL_API_KEY}
+    depends_on:
+      - samourai-server-node
+    x-runtipi:
+      internal_port: 8081
+      add_to_main_network: true
+      is_main: true
+  samourai-server-db:
+    image: louneskmt/dojo-db:1.5.0-low-mem
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/mysql/data:/var/lib/mysql
+    environment:
+      - MYSQL_DATABASE=samourai-main
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=samourai
+      - MYSQL_PASSWORD=password
+    stop_grace_period: 5m
+    x-runtipi:
+      add_to_main_network: true
+  samourai-server-node:
+    image: nmfretz/dojo-nodejs:1.16.1-rpcfix
+    command: /home/node/app/wait-for-it.sh samourai-server-db:3306 --timeout=720 --strict -- /home/node/app/restart.sh
+    user: '1000:1000'
+    environment:
+      - COMMON_BTC_NETWORK=${APP_BITCOIN_NETWORK}
+      - DOJO_VERSION_TAG=1.16.1
+      - NET_DOJO_TOR_IPV4=${TOR_PROXY_IP}
+      - TOR_SOCKS_PORT=${TOR_PROXY_PORT}
+      - NET_DOJO_MYSQL_IPV4=samourai-server-db
+      - MYSQL_DATABASE=samourai-main
+      - MYSQL_USER=samourai
+      - MYSQL_PASSWORD=password
+      - NODE_GAP_EXTERNAL=100
+      - NODE_GAP_INTERNAL=100
+      - NODE_ADDR_FILTER_THRESHOLD=1000
+      - NODE_ADDR_DERIVATION_MIN_CHILD=2
+      - NODE_ADDR_DERIVATION_MAX_CHILD=2
+      - NODE_ADDR_DERIVATION_THRESHOLD=10
+      - NODE_TXS_SCHED_MAX_ENTRIES=10
+      - NODE_TXS_SCHED_MAX_DELTA_HEIGHT=18
+      - NODE_JWT_ACCESS_EXPIRES=900
+      - NODE_JWT_REFRESH_EXPIRES=7200
+      - NODE_PREFIX_STATUS=status
+      - NODE_PREFIX_SUPPORT=support
+      - NODE_PREFIX_STATUS_PUSHTX=status
+      - NODE_TRACKER_MEMPOOL_PERIOD=10000
+      - NODE_TRACKER_UNCONF_TXS_PERIOD=300000
+      - NODE_ACTIVE_INDEXER=local_indexer
+      - NODE_FEE_TYPE=ECONOMICAL
+      - NODE_API_KEY=${APP_SAMOURAI_SERVER_NODE_API_KEY}
+      - NODE_ADMIN_KEY=${APP_SAMOURAI_SERVER_NODE_ADMIN_KEY}
+      - NODE_JWT_SECRET=${APP_SAMOURAI_SERVER_NODE_JWT_SECRET}
+      - BITCOIND_IP=${APP_BITCOIN_NODE_IP}
+      - BITCOIND_RPC_PORT=${APP_BITCOIN_RPC_PORT}
+      - BITCOIND_RPC_USER=${APP_BITCOIN_RPC_USER}
+      - BITCOIND_RPC_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - BITCOIND_ZMQ_RAWTXS=${APP_BITCOIN_ZMQ_RAWTX_PORT}
+      - BITCOIND_ZMQ_BLK_HASH=${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}
+      - EXPLORER_INSTALL=off
+      - INDEXER_IP=${APP_ELECTRS_NODE_IP}
+      - INDEXER_RPC_PORT=${APP_ELECTRS_NODE_PORT}
+      - INDEXER_PROTOCOL=tcp
+      - INDEXER_BATCH_SUPPORT=inactive
+    depends_on:
+      - samourai-server-db
+    x-runtipi:
+      add_to_main_network: true
+  samourai-server-whirlpool:
+    image: louneskmt/whirlpool:0.10.15
+    command:
+      - '--listen'
+      - '--cli.apiKey=${APP_SAMOURAI_SERVER_WHIRLPOOL_API_KEY}'
+      - '--cli.api.http-enable=true'
+      - '--cli.api.http-port=8898'
+      - '--cli.tor=true'
+      - '--cli.torConfig.coordinator.enabled=true'
+      - '--cli.torConfig.coordinator.onion=true'
+      - '--cli.torConfig.backend.enabled=false'
+      - '--cli.torConfig.backend.onion=false'
+      - '--cli.mix.liquidityClient=true'
+      - '--cli.mix.clientsPerPool=1'
+      - '--resync'
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/whirlpool:/home/whirlpool/.whirlpool-cli
+    environment:
+      - WHIRLPOOL_BITCOIN_NETWORK=${APP_BITCOIN_NETWORK}
+      - WHIRLPOOL_DOJO=on
+      - WHIRLPOOL_DOJO_IP=samourai-server
+    depends_on:
+      - samourai-server-node
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

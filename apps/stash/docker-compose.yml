@@ -1,0 +1,14 @@
+services:
+  stash:
+    image: savewithstash/stash:1.0.1
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/app/data
+      - ${APP_DATA_DIR}/data/models:/app/models
+    environment:
+      - PORT=5173
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 5173
+      is_main: true
+x-runtipi:
+  schema_version: 2

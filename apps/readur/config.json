@@ -1,0 +1,39 @@
+{
+  "name": "Readur",
+  "available": true,
+  "port": 19289,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "readur",
+  "description": "📄 Readur is a powerful and modern document management system designed to help individuals and teams efficiently organize, process, and access their digital documents. It combines a high-performance backend with a sleek and intuitive web interface to deliver a smooth and reliable user experience.",
+  "tipi_version": 1,
+  "version": "3.1.0",
+  "categories": [
+    "photography",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An intuitive OCR platform for documents",
+  "author": "Jon Fuller",
+  "source": "https://github.com/readur/readur",
+  "website": "https://github.com/readur/readur",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Readur seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506499,
+  "updated_at": 1792501566499,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

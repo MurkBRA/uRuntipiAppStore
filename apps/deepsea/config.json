@@ -1,0 +1,28 @@
+{
+  "name": "DeepSea Dashboard",
+  "available": true,
+  "port": 5300,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "deepsea",
+  "description": "This open-source dashboard monitors Ocean.xyz pool miners in real time. It presents hashrate, profitability, worker status and network metrics through a retro terminal interface. The goal is to keep miners fully informed with minimal fuss.",
+  "tipi_version": 1,
+  "version": "v2.0.4",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Retro style Ocean dashboard",
+  "author": "DJ O₿leezy",
+  "source": "https://github.com/Djobleezy/DeepSea-Dashboard",
+  "website": "https://github.com/Djobleezy/DeepSea-Dashboard",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501493954,
+  "updated_at": 1792501553954,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,20 @@
+services:
+  yuvomi:
+    image: ghcr.io/ulsklyc/yuvomi:2.78.0
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/data
+      - ${APP_DATA_DIR}/data/backups:/backups
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DB_PATH=/data/yuvomi.db
+      - BACKUP_DIR=/backups
+      - SESSION_SECRET=${APP_SEED}
+      - DB_ENCRYPTION_KEY=${APP_SEED}
+      - SESSION_SECURE=false
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+x-runtipi:
+  schema_version: 2

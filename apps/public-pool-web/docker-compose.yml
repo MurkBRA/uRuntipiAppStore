@@ -1,0 +1,65 @@
+services:
+  public-pool-web:
+    image: martinbarilik/public-pool-web:0.2.0
+    user: '1000:1000'
+    environment:
+      - RAILS_MASTER_KEY=dbd1d33e19a5e0ca9b28c2c55803afef
+      - DATABASE_URL=postgres://${APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME}:${APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD}@${APP_PUBLIC_POOL_WEB_POSTGRES_HOST}:${APP_PUBLIC_POOL_WEB_POSTGRES_PORT}/${APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME}
+      - REDIS_URL=redis://public-pool-web-redis:6379/0
+      - PUBLIC_POOL_HOST=public-pool_server_1
+      - PUBLIC_POOL_PORT=2019
+      - DONATE_BTC_ADDRESS=bc1qsn9x9vr9alx33687dqq9rt4cgfcldsrxz90pn4
+      - DONATE_LN_ADDRESS=martinbarilik@getalby.com
+    depends_on:
+      public-pool-web-db:
+        condition: service_healthy
+      public-pool-web-redis:
+        condition: service_healthy
+    x-runtipi:
+      internal_port: 3000
+      add_to_main_network: true
+      is_main: true
+  public-pool-web-db:
+    image: pgautoupgrade/pgautoupgrade:18.4-trixie
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql
+    environment:
+      - POSTGRES_USER=public_pool_web
+      - POSTGRES_PASSWORD=SlyRoundaboutWay
+      - POSTGRES_DB=public_pool_web_production
+    healthcheck:
+      test: test ! -f /var/lib/postgresql/PG_VERSION && test ! -f $${PGDATA}/upgrade_in_progress.lock && pg_isready -U public_pool_web -d public_pool_web_production
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30m
+    x-runtipi:
+      add_to_main_network: true
+  public-pool-web-redis:
+    image: valkey/valkey:8
+    user: '1000:1000'
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    x-runtipi:
+      add_to_main_network: true
+  public-pool-web-sidekiq:
+    image: martinbarilik/public-pool-web:0.2.0
+    command: bundle exec sidekiq
+    user: '1000:1000'
+    environment:
+      - RAILS_MASTER_KEY=dbd1d33e19a5e0ca9b28c2c55803afef
+      - REDIS_URL=redis://public-pool-web-redis:6379/0
+      - DATABASE_URL=postgres://${APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME}:${APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD}@${APP_PUBLIC_POOL_WEB_POSTGRES_HOST}:${APP_PUBLIC_POOL_WEB_POSTGRES_PORT}/${APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME}
+      - PUBLIC_POOL_HOST=public-pool_server_1
+      - PUBLIC_POOL_PORT=2019
+    depends_on:
+      - public-pool-web-redis
+      - public-pool-web-db
+      - public-pool-web
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

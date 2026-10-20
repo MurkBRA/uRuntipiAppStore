@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "formicaio",
+      "image": "bochaco/formicaio_proxy:0.3.0",
+      "isMain": true,
+      "internalPort": 52100,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "FORMICAIO_ADDR",
+          "value": "host.docker.internal:3000"
+        },
+        {
+          "key": "FORMICAIO_PROXY_PORT",
+          "value": 52100
+        }
+      ],
+      "extraHosts": [
+        "host.docker.internal:host-gateway"
+      ]
+    },
+    {
+      "name": "formicaio-app",
+      "image": "bochaco/formicaio:0.8.9-native-lcd-disabled",
+      "networkMode": "host",
+      "user": "1000:1000",
+      "stopGracePeriod": "5s",
+      "environment": [
+        {
+          "key": "DB_PATH",
+          "value": "/data"
+        },
+        {
+          "key": "NODE_MGR_ROOT_DIR",
+          "value": "/data"
+        },
+        {
+          "key": "LEPTOS_SITE_ADDR",
+          "value": "0.0.0.0:3000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/formicaio",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

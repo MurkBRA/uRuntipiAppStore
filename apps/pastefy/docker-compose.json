@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "pastefy",
+      "image": "interaapps/pastefy:7.1.6",
+      "isMain": true,
+      "internalPort": 80,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "HTTP_SERVER_CORS",
+          "value": "*"
+        },
+        {
+          "key": "DATABASE_DRIVER",
+          "value": "mysql"
+        },
+        {
+          "key": "DATABASE_NAME",
+          "value": "pastefy"
+        },
+        {
+          "key": "DATABASE_USER",
+          "value": "pastefy"
+        },
+        {
+          "key": "DATABASE_PASSWORD",
+          "value": "tyooe"
+        },
+        {
+          "key": "DATABASE_HOST",
+          "value": "pastefy-db"
+        },
+        {
+          "key": "DATABASE_PORT",
+          "value": "3306"
+        },
+        {
+          "key": "SERVER_NAME",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        }
+      ],
+      "dependsOn": [
+        "pastefy-db"
+      ]
+    },
+    {
+      "name": "pastefy-db",
+      "image": "mariadb:11.4.5",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "tyooe"
+        },
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "pastefy"
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "pastefy"
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "tyooe"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    }
+  ]
+}

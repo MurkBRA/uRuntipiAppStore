@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "syslog-ng",
+      "image": "rickraven/logdy:0.17.1",
+      "isMain": true,
+      "internalPort": 8080,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "LOGDY_MODE",
+          "value": "follow"
+        },
+        {
+          "key": "LOGDY_FOLLOW_FILES",
+          "value": "/data/*.log"
+        },
+        {
+          "key": "LOGDY_PASS",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/logs",
+          "containerPath": "/data",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": {
+        "syslog-ng-syslog": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "syslog-ng-syslog",
+      "image": "linuxserver/syslog-ng:4.10.2",
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        },
+        {
+          "key": "TZ",
+          "value": "${TZ}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/logs",
+          "containerPath": "/var/log"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 514,
+          "containerPort": 5514,
+          "udp": true,
+          "tcp": false
+        },
+        {
+          "hostPort": 601,
+          "containerPort": 6601,
+          "tcp": true
+        }
+      ],
+      "healthCheck": {
+        "test": "test -f /var/log/messages-kv.log || touch /var/log/messages-kv.log",
+        "interval": "5s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "5s"
+      }
+    }
+  ]
+}

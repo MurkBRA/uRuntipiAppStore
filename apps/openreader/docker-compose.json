@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "openreader",
+      "image": "nginx:1.30.5-alpine",
+      "isMain": true,
+      "internalPort": 8080,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "entrypoint": [
+        "nginx",
+        "-g",
+        "daemon off;"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx.conf",
+          "containerPath": "/etc/nginx/nginx.conf",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": [
+        "openreader-web"
+      ]
+    },
+    {
+      "name": "openreader-web",
+      "image": "ghcr.io/richardr1126/openreader:5.2.0",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "API_BASE",
+          "value": "http://kokoro_web_1:8880/v1"
+        },
+        {
+          "key": "API_MODEL_NAME",
+          "value": "kokoro"
+        },
+        {
+          "key": "BASE_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "AUTH_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "AUTH_TRUSTED_ORIGINS",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:3391,http://*.ts.net:3391,https://*.ts.net:3391,${ips_with_port}"
+        },
+        {
+          "key": "USE_ANONYMOUS_AUTH_SESSIONS",
+          "value": "true"
+        },
+        {
+          "key": "TTS_PLAYBACK_TOKEN_SECRET",
+          "value": "${APP_OPENREADER_PLAYBACK_SECRET}"
+        },
+        {
+          "key": "COMPUTE_WORKER_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "COMPUTE_WORKER_PUBLIC_URL",
+          "value": "http://openreader-playback.invalid"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docstore",
+          "containerPath": "/app/docstore"
+        }
+      ]
+    }
+  ]
+}

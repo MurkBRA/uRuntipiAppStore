@@ -1,0 +1,36 @@
+{
+  "name": "Transmute",
+  "available": true,
+  "port": 3313,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "transmute",
+  "description": "Transmute is a file conversion app for turning files into different formats through a clean and simple interface. It supports a wide range of file types, including images, videos, audio files, documents, structured data, spreadsheets, subtitles, fonts, and diagrams.",
+  "tipi_version": 1,
+  "version": "2.1.1",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An efficient tool for transforming files on your Umbrel",
+  "author": "Transmute",
+  "source": "https://github.com/transmute-app/transmute",
+  "website": "https://transmute.sh/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Transmute seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511691,
+  "updated_at": 1792501571691,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

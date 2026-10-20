@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "just-download",
+      "image": "codeberg.org/highghlow/just-download:v1.0.9",
+      "isMain": true,
+      "internalPort": 5000,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "LOCK_TRANSMISSION_CONFIG",
+          "value": 1
+        },
+        {
+          "key": "CONFIG_LOCATION",
+          "value": "/config/config.json"
+        },
+        {
+          "key": "CONFIG",
+          "value": "{\"indexers\": [], \"transmission\": {\"host\": \"transmission_server_1\", \"port\": 9091}}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config"
+        }
+      ]
+    }
+  ]
+}

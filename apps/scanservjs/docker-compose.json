@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "scanservjs",
+      "image": "sbs20/scanservjs:v3.3.0",
+      "isMain": true,
+      "internalPort": 8080,
+      "privileged": true,
+      "stopGracePeriod": "1m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/scans",
+          "containerPath": "/var/lib/scanservjs/output"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/etc/scanservjs"
+        },
+        {
+          "hostPath": "/var/run/dbus",
+          "containerPath": "/var/run/dbus"
+        },
+        {
+          "hostPath": "/dev",
+          "containerPath": "/dev"
+        }
+      ]
+    }
+  ]
+}

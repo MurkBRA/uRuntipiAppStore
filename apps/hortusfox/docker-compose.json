@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "hortusfox",
+      "image": "ghcr.io/danielbrendel/hortusfox-web:v6.3",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "APP_ADMIN_EMAIL",
+          "value": "umbrel@umbrel.local"
+        },
+        {
+          "key": "APP_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "hortusfox-db"
+        },
+        {
+          "key": "DB_PORT",
+          "value": 3306
+        },
+        {
+          "key": "DB_DATABASE",
+          "value": "hortusfox"
+        },
+        {
+          "key": "DB_USERNAME",
+          "value": "user"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "password"
+        },
+        {
+          "key": "DB_CHARSET",
+          "value": "utf8mb4"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/images",
+          "containerPath": "/var/www/html/public/img"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/attachments",
+          "containerPath": "/var/www/html/public/attachments"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/logs",
+          "containerPath": "/var/www/html/app/logs"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/backup",
+          "containerPath": "/var/www/html/public/backup"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/themes",
+          "containerPath": "/var/www/html/public/themes"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/migrate",
+          "containerPath": "/var/www/html/app/migrations"
+        }
+      ],
+      "dependsOn": [
+        "hortusfox-db"
+      ]
+    },
+    {
+      "name": "hortusfox-db",
+      "image": "mariadb:11.4.7",
+      "environment": [
+        {
+          "key": "MYSQL_ROOT_PASSWORD",
+          "value": "my-secret-pw"
+        },
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "hortusfox"
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "user"
+        },
+        {
+          "key": "MYSQL_PASSWORD",
+          "value": "password"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db_data",
+          "containerPath": "/var/lib/mysql"
+        }
+      ]
+    }
+  ]
+}

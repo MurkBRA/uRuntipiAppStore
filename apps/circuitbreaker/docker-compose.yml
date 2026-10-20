@@ -1,0 +1,20 @@
+services:
+  circuitbreaker:
+    image: ghcr.io/lightningequipment/circuitbreaker:v0.5.1
+    command:
+      - '--configdir=/data/.circuitbreaker'
+      - '--network=${APP_BITCOIN_NETWORK}'
+      - '--lnddir=/data/.lnd'
+      - '--rpcserver=${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}'
+      - '--httplisten=0.0.0.0:9235'
+    user: '1000:1000'
+    volumes:
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/data/.lnd:ro
+      - ${APP_DATA_DIR}/data:/data/.circuitbreaker
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 9235
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

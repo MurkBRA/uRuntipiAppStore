@@ -1,0 +1,28 @@
+{
+  "name": "Foldergram",
+  "available": true,
+  "port": 4141,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "foldergram",
+  "description": "Foldergram turns a collection of photos and videos into a clean, modern media gallery. It scans folders, organizes the discovered media, and presents everything in a visual interface designed for browsing, rediscovering, and managing personal image and video collections.",
+  "tipi_version": 1,
+  "version": "1.2.2",
+  "categories": [
+    "books",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A private Instagram-style feed for your memories",
+  "author": "Sajjad Ali",
+  "source": "https://github.com/foldergram/foldergram",
+  "website": "https://foldergram.github.io/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501496158,
+  "updated_at": 1792501556158,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

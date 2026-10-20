@@ -1,0 +1,84 @@
+services:
+  bitcoin-regtest-dashboard:
+    image: coreylphillips/bitcoin-regtest-dashboard:v1.1.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/bitcoin:/bitcoin/.bitcoin:ro
+    environment:
+      - PORT=3000
+      - BITCOIN_RPC_HOST=bitcoin-regtest-dashboard-bitcoin
+      - BITCOIN_RPC_PORT=18443
+      - BITCOIN_COOKIE_FILE=/bitcoin/.bitcoin/regtest/.cookie
+      - ELECTRS_HOST=bitcoin-regtest-dashboard-electrs
+      - ELECTRS_PORT=50001
+      - ELECTRS_EXTERNAL_PORT=60401
+      - BITCOIN_DEBUG_LOG=/bitcoin/.bitcoin/regtest/debug.log
+    depends_on:
+      bitcoin-regtest-dashboard-bitcoin:
+        condition: service_healthy
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  bitcoin-regtest-dashboard-bitcoin:
+    image: ghcr.io/getumbrel/docker-bitcoind:v31.1
+    command:
+      - |
+        rm -f /data/.bitcoin/regtest/.ready
+        bitcoind -regtest \
+          -server=1 \
+          -rpcbind=0.0.0.0 \
+          -rpcallowip=0.0.0.0/0 \
+          -rpcport=18443 \
+          -txindex=1 \
+          -fallbackfee=0.00001 \
+          -disablewallet=0 \
+          -zmqpubrawblock=tcp://0.0.0.0:28332 \
+          -zmqpubrawtx=tcp://0.0.0.0:28333 &
+        BITCOIND_PID=$$!
+        while [ ! -f /data/.bitcoin/regtest/.cookie ]; do sleep 1; done
+        chmod 755 /data/.bitcoin/regtest
+        chmod 644 /data/.bitcoin/regtest/.cookie
+        chmod 644 /data/.bitcoin/regtest/debug.log 2>/dev/null || true
+        sleep 2
+        bitcoin-cli -regtest -rpccookiefile=/data/.bitcoin/regtest/.cookie createwallet "regtest_wallet" 2>/dev/null || \
+          bitcoin-cli -regtest -rpccookiefile=/data/.bitcoin/regtest/.cookie loadwallet "regtest_wallet" 2>/dev/null || true
+        bitcoin-cli -regtest -rpccookiefile=/data/.bitcoin/regtest/.cookie -rpcwallet=regtest_wallet -generate 1 >/dev/null 2>&1 || true
+        touch /data/.bitcoin/regtest/.ready
+        while kill -0 $$BITCOIND_PID 2>/dev/null; do
+          chmod 755 /data/.bitcoin/regtest 2>/dev/null
+          chmod 644 /data/.bitcoin/regtest/.cookie 2>/dev/null
+          chmod 644 /data/.bitcoin/regtest/debug.log 2>/dev/null
+          sleep 5
+        done &
+        wait $$BITCOIND_PID
+    entrypoint:
+      - /bin/sh
+      - '-c'
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/bitcoin:/data/.bitcoin
+    healthcheck:
+      test: test -f /data/.bitcoin/regtest/.ready && chmod 644 /data/.bitcoin/regtest/.cookie && bitcoin-cli -regtest -rpccookiefile=/data/.bitcoin/regtest/.cookie getblockchaininfo
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+  bitcoin-regtest-dashboard-electrs:
+    image: getumbrel/electrs:v0.11.0
+    user: '1000:1000'
+    ports:
+      - 60401:50001/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/electrs:/data
+      - ${APP_DATA_DIR}/data/bitcoin:/data/.bitcoin:ro
+    environment:
+      - ELECTRS_ELECTRUM_RPC_ADDR=0.0.0.0:50001
+      - ELECTRS_DAEMON_RPC_ADDR=bitcoin-regtest-dashboard-bitcoin:18443
+      - ELECTRS_DAEMON_P2P_ADDR=bitcoin-regtest-dashboard-bitcoin:18444
+      - ELECTRS_LOG_FILTERS=INFO
+      - ELECTRS_NETWORK=regtest
+    depends_on:
+      bitcoin-regtest-dashboard-bitcoin:
+        condition: service_healthy
+x-runtipi:
+  schema_version: 2

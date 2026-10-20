@@ -1,0 +1,19 @@
+services:
+  opencode:
+    image: ghcr.io/anomalyco/opencode:1.19.3
+    command:
+      - serve
+      - '--hostname'
+      - 0.0.0.0
+      - '--port'
+      - '4096'
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/opencode:/home/opencode/
+    environment:
+      - HOME=/home/opencode
+    x-runtipi:
+      internal_port: 4096
+      is_main: true
+x-runtipi:
+  schema_version: 2

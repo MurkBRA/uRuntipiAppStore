@@ -1,0 +1,23 @@
+services:
+  openresty-manager:
+    image: uusec/openresty-manager:2.4.6
+    hostname: openresty-manager
+    ports:
+      - 3080:80/tcp
+      - 3443:443/tcp
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ${APP_DATA_DIR}/data/acme:/opt/om/acme
+      - ${APP_DATA_DIR}/data/data:/opt/om/data
+      - ${APP_DATA_DIR}/data/conf:/opt/om/nginx/conf
+      - ${APP_DATA_DIR}/data/logs:/opt/om/nginx/logs
+    environment:
+      - OM_USE_HTTPS=no
+      - NGINX_RESOLVER=resolver 127.0.0.11 valid=30s ipv6=off local=on;
+      - PUID=1000
+      - PGID=1000
+    x-runtipi:
+      internal_port: 34567
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,15 @@
+services:
+  opengist:
+    image: ghcr.io/thomiceli/opengist:1.15.2
+    user: '1000:1000'
+    ports:
+      - 2224:2224/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data:/opengist
+    environment:
+      - OG_SSH_PORT=2224
+    x-runtipi:
+      internal_port: 6157
+      is_main: true
+x-runtipi:
+  schema_version: 2

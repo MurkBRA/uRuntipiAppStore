@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "yucca",
+      "image": "yuccastream/yucca:0.13.4",
+      "isMain": true,
+      "internalPort": 9910,
+      "workingDir": "/opt/yucca",
+      "shmSize": "128mb",
+      "environment": [
+        {
+          "key": "YUCCA_SERVER_DATA_DIR",
+          "value": "/opt/yucca/data"
+        },
+        {
+          "key": "YUCCA_SMTP_SERVER_LISTEN_ADDRESS",
+          "value": ":10925"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data",
+          "containerPath": "/opt/yucca/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 10925,
+          "containerPort": 10925,
+          "tcp": true
+        },
+        {
+          "hostPort": 9912,
+          "containerPort": 9912,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

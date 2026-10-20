@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "lunalytics",
+      "image": "ksjaay/lunalytics:0.10.23",
+      "isMain": true,
+      "internalPort": 2308,
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/lunalytics_data",
+          "containerPath": "/app/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/logs",
+          "containerPath": "/app/logs"
+        }
+      ],
+      "healthCheck": {
+        "test": "nc -z 127.0.0.1 2308 || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "90s"
+      }
+    }
+  ]
+}

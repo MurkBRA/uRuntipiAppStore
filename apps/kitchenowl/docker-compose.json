@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "kitchenowl",
+      "image": "tombursch/kitchenowl:v0.7.10",
+      "isMain": true,
+      "internalPort": 8080,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "JWT_SECRET_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "DB_DRIVER",
+          "value": "postgresql"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "kitchenowl-db"
+        },
+        {
+          "key": "DB_NAME",
+          "value": "kitchenowl"
+        },
+        {
+          "key": "DB_USER",
+          "value": "kitchenowl"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "password"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/kitchenowl_files",
+          "containerPath": "/data"
+        }
+      ],
+      "dependsOn": [
+        "kitchenowl-db"
+      ]
+    },
+    {
+      "name": "kitchenowl-db",
+      "image": "postgres:17.4",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "kitchenowl"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "kitchenowl"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "password"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/kitchenowl_db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}",
+        "interval": "30s",
+        "timeout": "60s",
+        "retries": 5,
+        "startPeriod": "80s"
+      }
+    }
+  ]
+}

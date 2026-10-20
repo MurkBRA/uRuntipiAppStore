@@ -1,0 +1,44 @@
+services:
+  mattermost:
+    image: alexlack/mattermost-app:v12.0.0
+    user: '1000:1000'
+    ports:
+      - 8443:8443/tcp
+      - 8443:8443/udp
+    volumes:
+      - ${APP_DATA_DIR}/data/app/mattermost/config:/mattermost/config
+      - ${APP_DATA_DIR}/data/app/mattermost/data:/mattermost/data
+      - ${APP_DATA_DIR}/data/app/mattermost/logs:/mattermost/logs
+      - ${APP_DATA_DIR}/data/app/mattermost/plugins:/mattermost/plugins
+      - ${APP_DATA_DIR}/data/app/mattermost/client-plugins:/mattermost/client/plugins
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - MM_USERNAME=admin
+      - MM_PASSWORD=admin
+      - MM_DBNAME=mattermost
+      - MM_SQLSETTINGS_DATASOURCE=postgres://admin:admin@mattermost-db:5432/mattermost?sslmode=disable&connect_timeout=10
+    depends_on:
+      mattermost-db:
+        condition: service_healthy
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8000
+      is_main: true
+  mattermost-db:
+    image: alexlack/mattermost-db:v11.11.1
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - MM_USERNAME=admin
+      - MM_PASSWORD=admin
+      - MM_DBNAME=mattermost
+    healthcheck:
+      test: pg_isready -U admin -d mattermost
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    stop_grace_period: 1m
+x-runtipi:
+  schema_version: 2

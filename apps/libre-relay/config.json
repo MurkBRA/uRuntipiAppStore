@@ -1,0 +1,76 @@
+{
+  "name": "Libre Relay",
+  "available": true,
+  "port": 2108,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "libre-relay",
+  "description": "> \"[Bitcoin] takes advantage of the nature of information being easy to spread but hard to stifle.\" - Satoshi Nakamoto",
+  "tipi_version": 1,
+  "version": "libre-relay-v28.0-2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Run your personal node powered by Libre Relay",
+  "author": "Peter Todd",
+  "source": "https://github.com/petertodd/bitcoin",
+  "website": "https://umbrel.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Libre Relay command",
+      "min": 32,
+      "env_variable": "APP_LIBRE_RELAY_COMMAND"
+    },
+    {
+      "type": "random",
+      "label": "Libre Relay rpc hidden service",
+      "min": 32,
+      "env_variable": "APP_LIBRE_RELAY_RPC_HIDDEN_SERVICE"
+    },
+    {
+      "type": "random",
+      "label": "Libre Relay p2p hidden service",
+      "min": 32,
+      "env_variable": "APP_LIBRE_RELAY_P2P_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Libre Relay app libre relay rpc user",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_LIBRE_RELAY_RPC_USER"
+    },
+    {
+      "type": "text",
+      "label": "Libre Relay app libre relay rpc pass",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_LIBRE_RELAY_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Libre Relay bitcoin default network",
+      "required": false,
+      "default": "default",
+      "env_variable": "BITCOIN_DEFAULT_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Initialize Bitcoin with Clearnet over Tor",
+      "required": false,
+      "default": "true",
+      "env_variable": "BITCOIN_INITIALIZE_WITH_CLEARNET_OVER_TOR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501499767,
+  "updated_at": 1792501559767,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

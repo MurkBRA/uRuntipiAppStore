@@ -1,0 +1,27 @@
+{
+  "name": "scanservjs",
+  "available": true,
+  "port": 2903,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "scanservjs",
+  "description": "scanservjs is a web UI frontend for your scanner. It allows you to share one or more scanners (using SANE) on a network without the need for drivers or complicated installation.",
+  "tipi_version": 1,
+  "version": "v3.3.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Web-based interface for your SANE-compatible scanners",
+  "author": "sbs20",
+  "source": "https://github.com/sbs20/scanservjs",
+  "website": "https://sbs20.github.io/scanservjs/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501508073,
+  "updated_at": 1792501568073,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

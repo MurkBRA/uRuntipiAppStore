@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "rustdesk-server",
+      "image": "nginx:1.27",
+      "isMain": true,
+      "internalPort": 80,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/www",
+          "containerPath": "/usr/share/nginx/html",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "rustdesk-server-hbbs",
+      "image": "rustdesk/rustdesk-server:1.1.16",
+      "networkMode": "host",
+      "command": "hbbs",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/hbbs",
+          "containerPath": "/root"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 21115,
+          "containerPort": 21115,
+          "tcp": true
+        },
+        {
+          "hostPort": 21116,
+          "containerPort": 21116,
+          "tcp": true
+        },
+        {
+          "hostPort": 21116,
+          "containerPort": 21116,
+          "udp": true,
+          "tcp": false
+        },
+        {
+          "hostPort": 21118,
+          "containerPort": 21118,
+          "tcp": true
+        }
+      ],
+      "dependsOn": [
+        "rustdesk-server-hbbr"
+      ]
+    },
+    {
+      "name": "rustdesk-server-hbbr",
+      "image": "rustdesk/rustdesk-server:1.1.16",
+      "networkMode": "host",
+      "command": "hbbr",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/hbbr",
+          "containerPath": "/root"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 21117,
+          "containerPort": 21117,
+          "tcp": true
+        },
+        {
+          "hostPort": 21119,
+          "containerPort": 21119,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

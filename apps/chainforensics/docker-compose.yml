@@ -1,0 +1,36 @@
+services:
+  chainforensics:
+    image: dirtmcgrit/chainforensics-web:1.2.0
+    depends_on:
+      - chainforensics-api
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 80
+      add_to_main_network: true
+      is_main: true
+  chainforensics-api:
+    image: dirtmcgrit/chainforensics:1.2.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - DEBUG=false
+      - API_PORT=3000
+      - DATABASE_URL=sqlite+aiosqlite:////data/chainforensics.db
+      - BITCOIN_RPC_HOST=${APP_BITCOIN_NODE_IP}
+      - BITCOIN_RPC_PORT=8332
+      - BITCOIN_RPC_USER=${APP_BITCOIN_RPC_USER}
+      - BITCOIN_RPC_PASS=${APP_BITCOIN_RPC_PASS}
+      - BITCOIN_RPC_TIMEOUT=120
+      - FULCRUM_HOST=${APP_FULCRUM_NODE_IP}
+      - FULCRUM_PORT=50002
+      - MAX_TRACE_DEPTH=50
+      - DEFAULT_TRACE_DEPTH=10
+      - ENABLE_BACKGROUND_INDEXER=true
+      - PUID=1000
+      - PGID=1000
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

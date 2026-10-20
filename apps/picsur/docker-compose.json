@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "picsur",
+      "image": "ghcr.io/caramelfur/picsur:0.5.6",
+      "isMain": true,
+      "internalPort": 8286,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "PICSUR_PORT",
+          "value": 8286
+        },
+        {
+          "key": "PICSUR_DB_HOST",
+          "value": "picsur-db"
+        },
+        {
+          "key": "PICSUR_DB_PORT",
+          "value": 5432
+        },
+        {
+          "key": "PICSUR_DB_USERNAME",
+          "value": "picsuruser"
+        },
+        {
+          "key": "PICSUR_DB_PASSWORD",
+          "value": "picsurpass"
+        },
+        {
+          "key": "PICSUR_DB_DATABASE",
+          "value": "picsur"
+        },
+        {
+          "key": "PICSUR_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "PICSUR_MAX_FILE_SIZE",
+          "value": 128000000000
+        }
+      ],
+      "dependsOn": {
+        "picsur-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "picsur-db",
+      "image": "postgres:17.4",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "picsur"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "picsuruser"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "picsurpass"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -q -d picsur -U picsuruser",
+        "interval": "10s",
+        "timeout": "45s",
+        "retries": 10
+      },
+      "securityOpt": [
+        "no-new-privileges:true"
+      ]
+    }
+  ]
+}

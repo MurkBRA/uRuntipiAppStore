@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "sure",
+      "image": "ghcr.io/we-promise/sure:0.7.5",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "sure_user"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "sure_password"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "sure_production"
+        },
+        {
+          "key": "SECRET_KEY_BASE",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "SELF_HOSTED",
+          "value": "true"
+        },
+        {
+          "key": "RAILS_FORCE_SSL",
+          "value": "false"
+        },
+        {
+          "key": "RAILS_ASSUME_SSL",
+          "value": "false"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "sure-db"
+        },
+        {
+          "key": "DB_PORT",
+          "value": 5432
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://sure-redis:6379/1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/rails",
+          "containerPath": "/rails/storage"
+        }
+      ],
+      "dependsOn": {
+        "sure-db": {
+          "condition": "service_healthy"
+        },
+        "sure-redis": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "sure-worker",
+      "image": "ghcr.io/we-promise/sure:0.7.5",
+      "user": "1000:1000",
+      "command": "bundle exec sidekiq",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "sure_user"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "sure_password"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "sure_production"
+        },
+        {
+          "key": "SECRET_KEY_BASE",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "SELF_HOSTED",
+          "value": "true"
+        },
+        {
+          "key": "RAILS_FORCE_SSL",
+          "value": "false"
+        },
+        {
+          "key": "RAILS_ASSUME_SSL",
+          "value": "false"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "sure-db"
+        },
+        {
+          "key": "DB_PORT",
+          "value": 5432
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://sure-redis:6379/1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/rails",
+          "containerPath": "/rails/storage"
+        }
+      ],
+      "dependsOn": {
+        "sure-db": {
+          "condition": "service_healthy"
+        },
+        "sure-redis": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "sure-db",
+      "image": "postgres:18.3-alpine",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "sure_user"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "sure_password"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "sure_production"
+        },
+        {
+          "key": "PGDATA",
+          "value": "/data/pgdata"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U sure_user -h localhost -d sure_production",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      }
+    },
+    {
+      "name": "sure-redis",
+      "image": "redis:8.4.2",
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "redis-cli ping",
+        "interval": "5s",
+        "timeout": "5s",
+        "retries": 5,
+        "startPeriod": "30s"
+      }
+    }
+  ]
+}

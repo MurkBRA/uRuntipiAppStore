@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "monetr",
+      "image": "ghcr.io/monetr/monetr:1.19.0",
+      "isMain": true,
+      "internalPort": 4000,
+      "user": "1000:1000",
+      "command": [
+        "serve",
+        "--migrate",
+        "--generate-certificates"
+      ],
+      "environment": [
+        {
+          "key": "MONETR_ALLOW_SIGN_UP",
+          "value": "${MONETR_ALLOW_SIGN_UP}"
+        },
+        {
+          "key": "MONETR_PROOF_OF_WORK_ENABLED",
+          "value": "${MONETR_PROOF_OF_WORK_ENABLED}"
+        },
+        {
+          "key": "MONETR_PG_USERNAME",
+          "value": "postgres"
+        },
+        {
+          "key": "MONETR_PG_PASSWORD",
+          "value": "m0netrPass123"
+        },
+        {
+          "key": "MONETR_PG_DATABASE",
+          "value": "monetr"
+        },
+        {
+          "key": "MONETR_PG_ADDRESS",
+          "value": "monetr-db"
+        },
+        {
+          "key": "MONETR_PG_PORT",
+          "value": 5432
+        },
+        {
+          "key": "MONETR_REDIS_ENABLED",
+          "value": "true"
+        },
+        {
+          "key": "MONETR_REDIS_ADDRESS",
+          "value": "monetr-valkey"
+        },
+        {
+          "key": "MONETR_REDIS_PORT",
+          "value": 6379
+        },
+        {
+          "key": "MONETR_STORAGE_ENABLED",
+          "value": "${MONETR_STORAGE_ENABLED}"
+        },
+        {
+          "key": "MONETR_STORAGE_PROVIDER",
+          "value": "${MONETR_STORAGE_PROVIDER}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/etc/monetr"
+        }
+      ],
+      "dependsOn": {
+        "monetr-db": {
+          "condition": "service_healthy"
+        },
+        "monetr-valkey": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "monetr-db",
+      "image": "postgres:17.9",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "m0netrPass123"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "postgres"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "monetr"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U postgres || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    },
+    {
+      "name": "monetr-valkey",
+      "image": "valkey/valkey:9",
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/valkey",
+          "containerPath": "/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "valkey-cli ping",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    }
+  ]
+}

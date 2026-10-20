@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fulcrum",
+      "image": "nmfretz/umbrel-fulcrum:1.0.1",
+      "isMain": true,
+      "internalPort": 3006,
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "ELECTRUM_HIDDEN_SERVICE",
+          "value": "${APP_FULCRUM_RPC_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "ELECTRUM_LOCAL_SERVICE",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "ELECTRUM_HOST",
+          "value": "fulcrum-fulcrum-sidecar"
+        },
+        {
+          "key": "ELECTRUM_PUBLIC_CONNECTION_PORT",
+          "value": "50002"
+        },
+        {
+          "key": "BITCOIN_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "RPC_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/fulcrum-logs",
+          "containerPath": "/fulcrum-logs"
+        }
+      ],
+      "dependsOn": [
+        "fulcrum-fulcrum-sidecar"
+      ]
+    },
+    {
+      "name": "fulcrum-fulcrum-sidecar",
+      "image": "cculianu/fulcrum:v2.1.4",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "5m",
+      "command": "sh -c 'rm -f /tmp/fulcrum.pipe; mkfifo /tmp/fulcrum.pipe; tee -a /logs/fulcrum.log < /tmp/fulcrum.pipe & exec Fulcrum -D /data _ENV_ > /tmp/fulcrum.pipe 2>&1'",
+      "environment": [
+        {
+          "key": "TCP",
+          "value": "0.0.0.0:50002"
+        },
+        {
+          "key": "ADMIN",
+          "value": "0.0.0.0:8000"
+        },
+        {
+          "key": "BITCOIND",
+          "value": "${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "RPCUSER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "RPCPASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "PEERING",
+          "value": "false"
+        },
+        {
+          "key": "ANNOUNCE",
+          "value": "false"
+        },
+        {
+          "key": "DATA_DIR",
+          "value": "/data"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/fulcrum",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/fulcrum-logs",
+          "containerPath": "/logs"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 50002,
+          "containerPort": 50002,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

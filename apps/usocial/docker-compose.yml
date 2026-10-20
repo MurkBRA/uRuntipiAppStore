@@ -1,0 +1,30 @@
+services:
+  usocial:
+    image: ghcr.io/ibz/usocial:v0.1.5-buster
+    volumes:
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+      - ${APP_DATA_DIR}/data:/instance
+    environment:
+      - USOCIAL_JOB=WEB
+      - APP_PASSWORD=${APP_PASSWORD}
+      - LND_IP=${APP_LIGHTNING_NODE_IP}
+      - LND_GRPC_PORT=${APP_LIGHTNING_NODE_GRPC_PORT}
+      - LND_DIR=/lnd
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 5000
+      add_to_main_network: true
+      is_main: true
+  usocial-fetcher:
+    image: ghcr.io/ibz/usocial:v0.1.7-buster
+    volumes:
+      - ${APP_DATA_DIR}/data:/instance
+    environment:
+      - USOCIAL_JOB=FETCH_FEEDS
+    depends_on:
+      - usocial
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

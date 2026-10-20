@@ -1,0 +1,12 @@
+services:
+  vert:
+    image: ghcr.io/vert-sh/vert:sha-b3b04c2
+    environment:
+      - PUB_HOSTNAME=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - PUB_VERTD_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - PUB_ENV=production
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

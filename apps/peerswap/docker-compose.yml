@@ -1,0 +1,32 @@
+services:
+  peerswap:
+    image: ghcr.io/impa10r/peerswap-web:v7.0.2
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/home/peerswap/.peerswap
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/home/peerswap/.lnd:ro
+      - ${ELEMENTS_DATA_DIR}:/home/peerswap/.elements:ro
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - USER=peerswap
+      - NETWORK=${APP_BITCOIN_NETWORK}
+      - NO_HTTPS=true
+      - LND_HOST=${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}
+      - LND_MACAROONPATH=/home/peerswap/.lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - ELEMENTS_USER=elements
+      - ELEMENTS_PORT=${APP_ELEMENTS_NODE_RPC_PORT}
+      - ELEMENTS_HOST=http://elements_node_1
+      - ELEMENTS_WALLET=peerswap
+      - ELEMENTS_FOLDER=/home/elements/.elements
+      - ELEMENTS_FOLDER_MAPPED=/home/peerswap/.elements
+      - BITCOIN_HOST=${APP_BITCOIN_NODE_IP}
+      - BITCOIN_PORT=${APP_BITCOIN_RPC_PORT}
+      - BITCOIN_USER=${APP_BITCOIN_RPC_USER}
+      - BITCOIN_PASS=${APP_BITCOIN_RPC_PASS}
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 1984
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

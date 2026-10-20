@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "torq",
+      "image": "lncapital/torq:2.2.9",
+      "isMain": true,
+      "internalPort": 7028,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "command": [
+        "--torq.port",
+        "7028",
+        "--db.host",
+        "torq-db",
+        "--db.password",
+        "moneyprintergobrrr",
+        "--torq.password",
+        "${APP_PASSWORD}",
+        "--lnd.url",
+        "${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}",
+        "--lnd.macaroon-path",
+        "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon",
+        "--lnd.tls-path",
+        "/lnd/tls.cert",
+        "--torq.auto-login",
+        "start"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "torq-db",
+      "image": "timescale/timescaledb:2.8.1-pg14",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "moneyprintergobrrr"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/torq",
+          "containerPath": "/var/lib/postgresql/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/passwd",
+          "containerPath": "/etc/passwd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "name": "Torq",
+  "available": true,
+  "port": 7028,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "torq",
+  "description": "Operating a Lightning node requires a lot of work. You need to monitor your channels, rebalance them, keep track of your fees and much more.",
+  "tipi_version": 1,
+  "version": "2.2.9",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Scalable Node Management Software",
+  "author": "Torq",
+  "source": "https://torq.co",
+  "website": "https://torq.co",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Torq password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511508,
+  "updated_at": 1792501571508,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

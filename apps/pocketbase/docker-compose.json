@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "pocketbase",
+      "image": "ghcr.io/muchobien/pocketbase:0.40.5",
+      "isMain": true,
+      "internalPort": 8090,
+      "stopGracePeriod": "1m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data",
+          "containerPath": "/pb_data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/public",
+          "containerPath": "/pb_public"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/hooks",
+          "containerPath": "/pb_hooks"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/migrations",
+          "containerPath": "/pb_migrations"
+        }
+      ]
+    }
+  ]
+}

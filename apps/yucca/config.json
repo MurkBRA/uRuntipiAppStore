@@ -1,0 +1,26 @@
+{
+  "name": "Yucca",
+  "available": true,
+  "port": 9910,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "yucca",
+  "description": "Yucca is a simple NVR video surveillance solution for home and business. It is designed to support safe cities with thousands of cameras, subscriber services, and self-hosted home use.",
+  "tipi_version": 1,
+  "version": "0.13.4",
+  "categories": [
+    "automation"
+  ],
+  "short_desc": "Simple NVR video surveillance solution",
+  "author": "Yucca Stream",
+  "source": "https://yucca.app/",
+  "website": "https://yucca.app/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501513385,
+  "updated_at": 1792501573385,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

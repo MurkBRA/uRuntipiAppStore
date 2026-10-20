@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "nginx-proxy-manager",
+      "image": "jc21/nginx-proxy-manager:2.16.0",
+      "isMain": true,
+      "internalPort": 81,
+      "hostname": "nginx-proxy-manager",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/npm-data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/letsencrypt",
+          "containerPath": "/etc/letsencrypt"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 40080,
+          "containerPort": 80,
+          "tcp": true
+        },
+        {
+          "hostPort": 40443,
+          "containerPort": 443,
+          "tcp": true
+        }
+      ]
+    },
+    {
+      "name": "nginx-proxy-manager-docker-host",
+      "image": "qoomon/docker-host:3.3.1",
+      "hostname": "${APP_DOMAIN}",
+      "capAdd": [
+        "NET_ADMIN",
+        "NET_RAW"
+      ]
+    }
+  ]
+}

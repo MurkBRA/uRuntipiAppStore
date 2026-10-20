@@ -1,0 +1,26 @@
+{
+  "name": "Just. Download.",
+  "available": true,
+  "port": 3684,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "just-download",
+  "description": "Just Download allows you to easily download movies, books, games, etc. from your favourite indexers. It acts as a bridge between a Torznab feed (Jackett is recommended for making these) and transmission.",
+  "tipi_version": 1,
+  "version": "v1.0.9",
+  "categories": [
+    "media"
+  ],
+  "short_desc": "Download torrents. Just. Download.",
+  "author": "highghlow",
+  "source": "https://codeberg.org/highghlow/just-download/",
+  "website": "https://codeberg.org/highghlow/just-download",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501498887,
+  "updated_at": 1792501558887,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

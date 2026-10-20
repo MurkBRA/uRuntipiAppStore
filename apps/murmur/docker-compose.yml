@@ -1,0 +1,34 @@
+services:
+  murmur:
+    image: ghcr.io/getumbrel/murmur:v0.6.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/murmur:/data
+    environment:
+      - MURMUR_BUILTIN_HERMES_URL=http://murmur-hermes:9119
+      - MURMUR_BUILTIN_HERMES_USERNAME=murmur
+      - MURMUR_BUILTIN_HERMES_PASSWORD=${APP_MURMUR_HERMES_PASSWORD}
+      - MURMUR_FIND_HERMES=Hermes Agent=http://hermes-agent_web_1:18789
+      - MURMUR_ALLOWED_HOSTS=*
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  murmur-hermes:
+    image: ghcr.io/getumbrel/hermes-agent-umbrel:v0.22.0-4
+    command:
+      - gateway
+      - run
+    volumes:
+      - ${APP_DATA_DIR}/data/hermes:/opt/data
+    environment:
+      - HERMES_UID=1000
+      - HERMES_GID=1000
+      - HERMES_DASHBOARD=1
+      - HERMES_DASHBOARD_BASIC_AUTH_USERNAME=murmur
+      - HERMES_DASHBOARD_BASIC_AUTH_PASSWORD=${APP_MURMUR_HERMES_PASSWORD}
+      - HERMES_DASHBOARD_BASIC_AUTH_SECRET=${APP_MURMUR_HERMES_SECRET}
+      - HERMES_GATEWAY_BOOTSTRAP_STATE=running
+      - UMBREL_APP_NAME=Murmur
+    stop_grace_period: 1m
+x-runtipi:
+  schema_version: 2

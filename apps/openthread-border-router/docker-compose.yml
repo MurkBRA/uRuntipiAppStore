@@ -1,0 +1,82 @@
+services:
+  openthread-border-router:
+    image: ghcr.io/ownbee/hass-otbr-docker:v0.4.0
+    entrypoint:
+      - /bin/bash
+      - '-c'
+      - |
+        set -uo pipefail
+        SETTINGS=/data/settings.env
+        load_settings() {
+          CONFIGURED=0; DEVICE=""; BAUDRATE=""; FLOW_CONTROL=""; BACKBONE_IF=""
+          FIREWALL=""; NAT64=""; AUTOFLASH_FIRMWARE=""
+          [ -f "$$SETTINGS" ] || return
+          while IFS='=' read -r key val; do
+            case "$$key" in
+              DEVICE|BAUDRATE|FLOW_CONTROL|BACKBONE_IF|FIREWALL|NAT64|AUTOFLASH_FIRMWARE|CONFIGURED)
+                export "$$key=$$val" ;;
+            esac
+          done < "$$SETTINGS"
+        }
+        echo "[otbr] waiting for first-run setup to complete (open the app to configure)..."
+        while true; do
+          load_settings
+          if [ "$${CONFIGURED:-0}" = "1" ] && [ -n "$${DEVICE:-}" ] && [ -e "$${DEVICE:-/nonexistent}" ]; then
+            break
+          fi
+          echo "[otbr] not configured yet — retrying in 5s"
+          sleep 5
+        done
+        echo "[otbr] configured (DEVICE=$$DEVICE BACKBONE_IF=$${BACKBONE_IF:-}) — starting border router"
+        # Record the settings we are launching with so the wizard can tell when
+        # the live border router matches the saved config (vs. a pending restart).
+        cat "$$SETTINGS" > /data/.applied 2>/dev/null || true
+        find / -type f -name app.js -path '*frontend/res/js/*' 2>/dev/null \
+          | xargs -r sed -i "s/restServerPort = '8081'/restServerPort = '$${OTBR_REST_PORT:-8081}'/"
+        # s6-overlay must run as PID 1, so exec it. A background watcher restarts
+        # the container when settings change: it asks s6 to shut down with a
+        # non-zero exit code (via s6's container-results file), which restart:
+        # on-failure then brings back up to re-read the new settings. A normal
+        # Umbrel stop exits 0, so it is not restarted.
+        (
+          ref="$$(cat "$$SETTINGS" 2>/dev/null)"
+          while sleep 5; do
+            if [ "$$(cat "$$SETTINGS" 2>/dev/null)" != "$$ref" ]; then
+              echo "[otbr] settings changed — restarting to apply"
+              echo 1 > /run/s6-linux-init-container-results/exitcode 2>/dev/null || true
+              kill -TERM 1 2>/dev/null || true
+              exit 0
+            fi
+          done
+        ) &
+        exec /init
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - /dev:/dev
+    environment:
+      - OTBR_WEB_PORT=7587
+      - OTBR_REST_PORT=8083
+    depends_on:
+      - openthread-border-router-setup
+    privileged: true
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 7586
+      is_main: true
+  openthread-border-router-setup:
+    image: python:3.12-alpine
+    command:
+      - python3
+      - /app/server.py
+    volumes:
+      - ${APP_DATA_DIR}/data/server.py:/app/server.py:ro
+      - ${APP_DATA_DIR}/data:/data
+      - /dev:/dev:ro
+    environment:
+      - SETUP_PORT=7586
+      - OTBR_WEB_PORT=7587
+      - OTBR_REST_PORT=8083
+    network_mode: host
+    stop_grace_period: 10s
+x-runtipi:
+  schema_version: 2

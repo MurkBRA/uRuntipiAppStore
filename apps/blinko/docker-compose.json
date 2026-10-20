@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "blinko",
+      "image": "blinkospace/blinko:1.8.8",
+      "isMain": true,
+      "internalPort": 1111,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "NEXTAUTH_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "NEXT_PUBLIC_BASE_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "NEXTAUTH_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://blinkouser:blinkopass@blinko-db:5432/blinko"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/app/.blinko"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:1111",
+        "interval": "30s",
+        "timeout": "10s",
+        "retries": 5,
+        "startPeriod": "30s"
+      },
+      "dependsOn": {
+        "blinko-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "blinko-db",
+      "image": "postgres:17.3",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "blinko"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "blinkouser"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "blinkopass"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -q -d blinko -U blinkouser",
+        "interval": "10s",
+        "timeout": "45s",
+        "retries": 10
+      }
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "name": "ONLYOFFICE Docs",
+  "available": true,
+  "port": 3014,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "onlyoffice-nextcloud",
+  "description": "An online office suite for Nextcloud that enables you to create, edit and collaborate on text documents, spreadsheets and presentations in real time.",
+  "tipi_version": 1,
+  "version": "1.0.4",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Online office for Nextcloud",
+  "author": "Ascensio System SIA",
+  "source": "https://github.com/ONLYOFFICE/DocumentServer",
+  "website": "https://www.onlyoffice.com/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501503861,
+  "updated_at": 1792501563861,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

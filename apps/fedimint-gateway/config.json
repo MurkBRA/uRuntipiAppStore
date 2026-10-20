@@ -1,0 +1,100 @@
+{
+  "name": "Fedimint Lightning Gateway",
+  "available": true,
+  "port": 21335,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "fedimint-gateway",
+  "description": "The Fedimint Lightning Gateway is an ecash wallet that connects Fedimint users to the broader Lightning Network. Operators can earn fees by providing outbound and inbound Lightning liquidity via their existing LND node. # Key Characteristics  - Trust Model: Just like a Lightning node, a Lightning Gateway is not a custodian of the payments it is routing. Lightning Gateways should trust the federations they provide liquidity services to, but users do not need to trust the Lightning Gateway.",
+  "tipi_version": 1,
+  "version": "v0.12.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Lightning routing for Fedimints",
+  "author": "Fedimint Developers",
+  "source": "https://github.com/fedimint/fedimint",
+  "website": "https://fedimint.org/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Network (Electrs format)",
+      "required": false,
+      "default": "bitcoin",
+      "hint": "Electrs network identifier (bitcoin, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK_ELECTRS"
+    },
+    {
+      "type": "random",
+      "label": "Fedimint Lightning Gateway password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495732,
+  "updated_at": 1792501555732,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

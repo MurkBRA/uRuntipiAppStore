@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "restreamer",
+      "image": "datarhei/restreamer:2.12.0",
+      "isMain": true,
+      "internalPort": 8080,
+      "environment": [
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/core/config"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/core/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 8181,
+          "containerPort": 8181,
+          "tcp": true
+        },
+        {
+          "hostPort": 1935,
+          "containerPort": 1935,
+          "tcp": true
+        },
+        {
+          "hostPort": 1936,
+          "containerPort": 1936,
+          "tcp": true
+        },
+        {
+          "hostPort": 6000,
+          "containerPort": 6000,
+          "udp": true,
+          "tcp": false
+        }
+      ]
+    }
+  ]
+}

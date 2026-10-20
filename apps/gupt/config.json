@@ -1,0 +1,28 @@
+{
+  "name": "Gupt",
+  "available": true,
+  "port": 8423,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "gupt",
+  "description": "Encrypted chat, passwords, notes, bookmarks, and ephemeral sharing — with no phone number, no email, no account, and no central server.",
+  "tipi_version": 1,
+  "version": "5.1.0",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Encrypted chat, passwords, notes, bookmarks, and ephemeral sharing",
+  "author": "besoeasy",
+  "source": "https://github.com/besoeasy/gupt",
+  "website": "https://github.com/besoeasy/gupt",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501497145,
+  "updated_at": 1792501557145,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

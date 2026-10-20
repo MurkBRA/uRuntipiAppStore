@@ -1,0 +1,35 @@
+{
+  "name": "Urbit",
+  "available": true,
+  "port": 21955,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "urbit",
+  "description": "Urbit is a personal server for self-sovereign personal & networked computing. Nock, a functional combinator, is built into Hoon, a system programming language, used to implement Arvo, a deterministic operating system, that communicates over Ames, a decentralized, encrypted P2P network.",
+  "tipi_version": 1,
+  "version": "v4.6",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Run Urbit on your Umbrel",
+  "author": "~mopfel-winrux & ~sitful-hatred",
+  "source": "https://github.com/mopfel-winrux/urbit-umbrel",
+  "website": "https://github.com/mopfel-winrux/urbit-umbrel",
+  "url_suffix": "launch",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Urbit password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501512029,
+  "updated_at": 1792501572029,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

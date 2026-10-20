@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "sphinx-relay",
+      "image": "sphinxlightning/sphinx-relay:v2.5.2",
+      "isMain": true,
+      "internalPort": 3300,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "PUBLIC_URL",
+          "value": "${APP_DOMAIN}:3300"
+        },
+        {
+          "key": "LND_IP",
+          "value": "${APP_LIGHTNING_NODE_IP}"
+        },
+        {
+          "key": "CONNECT_UI",
+          "value": "true"
+        },
+        {
+          "key": "LND_PORT",
+          "value": "${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "TLS_LOCATION",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "MACAROON_LOCATION",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        },
+        {
+          "key": "LND_LOG_LOCATION",
+          "value": "/lnd/logs/bitcoin/${APP_BITCOIN_NETWORK}/lnd.log"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/relay/.lnd/"
+        }
+      ]
+    }
+  ]
+}

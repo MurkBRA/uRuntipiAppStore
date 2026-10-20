@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "saifa",
+      "image": "patranakamo/saifa-fe:v1.3.2",
+      "isMain": true,
+      "internalPort": 80,
+      "addToMainNetwork": true,
+      "dependsOn": [
+        "saifa-backend"
+      ]
+    },
+    {
+      "name": "saifa-backend",
+      "image": "patranakamo/saifa-be:v1.3.3",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "HOME",
+          "value": "/data"
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "BITCOIN_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "LN_SERVER_URL",
+          "value": "https://${LND_IP}:${LND_REST_PORT}"
+        },
+        {
+          "key": "REDIS_HOST",
+          "value": "saifa-redis"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/var/www/html/lnd",
+          "readOnly": true
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 9988,
+          "containerPort": 80,
+          "tcp": true
+        }
+      ],
+      "dependsOn": [
+        "saifa-redis"
+      ]
+    },
+    {
+      "name": "saifa-redis",
+      "image": "redis:7.2.4",
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "HOME",
+          "value": "/data/redis_data"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis_data",
+          "containerPath": "/data/redis_data"
+        }
+      ]
+    }
+  ]
+}

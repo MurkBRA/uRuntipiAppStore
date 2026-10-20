@@ -1,0 +1,17 @@
+services:
+  notediscovery:
+    image: ghcr.io/gamosoft/notediscovery:0.32.1
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    healthcheck:
+      test: python -c import urllib.request; urllib.request.urlopen('http://localhost:8000/health')
+      interval: 60s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+    x-runtipi:
+      internal_port: 8000
+      is_main: true
+x-runtipi:
+  schema_version: 2

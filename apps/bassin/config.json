@@ -1,0 +1,66 @@
+{
+  "name": "Bassin",
+  "available": true,
+  "port": 5008,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bassin",
+  "description": "A zero-fee Bitcoin solo mining pool for Umbrel. Run your own ckPool at home.",
+  "tipi_version": 1,
+  "version": "v1.8.11",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Solo Bitcoin Mining Pool (ckPool)",
+  "author": "blockdyor",
+  "source": "https://github.com/blockdyor/bassin",
+  "website": "https://github.com/blockdyor",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Hashblock Port",
+      "required": false,
+      "default": 28334,
+      "env_variable": "APP_BITCOIN_ZMQ_HASHBLOCK_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501488971,
+  "updated_at": 1792501548971,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

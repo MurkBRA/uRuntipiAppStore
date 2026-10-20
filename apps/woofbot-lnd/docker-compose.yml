@@ -1,0 +1,40 @@
+services:
+  woofbot-lnd:
+    image: woofbot/woofbot:v0.9.8
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/server-logs:/app/logs
+      - ${APP_LIGHTNING_NODE_DATA_DIR}/tls.cert:/lnd/tls.cert:ro
+      - ${APP_LIGHTNING_NODE_DATA_DIR}/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon:/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon:ro
+    environment:
+      - MONGODB_URI=mongodb://woofbot-lnd-mongodb:27017/woofbot
+      - APP_PORT=8080
+      - APP_SEED=${APP_SEED}
+      - APP_BITCOIN_NODE_IP=${APP_BITCOIN_NODE_IP}
+      - APP_BITCOIN_RPC_USER=${APP_BITCOIN_RPC_USER}
+      - APP_BITCOIN_RPC_PASS=${APP_BITCOIN_RPC_PASS}
+      - APP_BITCOIN_RPC_PORT=${APP_BITCOIN_RPC_PORT}
+      - APP_LIGHTNING_NODE_IP=${APP_LIGHTNING_NODE_IP}
+      - APP_LIGHTNING_NODE_GRPC_PORT=${APP_LIGHTNING_NODE_GRPC_PORT}
+      - LND_TLS_PATH=/lnd/tls.cert
+      - LND_READONLY_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon
+      - SERVER_LOGS_FILEPATH=/app/logs/server.log
+    depends_on:
+      - woofbot-lnd-mongodb
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8080
+      add_to_main_network: true
+      is_main: true
+  woofbot-lnd-mongodb:
+    image: mongo:4.4.6-bionic
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/data/db
+      - ${APP_DATA_DIR}/data/db/diagnostic.data:/data/db/diagnostic.data
+      - ${APP_DATA_DIR}/data/db/journal:/data/db/journal
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

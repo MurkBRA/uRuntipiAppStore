@@ -1,0 +1,26 @@
+{
+  "name": "Wavelog",
+  "available": true,
+  "port": 22784,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "wavelog",
+  "description": "⚠️ See below for important set-up instructions.",
+  "tipi_version": 1,
+  "version": "3.2.4",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Amateur radio logging software",
+  "author": "DF2ET, DJ7NT, HB9HIL, LA8AJA",
+  "source": "https://github.com/wavelog/wavelog",
+  "website": "https://www.wavelog.org",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501512533,
+  "updated_at": 1792501572533,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

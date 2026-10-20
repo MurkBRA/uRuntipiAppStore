@@ -1,0 +1,15 @@
+services:
+  bisq2-node:
+    image: ghcr.io/bisq-network/bisq2-api:2.1.14.0
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8091
+      is_main: true
+  bisq2-node-web:
+    image: ghcr.io/bisq-network/bisq2-api-web-ui:2.1.14.0
+    volumes:
+      - ${APP_DATA_DIR}/data:/data:ro
+x-runtipi:
+  schema_version: 2

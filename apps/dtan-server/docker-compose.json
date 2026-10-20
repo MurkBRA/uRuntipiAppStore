@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "dtan-server",
+      "image": "voidic/dtan-server:v0.2.0",
+      "isMain": true,
+      "internalPort": 8000,
+      "environment": [
+        {
+          "key": "RUST_LOG",
+          "value": "info"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/app/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config/config.yml",
+          "containerPath": "/app/config.yml"
+        }
+      ]
+    }
+  ]
+}

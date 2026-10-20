@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "leafwiki",
+      "image": "ghcr.io/perber/leafwiki:v0.14.1",
+      "isMain": true,
+      "internalPort": 8080,
+      "environment": [
+        {
+          "key": "LEAFWIKI_JWT_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LEAFWIKI_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "LEAFWIKI_ALLOW_INSECURE",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "name": "SimpleTorrent",
+  "available": true,
+  "port": 18611,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "simple-torrent",
+  "description": "SimpleTorrent is a a self-hosted remote torrent client that starts torrents remotely, download sets of files on your Umbrel, which are then retrievable or streamable via web browser over HTTP. This project is a re-branded fork of cloud-torrent by jpillora. Features:",
+  "tipi_version": 1,
+  "version": "1.3.9",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Download torrents with your Umbrel",
+  "author": "Preston",
+  "source": "https://github.com/boypt/simple-torrent",
+  "website": "https://github.com/boypt",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501508867,
+  "updated_at": 1792501568867,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

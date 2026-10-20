@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "datum",
+      "image": "ghcr.io/retropex/datum:v1.14",
+      "isMain": true,
+      "internalPort": 21000,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "command": [
+        "--config=/app/conf/datum_gateway_config.json"
+      ],
+      "entrypoint": [
+        "/app/datum_gateway"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/settings/",
+          "containerPath": "/app/conf/"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 23334,
+          "containerPort": 23334,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

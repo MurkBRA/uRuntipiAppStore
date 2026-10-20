@@ -1,0 +1,27 @@
+{
+  "name": "Holesail Switchboard",
+  "available": true,
+  "port": 3160,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "holesail-switchboard",
+  "description": "Running Umbrel behind a home router (NAT) without a public domain? Tor is too slow?",
+  "tipi_version": 1,
+  "version": "v2.0.8",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "Manage multiple holesail P2P tunnels from a single dashboard",
+  "author": "oren-z0",
+  "source": "https://github.com/oren-z0/holesail-switchboard",
+  "website": "https://github.com/oren-z0/holesail-switchboard",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501497642,
+  "updated_at": 1792501557642,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

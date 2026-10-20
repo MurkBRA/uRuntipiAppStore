@@ -1,0 +1,51 @@
+{
+  "name": "AnythingLLM",
+  "available": true,
+  "port": 3031,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "anything-llm",
+  "description": "AnythingLLM is a self-hosted AI workspace for chatting with LLMs, building knowledge bases from your documents, and creating custom AI agents.",
+  "tipi_version": 1,
+  "version": "1.18.0",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "AI workspace for chat, documents, and agents",
+  "author": "Mintplex Labs",
+  "source": "https://github.com/Mintplex-Labs/anything-llm",
+  "website": "https://anythingllm.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "AnythingLLM anything llm jwt secret",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_ANYTHING_LLM_JWT_SECRET"
+    },
+    {
+      "type": "random",
+      "label": "AnythingLLM anything llm sig key",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_ANYTHING_LLM_SIG_KEY"
+    },
+    {
+      "type": "random",
+      "label": "AnythingLLM anything llm sig salt",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_ANYTHING_LLM_SIG_SALT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501488529,
+  "updated_at": 1792501548529,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

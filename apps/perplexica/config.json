@@ -1,0 +1,26 @@
+{
+  "name": "Vane",
+  "available": true,
+  "port": 3444,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "perplexica",
+  "description": "🤖 Vane is an intelligent AI-powered search and question-answering engine that redefines the way information is discovered and understood. Instead of providing a long list of links, it processes data from multiple sources, interprets the meaning behind each query, and generates clear, structured, and conversational responses. Every answer is designed to be both informative and contextually relevant, helping users understand complex topics without the need to sift through endless pages of search results.",
+  "tipi_version": 1,
+  "version": "v1.12.2",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "An AI-powered answering engine",
+  "author": "Kushagra Srivastava",
+  "source": "https://github.com/ItzCrazyKns/Vane",
+  "website": "https://github.com/ItzCrazyKns/Vane",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505175,
+  "updated_at": 1792501565175,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,36 @@
+{
+  "name": "HA-Fusion",
+  "available": true,
+  "port": 5023,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "home-assistant-fusion-ui",
+  "description": "HA-Fusion (Home Assistant Fusion UI) is an alternative frontend for the Home Assistant dashboard, inspired by the sleek and intuitive design of the iOS Home app. While it does not manage integrations, HA-Fusion aims to provide a highly customizable and visually appealing interface for users looking to enhance their Home Assistant experience.",
+  "tipi_version": 1,
+  "version": "2024.10.1",
+  "categories": [
+    "automation"
+  ],
+  "short_desc": "A modern, easy-to-use and performant custom Home Assistant dashboard",
+  "author": "Mattias Persson",
+  "source": "https://github.com/matt8707/ha-fusion",
+  "website": "https://github.com/matt8707/ha-fusion",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "HA-Fusion hafusion machine ip",
+      "min": 32,
+      "env_variable": "APP_HAFUSION_MACHINE_IP"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501497827,
+  "updated_at": 1792501557827,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,17 @@
+# cobalt
+
+> Best way to save what you love
+
+⚙️ In order use your own cobalt instance, go to settings > instances > and toggle "use a custom processing server". Add http://umbrel.local:9013 as your server.
+
+cobalt is a powerful and intuitive media downloader built to simplify the process of saving your favorite content from the web. Designed for users who want to enjoy their media without the interruptions of ads, trackers, or paywalls, cobalt offers a streamlined experience. Whether you're downloading videos, music, images, or other types of media, cobalt acts as a proxy that fetches content directly from its source, ensuring a fast and seamless process.
+
+What sets cobalt apart is its commitment to user privacy and freedom. The tool doesn't cache content, so you're always downloading directly from the original source. It also avoids unnecessary distractions, like ads or third-party interference, letting you enjoy a cleaner, faster, and more reliable media retrieval process.
+
+cobalt is ideal for anyone who values simplicity and control over their media downloads. With its easy-to-use interface and efficient functionality, you can quickly retrieve and store content without the usual hassle. Whether you're an enthusiast collecting media or someone simply trying to access content without restrictions, cobalt makes it easy to download what you love, whenever you want.
+
+## Links
+- **Upstream Version**: `11.5`
+- **Website**: https://cobalt.tools/
+- **Source Repository**: https://github.com/imputnet/cobalt
+- **Support**: https://github.com/imputnet/cobalt/issues

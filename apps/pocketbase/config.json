@@ -1,0 +1,27 @@
+{
+  "name": "PocketBase",
+  "available": true,
+  "port": 5400,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "pocketbase",
+  "description": "PocketBase is an open source backend consisting of embedded database (SQLite) with realtime subscriptions, built-in auth management, convenient dashboard UI and simple REST-ish API.",
+  "tipi_version": 1,
+  "version": "0.40.5",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "Open Source backend for your next SaaS and Mobile app in 1 file",
+  "author": "PocketBase",
+  "source": "https://github.com/pocketbase/pocketbase",
+  "website": "https://pocketbase.io/",
+  "url_suffix": "_/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505593,
+  "updated_at": 1792501565593,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

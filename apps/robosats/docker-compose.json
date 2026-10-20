@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "robosats",
+      "image": "recksato/robosats-client:v0.8.7-alpha",
+      "isMain": true,
+      "internalPort": 12596,
+      "stopGracePeriod": "1m",
+      "command": [
+        "sh",
+        "-ec",
+        "sed -i 's/listen 12596 ssl;/listen 12596;/' /etc/nginx/nginx.conf\nexec sh robosats-client.sh\n"
+      ],
+      "environment": [
+        {
+          "key": "TOR_PROXY_IP",
+          "value": "${TOR_PROXY_IP}"
+        },
+        {
+          "key": "TOR_PROXY_PORT",
+          "value": "${TOR_PROXY_PORT}"
+        }
+      ]
+    }
+  ]
+}

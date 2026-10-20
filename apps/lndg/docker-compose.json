@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "lndg",
+      "image": "ghcr.io/cryptosharks131/lndg:v1.11.1",
+      "isMain": true,
+      "internalPort": 8889,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "command": [
+        "sh",
+        "-c",
+        "python initialize.py -net '${APP_BITCOIN_NETWORK}' -rpc '${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}' -pw '${APP_PASSWORD}' -csrf \"$${LNDG_CSRF_TRUSTED_ORIGINS}\" -wn && python controller.py runserver 0.0.0.0:8889"
+      ],
+      "environment": [
+        {
+          "key": "LNDG_CSRF_TRUSTED_ORIGINS",
+          "value": "${APP_LNDG_CSRF_TRUSTED_ORIGINS}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/root/.lnd",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

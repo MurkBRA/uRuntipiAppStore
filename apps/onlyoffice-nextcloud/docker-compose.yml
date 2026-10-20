@@ -1,0 +1,32 @@
+services:
+  onlyoffice-nextcloud:
+    image: a4004/onlyoffice-nextcloud-web:1.0.4
+    environment:
+      - DOCS_ADDRESS=http://${APP_DOMAIN}:5672
+      - DOCS_INTERNAL_ADDRESS=http://onlyoffice-nextcloud-documentserver
+      - NEXTCLOUD_INTERNAL_ADDRESS=http://nextcloud_web_1
+      - NEXTCLOUD_WEB_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+    x-runtipi:
+      internal_port: 3000
+      add_to_main_network: true
+      is_main: true
+  onlyoffice-nextcloud-documentserver:
+    image: onlyoffice/documentserver:10.0.0
+    ports:
+      - 5672:80/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/logs:/var/log/onlyoffice
+      - ${APP_DATA_DIR}/data/certs:/var/www/onlyoffice/Data
+      - ${APP_DATA_DIR}/data/cache:/var/lib/onlyoffice
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql
+    environment:
+      - JWT_ENABLED=false
+      - ONLYOFFICE_HTTPS_HSTS_ENABLED=false
+      - USE_UNAUTHORIZED_STORAGE=true
+      - ALLOW_PRIVATE_IP_ADDRESS=true
+      - ALLOW_META_IP_ADDRESS=true
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

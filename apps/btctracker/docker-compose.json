@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "btctracker",
+      "image": "thewilqq/btc-tracker:v0.8.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "NODE_ENV",
+          "value": "production"
+        },
+        {
+          "key": "PORT",
+          "value": "3000"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "file:/app/data/bitcoin-tracker.db"
+        },
+        {
+          "key": "NEXTAUTH_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "NEXTAUTH_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

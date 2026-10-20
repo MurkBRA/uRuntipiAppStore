@@ -1,0 +1,22 @@
+services:
+  manifold-fedimint-guardian:
+    image: ghcr.io/fedibtc/manifold-fman:99d518ffb4c247fd7616783b9f6b20a9dbc1a739
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/data/admin-password:/admin-password:ro
+    environment:
+      - FLEET_MANAGER_MANIFOLD_ENVIRONMENT=production
+      - FLEET_MANAGER_ESPLORA_URL=https://mempool.space/api
+      - FLEET_MANAGER_BITCOIND_URL=http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}
+      - FLEET_MANAGER_BITCOIND_USERNAME=${APP_BITCOIN_RPC_USER}
+      - FLEET_MANAGER_BITCOIND_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - FLEET_MANAGER_ADMIN_HTTP_BIND=0.0.0.0:8181
+      - FLEET_MANAGER_ADMIN_HTTP_AUTH=password
+      - FLEET_MANAGER_ADMIN_HTTP_PASSWORD_FILE=/admin-password
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8181
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

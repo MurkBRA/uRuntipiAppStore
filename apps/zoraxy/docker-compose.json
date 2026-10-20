@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "zoraxy",
+      "image": "zoraxydocker/zoraxy:v3.3.4",
+      "isMain": true,
+      "internalPort": 8000,
+      "environment": [
+        {
+          "key": "FASTGEOIP",
+          "value": "false"
+        },
+        {
+          "key": "ZEROTIER",
+          "value": "false"
+        },
+        {
+          "key": "DOCKER",
+          "value": "false"
+        },
+        {
+          "key": "NOAUTH",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config/",
+          "containerPath": "/opt/zoraxy/config"
+        },
+        {
+          "hostPath": "/etc/localtime",
+          "containerPath": "/etc/localtime",
+          "readOnly": true
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 41080,
+          "containerPort": 80,
+          "tcp": true
+        },
+        {
+          "hostPort": 41443,
+          "containerPort": 443,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "twenty",
+      "image": "twentycrm/twenty:v2.49.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "NODE_PORT",
+          "value": 3000
+        },
+        {
+          "key": "PG_DATABASE_URL",
+          "value": "postgres://postgres:postgres@twenty-db:5432/default"
+        },
+        {
+          "key": "SERVER_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "FRONT_AUTO_BASE_URL",
+          "value": "true"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://twenty-redis:6379"
+        },
+        {
+          "key": "APP_SECRET",
+          "value": "2Gn5puuVCH0SI386E9RqOqHm0hGIAyrB"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server-local-data",
+          "containerPath": "/app/packages/twenty-server/.local-storage"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker-data",
+          "containerPath": "/app/docker-data"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl --fail http://localhost:3000/healthz",
+        "interval": "10s",
+        "timeout": "30s",
+        "retries": 10,
+        "startPeriod": "120s"
+      },
+      "dependsOn": {
+        "twenty-db": {
+          "condition": "service_healthy"
+        },
+        "twenty-redis": {
+          "condition": "service_started"
+        }
+      }
+    },
+    {
+      "name": "twenty-worker",
+      "image": "twentycrm/twenty:v2.49.0",
+      "user": "1000:1000",
+      "command": [
+        "yarn",
+        "worker:prod"
+      ],
+      "environment": [
+        {
+          "key": "PG_DATABASE_URL",
+          "value": "postgres://postgres:postgres@twenty-db:5432/default"
+        },
+        {
+          "key": "SERVER_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://twenty-redis:6379"
+        },
+        {
+          "key": "DISABLE_DB_MIGRATIONS",
+          "value": "true"
+        },
+        {
+          "key": "DISABLE_CRON_JOBS_REGISTRATION",
+          "value": "true"
+        },
+        {
+          "key": "APP_SECRET",
+          "value": "2Gn5puuVCH0SI386E9RqOqHm0hGIAyrB"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/server-local-data",
+          "containerPath": "/app/packages/twenty-server/.local-storage"
+        }
+      ],
+      "dependsOn": {
+        "twenty-db": {
+          "condition": "service_healthy"
+        },
+        "twenty": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "twenty-db",
+      "image": "postgres:16.8",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "default"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "postgres"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "postgres"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db-data",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U postgres -h localhost -d postgres",
+        "interval": "10s",
+        "timeout": "30s",
+        "retries": 10
+      }
+    },
+    {
+      "name": "twenty-redis",
+      "image": "redis:7.4.2",
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

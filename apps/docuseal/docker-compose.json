@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "docuseal",
+      "image": "docuseal/docuseal:3.3.3",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://docusealuser:docusealpass@docuseal-db:5432/docuseal?sslmode=disable"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/data/docuseal"
+        }
+      ],
+      "dependsOn": [
+        "docuseal-db"
+      ]
+    },
+    {
+      "name": "docuseal-db",
+      "image": "postgres:17.3",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "docuseal"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "docusealuser"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "docusealpass"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ]
+    }
+  ]
+}

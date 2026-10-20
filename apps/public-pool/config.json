@@ -1,0 +1,57 @@
+{
+  "name": "Public Pool",
+  "available": true,
+  "port": 2019,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "public-pool",
+  "description": "Public Pool is an open-source, solo Bitcoin mining application that lets you run your own pool using your own node. Instead of relying on centralized pools, Public Pool enables your mining hardware to submit work to your personal setup, ensuring that you have full control over your mining operation. If you successfully mine a block, you receive the entire block reward. No splitting with other miners. No fees. No middleman.",
+  "tipi_version": 1,
+  "version": "1.25.3",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Fully Open Source Solo Bitcoin Mining Pool",
+  "author": "Benjamin Wilson",
+  "source": "https://github.com/benjamin-wilson/public-pool",
+  "website": "https://web.public-pool.io/#/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505924,
+  "updated_at": 1792501565924,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

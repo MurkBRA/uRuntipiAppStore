@@ -1,0 +1,64 @@
+services:
+  bolt12-pay:
+    image: alex71btc/bolt12-pay:0.3.14
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    environment:
+      - APP_DATA_DIR=/data
+      - APP_CONFIG_PATH=/data/config.json
+      - CONFIG_JSON_PATH=/data/config.json
+      - SECRETS_JSON_PATH=/data/config/secrets.json
+      - PAY_UI_SESSION_TTL=1800
+      - CORS_ORIGINS=*
+      - LNDK_CLI=/usr/local/bin/lndk-cli
+      - LNDK_NETWORK=bitcoin
+      - LNDK_GRPC_HOST=https://lndk
+      - LNDK_GRPC_PORT=7000
+      - LNDK_CERT_PATH=/data/lndk/tls-cert.pem
+      - LNDK_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - LNDK_INVOICE_TIMEOUT_SECONDS=60
+      - LNDK_TIMEOUT_SECONDS=75
+      - ALLOW_PAY_OFFER=true
+      - LND_REST_URL=https://lightning_lnd_1:8080
+      - LND_TLS_CERT_PATH=/lnd/tls.cert
+      - LND_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
+      - LND_REST_INSECURE=true
+      - LNURL_MIN_SENDABLE_MSAT=1000
+      - LNURL_MAX_SENDABLE_MSAT=1000000000
+      - LNURL_COMMENT_ALLOWED=120
+      - LNURL_ALIAS_MODE=shared
+      - LNURL_SHARED_DESCRIPTION=LNURL payment
+      - LNURL_DEFAULT_DESCRIPTION=Lightning payment
+    depends_on:
+      - bolt12-pay-lndk
+    x-runtipi:
+      internal_port: 8081
+      add_to_main_network: true
+      is_main: true
+  bolt12-pay-lndk:
+    image: alex71btc/lndk:bolt12-pay-89a06db-multiarch
+    command:
+      - |
+        echo "Waiting for LND TLS + macaroon..."
+        while [ ! -f /lnd/tls.cert ] || [ ! -f /lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon ]; do
+          echo "Waiting for cert/macaroon..."
+          sleep 5
+        done
+
+        echo "Starting LNDK with retry loop..."
+        while true; do
+          lndk --address=https://lightning_lnd_1:10009 --cert-path=/lnd/tls.cert --macaroon-path=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon --data-dir=/data/lndk --grpc-host=0.0.0.0 --grpc-port=7000
+          echo "LNDK exited or failed. Retrying in 10s..."
+          sleep 10
+        done
+    entrypoint:
+      - /bin/sh
+      - '-c'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

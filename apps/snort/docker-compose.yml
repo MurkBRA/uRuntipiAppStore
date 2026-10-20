@@ -1,0 +1,8 @@
+services:
+  snort:
+    image: voidic/snort:v0.5.3
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+x-runtipi:
+  schema_version: 2

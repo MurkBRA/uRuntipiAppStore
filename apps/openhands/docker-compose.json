@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "openhands",
+      "image": "ghcr.io/openhands/openhands:1.10.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "tty": true,
+      "stdinOpen": true,
+      "environment": [
+        {
+          "key": "AGENT_SERVER_IMAGE_REPOSITORY",
+          "value": "ghcr.io/openhands/agent-server"
+        },
+        {
+          "key": "AGENT_SERVER_IMAGE_TAG",
+          "value": "1.33.0-python"
+        },
+        {
+          "key": "SANDBOX_HOST_PORT",
+          "value": "3994"
+        },
+        {
+          "key": "SANDBOX_CONTAINER_URL_PATTERN",
+          "value": "http://localhost:{port}"
+        },
+        {
+          "key": "WORKSPACE_MOUNT_PATH",
+          "value": "/opt/workspace_base"
+        },
+        {
+          "key": "LOG_ALL_EVENTS",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/var/run"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/openhands",
+          "containerPath": "/.openhands"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/workspace",
+          "containerPath": "/opt/workspace_base"
+        }
+      ],
+      "healthCheck": {
+        "test": "timeout 10s bash -c ':> /dev/tcp/127.0.0.1/3000' || exit 1",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 3,
+        "startPeriod": "90s"
+      },
+      "dependsOn": {
+        "openhands-docker": {
+          "condition": "service_started"
+        }
+      },
+      "extraHosts": [
+        "host.docker.internal:host-gateway",
+        "${APP_DOMAIN}:host-gateway"
+      ]
+    },
+    {
+      "name": "openhands-docker",
+      "image": "docker:28.0.4-dind",
+      "networkMode": "host",
+      "privileged": true,
+      "stopGracePeriod": "1m",
+      "command": "dockerd\n  --bridge dind0\n  --data-root /data/data\n  --exec-root /data/exec\n  --host unix:///data/docker.sock\n  --iptables=false\n  --pidfile /data/docker.pid",
+      "entrypoint": "/entrypoint.sh",
+      "environment": [
+        {
+          "key": "DOCKER_ENSURE_BRIDGE",
+          "value": "dind0:10.32.0.1/16"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/entrypoint.sh",
+          "containerPath": "/entrypoint.sh"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

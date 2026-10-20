@@ -1,0 +1,57 @@
+{
+  "name": "Satsbook",
+  "available": true,
+  "port": 3017,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "satsbook",
+  "description": "Track routing fees, import exchange transactions (Strike, River, Coinbase, Swan), and view your full Bitcoin portfolio — all on your own hardware. Satsbook connects to your LND node and provides a privacy-first dashboard with fee analytics, interactive portfolio breakdown, unified transaction ledger, and transfer tagging. Upgrade to Pro for FIFO/LIFO tax export (Form 8949), or Power to sync your BTC holdings to Monarch Money. No cloud required.",
+  "tipi_version": 1,
+  "version": "2.1.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Bitcoin accounting and tax export for Lightning node operators",
+  "author": "brewgator",
+  "source": "https://github.com/satsbook/satsbook",
+  "website": "https://github.com/satsbook/satsbook",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501507848,
+  "updated_at": 1792501567848,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

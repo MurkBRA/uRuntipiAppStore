@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bark-wallet",
+      "image": "secondark/bark-web:0.8.0",
+      "isMain": true,
+      "internalPort": 8080,
+      "stopGracePeriod": "1m",
+      "dependsOn": [
+        "bark-wallet-api",
+        "bark-wallet-barkd"
+      ]
+    },
+    {
+      "name": "bark-wallet-api",
+      "image": "secondark/bark-web-api:0.8.0",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "PORT",
+          "value": 4001
+        },
+        {
+          "key": "WALLET_DIR",
+          "value": "/wallet-data/.bark"
+        },
+        {
+          "key": "WALLET_DATA_PATH",
+          "value": "/Apps/bark-wallet/data/wallet/.bark/"
+        },
+        {
+          "key": "BARKD_URL",
+          "value": "http://barkd:4000"
+        },
+        {
+          "key": "ARK_SERVER",
+          "value": "https://ark.second.tech"
+        },
+        {
+          "key": "CHAIN_SOURCE",
+          "value": "https://mempool.second.tech/api"
+        },
+        {
+          "key": "BARK_NETWORK",
+          "value": "mainnet"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/wallet",
+          "containerPath": "/wallet-data",
+          "readOnly": true
+        }
+      ],
+      "dependsOn": [
+        "bark-wallet-barkd"
+      ]
+    },
+    {
+      "name": "bark-wallet-barkd",
+      "image": "secondark/bark:0.6.2",
+      "user": "0:0",
+      "stopGracePeriod": "1m",
+      "command": "sh -c \"mkdir -p /data/.bark && chown -R 1000:1000 /data && exec setpriv --reuid 1000 --regid 1000 --clear-groups /usr/local/bin/barkd --port 4000 --host 0.0.0.0 --datadir /data/.bark --expose-mnemonic\"",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/wallet",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

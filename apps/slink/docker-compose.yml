@@ -1,0 +1,25 @@
+services:
+  slink:
+    image: anirdev/slink:v1.14.2
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/server.js:/services/client/svelte-kit/server.js:ro
+      - ${APP_DATA_DIR}/data/var:/app/var/data
+      - ${APP_DATA_DIR}/data/images:/app/slink/images
+    environment:
+      - TZ=UTC
+      - ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - PROTOCOL_HEADER=x-forwarded-proto
+      - REQUIRE_SSL=false
+      - USER_APPROVAL_REQUIRED=false
+      - USER_PASSWORD_MIN_LENGTH=8
+      - USER_PASSWORD_REQUIREMENTS=15
+      - IMAGE_MAX_SIZE=15M
+      - IMAGE_STRIP_EXIF_METADATA=true
+      - IMAGE_COMPRESSION_QUALITY=80
+      - STORAGE_PROVIDER=local
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,444 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "solidtime",
+      "image": "solidtime/solidtime:0.22.0",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "CONTAINER_MODE",
+          "value": "http"
+        },
+        {
+          "key": "AUTO_DB_MIGRATE",
+          "value": "true"
+        },
+        {
+          "key": "APP_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "VITE_APP_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "APP_ENV",
+          "value": "production"
+        },
+        {
+          "key": "APP_DEBUG",
+          "value": "false"
+        },
+        {
+          "key": "APP_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "APP_FORCE_HTTPS",
+          "value": "false"
+        },
+        {
+          "key": "TRUSTED_PROXIES",
+          "value": "0.0.0.0/0,2000:0:0:0:0:0:0:0/3"
+        },
+        {
+          "key": "TRUSTED_HOSTS",
+          "value": "${APP_DOMAIN},${LOCAL_DOMAIN},${APP_DOMAIN},${APP_DOMAIN},${local_ips}"
+        },
+        {
+          "key": "SUPER_ADMINS",
+          "value": "umbrel@umbrel.local"
+        },
+        {
+          "key": "LOG_CHANNEL",
+          "value": "stderr_daily"
+        },
+        {
+          "key": "LOG_LEVEL",
+          "value": "debug"
+        },
+        {
+          "key": "DB_CONNECTION",
+          "value": "pgsql"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "solidtime-db"
+        },
+        {
+          "key": "DB_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "DB_SSL_MODE",
+          "value": "prefer"
+        },
+        {
+          "key": "DB_DATABASE",
+          "value": "solidtime"
+        },
+        {
+          "key": "DB_USERNAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "solidtime"
+        },
+        {
+          "key": "MAIL_MAILER",
+          "value": "smtp"
+        },
+        {
+          "key": "MAIL_ENCRYPTION",
+          "value": "tls"
+        },
+        {
+          "key": "MAIL_FROM_ADDRESS",
+          "value": "no-reply@your-domain.com"
+        },
+        {
+          "key": "MAIL_FROM_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "QUEUE_CONNECTION",
+          "value": "database"
+        },
+        {
+          "key": "FILESYSTEM_DISK",
+          "value": "local"
+        },
+        {
+          "key": "PUBLIC_FILESYSTEM_DISK",
+          "value": "public"
+        },
+        {
+          "key": "GOTENBERG_URL",
+          "value": "http://solidtime-gotenberg:3000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/var/www/html/storage"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl --fail http://localhost:8000/health-check/up || exit 1"
+      },
+      "dependsOn": {
+        "solidtime-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "solidtime-scheduler",
+      "image": "solidtime/solidtime:0.22.0",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "CONTAINER_MODE",
+          "value": "scheduler"
+        },
+        {
+          "key": "APP_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "VITE_APP_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "APP_ENV",
+          "value": "production"
+        },
+        {
+          "key": "APP_DEBUG",
+          "value": "false"
+        },
+        {
+          "key": "APP_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "APP_FORCE_HTTPS",
+          "value": "false"
+        },
+        {
+          "key": "TRUSTED_PROXIES",
+          "value": "0.0.0.0/0,2000:0:0:0:0:0:0:0/3"
+        },
+        {
+          "key": "TRUSTED_HOSTS",
+          "value": "${APP_DOMAIN},${LOCAL_DOMAIN},${APP_DOMAIN},${APP_DOMAIN},${local_ips}"
+        },
+        {
+          "key": "SUPER_ADMINS",
+          "value": "umbrel@umbrel.local"
+        },
+        {
+          "key": "LOG_CHANNEL",
+          "value": "stderr_daily"
+        },
+        {
+          "key": "LOG_LEVEL",
+          "value": "debug"
+        },
+        {
+          "key": "DB_CONNECTION",
+          "value": "pgsql"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "solidtime-db"
+        },
+        {
+          "key": "DB_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "DB_SSL_MODE",
+          "value": "prefer"
+        },
+        {
+          "key": "DB_DATABASE",
+          "value": "solidtime"
+        },
+        {
+          "key": "DB_USERNAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "solidtime"
+        },
+        {
+          "key": "MAIL_MAILER",
+          "value": "smtp"
+        },
+        {
+          "key": "MAIL_ENCRYPTION",
+          "value": "tls"
+        },
+        {
+          "key": "MAIL_FROM_ADDRESS",
+          "value": "no-reply@your-domain.com"
+        },
+        {
+          "key": "MAIL_FROM_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "QUEUE_CONNECTION",
+          "value": "database"
+        },
+        {
+          "key": "FILESYSTEM_DISK",
+          "value": "local"
+        },
+        {
+          "key": "PUBLIC_FILESYSTEM_DISK",
+          "value": "public"
+        },
+        {
+          "key": "GOTENBERG_URL",
+          "value": "http://solidtime-gotenberg:3000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/var/www/html/storage"
+        }
+      ],
+      "healthCheck": {
+        "test": "healthcheck"
+      },
+      "dependsOn": {
+        "solidtime-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "solidtime-queue",
+      "image": "solidtime/solidtime:0.22.0",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "CONTAINER_MODE",
+          "value": "worker"
+        },
+        {
+          "key": "WORKER_COMMAND",
+          "value": "php /var/www/html/artisan queue:work"
+        },
+        {
+          "key": "APP_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "VITE_APP_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "APP_ENV",
+          "value": "production"
+        },
+        {
+          "key": "APP_DEBUG",
+          "value": "false"
+        },
+        {
+          "key": "APP_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "APP_FORCE_HTTPS",
+          "value": "false"
+        },
+        {
+          "key": "TRUSTED_PROXIES",
+          "value": "0.0.0.0/0,2000:0:0:0:0:0:0:0/3"
+        },
+        {
+          "key": "TRUSTED_HOSTS",
+          "value": "${APP_DOMAIN},${LOCAL_DOMAIN},${APP_DOMAIN},${APP_DOMAIN},${local_ips}"
+        },
+        {
+          "key": "SUPER_ADMINS",
+          "value": "umbrel@umbrel.local"
+        },
+        {
+          "key": "LOG_CHANNEL",
+          "value": "stderr_daily"
+        },
+        {
+          "key": "LOG_LEVEL",
+          "value": "debug"
+        },
+        {
+          "key": "DB_CONNECTION",
+          "value": "pgsql"
+        },
+        {
+          "key": "DB_HOST",
+          "value": "solidtime-db"
+        },
+        {
+          "key": "DB_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "DB_SSL_MODE",
+          "value": "prefer"
+        },
+        {
+          "key": "DB_DATABASE",
+          "value": "solidtime"
+        },
+        {
+          "key": "DB_USERNAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "DB_PASSWORD",
+          "value": "solidtime"
+        },
+        {
+          "key": "MAIL_MAILER",
+          "value": "smtp"
+        },
+        {
+          "key": "MAIL_ENCRYPTION",
+          "value": "tls"
+        },
+        {
+          "key": "MAIL_FROM_ADDRESS",
+          "value": "no-reply@your-domain.com"
+        },
+        {
+          "key": "MAIL_FROM_NAME",
+          "value": "solidtime"
+        },
+        {
+          "key": "QUEUE_CONNECTION",
+          "value": "database"
+        },
+        {
+          "key": "FILESYSTEM_DISK",
+          "value": "local"
+        },
+        {
+          "key": "PUBLIC_FILESYSTEM_DISK",
+          "value": "public"
+        },
+        {
+          "key": "GOTENBERG_URL",
+          "value": "http://solidtime-gotenberg:3000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/var/www/html/storage"
+        }
+      ],
+      "healthCheck": {
+        "test": "healthcheck"
+      },
+      "dependsOn": {
+        "solidtime-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "solidtime-db",
+      "image": "postgres:17.3",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "PGPASSWORD",
+          "value": "soldtime"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "solidtime"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "solidtime"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "solidtime"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -q -d solidtime -U solidtime",
+        "timeout": "5s",
+        "retries": 3
+      }
+    },
+    {
+      "name": "solidtime-gotenberg",
+      "image": "gotenberg/gotenberg:8.17.1",
+      "user": "1000:1000",
+      "healthCheck": {
+        "test": "curl --silent --fail http://localhost:3000/health"
+      }
+    }
+  ]
+}

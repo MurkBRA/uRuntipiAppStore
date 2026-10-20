@@ -1,0 +1,28 @@
+{
+  "name": "Satoshi Dashboard",
+  "available": true,
+  "port": 8410,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "satoshi-dashboard",
+  "description": "Satoshi Dashboard is a comprehensive, real-time Bitcoin analytics platform that brings together 32+ key metrics into a single, beautifully designed interface. Track live BTC price, sats per dollar, block height, hash rate, network difficulty, circulating supply, and the Fear & Greed index — all updating in real time from multiple data sources.",
+  "tipi_version": 1,
+  "version": "v1.1.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Real-time Bitcoin analytics dashboard",
+  "author": "Satoshi-Dashboard",
+  "source": "https://github.com/Satoshi-Dashboard/main",
+  "website": "https://www.satoshidashboard.com",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501507671,
+  "updated_at": 1792501567671,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

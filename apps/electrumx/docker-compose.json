@@ -1,0 +1,85 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "electrumx",
+      "image": "ghcr.io/getumbrel/umbrel-electrumx:1.0.0",
+      "isMain": true,
+      "internalPort": 3007,
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "ELECTRUM_HIDDEN_SERVICE",
+          "value": "${APP_ELECTRUMX_RPC_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "ELECTRUM_LOCAL_SERVICE",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "ELECTRUM_HOST",
+          "value": "electrumx-electrumx-sidecar"
+        },
+        {
+          "key": "ELECTRUM_PUBLIC_CONNECTION_PORT",
+          "value": "50003"
+        },
+        {
+          "key": "ELECTRUM_RPC_PORT",
+          "value": "8000"
+        },
+        {
+          "key": "BITCOIN_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "RPC_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        }
+      ],
+      "dependsOn": [
+        "electrumx-electrumx-sidecar"
+      ]
+    },
+    {
+      "name": "electrumx-electrumx-sidecar",
+      "image": "lukechilds/electrumx:v1.16.0",
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "DAEMON_URL",
+          "value": "http://${APP_BITCOIN_RPC_USER}:${APP_BITCOIN_RPC_PASS}@${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "COIN",
+          "value": "BitcoinSegwit"
+        },
+        {
+          "key": "NET",
+          "value": "${APP_BITCOIN_NETWORK}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/electrumx",
+          "containerPath": "/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 50003,
+          "containerPort": 50001,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

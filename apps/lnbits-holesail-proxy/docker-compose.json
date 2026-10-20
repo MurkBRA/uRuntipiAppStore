@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "lnbits-holesail-proxy",
+      "image": "orenz0/holesail-server-manager:v1.0.7",
+      "isMain": true,
+      "internalPort": 3107,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "HSM_DATA_FILE",
+          "value": "/data/hsm.json"
+        },
+        {
+          "key": "HSM_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "HSM_PORT",
+          "value": 3107
+        },
+        {
+          "key": "HSM_TITLE",
+          "value": "LNbits Holesail Proxy"
+        },
+        {
+          "key": "HSM_TARGET_ADDRESS",
+          "value": "lnbits_web_1"
+        },
+        {
+          "key": "HSM_TARGET_PORT",
+          "value": 3007
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

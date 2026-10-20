@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "dropgate-server",
+      "image": "willtda/dropgate-server:3.0.13",
+      "isMain": true,
+      "internalPort": 52443,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "SERVER_PORT",
+          "value": 52443
+        },
+        {
+          "key": "SERVER_NAME",
+          "value": "Dropgate Server"
+        },
+        {
+          "key": "ENABLE_WEB_UI",
+          "value": "true"
+        },
+        {
+          "key": "ENABLE_UPLOAD",
+          "value": "true"
+        },
+        {
+          "key": "UPLOAD_ENABLE_E2EE",
+          "value": "true"
+        },
+        {
+          "key": "UPLOAD_PRESERVE_UPLOADS",
+          "value": "false"
+        },
+        {
+          "key": "UPLOAD_MAX_FILE_SIZE_MB",
+          "value": 100
+        },
+        {
+          "key": "UPLOAD_MAX_STORAGE_GB",
+          "value": 10
+        },
+        {
+          "key": "UPLOAD_MAX_FILE_LIFETIME_HOURS",
+          "value": 24
+        },
+        {
+          "key": "UPLOAD_MAX_FILE_DOWNLOADS",
+          "value": 1
+        },
+        {
+          "key": "ENABLE_P2P",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/usr/src/app/uploads"
+        }
+      ]
+    }
+  ]
+}

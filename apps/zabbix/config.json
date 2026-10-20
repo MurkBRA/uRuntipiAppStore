@@ -1,0 +1,27 @@
+{
+  "name": "Zabbix",
+  "available": true,
+  "port": 10052,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "zabbix",
+  "description": "⚠️ Zabbix may take a few minutes to initialize after installation. Please be patient.",
+  "tipi_version": 1,
+  "version": "7.4.15",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "The all-in-one, open-source solution that lets you monitor anything",
+  "author": "Zabbix LLC",
+  "source": "https://github.com/zabbix/zabbix",
+  "website": "https://www.zabbix.com/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501513504,
+  "updated_at": 1792501573504,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,43 @@
+{
+  "name": "LeafWiki",
+  "available": true,
+  "port": 8066,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "leafwiki",
+  "description": "🌿 LeafWiki gives you a focused space to create, structure, and maintain a personal or shared knowledge base. It helps you turn scattered notes, instructions, ideas, and reference material into clear wiki pages that are easy to read, update, and organize. You can use it to document processes, collect important information, write guides, preserve technical notes, and build a clean library of knowledge that grows naturally over time.",
+  "tipi_version": 1,
+  "version": "0.14.1",
+  "categories": [
+    "books",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A real wiki app without the heavy stack",
+  "author": "perber",
+  "source": "https://github.com/perber/leafwiki",
+  "website": "https://leafwiki.com/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "LeafWiki seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "random",
+      "label": "LeafWiki password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501499646,
+  "updated_at": 1792501559646,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

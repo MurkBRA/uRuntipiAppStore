@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "snort",
+      "image": "voidic/snort:v0.5.3",
+      "isMain": true,
+      "internalPort": 8080
+    }
+  ]
+}

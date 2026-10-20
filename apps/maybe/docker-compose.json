@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "maybe",
+      "image": "ghcr.io/maybe-finance/maybe:0.6.0",
+      "isMain": true,
+      "internalPort": 3063,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "SELF_HOSTING_ENABLED",
+          "value": "true"
+        },
+        {
+          "key": "PORT",
+          "value": 3063
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://maybe:maybe@maybe%5Fdb%5F1:5432/maybe"
+        },
+        {
+          "key": "RAILS_FORCE_SSL",
+          "value": "false"
+        },
+        {
+          "key": "RAILS_ASSUME_SSL",
+          "value": "false"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "maybe"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "maybe"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "maybe"
+        },
+        {
+          "key": "GOOD_JOB_EXECUTION_MODE",
+          "value": "async"
+        },
+        {
+          "key": "SECRET_KEY_BASE",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://maybe-redis:6379/1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/rails",
+          "containerPath": "/rails/storage"
+        }
+      ],
+      "dependsOn": {
+        "maybe-db": {
+          "condition": "service_healthy"
+        },
+        "maybe-redis": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "maybe-worker",
+      "image": "ghcr.io/maybe-finance/maybe:0.6.0",
+      "command": "bundle exec sidekiq",
+      "environment": [
+        {
+          "key": "SELF_HOSTING_ENABLED",
+          "value": "true"
+        },
+        {
+          "key": "PORT",
+          "value": 3063
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://maybe:maybe@maybe%5Fdb%5F1:5432/maybe"
+        },
+        {
+          "key": "RAILS_FORCE_SSL",
+          "value": "false"
+        },
+        {
+          "key": "RAILS_ASSUME_SSL",
+          "value": "false"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "maybe"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "maybe"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "maybe"
+        },
+        {
+          "key": "GOOD_JOB_EXECUTION_MODE",
+          "value": "async"
+        },
+        {
+          "key": "SECRET_KEY_BASE",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://maybe-redis:6379/1"
+        }
+      ],
+      "dependsOn": {
+        "maybe-redis": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "maybe-db",
+      "image": "postgres:16",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "POSTGRES_DB",
+          "value": "maybe"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "maybe"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "maybe"
+        },
+        {
+          "key": "PGDATA",
+          "value": "/var/lib/postgresql/data/pgdata"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/postgres",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U maybe",
+        "interval": "10s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    },
+    {
+      "name": "maybe-redis",
+      "image": "redis:7.4.2",
+      "user": "1000:1000",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "redis-cli ping",
+        "interval": "5s",
+        "timeout": "5s",
+        "retries": 5
+      }
+    }
+  ]
+}

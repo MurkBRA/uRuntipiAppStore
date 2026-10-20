@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "threema",
+      "image": "dennysubke/threema-web:v2.6.5",
+      "isMain": true,
+      "internalPort": 80
+    }
+  ]
+}

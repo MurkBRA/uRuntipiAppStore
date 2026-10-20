@@ -1,0 +1,29 @@
+{
+  "name": "Enclosed",
+  "available": true,
+  "port": 8788,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "enclosed",
+  "description": "Enclosed is a minimalistic web application designed for sending private and secure notes. Whether you need to share sensitive information or just want a simple way to send encrypted messages, Enclosed provides a user-friendly interface with strong security features to ensure your data remains confidential.",
+  "tipi_version": 1,
+  "version": "1.16.0-rootless",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Send private and secure notes",
+  "author": "Corentin Thomasset",
+  "source": "https://github.com/CorentinTh/enclosed",
+  "website": "https://enclosed.cc/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495403,
+  "updated_at": 1792501555403,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,71 @@
+services:
+  btcpay-server:
+    image: btcpayserver/btcpayserver:2.4.5
+    entrypoint:
+      - dotnet
+      - BTCPayServer.dll
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/btcpay:/data
+      - ${APP_DATA_DIR}/data/nbxplorer:/data/.nbxplorer
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    environment:
+      - HOME=/data
+      - BTCPAY_DATADIR=/data
+      - BTCPAY_PLUGINDIR=/data/plugins
+      - BTCPAY_DOCKERDEPLOYMENT=false
+      - BTCPAY_POSTGRES=User ID=postgres;Host=btcpay-server-postgres;Port=5432;Database=btcpayserver${APP_BITCOIN_NETWORK}
+      - BTCPAY_NETWORK=${APP_BITCOIN_NETWORK}
+      - BTCPAY_BIND=0.0.0.0:3003
+      - BTCPAY_CHAINS=btc
+      - BTCPAY_BTCEXPLORERURL=http://btcpay-server-nbxplorer:32838
+      - BTCPAY_BTCLIGHTNING=type=lnd-rest;server=https://${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_REST_PORT}/;macaroonfilepath=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon;allowinsecure=true
+      - BTCPAY_SOCKSENDPOINT=${TOR_PROXY_IP}:${TOR_PROXY_PORT}
+      - BTCPAY_EXPLORERPOSTGRES=User ID=postgres;Host=btcpay-server-postgres;Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=nbxplorer${APP_BITCOIN_NETWORK}
+      - BTCPAY_TORSERVICES=btcpayserver:${APP_DOMAIN}
+    depends_on:
+      - btcpay-server-nbxplorer
+      - btcpay-server-postgres
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3003
+      add_to_main_network: true
+      is_main: true
+  btcpay-server-nbxplorer:
+    image: nicolasdorier/nbxplorer:2.6.19
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/nbxplorer:/data
+    environment:
+      - NBXPLORER_DATADIR=/data
+      - NBXPLORER_NETWORK=${APP_BITCOIN_NETWORK}
+      - NBXPLORER_BIND=0.0.0.0:32838
+      - NBXPLORER_CHAINS=btc
+      - NBXPLORER_SIGNALFILEDIR=/data
+      - NBXPLORER_BTCRPCURL=http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}
+      - NBXPLORER_BTCNODEENDPOINT=${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_P2P_WHITEBIND_PORT-${APP_BITCOIN_P2P_PORT}}
+      - NBXPLORER_BTCRPCUSER=${APP_BITCOIN_RPC_USER}
+      - NBXPLORER_BTCRPCPASSWORD=${APP_BITCOIN_RPC_PASS}
+      - NBXPLORER_POSTGRES=User ID=postgres;Host=btcpay-server-postgres;Port=5432;Application Name=nbxplorer;MaxPoolSize=20;Database=nbxplorer${APP_BITCOIN_NETWORK}
+      - NBXPLORER_BTCHASTXINDEX=1
+    depends_on:
+      - btcpay-server-postgres
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+  btcpay-server-postgres:
+    image: btcpayserver/postgres:13.13
+    command:
+      - '-c'
+      - random_page_cost=1.0
+      - '-c'
+      - shared_preload_libraries=pg_stat_statements
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

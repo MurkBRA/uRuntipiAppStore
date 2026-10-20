@@ -1,0 +1,37 @@
+services:
+  picsur:
+    image: ghcr.io/caramelfur/picsur:0.5.6
+    user: '1000:1000'
+    environment:
+      - PICSUR_PORT=8286
+      - PICSUR_DB_HOST=picsur-db
+      - PICSUR_DB_PORT=5432
+      - PICSUR_DB_USERNAME=picsuruser
+      - PICSUR_DB_PASSWORD=picsurpass
+      - PICSUR_DB_DATABASE=picsur
+      - PICSUR_ADMIN_PASSWORD=${APP_PASSWORD}
+      - PICSUR_MAX_FILE_SIZE=128000000000
+    depends_on:
+      picsur-db:
+        condition: service_healthy
+    x-runtipi:
+      internal_port: 8286
+      is_main: true
+  picsur-db:
+    image: postgres:17.4
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=picsur
+      - POSTGRES_USER=picsuruser
+      - POSTGRES_PASSWORD=picsurpass
+    healthcheck:
+      test: pg_isready -q -d picsur -U picsuruser
+      interval: 10s
+      timeout: 45s
+      retries: 10
+    security_opt:
+      - no-new-privileges:true
+x-runtipi:
+  schema_version: 2

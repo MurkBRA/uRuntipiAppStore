@@ -1,0 +1,16 @@
+services:
+  dcrdex:
+    image: decred/dcrdex:v1.0.5
+    entrypoint:
+      - /bin/sh
+      - '-c'
+      - exec ./bisonw --webaddr $(hostname -I|cut -d\  -f1 ):5758
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/dex/.dexc
+    stop_grace_period: 15m
+    x-runtipi:
+      internal_port: 5758
+      is_main: true
+x-runtipi:
+  schema_version: 2

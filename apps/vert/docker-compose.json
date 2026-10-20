@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "vert",
+      "image": "ghcr.io/vert-sh/vert:sha-b3b04c2",
+      "isMain": true,
+      "internalPort": 80,
+      "environment": [
+        {
+          "key": "PUB_HOSTNAME",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "PUB_VERTD_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "PUB_ENV",
+          "value": "production"
+        }
+      ]
+    }
+  ]
+}

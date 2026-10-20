@@ -1,0 +1,35 @@
+{
+  "name": "GlassHome",
+  "available": true,
+  "port": 3123,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "glasshome",
+  "description": "GlassHome is a local-first dashboard for Home Assistant that you design by dragging and dropping widgets in the UI, with no YAML. It talks to Home Assistant directly on your network over WebSocket; your entity data, Home Assistant address, and auth token never leave your network.",
+  "tipi_version": 1,
+  "version": "1.4.5",
+  "categories": [
+    "automation"
+  ],
+  "short_desc": "A beautiful, local-first dashboard for Home Assistant",
+  "author": "GlassHome",
+  "source": "https://github.com/glasshome/homeassistant-addon",
+  "website": "https://glasshome.app",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Home Gateway IP",
+      "required": false,
+      "default": "192.168.1.1",
+      "env_variable": "GATEWAY_IP"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501496819,
+  "updated_at": 1792501556819,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

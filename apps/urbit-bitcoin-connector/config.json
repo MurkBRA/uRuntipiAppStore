@@ -1,0 +1,78 @@
+{
+  "name": "Urbit Bitcoin Connector",
+  "available": true,
+  "port": 9090,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "urbit-bitcoin-connector",
+  "description": "Urbit has a native Bitcoin wallet that you can connect to a full node via an intermediary, called a provider. Providers run a piece of backend software called %btc-provider that communicates with a full node with bitcoind and electrs, as well as a custome Node Express proxy to translate RPC calls between TCP and HTTP. This app will install the Express proxy and configure it to point at your Umbrel's Bitcoin full node. Using this, you can configure a Bitcoin provider on a ship (even one running on your Umbrel) and configure it, or other ships to point their wallets at it.",
+  "tipi_version": 1,
+  "version": "latest",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Connect your Urbit's Bitcoin wallet to your Bitcoin node",
+  "author": "~sitful-hatred & ~mopfel-winrux",
+  "source": "https://github.com/yapishu/urbit-bitcoin-node",
+  "website": "https://subject.network",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Electrs Server Host / IP",
+      "required": false,
+      "default": "electrs",
+      "env_variable": "APP_ELECTRS_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Electrs Server Port",
+      "required": false,
+      "default": 50001,
+      "env_variable": "APP_ELECTRS_NODE_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Auth Line (rpcauth)",
+      "required": false,
+      "default": "umbrel:ab803582c122e9ab25dece2fb5aa83f5$b1fd6770a6dc64ca33ce25f45f64cb2cfda0be03e0698fc8e858388205fb1dd8",
+      "env_variable": "APP_BITCOIN_RPC_AUTH"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501512095,
+  "updated_at": 1792501572095,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "thelounge",
+      "image": "ghcr.io/thelounge/thelounge:v4.4.3",
+      "isMain": true,
+      "internalPort": 9000,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/var/opt/thelounge"
+        }
+      ]
+    }
+  ]
+}

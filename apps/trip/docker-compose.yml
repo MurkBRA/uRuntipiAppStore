@@ -1,0 +1,17 @@
+services:
+  trip:
+    image: ghcr.io/itskovacs/trip:1.50.1
+    command:
+      - fastapi
+      - run
+      - /app/trip/main.py
+      - '--host'
+      - 0.0.0.0
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/app/storage
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8000
+      is_main: true
+x-runtipi:
+  schema_version: 2

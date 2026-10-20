@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "core-lightning-rtl",
+      "image": "shahanafarooqui/rtl:v0.15.13",
+      "isMain": true,
+      "internalPort": 3000,
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "PORT",
+          "value": 3000
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "LN_IMPLEMENTATION",
+          "value": "CLN"
+        },
+        {
+          "key": "lnImplementation",
+          "value": "CLN"
+        },
+        {
+          "key": "LN_SERVER_URL",
+          "value": "https://${APP_CORE_LIGHTNING_DAEMON_IP}:${CORE_LIGHTNING_REST_PORT}"
+        },
+        {
+          "key": "RUNE_PATH",
+          "value": "/root/.lightning/.commando-env"
+        },
+        {
+          "key": "RTL_CONFIG_PATH",
+          "value": "/data"
+        },
+        {
+          "key": "DB_DIRECTORY_PATH",
+          "value": "/data"
+        },
+        {
+          "key": "RTL_COOKIE_PATH",
+          "value": "/data/.cookie"
+        },
+        {
+          "key": "BLOCK_EXPLORER_URL",
+          "value": "${BLOCK_EXPLORER_URL}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/rtl",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_CORE_LIGHTNING_DATA_DIR}",
+          "containerPath": "/root/.lightning",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

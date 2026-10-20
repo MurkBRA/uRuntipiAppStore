@@ -1,0 +1,83 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "onlyoffice-nextcloud",
+      "image": "a4004/onlyoffice-nextcloud-web:1.0.4",
+      "isMain": true,
+      "internalPort": 3000,
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "DOCS_ADDRESS",
+          "value": "http://${APP_DOMAIN}:5672"
+        },
+        {
+          "key": "DOCS_INTERNAL_ADDRESS",
+          "value": "http://onlyoffice-nextcloud-documentserver"
+        },
+        {
+          "key": "NEXTCLOUD_INTERNAL_ADDRESS",
+          "value": "http://nextcloud_web_1"
+        },
+        {
+          "key": "NEXTCLOUD_WEB_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        }
+      ]
+    },
+    {
+      "name": "onlyoffice-nextcloud-documentserver",
+      "image": "onlyoffice/documentserver:10.0.0",
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "JWT_ENABLED",
+          "value": "false"
+        },
+        {
+          "key": "ONLYOFFICE_HTTPS_HSTS_ENABLED",
+          "value": "false"
+        },
+        {
+          "key": "USE_UNAUTHORIZED_STORAGE",
+          "value": "true"
+        },
+        {
+          "key": "ALLOW_PRIVATE_IP_ADDRESS",
+          "value": "true"
+        },
+        {
+          "key": "ALLOW_META_IP_ADDRESS",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/logs",
+          "containerPath": "/var/log/onlyoffice"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/certs",
+          "containerPath": "/var/www/onlyoffice/Data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/cache",
+          "containerPath": "/var/lib/onlyoffice"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 5672,
+          "containerPort": 80,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

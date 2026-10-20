@@ -1,0 +1,26 @@
+{
+  "name": "Remmina",
+  "available": true,
+  "port": 8764,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "remmina",
+  "description": "Use other desktops remotely, from a tiny screen or large monitors.",
+  "tipi_version": 1,
+  "version": "1.4.35",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Remote access screen and file sharing",
+  "author": "Remmina",
+  "source": "https://gitlab.com/Remmina/Remmina",
+  "website": "https://remmina.org",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506647,
+  "updated_at": 1792501566647,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

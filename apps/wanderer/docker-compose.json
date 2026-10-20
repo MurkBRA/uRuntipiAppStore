@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "wanderer",
+      "image": "flomp/wanderer-web:v0.21.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "ORIGIN",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "BODY_SIZE_LIMIT",
+          "value": "Infinity"
+        },
+        {
+          "key": "POCKETBASE_PROXY_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "PUBLIC_POCKETBASE_URL",
+          "value": "http://wanderer-db:8090"
+        },
+        {
+          "key": "PUBLIC_DISABLE_SIGNUP",
+          "value": "false"
+        },
+        {
+          "key": "UPLOAD_FOLDER",
+          "value": "/app/uploads"
+        },
+        {
+          "key": "UPLOAD_USER",
+          "value": "admin"
+        },
+        {
+          "key": "UPLOAD_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "VALHALLA_URL",
+          "value": "https://valhalla1.openstreetmap.de"
+        },
+        {
+          "key": "NOMINATIM_URL",
+          "value": "https://nominatim.openstreetmap.org"
+        },
+        {
+          "key": "OVERPASS_API_URL",
+          "value": "https://overpass-api.de"
+        },
+        {
+          "key": "PUBLIC_MAP_MAX_POLYLINES",
+          "value": 100
+        },
+        {
+          "key": "MEILI_URL",
+          "value": "http://wanderer-search:7700"
+        },
+        {
+          "key": "MEILI_MASTER_KEY",
+          "value": "${APP_SEED}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/uploads",
+          "containerPath": "/app/uploads"
+        }
+      ],
+      "dependsOn": {
+        "wanderer-search": {
+          "condition": "service_healthy"
+        },
+        "wanderer-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "wanderer-search",
+      "image": "getmeili/meilisearch:v1.14.0",
+      "environment": [
+        {
+          "key": "MEILI_NO_ANALYTICS",
+          "value": "true"
+        },
+        {
+          "key": "MEILI_URL",
+          "value": "http://wanderer-search:7700"
+        },
+        {
+          "key": "MEILI_MASTER_KEY",
+          "value": "${APP_SEED}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data.ms",
+          "containerPath": "/meili_data/data.ms"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl --fail http://localhost:7700/health || exit 1",
+        "interval": "15s",
+        "timeout": "10s",
+        "retries": 10,
+        "startPeriod": "20s"
+      }
+    },
+    {
+      "name": "wanderer-db",
+      "image": "flomp/wanderer-db:v0.21.0",
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POCKETBASE_ENCRYPTION_KEY",
+          "value": "${APP_WANDERER_ENCRYPTION_KEY}"
+        },
+        {
+          "key": "POCKETBASE_PROXY_SECRET",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "MEILI_URL",
+          "value": "http://wanderer-search:7700"
+        },
+        {
+          "key": "MEILI_MASTER_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "ORIGIN",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/pb_data",
+          "containerPath": "/pb_data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/plugins",
+          "containerPath": "/data/plugins"
+        }
+      ],
+      "healthCheck": {
+        "test": "/curl --fail http://localhost:8090/health",
+        "interval": "15s",
+        "timeout": "10s",
+        "retries": 10,
+        "startPeriod": "20s"
+      },
+      "dependsOn": {
+        "wanderer-search": {
+          "condition": "service_healthy"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+services:
+  openreader:
+    image: nginx:1.30.5-alpine
+    entrypoint:
+      - nginx
+      - '-g'
+      - daemon off;
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - openreader-web
+    x-runtipi:
+      internal_port: 8080
+      add_to_main_network: true
+      is_main: true
+  openreader-web:
+    image: ghcr.io/richardr1126/openreader:5.2.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/docstore:/app/docstore
+    environment:
+      - API_BASE=http://kokoro_web_1:8880/v1
+      - API_MODEL_NAME=kokoro
+      - BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - AUTH_SECRET=${APP_SEED}
+      - AUTH_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:3391,http://*.ts.net:3391,https://*.ts.net:3391,${ips_with_port}
+      - USE_ANONYMOUS_AUTH_SESSIONS=true
+      - TTS_PLAYBACK_TOKEN_SECRET=${APP_OPENREADER_PLAYBACK_SECRET}
+      - COMPUTE_WORKER_HOST=0.0.0.0
+      - COMPUTE_WORKER_PUBLIC_URL=http://openreader-playback.invalid
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

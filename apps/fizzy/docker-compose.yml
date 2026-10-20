@@ -1,0 +1,19 @@
+services:
+  fizzy:
+    image: ghcr.io/mauricewipf/fizzy-umbrel:5f45e54
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/rails/storage
+    environment:
+      - RAILS_ENV=production
+      - SECRET_KEY_BASE=${APP_SEED}
+      - DATABASE_ADAPTER=sqlite
+      - ACTIVE_STORAGE_SERVICE=local
+      - SOLID_QUEUE_IN_PUMA=true
+      - FORCE_SSL=false
+      - ASSUME_SSL=false
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

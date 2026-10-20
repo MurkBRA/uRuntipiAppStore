@@ -1,0 +1,96 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "holesail-switchboard",
+      "image": "orenz0/holesail-switchboard:v2.0.8",
+      "isMain": true,
+      "internalPort": 3160,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "HSSB_DATA_FILE",
+          "value": "/data/data.json"
+        },
+        {
+          "key": "HSSB_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "HSSB_PORT",
+          "value": 3160
+        },
+        {
+          "key": "HSSB_CLIENT_HOST",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "HSSB_FIXED_CLIENT_PORTS",
+          "value": "3161-3170"
+        },
+        {
+          "key": "HSSB_SUBTITLE",
+          "value": "For more information, visit: https://github.com/oren-z0/holesail-switchboard/blob/main/docs/Umbrel.md"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 3161,
+          "containerPort": 3161,
+          "tcp": true
+        },
+        {
+          "hostPort": 3162,
+          "containerPort": 3162,
+          "tcp": true
+        },
+        {
+          "hostPort": 3163,
+          "containerPort": 3163,
+          "tcp": true
+        },
+        {
+          "hostPort": 3164,
+          "containerPort": 3164,
+          "tcp": true
+        },
+        {
+          "hostPort": 3165,
+          "containerPort": 3165,
+          "tcp": true
+        },
+        {
+          "hostPort": 3166,
+          "containerPort": 3166,
+          "tcp": true
+        },
+        {
+          "hostPort": 3167,
+          "containerPort": 3167,
+          "tcp": true
+        },
+        {
+          "hostPort": 3168,
+          "containerPort": 3168,
+          "tcp": true
+        },
+        {
+          "hostPort": 3169,
+          "containerPort": 3169,
+          "tcp": true
+        },
+        {
+          "hostPort": 3170,
+          "containerPort": 3170,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

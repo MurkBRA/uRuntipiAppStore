@@ -1,0 +1,35 @@
+{
+  "name": "Agent Zero",
+  "available": true,
+  "port": 3015,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "agent-zero",
+  "description": "Agent Zero is a personal, organic agentic framework that grows and learns with you. It is fully Dockerized and includes features like Speech-to-Text and TTS.",
+  "tipi_version": 1,
+  "version": "v2.14",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "A personal, organic agentic framework that grows and learns with you",
+  "author": "Agent Zero AI",
+  "source": "https://github.com/agent0ai/agent-zero",
+  "website": "https://github.com/agent0ai/agent-zero",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Agent Zero ips with port",
+      "required": false,
+      "default": "default",
+      "env_variable": "ips_with_port"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501487758,
+  "updated_at": 1792501547758,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

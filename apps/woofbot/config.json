@@ -1,0 +1,66 @@
+{
+  "name": "WoofBot (without Lightning)",
+  "available": true,
+  "port": 22182,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "woofbot",
+  "description": "WoofBot is a chat bot that runs on your personal Bitcoin node and sends telegram notifications for configured events: payments from/to specified addresses, transactions being confirmed, new-blocks and more. This version of WoofBot requires only Bitcoin Core to be installed, and does not integrate with any lightning api.",
+  "tipi_version": 1,
+  "version": "0.9.8",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A chatbot for your personal node",
+  "author": "WoofBotApp",
+  "source": "https://github.com/woofbotapp/woofbotapp",
+  "website": "https://github.com/woofbotapp",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "WoofBot (without Lightning) seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501513162,
+  "updated_at": 1792501573162,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

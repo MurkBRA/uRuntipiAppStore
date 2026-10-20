@@ -1,0 +1,8 @@
+services:
+  bentopdf:
+    image: ghcr.io/alam00000/bentopdf:v2.8.10
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+x-runtipi:
+  schema_version: 2

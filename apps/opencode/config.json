@@ -1,0 +1,28 @@
+{
+  "name": "OpenCode",
+  "available": true,
+  "port": 4096,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "opencode",
+  "description": "OpenCode is an open source AI coding agent designed to enhance your development workflow across terminal, IDE, and desktop environments. Use it to chat about code, generate changes, and execute sophisticated multi-session workflows across your projects.",
+  "tipi_version": 1,
+  "version": "1.19.3",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "The open source AI coding agent",
+  "author": "Anomaly",
+  "source": "https://github.com/anomalyco/opencode",
+  "website": "https://opencode.ai/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501503951,
+  "updated_at": 1792501563951,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

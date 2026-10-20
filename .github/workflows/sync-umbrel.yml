@@ -1,0 +1,80 @@
+name: Sync Umbrel App Store
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: "Force regeneration of all apps"
+        required: false
+        default: "false"
+        type: boolean
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-store:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Refresh official Runtipi blacklist
+        run: npm run update:blacklist
+
+      - name: Sync and transpile Umbrel apps
+        run: |
+          if [ "${{ inputs.force }}" = "true" ]; then
+            npm run sync -- --force
+          else
+            npm run sync
+          fi
+
+      - name: Run full test & schema validation suite
+        run: npm test
+
+      - name: Check for changes and classify PR labels
+        id: diff_check
+        run: |
+          if [ -z "$(git status --porcelain apps/ blacklist.json state/ README.md)" ]; then
+            echo "has_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_changes=true" >> $GITHUB_OUTPUT
+            NEW_APPS=$(git status --porcelain apps/ | grep '^?? apps/' | wc -l || true)
+            if [ "$NEW_APPS" -gt 0 ]; then
+              echo "labels=type:new-app,needs-review" >> $GITHUB_OUTPUT
+              echo "pr_title=feat(store): sync new apps and updates from UmbrelOS App Store" >> $GITHUB_OUTPUT
+            else
+              echo "labels=type:version-bump,automerge" >> $GITHUB_OUTPUT
+              echo "pr_title=chore(deps): automated version bump sync from UmbrelOS App Store" >> $GITHUB_OUTPUT
+            fi
+          fi
+
+      - name: Create Automated Pull Request
+        if: steps.diff_check.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: ${{ steps.diff_check.outputs.pr_title }}
+          branch: automation/umbrel-sync
+          delete-branch: true
+          title: ${{ steps.diff_check.outputs.pr_title }}
+          body: |
+            ## Automated UmbrelOS $\rightarrow$ Runtipi Store Sync
+            This PR was automatically generated and validated by the `uRuntipiAppStore` transpiler pipeline:
+            - Passed Layer 1 (Transpiler Unit Tests)
+            - Passed Layer 2 (`@runtipi/common` & AJV Schema Validation)
+            - Passed Layer 3 (Anti-Duplication Blacklist, Port Uniqueness, Zero-Leak & JPEG Header Tests)
+          labels: ${{ steps.diff_check.outputs.labels }}

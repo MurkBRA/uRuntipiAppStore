@@ -1,0 +1,27 @@
+services:
+  influxdb:
+    image: chronograf:1.11.4
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/chronograf:/var/lib/chronograf
+    environment:
+      - INFLUXDB_URL=http://influxdb-influxdb-sidecar:8086
+      - INFLUXDB_USERNAME=admin
+      - INFLUXDB_PASSWORD=${APP_PASSWORD}
+    depends_on:
+      - influxdb-influxdb-sidecar
+    x-runtipi:
+      internal_port: 8888
+      is_main: true
+  influxdb-influxdb-sidecar:
+    image: influxdb:1.13.1
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/influxdb:/var/lib/influxdb
+    environment:
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=${APP_PASSWORD}
+      - INFLUXDB_HTTP_AUTH_ENABLED=true
+    stop_grace_period: 1m
+x-runtipi:
+  schema_version: 2

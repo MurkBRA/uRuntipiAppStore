@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "campfire",
+      "image": "ghcr.io/basecamp/once-campfire:1.5.4",
+      "isMain": true,
+      "internalPort": 80,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "RAILS_ENV",
+          "value": "production"
+        },
+        {
+          "key": "SECRET_KEY_BASE",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://campfire-redis:6379"
+        },
+        {
+          "key": "DISABLE_SSL",
+          "value": "true"
+        },
+        {
+          "key": "VAPID_PUBLIC_KEY",
+          "value": "${VAPID_PUBLIC_KEY}"
+        },
+        {
+          "key": "VAPID_PRIVATE_KEY",
+          "value": "${VAPID_PRIVATE_KEY}"
+        },
+        {
+          "key": "SENTRY_DSN",
+          "value": "${SENTRY_DSN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/rails/storage"
+        }
+      ],
+      "dependsOn": [
+        "campfire-redis"
+      ]
+    },
+    {
+      "name": "campfire-redis",
+      "image": "redis:7-alpine",
+      "user": "1000:1000",
+      "command": "redis-server --save 60 1 --save 300 10 --save 900 100 --appendonly yes --loglevel warning",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/redis",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

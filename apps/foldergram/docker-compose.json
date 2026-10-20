@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "foldergram",
+      "image": "ghcr.io/foldergram/foldergram:1.2.2",
+      "isMain": true,
+      "internalPort": 4141,
+      "environment": [
+        {
+          "key": "IMAGE_DETAIL_SOURCE",
+          "value": "preview"
+        },
+        {
+          "key": "DERIVATIVE_MODE",
+          "value": "eager"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/gallery",
+          "containerPath": "/app/data/gallery"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/app/data/db"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/thumbnails",
+          "containerPath": "/app/data/thumbnails"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/previews",
+          "containerPath": "/app/data/previews"
+        }
+      ]
+    }
+  ]
+}

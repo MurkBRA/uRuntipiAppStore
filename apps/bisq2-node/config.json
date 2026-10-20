@@ -1,0 +1,26 @@
+{
+  "name": "Bisq 2 Node",
+  "available": true,
+  "port": 8390,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bisq2-node",
+  "description": "Bisq Connect lets you buy and sell Bitcoin peer-to-peer from your phone. This app runs a Bisq 2 node for Bisq Connect, allowing your phone to connect through a node you control instead of relying on someone else's.",
+  "tipi_version": 1,
+  "version": "2.1.14.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Run your own Bisq 2 node for private Bitcoin trading",
+  "author": "Bisq",
+  "source": "https://github.com/bisq-network/bisq2",
+  "website": "https://bisq.network",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501489296,
+  "updated_at": 1792501549296,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

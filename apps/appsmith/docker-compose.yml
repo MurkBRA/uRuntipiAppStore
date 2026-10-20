@@ -1,0 +1,13 @@
+services:
+  appsmith:
+    image: appsmith/appsmith-ce:v2.5.0
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/appsmith-stacks
+    environment:
+      - APPSMITH_ENCRYPTION_PASSWORD=${APP_PASSWORD}
+      - APPSMITH_ENCRYPTION_SALT=${APP_PASSWORD}
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+x-runtipi:
+  schema_version: 2

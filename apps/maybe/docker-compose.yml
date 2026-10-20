@@ -1,0 +1,71 @@
+services:
+  maybe:
+    image: ghcr.io/maybe-finance/maybe:0.6.0
+    volumes:
+      - ${APP_DATA_DIR}/data/rails:/rails/storage
+    environment:
+      - SELF_HOSTING_ENABLED=true
+      - PORT=3063
+      - DATABASE_URL=postgresql://maybe:maybe@maybe%5Fdb%5F1:5432/maybe
+      - RAILS_FORCE_SSL=false
+      - RAILS_ASSUME_SSL=false
+      - POSTGRES_DB=maybe
+      - POSTGRES_USER=maybe
+      - POSTGRES_PASSWORD=maybe
+      - GOOD_JOB_EXECUTION_MODE=async
+      - SECRET_KEY_BASE=${APP_SEED}
+      - REDIS_URL=redis://maybe-redis:6379/1
+    depends_on:
+      maybe-db:
+        condition: service_healthy
+      maybe-redis:
+        condition: service_healthy
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3063
+      is_main: true
+  maybe-worker:
+    image: ghcr.io/maybe-finance/maybe:0.6.0
+    command: bundle exec sidekiq
+    environment:
+      - SELF_HOSTING_ENABLED=true
+      - PORT=3063
+      - DATABASE_URL=postgresql://maybe:maybe@maybe%5Fdb%5F1:5432/maybe
+      - RAILS_FORCE_SSL=false
+      - RAILS_ASSUME_SSL=false
+      - POSTGRES_DB=maybe
+      - POSTGRES_USER=maybe
+      - POSTGRES_PASSWORD=maybe
+      - GOOD_JOB_EXECUTION_MODE=async
+      - SECRET_KEY_BASE=${APP_SEED}
+      - REDIS_URL=redis://maybe-redis:6379/1
+    depends_on:
+      maybe-redis:
+        condition: service_healthy
+  maybe-db:
+    image: postgres:16
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=maybe
+      - POSTGRES_USER=maybe
+      - POSTGRES_PASSWORD=maybe
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: pg_isready -U maybe
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    stop_grace_period: 1m
+  maybe-redis:
+    image: redis:7.4.2
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+    healthcheck:
+      test: redis-cli ping
+      interval: 5s
+      timeout: 5s
+      retries: 5
+x-runtipi:
+  schema_version: 2

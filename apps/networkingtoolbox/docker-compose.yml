@@ -1,0 +1,19 @@
+services:
+  networkingtoolbox:
+    image: ghcr.io/lissy93/networking-toolbox:1.6.0
+    user: '1000:1000'
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOST=0.0.0.0
+    healthcheck:
+      test: wget -qO- http://localhost:3000/health
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+x-runtipi:
+  schema_version: 2

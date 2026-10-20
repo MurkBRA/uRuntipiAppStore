@@ -1,0 +1,56 @@
+services:
+  reitti:
+    image: dedicatedcode/reitti:5.7.0
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/data
+    environment:
+      - POSTGIS_USER=reitti
+      - POSTGIS_PASSWORD=reitti
+      - POSTGIS_DB=reittidb
+      - POSTGIS_HOST=reitti-postgis
+    depends_on:
+      reitti-postgis:
+        condition: service_healthy
+      reitti-redis:
+        condition: service_healthy
+      reitti-tile-cache:
+        condition: service_healthy
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+  reitti-postgis:
+    image: imresamu/postgis:17-3.5-alpine
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/postgis:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=reitti
+      - POSTGRES_PASSWORD=reitti
+      - POSTGRES_DB=reittidb
+    healthcheck:
+      test: pg_isready -U reitti -d reittidb
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  reitti-redis:
+    image: redis:7.4.9-alpine
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  reitti-tile-cache:
+    image: dedicatedcode/reitti-tile-cache:5.7.0
+    volumes:
+      - ${APP_DATA_DIR}/data/title-cache:/var/cache/nginx
+    healthcheck:
+      test: 'curl -f -s -o /dev/null -H "X-Reitti-Upstream-Url: https://tiles.dedicatedcode.com" http://localhost/custom/planet/latest/0/0/0.pbf || exit 1'
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+x-runtipi:
+  schema_version: 2

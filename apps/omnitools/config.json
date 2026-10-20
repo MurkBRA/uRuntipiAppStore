@@ -1,0 +1,28 @@
+{
+  "name": "OmniTools",
+  "available": true,
+  "port": 22424,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "omnitools",
+  "description": "🛠️ OmniTools is a versatile all in one web application that offers a comprehensive collection of over 80 practical utilities designed to simplify everyday digital tasks. It acts as a Swiss Army knife for your browser enabling you to handle a wide range of file formats conversions and manipulations all without relying on external servers or cloud uploads.",
+  "tipi_version": 1,
+  "version": "0.6.0",
+  "categories": [
+    "photography",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An all-in-one collection of powerful web-based tools for everyday tasks",
+  "author": "Ibrahima Gaye Coulibaly",
+  "source": "https://github.com/iib0011/omni-tools",
+  "website": "https://omnitools.app/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501503789,
+  "updated_at": 1792501563789,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

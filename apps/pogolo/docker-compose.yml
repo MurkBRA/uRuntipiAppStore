@@ -1,0 +1,40 @@
+services:
+  pogolo:
+    image: 0xf0xx0/pogolo-umbrel-webui:v1.x
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - POGOLO_API_URL=http://pogolo-pogolo-sidecar:5662
+      - POGOLO_LOG=/data/pogolo.log
+      - POGOLO_DIR=/data
+      - DEVICE_DOMAIN_NAME=${APP_DOMAIN}
+    x-runtipi:
+      internal_port: 5663
+      add_to_main_network: true
+      is_main: true
+  pogolo-pogolo-sidecar:
+    image: 0xf0xx0/pogolo:v1.x
+    command:
+      - /pogolo
+      - '--conf'
+      - /data/pogolo.toml
+      - '--logfile'
+      - /data/pogolo.log
+    user: '1000:1000'
+    ports:
+      - 5661:5661/tcp
+      - 5662:5662/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - POGOLO_HOST=0.0.0.0
+      - POGOLO_BACKEND_HOST=${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}
+      - POGOLO_BACKEND_RPCAUTH=${APP_BITCOIN_RPC_USER}:${APP_BITCOIN_RPC_PASS}
+      - POGOLO_BACKEND_ZMQHOST=tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_HASHBLOCK_PORT}
+      - FORCE_COLOR=1
+    stop_grace_period: 30s
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "fizzy",
+      "image": "ghcr.io/mauricewipf/fizzy-umbrel:5f45e54",
+      "isMain": true,
+      "internalPort": 80,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "RAILS_ENV",
+          "value": "production"
+        },
+        {
+          "key": "SECRET_KEY_BASE",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "DATABASE_ADAPTER",
+          "value": "sqlite"
+        },
+        {
+          "key": "ACTIVE_STORAGE_SERVICE",
+          "value": "local"
+        },
+        {
+          "key": "SOLID_QUEUE_IN_PUMA",
+          "value": "true"
+        },
+        {
+          "key": "FORCE_SSL",
+          "value": "false"
+        },
+        {
+          "key": "ASSUME_SSL",
+          "value": "false"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app",
+          "containerPath": "/rails/storage"
+        }
+      ]
+    }
+  ]
+}

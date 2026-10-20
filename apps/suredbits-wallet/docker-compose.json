@@ -1,0 +1,149 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "suredbits-wallet",
+      "image": "bitcoinscala/wallet-server-ui:1.9.7",
+      "isMain": true,
+      "internalPort": 3002,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "LOG_PATH",
+          "value": "/log/"
+        },
+        {
+          "key": "BITCOIN_S_HOME",
+          "value": "/bitcoin-s/"
+        },
+        {
+          "key": "WALLET_SERVER_API_URL",
+          "value": "http://suredbits-wallet-walletserver:9999/"
+        },
+        {
+          "key": "WALLET_SERVER_WS",
+          "value": "ws://suredbits-wallet-walletserver:19999/events"
+        },
+        {
+          "key": "TOR_PROXY",
+          "value": "socks5://${TOR_PROXY_IP}:${TOR_PROXY_PORT}"
+        },
+        {
+          "key": "DEFAULT_UI_PASSWORD",
+          "value": "none"
+        },
+        {
+          "key": "BITCOIN_S_SERVER_RPC_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/wallet",
+          "containerPath": "/bitcoin-s"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/log",
+          "containerPath": "/log"
+        }
+      ],
+      "dependsOn": [
+        "suredbits-wallet-walletserver"
+      ]
+    },
+    {
+      "name": "suredbits-wallet-walletserver",
+      "image": "bitcoinscala/bitcoin-s-server:1.9.7",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "entrypoint": [
+        "/opt/docker/bin/bitcoin-s-server",
+        "--datadir",
+        "/bitcoin-s",
+        "--conf",
+        "/opt/docker/docker-application.conf"
+      ],
+      "environment": [
+        {
+          "key": "BITCOIN_S_NODE_MODE",
+          "value": "bitcoind"
+        },
+        {
+          "key": "BITCOIN_S_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "BITCOIN_S_KEYMANAGER_ENTROPY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "BITCOIN_S_PROXY_ENABLED",
+          "value": "false"
+        },
+        {
+          "key": "BITCOIN_S_TOR_ENABLED",
+          "value": "false"
+        },
+        {
+          "key": "BITCOIN_S_TOR_PROVIDED",
+          "value": "true"
+        },
+        {
+          "key": "BITCOIN_S_DLCNODE_PROXY_ENABLED",
+          "value": "true"
+        },
+        {
+          "key": "BITCOIN_S_DLCNODE_PROXY_SOCKS5",
+          "value": "${TOR_PROXY_IP}:${TOR_PROXY_PORT}"
+        },
+        {
+          "key": "BITCOIN_S_DLCNODE_EXTERNAL_IP",
+          "value": "${APP_SUREDBITS_WALLET_P2P_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "BITCOIN_S_BITCOIND_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BITCOIN_S_BITCOIND_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BITCOIN_S_BITCOIND_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BITCOIN_S_BITCOIND_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "BITCOIN_S_SERVER_RPC_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "JAVA_OPTS",
+          "value": "-Xmx756m"
+        },
+        {
+          "key": "DISABLE_JLINK",
+          "value": "1"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/wallet",
+          "containerPath": "/bitcoin-s"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 2862,
+          "containerPort": 2862,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

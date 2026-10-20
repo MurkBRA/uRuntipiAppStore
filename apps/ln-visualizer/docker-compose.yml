@@ -1,0 +1,25 @@
+services:
+  ln-visualizer:
+    image: maxkotlan/ln-visualizer-web:v0.0.28
+    environment:
+      - LN_VISUALIZER_API_URL=http://ln-visualizer-api:5647
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 80
+      add_to_main_network: true
+      is_main: true
+  ln-visualizer-api:
+    image: maxkotlan/ln-visualizer-api:v0.0.28
+    user: '1000:1000'
+    volumes:
+      - ${APP_LIGHTNING_NODE_DATA_DIR}/tls.cert:/lnd/tls.cert:ro
+      - ${APP_LIGHTNING_NODE_DATA_DIR}/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon:/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon:ro
+    environment:
+      - LND_CERT_FILE=/lnd/tls.cert
+      - LND_MACAROON_FILE=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon
+      - LND_SOCKET=${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,27 @@
+{
+  "name": "Dropgate Server",
+  "available": true,
+  "port": 52443,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "dropgate-server",
+  "description": "**Dropgate** is a modern, privacy-respecting file sharing system designed to be easy to self-host and easy to use.",
+  "tipi_version": 1,
+  "version": "3.0.13",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Self-hosted, privacy-first file sharing with hosted upload and P2P transfer",
+  "author": "Diamond Digital Development",
+  "source": "https://github.com/diamonddigitaldev/Dropgate",
+  "website": "https://diamonddigital.dev/projects/dropgate",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501494523,
+  "updated_at": 1792501554523,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,22 @@
+services:
+  specter-desktop:
+    image: ghcr.io/cryptoadvance/specter-desktop:v2.1.11
+    command:
+      - '--host=0.0.0.0'
+      - '--specter-data-folder=/data'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - BTC_RPC_USER=${APP_BITCOIN_RPC_USER}
+      - BTC_RPC_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - BTC_RPC_HOST=${APP_BITCOIN_NODE_IP}
+      - BTC_RPC_PORT=${APP_BITCOIN_RPC_PORT}
+      - BTC_RPC_PROTOCOL=http
+    stop_signal: SIGINT
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 25441
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

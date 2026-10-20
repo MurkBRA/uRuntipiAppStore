@@ -1,0 +1,57 @@
+{
+  "name": "Joinstr",
+  "available": true,
+  "port": 5500,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "joinstr",
+  "description": "Joinstr is a coordinator-less coinjoin that uses Nostr relays to find peers and collaboratively build a Bitcoin transaction, improving on-chain privacy.",
+  "tipi_version": 1,
+  "version": "0.1.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Decentralized coinjoin over Nostr",
+  "author": "Invincible Privacy",
+  "source": "https://gitlab.com/invincible-privacy/joinstr",
+  "website": "https://joinstr.xyz",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501498703,
+  "updated_at": 1792501558703,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

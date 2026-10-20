@@ -1,0 +1,16 @@
+services:
+  valorgrid:
+    image: ghcr.io/aivm23/valorgrid:v3.36.3
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - HOST=0.0.0.0
+      - PORT=1325
+      - PORTFOLIO_DB_PATH=/data/portfolio.sqlite
+      - VALORGRID_BACKUP_DIR=/data/backups
+      - VALORGRID_AUTH_USER=valorgrid
+    x-runtipi:
+      internal_port: 1325
+      is_main: true
+x-runtipi:
+  schema_version: 2

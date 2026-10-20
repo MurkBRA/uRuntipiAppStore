@@ -1,0 +1,28 @@
+services:
+  blockstream-blind-oracle:
+    image: tulipan81/pinserver_web:v0.0.36
+    volumes:
+      - ${APP_DATA_DIR}/data/server_public_key.pub:/app/server_public_key.pub
+      - ${APP_DATA_DIR}/data/server_private_key.key:/app/server_private_key.key
+      - ${APP_DATA_DIR}/data/pins:/app/pins
+    environment:
+      - PINSERVER_URL_A=${APP_PINSERVER_HIDDEN_SERVICE}
+      - PINSERVER_PORT_A=8097
+      - PINSERVER_URL_B=${APP_TAILSCALE_URL}
+      - PINSERVER_PORT_B=8097
+    x-runtipi:
+      internal_port: 8095
+      is_main: true
+  blockstream-blind-oracle-node:
+    image: tulipan81/blind_pin_server:v0.0.7
+    ports:
+      - 8097:8096/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/server_public_key.pub:/server_public_key.pub
+      - ${APP_DATA_DIR}/data/server_private_key.key:/server_private_key.key
+      - ${APP_DATA_DIR}/data/pins:/pins
+    depends_on:
+      - blockstream-blind-oracle
+    stop_grace_period: 1m
+x-runtipi:
+  schema_version: 2

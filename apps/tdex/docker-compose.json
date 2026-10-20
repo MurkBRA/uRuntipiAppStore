@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "tdex",
+      "image": "caddy:2.6.4-alpine",
+      "isMain": true,
+      "internalPort": 8080,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/caddy-data/Caddyfile",
+          "containerPath": "/etc/caddy/Caddyfile"
+        }
+      ]
+    },
+    {
+      "name": "tdex-oceand",
+      "image": "ghcr.io/vulpemventures/oceand:v0.1.17",
+      "tty": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "OCEAN_LOG_LEVEL",
+          "value": 5
+        },
+        {
+          "key": "OCEAN_DB_TYPE",
+          "value": "badger"
+        },
+        {
+          "key": "OCEAN_NO_TLS",
+          "value": "true"
+        },
+        {
+          "key": "OCEAN_NO_PROFILER",
+          "value": "true"
+        },
+        {
+          "key": "OCEAN_UTXO_EXPIRY_DURATION_IN_SECONDS",
+          "value": 240
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ocean-data",
+          "containerPath": "/home/ocean/.oceand"
+        }
+      ]
+    },
+    {
+      "name": "tdex-tdexd",
+      "image": "ghcr.io/tdex-network/tdexd:v1.0.1",
+      "tty": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "TDEX_LOG_LEVEL",
+          "value": 5
+        },
+        {
+          "key": "TDEX_OPERATOR_LISTENING_PORT",
+          "value": "9092"
+        },
+        {
+          "key": "TDEX_TRADE_LISTENING_PORT",
+          "value": "9092"
+        },
+        {
+          "key": "TDEX_NO_OPERATOR_TLS",
+          "value": "true"
+        },
+        {
+          "key": "TDEX_WALLET_ADDR",
+          "value": "oceand:18000"
+        },
+        {
+          "key": "TDEX_CONNECT_ADDR",
+          "value": "${APP_TDEX_DAEMON_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "TDEX_CONNECT_PROTO",
+          "value": "http"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/tdexd",
+          "containerPath": "/home/tdex/.tdex-daemon"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 9092,
+          "containerPort": 9092,
+          "tcp": true
+        }
+      ],
+      "dependsOn": [
+        "tdex-oceand"
+      ]
+    },
+    {
+      "name": "tdex-dashboard",
+      "image": "ghcr.io/tdex-network/dashboard:v1.0.2",
+      "environment": [
+        {
+          "key": "USE_PROXY",
+          "value": "false"
+        },
+        {
+          "key": "IS_PACKAGED",
+          "value": "true"
+        },
+        {
+          "key": "TRADER_HIDDEN_SERVICE",
+          "value": "${APP_TDEX_DAEMON_HIDDEN_SERVICE}"
+        }
+      ]
+    }
+  ]
+}

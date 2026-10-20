@@ -1,0 +1,29 @@
+{
+  "name": "NetBird",
+  "available": true,
+  "port": 8479,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "netbird",
+  "description": "NetBird is a secure networking platform that creates private, peer-to-peer connections between devices using encrypted communication channels. It builds a trusted network layer that allows seamless and direct communication without exposing data to intermediaries. Every connection is protected with modern encryption standards and managed automatically through a zero trust security model that authenticates identities rather than networks.",
+  "tipi_version": 1,
+  "version": "1.27",
+  "categories": [
+    "network",
+    "security"
+  ],
+  "short_desc": "An adaptive client for Zero Trust Networking",
+  "author": "NetBird",
+  "source": "https://github.com/netbirdio/netbird",
+  "website": "https://netbird.io/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501502864,
+  "updated_at": 1792501562864,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

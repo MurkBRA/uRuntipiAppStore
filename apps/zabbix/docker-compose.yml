@@ -1,0 +1,44 @@
+services:
+  zabbix:
+    image: zabbix/zabbix-web-nginx-pgsql:7.4.15-alpine
+    hostname: zabbix-frontend
+    environment:
+      - DB_SERVER_HOST=zabbix-database
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=zabbix
+      - ZBX_SERVER_HOST=zabbix-server
+      - PHP_TZ=UTC
+    depends_on:
+      - zabbix-zabbix-server
+      - zabbix-zabbix-database
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+  zabbix-zabbix-server:
+    image: zabbix/zabbix-server-pgsql:7.4.15-alpine
+    hostname: zabbix-server
+    ports:
+      - 10050:10050/tcp
+    environment:
+      - DB_SERVER_HOST=zabbix-database
+      - POSTGRES_USER=zabbix
+      - POSTGRES_PASSWORD=zabbix
+    depends_on:
+      - zabbix-zabbix-database
+  zabbix-zabbix-agent:
+    image: zabbix/zabbix-agent2:7.4.15-alpine
+    hostname: zabbix-agent
+    environment:
+      - ZBX_HOSTNAME=zabbix-agent
+      - ZBX_SERVER_HOST=zabbix-server
+  zabbix-zabbix-database:
+    image: postgres:13.18-alpine3.20
+    hostname: zabbix-database
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=zabbix
+      - POSTGRES_USER=zabbix
+      - POSTGRES_DB=zabbix
+x-runtipi:
+  schema_version: 2

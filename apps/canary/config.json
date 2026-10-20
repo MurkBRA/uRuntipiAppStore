@@ -1,0 +1,71 @@
+{
+  "name": "Canary Wallet",
+  "available": true,
+  "port": 3005,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "canary",
+  "description": "A canary in the cold mine. When your bitcoins are in cold storage, you seldom check on them.",
+  "tipi_version": 1,
+  "version": "1.7.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Early warning system for Bitcoin cold storage",
+  "author": "schjonhaug",
+  "source": "https://github.com/schjonhaug/canary",
+  "website": "https://github.com/schjonhaug/canary",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Electrs Server Host / IP",
+      "required": false,
+      "default": "electrs",
+      "env_variable": "APP_ELECTRS_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Electrs Server Port",
+      "required": false,
+      "default": 50001,
+      "env_variable": "APP_ELECTRS_NODE_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Canary Wallet app canary mempool port",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_CANARY_MEMPOOL_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Canary Wallet app canary umbrel ntfy url",
+      "required": false,
+      "default": "default",
+      "env_variable": "APP_CANARY_UMBREL_NTFY_URL"
+    },
+    {
+      "type": "random",
+      "label": "Canary Wallet password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "random",
+      "label": "Canary Wallet seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501492074,
+  "updated_at": 1792501552074,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

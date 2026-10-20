@@ -1,0 +1,51 @@
+{
+  "name": "OpenReader",
+  "available": true,
+  "port": 3391,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "openreader",
+  "description": "OpenReader WebUI is a web-based document reader that integrates text-to-speech (TTS) functionality, allowing users to listen to text from various document formats, including PDF and EPUB. Designed to enhance accessibility and improve the reading experience, it features synchronized text highlighting, ensuring that the currently read portion of the document is visually emphasized as the speech engine narrates the content. This makes it particularly useful for individuals with visual impairments, reading difficulties, or those who simply prefer an auditory learning style.",
+  "tipi_version": 1,
+  "version": "1.30.5-alpine",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "A document reader with Text-to-Speech capabilities",
+  "author": "Richard Roberson",
+  "source": "https://github.com/richardr1126/openreader",
+  "website": "https://openreader.richardr.dev/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "OpenReader playback secret",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_OPENREADER_PLAYBACK_SECRET"
+    },
+    {
+      "type": "random",
+      "label": "OpenReader seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "text",
+      "label": "OpenReader ips with port",
+      "required": false,
+      "default": "default",
+      "env_variable": "ips_with_port"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504196,
+  "updated_at": 1792501564196,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

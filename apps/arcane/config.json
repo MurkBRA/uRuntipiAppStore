@@ -1,0 +1,34 @@
+{
+  "name": "Arcane",
+  "available": true,
+  "port": 3552,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "arcane",
+  "description": "⚠️ Make sure to only use named Docker volumes for your containers and projects. Data in bind-mounted volumes will be lost when the Arcane app is restarted or updated.",
+  "tipi_version": 1,
+  "version": "2.16.1",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "An easy and modern Docker management platform",
+  "author": "Arcane",
+  "source": "https://github.com/getarcaneapp/arcane",
+  "website": "https://getarcane.app/",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Arcane password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501488729,
+  "updated_at": 1792501548729,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

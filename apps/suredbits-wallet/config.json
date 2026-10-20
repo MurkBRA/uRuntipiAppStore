@@ -1,0 +1,100 @@
+{
+  "name": "Suredbits Wallet",
+  "available": true,
+  "port": 3020,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "suredbits-wallet",
+  "description": "The Suredbits Wallet is your one stop shop for building Discreet Log Contracts. With our wallet you can create prop bets like Trump vs Biden in the 2020 US Presidential election or complicated financial derivatives such as contracts for difference that can be used to hedge risk or engage in speculation.",
+  "tipi_version": 1,
+  "version": "1.9.7",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A universal DLC wallet",
+  "author": "Suredbits",
+  "source": "https://github.com/bitcoin-s/bitcoin-s",
+  "website": "https://suredbits.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Suredbits Wallet p2p hidden service",
+      "min": 32,
+      "env_variable": "APP_SUREDBITS_WALLET_P2P_HIDDEN_SERVICE"
+    },
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    },
+    {
+      "type": "random",
+      "label": "Suredbits Wallet password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "random",
+      "label": "Suredbits Wallet seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501510380,
+  "updated_at": 1792501570380,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

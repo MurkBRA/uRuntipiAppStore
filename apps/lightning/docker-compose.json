@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "lightning",
+      "image": "getumbrel/umbrel-lightning:v1.3.2",
+      "isMain": true,
+      "internalPort": 3006,
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "PORT",
+          "value": "3006"
+        },
+        {
+          "key": "TOR_PROXY_IP",
+          "value": "${TOR_PROXY_IP}"
+        },
+        {
+          "key": "TOR_PROXY_PORT",
+          "value": "${TOR_PROXY_PORT}"
+        },
+        {
+          "key": "BITCOIN_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "RPC_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "LND_NETWORK",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "LND_HOST",
+          "value": "lightning-lnd"
+        },
+        {
+          "key": "LND_REST_HIDDEN_SERVICE",
+          "value": "${APP_LIGHTNING_REST_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "LND_GRPC_HIDDEN_SERVICE",
+          "value": "${APP_LIGHTNING_GRPC_HIDDEN_SERVICE}"
+        },
+        {
+          "key": "TLS_FILE",
+          "value": "/data/.lnd/tls.cert"
+        },
+        {
+          "key": "MACAROON_DIR",
+          "value": "/data/.lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/"
+        },
+        {
+          "key": "CHANNEL_BACKUP_FILE",
+          "value": "/data/.lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/channel.backup"
+        },
+        {
+          "key": "BACKUP_STATUS_FILE",
+          "value": "/statuses/backup-status.json"
+        },
+        {
+          "key": "JSON_STORE_FILE",
+          "value": "/data/state.json"
+        },
+        {
+          "key": "JSON_SETTINGS_FILE",
+          "value": "/data/settings.json"
+        },
+        {
+          "key": "UMBREL_LND_CONF_FILEPATH",
+          "value": "/data/.lnd/umbrel-lnd.conf"
+        },
+        {
+          "key": "LND_CONF_FILEPATH",
+          "value": "/data/.lnd/lnd.conf"
+        },
+        {
+          "key": "LND_INITIALIZE_WITH_TOR_ONLY",
+          "value": "${LND_INITIALIZE_WITH_TOR_ONLY}"
+        },
+        {
+          "key": "DEVICE_DOMAIN_NAME",
+          "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "EXPLORER_PORT",
+          "value": "${APP_MEMPOOL_PORT}"
+        },
+        {
+          "key": "EXPLORER_HIDDEN_SERVICE",
+          "value": "${APP_MEMPOOL_HIDDEN_SERVICE}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data/lnd",
+          "containerPath": "/data/.lnd"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/lightning",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "lightning-lnd",
+      "image": "lightninglabs/lnd:v0.21.4-beta",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "hostname": "${APP_DOMAIN}",
+      "command": "${APP_LIGHTNING_COMMAND}",
+      "environment": [
+        {
+          "key": "HOME",
+          "value": "/data"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data/lnd",
+          "containerPath": "/data/.lnd"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 9735,
+          "containerPort": 9735,
+          "tcp": true
+        },
+        {
+          "hostPort": 8080,
+          "containerPort": 8080,
+          "tcp": true
+        },
+        {
+          "hostPort": 10009,
+          "containerPort": 10009,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+services:
+  bark-wallet:
+    image: secondark/bark-web:0.8.0
+    depends_on:
+      - bark-wallet-api
+      - bark-wallet-barkd
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+  bark-wallet-api:
+    image: secondark/bark-web-api:0.8.0
+    volumes:
+      - ${APP_DATA_DIR}/data/wallet:/wallet-data:ro
+    environment:
+      - PORT=4001
+      - WALLET_DIR=/wallet-data/.bark
+      - WALLET_DATA_PATH=/Apps/bark-wallet/data/wallet/.bark/
+      - BARKD_URL=http://barkd:4000
+      - ARK_SERVER=https://ark.second.tech
+      - CHAIN_SOURCE=https://mempool.second.tech/api
+      - BARK_NETWORK=mainnet
+    depends_on:
+      - bark-wallet-barkd
+    stop_grace_period: 1m
+  bark-wallet-barkd:
+    image: secondark/bark:0.6.2
+    command: sh -c "mkdir -p /data/.bark && chown -R 1000:1000 /data && exec setpriv --reuid 1000 --regid 1000 --clear-groups /usr/local/bin/barkd --port 4000 --host 0.0.0.0 --datadir /data/.bark --expose-mnemonic"
+    user: '0:0'
+    volumes:
+      - ${APP_DATA_DIR}/data/wallet:/data
+    stop_grace_period: 1m
+x-runtipi:
+  schema_version: 2

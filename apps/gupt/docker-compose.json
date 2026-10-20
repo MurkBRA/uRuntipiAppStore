@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "gupt",
+      "image": "ghcr.io/besoeasy/gupt:5.1.0",
+      "isMain": true,
+      "internalPort": 8000,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m"
+    }
+  ]
+}

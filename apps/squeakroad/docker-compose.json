@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "squeakroad",
+      "image": "ghcr.io/yzernik/squeakroad:v0.1.14",
+      "isMain": true,
+      "internalPort": 18200,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "ROCKET_PORT",
+          "value": 18200
+        },
+        {
+          "key": "ROCKET_ADDRESS",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "SQUEAKROAD_DB_URL",
+          "value": "/data/db.sqlite"
+        },
+        {
+          "key": "SQUEAKROAD_ADMIN_USERNAME",
+          "value": "umbrel"
+        },
+        {
+          "key": "SQUEAKROAD_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SQUEAKROAD_LND_HOST",
+          "value": "${APP_LIGHTNING_NODE_IP}"
+        },
+        {
+          "key": "SQUEAKROAD_LND_PORT",
+          "value": "${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "SQUEAKROAD_LND_TLS_CERT_PATH",
+          "value": "/lnd-dir/tls.cert"
+        },
+        {
+          "key": "SQUEAKROAD_LND_MACAROON_PATH",
+          "value": "/lnd-dir/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd-dir",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

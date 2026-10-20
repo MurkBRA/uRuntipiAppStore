@@ -1,0 +1,26 @@
+{
+  "name": "FossFLOW",
+  "available": true,
+  "port": 8176,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "fossflow",
+  "description": "FossFLOW is a feature-rich, open-source Progressive Web App (PWA) designed for creating elegant and professional **isometric diagrams**. It's lightweight, fast, and privacy-friendly everything runs locally in your browser.",
+  "tipi_version": 1,
+  "version": "master-b69fc2e",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Make beautiful isometric infrastructure diagrams",
+  "author": "stan-smith",
+  "source": "https://github.com/stan-smith/FossFLOW",
+  "website": "https://github.com/stan-smith/FossFLOW",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501496304,
+  "updated_at": 1792501556304,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

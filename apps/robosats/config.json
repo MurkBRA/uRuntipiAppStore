@@ -1,0 +1,43 @@
+{
+  "name": "RoboSats",
+  "available": true,
+  "port": 12596,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "robosats",
+  "description": "RoboSats is a simple and private app to exchange bitcoin for national currencies.  Robosats simplifies the P2P user experience and uses lightning hold invoices to  minimize custody and trust requirements. The deterministically generated robot  avatars help users stick to best privacy practices.",
+  "tipi_version": 1,
+  "version": "v0.8.7-alpha",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Simple and Private Bitcoin P2P Exchange",
+  "author": "RoboSats",
+  "source": "https://github.com/RoboSats/robosats",
+  "website": "https://learn.robosats.org",
+  "https": true,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501506909,
+  "updated_at": 1792501566909,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

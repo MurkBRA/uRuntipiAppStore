@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "satsale",
+      "image": "satsale/satsale:0.1.13",
+      "isMain": true,
+      "internalPort": 5000,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "DATA_DIR",
+          "value": "/data"
+        },
+        {
+          "key": "LND_DATA_DIR",
+          "value": "${APP_LIGHTNING_NODE_DATA_DIR}"
+        },
+        {
+          "key": "LND_HOST",
+          "value": "${APP_LIGHTNING_NODE_IP}"
+        },
+        {
+          "key": "LND_GRPC_PORT",
+          "value": "${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "MACAROON_FILE",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/invoice.macaroon"
+        },
+        {
+          "key": "TLS_FILE",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

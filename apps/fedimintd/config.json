@@ -1,0 +1,71 @@
+{
+  "name": "Fedimint",
+  "available": true,
+  "port": 28099,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "fedimintd",
+  "description": "Fedimint is a federated Chaumian E-Cash Mint to custody and transact bitcoin in a community. It allows groups of trusted individuals, called guardians, to jointly operate a multi-signature e-cash mint. # Setting Up a Federation You can create a Fedimint in two ways:",
+  "tipi_version": 1,
+  "version": "v0.12.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Federated Chaumian E-Cash Mint for Bitcoin",
+  "author": "Fedimint Developers",
+  "source": "https://github.com/fedimint/fedimint",
+  "website": "https://fedimint.org/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Network (Electrs format)",
+      "required": false,
+      "default": "bitcoin",
+      "hint": "Electrs network identifier (bitcoin, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK_ELECTRS"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "random",
+      "label": "Fedimint password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501495860,
+  "updated_at": 1792501555860,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

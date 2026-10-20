@@ -1,0 +1,76 @@
+services:
+  core-lightning:
+    image: ghcr.io/elementsproject/cln-application:26.09
+    command: npm run start
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/data/app
+      - ${APP_DATA_DIR}/data/data/lightningd:/root/.lightning
+    environment:
+      - APP_SINGLE_SIGN_ON=true
+      - APP_HOST=core-lightning
+      - APP_PORT=2103
+      - BITCOIN_NETWORK=${APP_BITCOIN_NETWORK}
+      - LIGHTNING_HOST=core-lightning-lightningd
+      - LIGHTNING_TOR_HOST=${APP_CORE_LIGHTNING_HIDDEN_SERVICE}
+      - LIGHTNING_WS_HOST=core-lightning-lightningd
+      - LIGHTNING_WS_TOR_HOST=${APP_CORE_LIGHTNING_HIDDEN_SERVICE}
+      - APP_CONNECT=COMMANDO
+      - APP_MODE=production
+      - LIGHTNING_DATA_DIR=/root/.lightning
+      - APP_CONFIG_FILE=/data/app/config.json
+      - LIGHTNING_VARS_FILE=/root/.lightning/.commando-env
+      - LIGHTNING_WS_PROTOCOL=ws
+      - LIGHTNING_WS_PORT=2106
+      - LIGHTNING_WS_CLIENT_KEY_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/client-key.pem
+      - LIGHTNING_WS_CLIENT_CERT_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/client.pem
+      - LIGHTNING_WS_CA_CERT_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/ca.pem
+      - LIGHTNING_REST_PROTOCOL=https
+      - LIGHTNING_REST_HOST=${APP_DOMAIN}
+      - LIGHTNING_REST_TOR_HOST=${APP_CORE_LIGHTNING_HIDDEN_SERVICE}
+      - LIGHTNING_REST_PORT=2107
+      - LIGHTNING_REST_CLIENT_KEY_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/client-key.pem
+      - LIGHTNING_REST_CLIENT_CERT_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/client.pem
+      - LIGHTNING_REST_CA_CERT_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/ca.pem
+      - LIGHTNING_GRPC_HOST=${APP_DOMAIN}
+      - LIGHTNING_GRPC_TOR_HOST=${APP_CORE_LIGHTNING_HIDDEN_SERVICE}
+      - LIGHTNING_GRPC_PORT=2110
+      - LIGHTNING_GRPC_PROTO_PATH=https://github.com/ElementsProject/lightning/tree/master/cln-grpc/proto
+      - LIGHTNING_GRPC_CLIENT_KEY_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/client-key.pem
+      - LIGHTNING_GRPC_CLIENT_CERT_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/client.pem
+      - LIGHTNING_GRPC_CA_CERT_FILE=/root/.lightning/${APP_BITCOIN_NETWORK}/ca.pem
+    x-runtipi:
+      internal_port: 2103
+      add_to_main_network: true
+      is_main: true
+  core-lightning-lightningd:
+    image: elementsproject/lightningd:v26.06.9
+    command:
+      - '--bitcoin-rpcconnect=${APP_BITCOIN_NODE_IP}'
+      - '--bitcoin-rpcuser=${APP_BITCOIN_RPC_USER}'
+      - '--bitcoin-rpcpassword=${APP_BITCOIN_RPC_PASS}'
+      - '--bitcoin-rpcport=${APP_BITCOIN_RPC_PORT}'
+      - '--lightning-dir=/root/.lightning'
+      - '--proxy=${TOR_PROXY_IP}:${TOR_PROXY_PORT}'
+      - '--bind-addr=core-lightning-lightningd:9735'
+      - '--bind-addr=ws:core-lightning-lightningd:2106'
+      - '--addr=statictor:${TOR_PROXY_IP}:29051'
+      - '--tor-service-password=${TOR_PASSWORD}'
+      - '--network=${APP_BITCOIN_NETWORK}'
+      - '--database-upgrade=true'
+      - '--grpc-host=core-lightning-lightningd'
+      - '--grpc-port=2110'
+      - '--clnrest-host=core-lightning-lightningd'
+      - '--clnrest-port=2107'
+    ports:
+      - 9736:9735/tcp
+      - 2106:2106/tcp
+      - 2107:2107/tcp
+      - 2110:2110/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/data/lightningd:/root/.lightning
+    environment:
+      - LIGHTNINGD_NETWORK=${APP_BITCOIN_NETWORK}
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

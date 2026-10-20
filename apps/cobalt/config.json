@@ -1,0 +1,29 @@
+{
+  "name": "cobalt",
+  "available": true,
+  "port": 9009,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "cobalt",
+  "description": "⚙️ In order use your own cobalt instance, go to settings > instances > and toggle \"use a custom processing server\". Add http://umbrel.local:9013 as your server.",
+  "tipi_version": 1,
+  "version": "11.5",
+  "categories": [
+    "media",
+    "music"
+  ],
+  "short_desc": "Best way to save what you love",
+  "author": "imputnet",
+  "source": "https://github.com/imputnet/cobalt",
+  "website": "https://cobalt.tools/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501493010,
+  "updated_at": 1792501553010,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,22 @@
+services:
+  paperclip:
+    image: ghcr.io/paperclipai/paperclip:2026.1012.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/paperclip
+    environment:
+      - HOST=0.0.0.0
+      - PAPERCLIP_HOME=/paperclip
+      - PAPERCLIP_PUBLIC_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - PAPERCLIP_API_URL=http://127.0.0.1:3100
+      - PAPERCLIP_ALLOWED_HOSTNAMES=${APP_DOMAIN},${APP_DOMAIN}:8860,${LOCAL_DOMAIN},${LOCAL_DOMAIN}:8860,${APP_DOMAIN},${APP_DOMAIN}:8860,${APP_DOMAIN},${local_ips},paperclip
+      - BETTER_AUTH_SECRET=${APP_SEED}
+      - PAPERCLIP_DEPLOYMENT_MODE=authenticated
+      - PAPERCLIP_DEPLOYMENT_EXPOSURE=private
+      - PAPERCLIP_TELEMETRY_DISABLED=1
+      - DO_NOT_TRACK=1
+    x-runtipi:
+      internal_port: 3100
+      is_main: true
+x-runtipi:
+  schema_version: 2

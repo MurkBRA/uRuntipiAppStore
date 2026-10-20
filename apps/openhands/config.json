@@ -1,0 +1,26 @@
+{
+  "name": "OpenHands",
+  "available": true,
+  "port": 3993,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "openhands",
+  "description": "👐 OpenHands is a local-first AI development assistant that helps developers automate repetitive programming tasks and concentrate on more meaningful work. It runs entirely on your own Umbrel server and respects your privacy by keeping all operations offline and under your control. OpenHands understands, edits, and improves code independently by using intelligent software agents that analyze your repositories, execute commands, work with files, and follow instructions written in natural language.",
+  "tipi_version": 1,
+  "version": "1.10.0",
+  "categories": [
+    "ai"
+  ],
+  "short_desc": "A local AI agent for writing and improving code",
+  "author": "All Hands AI, Inc",
+  "source": "https://github.com/All-Hands-AI/OpenHands",
+  "website": "https://www.all-hands.dev/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501504084,
+  "updated_at": 1792501564084,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

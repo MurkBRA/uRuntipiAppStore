@@ -1,0 +1,27 @@
+services:
+  anything-llm:
+    image: mintplexlabs/anythingllm:1.18.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/.env:/app/server/.env
+      - ${APP_DATA_DIR}/data/server-storage:/app/server/storage
+      - ${APP_DATA_DIR}/data/collector-hotdir:/app/collector/hotdir
+      - ${APP_DATA_DIR}/data/collector-outputs:/app/collector/outputs
+    environment:
+      - SERVER_PORT=3001
+      - STORAGE_DIR=/app/server/storage
+      - UID=1000
+      - GID=1000
+      - DISABLE_TELEMETRY=true
+      - JWT_SECRET=${APP_ANYTHING_LLM_JWT_SECRET}
+      - SIG_KEY=${APP_ANYTHING_LLM_SIG_KEY}
+      - SIG_SALT=${APP_ANYTHING_LLM_SIG_SALT}
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    cap_add:
+      - SYS_ADMIN
+    x-runtipi:
+      internal_port: 3001
+      is_main: true
+x-runtipi:
+  schema_version: 2

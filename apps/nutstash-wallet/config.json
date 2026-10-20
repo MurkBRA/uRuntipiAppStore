@@ -1,0 +1,26 @@
+{
+  "name": "Nutstash Wallet",
+  "available": true,
+  "port": 4173,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "nutstash-wallet",
+  "description": "What is Cashu? \"Cashu is a free and open-source Chaumian ecash system built for Bitcoin. Cashu offers near-perfect privacy for users of custodial Bitcoin applications. Nobody needs to knows who you are, how much funds you have, and with whom you transact with.\" - cashu.space",
+  "tipi_version": 1,
+  "version": "0.1.10",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Nutstash is a Cashu wallet for your browser",
+  "author": "gandlafbtc",
+  "source": "https://github.com/gandlafbtc/nutstash-wallet",
+  "website": "https://nutstash.app/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501503434,
+  "updated_at": 1792501563434,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

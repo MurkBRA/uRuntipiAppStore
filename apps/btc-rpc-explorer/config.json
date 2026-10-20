@@ -1,0 +1,77 @@
+{
+  "name": "BTC RPC Explorer",
+  "available": true,
+  "port": 3002,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "btc-rpc-explorer",
+  "description": "BTC RPC Explorer is a full-featured, self-hosted explorer for the Bitcoin blockchain. With this explorer, you can explore not just the blockchain database, but also explore the functional capabilities of your Umbrel.",
+  "tipi_version": 1,
+  "version": "3.5.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Simple, database-free blockchain explorer",
+  "author": "Dan Janosik",
+  "source": "https://github.com/janoside/btc-rpc-explorer",
+  "website": "https://bitcoinexplorer.org/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Electrs Server Host / IP",
+      "required": false,
+      "default": "electrs",
+      "env_variable": "APP_ELECTRS_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Electrs Server Port",
+      "required": false,
+      "default": 50001,
+      "env_variable": "APP_ELECTRS_NODE_PORT"
+    },
+    {
+      "type": "random",
+      "label": "BTC RPC Explorer password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501491373,
+  "updated_at": 1792501551373,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

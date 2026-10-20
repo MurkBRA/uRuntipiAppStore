@@ -1,0 +1,35 @@
+services:
+  hortusfox:
+    image: ghcr.io/danielbrendel/hortusfox-web:v6.3
+    volumes:
+      - ${APP_DATA_DIR}/data/images:/var/www/html/public/img
+      - ${APP_DATA_DIR}/data/attachments:/var/www/html/public/attachments
+      - ${APP_DATA_DIR}/data/logs:/var/www/html/app/logs
+      - ${APP_DATA_DIR}/data/backup:/var/www/html/public/backup
+      - ${APP_DATA_DIR}/data/themes:/var/www/html/public/themes
+      - ${APP_DATA_DIR}/data/migrate:/var/www/html/app/migrations
+    environment:
+      - APP_ADMIN_EMAIL=umbrel@umbrel.local
+      - APP_ADMIN_PASSWORD=${APP_PASSWORD}
+      - DB_HOST=hortusfox-db
+      - DB_PORT=3306
+      - DB_DATABASE=hortusfox
+      - DB_USERNAME=user
+      - DB_PASSWORD=password
+      - DB_CHARSET=utf8mb4
+    depends_on:
+      - hortusfox-db
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+  hortusfox-db:
+    image: mariadb:11.4.7
+    volumes:
+      - ${APP_DATA_DIR}/data/db_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=my-secret-pw
+      - MYSQL_DATABASE=hortusfox
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
+x-runtipi:
+  schema_version: 2

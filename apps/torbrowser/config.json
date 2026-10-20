@@ -1,0 +1,26 @@
+{
+  "name": "Tor Browser",
+  "available": true,
+  "port": 5832,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "torbrowser",
+  "description": "🧅 Tor Browser is a powerful tool designed to provide anonymous, secure, and private access to the internet. Built on Mozilla Firefox and optimized for privacy, Tor Browser uses the Tor network (The Onion Router) to protect users' identities and locations by encrypting and relaying their internet traffic through multiple nodes across the globe. This process, known as “onion routing,” conceals users' IP addresses, making it extremely difficult for websites, advertisers, or surveillance entities to track browsing activities or pinpoint locations.",
+  "tipi_version": 1,
+  "version": "15.0.17",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "An invisible shield for your browsing experience",
+  "author": "The Tor Project",
+  "source": "https://github.com/torproject/tor",
+  "website": "https://www.torproject.org/",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511445,
+  "updated_at": 1792501571445,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,14 @@
+services:
+  papra:
+    image: ghcr.io/papra-hq/papra:26.6.2-rootless
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/app-data
+    environment:
+      - AUTH_SECRET=${APP_SEED}
+      - APP_BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+    x-runtipi:
+      internal_port: 1221
+      is_main: true
+x-runtipi:
+  schema_version: 2

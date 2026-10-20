@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "lightningmate",
+      "image": "ghcr.io/opensourceminers/lightningmate:v0.7.7",
+      "isMain": true,
+      "internalPort": 3001,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "APP_LIGHTNING_NODE_IP",
+          "value": "${APP_LIGHTNING_NODE_IP}"
+        },
+        {
+          "key": "APP_LIGHTNING_NODE_GRPC_PORT",
+          "value": "${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "LND_SOCKET",
+          "value": "${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "LND_DIR",
+          "value": "/lnd"
+        },
+        {
+          "key": "LND_CERT_PATH",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "LND_MACAROON_PATH",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon"
+        },
+        {
+          "key": "DATA_DIR",
+          "value": "/data"
+        },
+        {
+          "key": "PORT",
+          "value": "3001"
+        },
+        {
+          "key": "LM_BIND",
+          "value": "0.0.0.0"
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "APP_SEED",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LM_ENABLE_WRITE",
+          "value": "true"
+        },
+        {
+          "key": "LND_WRITE_MACAROON_PATH",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon"
+        },
+        {
+          "key": "LM_SELL_FEE_BPS",
+          "value": "100"
+        },
+        {
+          "key": "LM_SELL_FEE_ADDRESS",
+          "value": "lightningmate@btcpay.opensourceminers.de"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

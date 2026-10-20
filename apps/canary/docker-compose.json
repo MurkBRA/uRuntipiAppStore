@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "canary",
+      "image": "schjonhaug/canary-frontend:v1.7.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "API_URL",
+          "value": "http://canary-backend:3001"
+        }
+      ],
+      "dependsOn": [
+        "canary-backend"
+      ]
+    },
+    {
+      "name": "canary-backend",
+      "image": "schjonhaug/canary-backend:v1.7.0",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "CANARY_NETWORK",
+          "value": "mainnet"
+        },
+        {
+          "key": "CANARY_ELECTRUM_URL",
+          "value": "tcp://${APP_ELECTRS_NODE_IP}:${APP_ELECTRS_NODE_PORT}"
+        },
+        {
+          "key": "CANARY_BIND_ADDRESS",
+          "value": "0.0.0.0:3001"
+        },
+        {
+          "key": "CANARY_DATA_DIR",
+          "value": "/app/data"
+        },
+        {
+          "key": "CANARY_MODE",
+          "value": "self-hosted"
+        },
+        {
+          "key": "CANARY_SYNC_INTERVAL",
+          "value": 60
+        },
+        {
+          "key": "FRONTEND_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "CANARY_MEMPOOL_PORT",
+          "value": "${APP_CANARY_MEMPOOL_PORT}"
+        },
+        {
+          "key": "CANARY_TX_EXPLORER_PLATFORM",
+          "value": "umbrel"
+        },
+        {
+          "key": "CANARY_UMBREL_NTFY_URL",
+          "value": "${APP_CANARY_UMBREL_NTFY_URL}"
+        },
+        {
+          "key": "CANARY_SELF_HOSTED_ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "JWT_SECRET",
+          "value": "${APP_SEED}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

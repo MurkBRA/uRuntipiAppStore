@@ -1,0 +1,44 @@
+{
+  "name": "Poznote",
+  "available": true,
+  "port": 8389,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "poznote",
+  "description": "📝 Poznote is a clean and focused application designed to help users capture, structure, and refine information in a flexible workspace. It combines a rich text editor with Markdown formatting to support both quick jotting and long form writing, allowing thoughts to grow and change without friction.",
+  "tipi_version": 1,
+  "version": "6.121.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "A powerful app for taking notes",
+  "author": "Timothé Poznanski",
+  "source": "https://github.com/timothepoznanski/poznote",
+  "website": "https://poznote.com/",
+  "url_suffix": "login.php",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Poznote mcp auth token",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_POZNOTE_MCP_AUTH_TOKEN"
+    },
+    {
+      "type": "text",
+      "label": "Enable Debug Mode",
+      "required": false,
+      "default": "false",
+      "env_variable": "POZNOTE_DEBUG"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505846,
+  "updated_at": 1792501565846,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "satwatch",
+      "image": "ghcr.io/jpcummins/sat.watch:1.1.8",
+      "isMain": true,
+      "internalPort": 8080,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://satwatch:satwatch@satwatch-db:5432/satwatch?sslmode=disable"
+        },
+        {
+          "key": "ELECTRUM_HOST",
+          "value": "${APP_ELECTRS_NODE_IP}"
+        },
+        {
+          "key": "ELECTRUM_PORT",
+          "value": "${APP_ELECTRS_NODE_PORT}"
+        },
+        {
+          "key": "URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "ZMQ_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "ZMQ_PORT",
+          "value": "${APP_BITCOIN_ZMQ_RAWTX_PORT}"
+        },
+        {
+          "key": "RPCHOST",
+          "value": "http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "RPCUSER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "RPCPASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        }
+      ],
+      "dependsOn": {
+        "satwatch-db": {
+          "condition": "service_healthy"
+        }
+      }
+    },
+    {
+      "name": "satwatch-db",
+      "image": "docker.io/library/postgres:17",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "environment": [
+        {
+          "key": "POSTGRES_USER",
+          "value": "satwatch"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "satwatch"
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "satwatch"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/db",
+          "containerPath": "/var/lib/postgresql/data"
+        }
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U satwatch -h localhost -d satwatch",
+        "interval": "5s",
+        "timeout": "5s",
+        "retries": 10
+      }
+    }
+  ]
+}

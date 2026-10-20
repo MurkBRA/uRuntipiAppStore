@@ -1,0 +1,28 @@
+{
+  "name": "Bitcoin Regtest Dashboard",
+  "available": true,
+  "port": 3022,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bitcoin-regtest-dashboard",
+  "description": "A self-contained development dashboard with its own Bitcoin Core regtest node and Electrs instance. No external dependencies required.",
+  "tipi_version": 1,
+  "version": "1.1.0",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Development toolkit for Bitcoin regtest",
+  "author": "Corey Phillips",
+  "source": "https://github.com/coreyphillips/bitcoin-regtest-dashboard",
+  "website": "https://github.com/coreyphillips/bitcoin-regtest-dashboard",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501490131,
+  "updated_at": 1792501550131,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

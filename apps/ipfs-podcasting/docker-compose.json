@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "ipfs-podcasting",
+      "image": "ipfspodcasting/podcastnode:v0.6",
+      "isMain": true,
+      "internalPort": 8675,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ipfs",
+          "containerPath": "/ipfs-podcasting/ipfs"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/cfg",
+          "containerPath": "/ipfs-podcasting/cfg"
+        }
+      ],
+      "addPorts": [
+        {
+          "hostPort": 4001,
+          "containerPort": 4001,
+          "tcp": true
+        }
+      ]
+    }
+  ]
+}

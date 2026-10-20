@@ -1,0 +1,11 @@
+services:
+  deepsea:
+    image: ghcr.io/retropex/custom-dashboard-ocean:v2.0.4
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data/
+    x-runtipi:
+      internal_port: 8000
+      is_main: true
+x-runtipi:
+  schema_version: 2

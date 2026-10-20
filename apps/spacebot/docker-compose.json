@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "spacebot",
+      "image": "ghcr.io/spacedriveapp/spacebot:v0.5.0",
+      "isMain": true,
+      "internalPort": 19898,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "TZ",
+          "value": "${TZ:-UTC}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Krystal Bull",
+  "available": true,
+  "port": 21774,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "krystal-bull",
+  "description": "Krystal Bull allows you to become a Bitcoin oracle. An oracle allows information from the real world (financial markets, sporting events, elections, etc) to be used to create and settle Bitcoin bets.",
+  "tipi_version": 1,
+  "version": "1.9.7",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Become an oracle and create Bitcoin bets",
+  "author": "SuredBits",
+  "source": "https://github.com/bitcoin-s/krystal-bull",
+  "website": "https://suredbits.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    },
+    {
+      "type": "random",
+      "label": "Krystal Bull password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "random",
+      "label": "Krystal Bull seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501499392,
+  "updated_at": 1792501559392,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

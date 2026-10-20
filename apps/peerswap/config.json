@@ -1,0 +1,101 @@
+{
+  "name": "PeerSwap",
+  "available": true,
+  "port": 1984,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "peerswap",
+  "description": "PeerSwap enables Lightning Network nodes to balance their channels by facilitating atomic swaps with direct peers. PeerSwap enhances decentralization of the Lightning Network by enabling all nodes to be their own swap provider. No centralized coordinator, no 3rd party rent collector, and lowest cost channel balancing means small nodes can better compete with large nodes. Includes channel AutoFees, Liquid Peg-in and BTC send with coin select + fee bump functionality.",
+  "tipi_version": 1,
+  "version": "7.0.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Balance your lightning channels with Liquid BTC",
+  "author": "PeerSwap Project",
+  "source": "https://github.com/Impa10r/peerswap-web",
+  "website": "https://peerswap.dev",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "PeerSwap elements data dir",
+      "min": 32,
+      "env_variable": "ELEMENTS_DATA_DIR"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Elements Core RPC Port",
+      "required": false,
+      "default": 7041,
+      "env_variable": "APP_ELEMENTS_NODE_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505120,
+  "updated_at": 1792501565120,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "arcane",
+      "image": "ghcr.io/getarcaneapp/arcane:v2.16.1",
+      "isMain": true,
+      "internalPort": 3552,
+      "environment": [
+        {
+          "key": "APP_URL",
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+        },
+        {
+          "key": "PUID",
+          "value": 1000
+        },
+        {
+          "key": "PGID",
+          "value": 1000
+        },
+        {
+          "key": "ENCRYPTION_KEY",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app_data",
+          "containerPath": "/app/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/projects",
+          "containerPath": "/app/data/projects"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/var/run"
+        }
+      ],
+      "dependsOn": [
+        "arcane-docker"
+      ]
+    },
+    {
+      "name": "arcane-docker",
+      "image": "docker:27.2.0-dind",
+      "networkMode": "host",
+      "privileged": true,
+      "stopGracePeriod": "1m",
+      "command": "dockerd\n  --bridge dind0\n  --data-root /data/data\n  --exec-root /data/exec\n  --host unix:///data/docker.sock\n  --pidfile /data/docker.pid",
+      "entrypoint": "/entrypoint.sh",
+      "environment": [
+        {
+          "key": "DOCKER_ENSURE_BRIDGE",
+          "value": "dind0:10.32.0.1/16"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/entrypoint.sh",
+          "containerPath": "/entrypoint.sh"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

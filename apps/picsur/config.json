@@ -1,0 +1,38 @@
+{
+  "name": "Picsur",
+  "available": true,
+  "port": 8286,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "picsur",
+  "description": "🖼️ Picsur is a lightweight, self-hosted image hosting platform designed for simplicity and control. It allows users to upload, store, and share images directly from their own server, without relying on third-party services. Inspired by the functionality of platforms like Imgur and Pastebin, Picsur focuses on offering a clean and efficient experience for users who need a straightforward way to manage images online.",
+  "tipi_version": 1,
+  "version": "0.5.6",
+  "categories": [
+    "photography",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An easy to use image sharing service",
+  "author": "CaramelFur",
+  "source": "https://github.com/CaramelFur/Picsur",
+  "website": "https://picsur.org/upload",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Picsur password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505315,
+  "updated_at": 1792501565315,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

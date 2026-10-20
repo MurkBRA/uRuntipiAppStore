@@ -1,0 +1,23 @@
+services:
+  ordinals:
+    image: nmfretz/ord:0.27.1
+    command: ord server --http
+    volumes:
+      - ${APP_DATA_DIR}/data/ord:/var/lib/ord
+      - ${APP_BITCOIN_DATA_DIR}:/var/lib/bitcoind:ro
+    environment:
+      - ORD_DATA_DIR=/var/lib/ord
+      - ORD_BITCOIN_DATA_DIR=/var/lib/bitcoind
+      - ORD_COOKIE_FILE=/var/lib/bitcoind/.cookie
+      - ORD_BITCOIN_RPC_USERNAME=${APP_BITCOIN_RPC_USER}
+      - ORD_BITCOIN_RPC_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - ORD_BITCOIN_RPC_URL=${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}
+      - ORD_CHAIN=${APP_BITCOIN_NETWORK}
+      - ORD_INDEX_RUNES=true
+    stop_grace_period: 15m30s
+    x-runtipi:
+      internal_port: 80
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,21 @@
+services:
+  urbit-bitcoin-connector:
+    image: matwet/urbit-btc-node:latest
+    ports:
+      - 55555:55555/tcp
+    environment:
+      - INTERNAL_IP=urbit-bitcoin-connector
+      - ELECTRUM_IP=${APP_ELECTRS_NODE_IP}
+      - ELECTRUM_PORT=${APP_ELECTRS_NODE_PORT}
+      - BITCOIN_IP=${APP_BITCOIN_NODE_IP}
+      - BITCOIN_RPC_PORT=${APP_BITCOIN_RPC_PORT}
+      - BITCOIN_RPC_USER=${APP_BITCOIN_RPC_USER}
+      - BITCOIN_RPC_PASS=${APP_BITCOIN_RPC_PASS}
+      - BITCOIN_RPC_AUTH=${APP_BITCOIN_RPC_AUTH}
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 9090
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

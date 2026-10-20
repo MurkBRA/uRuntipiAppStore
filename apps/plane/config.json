@@ -1,0 +1,29 @@
+{
+  "name": "Plane",
+  "available": true,
+  "port": 8762,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "plane",
+  "description": "Meet Plane, an open-source project management tool to track issues, run sprints cycles, and manage product roadmaps without the chaos of managing the tool itself. 🧘‍♀️",
+  "tipi_version": 1,
+  "version": "alpine3.23",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Modern project management for all teams",
+  "author": "Plane Software Inc.",
+  "source": "https://github.com/makeplane/plane",
+  "website": "http://plane.so/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501505443,
+  "updated_at": 1792501565443,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

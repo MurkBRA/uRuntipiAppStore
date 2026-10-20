@@ -1,0 +1,149 @@
+{
+  "name": "Samourai Server",
+  "available": true,
+  "port": 3021,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "samourai-server",
+  "description": "⚠️ Whirlpool functionality no longer works due to the shutdown of Samourai's Whirlpool coordinator. Dojo functionality is unaffected.",
+  "tipi_version": 1,
+  "version": "1.21-alpine",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Your private backing server for Samourai Wallet",
+  "author": "Samourai",
+  "source": "https://github.com/louneskmt/umbrel-samourai-dojo/tree/v1.16.1-umbrel",
+  "website": "https://samouraiwallet.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Samourai Server dojo hidden service",
+      "min": 32,
+      "env_variable": "APP_SAMOURAI_SERVER_DOJO_HIDDEN_SERVICE"
+    },
+    {
+      "type": "random",
+      "label": "Samourai Server whirlpool hidden service",
+      "min": 32,
+      "env_variable": "APP_SAMOURAI_SERVER_WHIRLPOOL_HIDDEN_SERVICE"
+    },
+    {
+      "type": "random",
+      "label": "Samourai Server node api key",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_SAMOURAI_SERVER_NODE_API_KEY"
+    },
+    {
+      "type": "random",
+      "label": "Samourai Server node admin key",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_SAMOURAI_SERVER_NODE_ADMIN_KEY"
+    },
+    {
+      "type": "random",
+      "label": "Samourai Server node jwt secret",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_SAMOURAI_SERVER_NODE_JWT_SECRET"
+    },
+    {
+      "type": "random",
+      "label": "Samourai Server whirlpool api key",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_SAMOURAI_SERVER_WHIRLPOOL_API_KEY"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Node Host / IP",
+      "required": false,
+      "default": "bitcoind",
+      "hint": "Hostname or IP of your Bitcoin RPC node on the Runtipi network",
+      "env_variable": "APP_BITCOIN_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin RPC Port",
+      "required": false,
+      "default": 8332,
+      "env_variable": "APP_BITCOIN_RPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin RPC Username",
+      "required": false,
+      "default": "umbrel",
+      "env_variable": "APP_BITCOIN_RPC_USER"
+    },
+    {
+      "type": "password",
+      "label": "Bitcoin RPC Password",
+      "required": false,
+      "default": "moneyprintergobrrr",
+      "env_variable": "APP_BITCOIN_RPC_PASS"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Rawtx Port",
+      "required": false,
+      "default": 28333,
+      "env_variable": "APP_BITCOIN_ZMQ_RAWTX_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Hashblock Port",
+      "required": false,
+      "default": 28334,
+      "env_variable": "APP_BITCOIN_ZMQ_HASHBLOCK_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Electrs Server Host / IP",
+      "required": false,
+      "default": "electrs",
+      "env_variable": "APP_ELECTRS_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Electrs Server Port",
+      "required": false,
+      "default": 50001,
+      "env_variable": "APP_ELECTRS_NODE_PORT"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501507572,
+  "updated_at": 1792501567572,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

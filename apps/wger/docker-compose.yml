@@ -1,0 +1,155 @@
+services:
+  wger:
+    image: nginx:alpine3.22
+    volumes:
+      - ${APP_DATA_DIR}/data/config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ${APP_DATA_DIR}/data/static:/wger/static:ro
+      - ${APP_DATA_DIR}/data/media:/wger/media:ro
+    depends_on:
+      - wger-web
+      - wger-powersync
+    healthcheck:
+      test: wget --quiet --tries=1 --spider http://127.0.0.1:80/
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    x-runtipi:
+      internal_port: 80
+      is_main: true
+  wger-web:
+    image: wger/server:2.7
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/static:/home/wger/static
+      - ${APP_DATA_DIR}/data/media:/home/wger/media
+    environment:
+      - SECRET_KEY=${APP_SEED}
+      - CSRF_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:8450,${ips_with_port}
+      - SITE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - MEDIA_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}/media/
+      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+      - POWERSYNC_URL_PATH=ps
+    depends_on:
+      wger-db:
+        condition: service_healthy
+      wger-cache:
+        condition: service_healthy
+      wger-powersync_setup:
+        condition: service_completed_successfully
+    healthcheck:
+      test: wget --no-verbose --tries=1 -O /dev/null http://localhost:8000/api/v2/version/
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 300s
+  wger-powersync_setup:
+    image: wger/server:2.7
+    command: ./manage.py setup-powersync-storage
+    user: '1000:1000'
+    environment:
+      - SECRET_KEY=${APP_SEED}
+      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+    depends_on:
+      wger-db:
+        condition: service_healthy
+  wger-powersync:
+    image: journeyapps/powersync-service:1.22.0
+    command:
+      - start
+      - '-r'
+      - unified
+    volumes:
+      - ${APP_DATA_DIR}/data/powersync.yaml:/config/powersync.yaml:ro
+      - ${APP_DATA_DIR}/data/sync_rules.yaml:/config/sync_rules.yaml:ro
+    environment:
+      - POWERSYNC_CONFIG_PATH=/config/powersync.yaml
+      - PS_JWKS_URL=http://wger-web:8000/api/v2/powersync-keys
+      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+      - PS_PORT=8080
+    depends_on:
+      wger-db:
+        condition: service_healthy
+      wger-web:
+        condition: service_healthy
+      wger-powersync_setup:
+        condition: service_completed_successfully
+  wger-db:
+    image: postgres:17.5-alpine
+    command:
+      - postgres
+      - '-c'
+      - wal_level=logical
+      - '-c'
+      - shared_buffers=256MB
+      - '-c'
+      - effective_cache_size=768MB
+      - '-c'
+      - work_mem=8MB
+      - '-c'
+      - random_page_cost=1.1
+      - '-c'
+      - max_connections=30
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres-data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=wger
+      - POSTGRES_PASSWORD=wger
+      - POSTGRES_DB=wger
+      - TZ=Europe/Berlin
+    healthcheck:
+      test: pg_isready -U wger
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    shm_size: 256mb
+  wger-cache:
+    image: redis:8.0.3-alpine
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/redis-data:/data
+    healthcheck:
+      test: redis-cli ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  wger-celery_worker:
+    image: wger/server:2.7
+    command: /start-worker
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/media:/home/wger/media
+    environment:
+      - SECRET_KEY=${APP_SEED}
+      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+    depends_on:
+      wger-web:
+        condition: service_healthy
+    healthcheck:
+      test: celery -A wger inspect ping
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  wger-celery_beat:
+    image: wger/server:2.7
+    command: /start-beat
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/celery-beat:${APP_DATA_DIR}/beat/
+    environment:
+      - SECRET_KEY=${APP_SEED}
+      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+    depends_on:
+      wger-celery_worker:
+        condition: service_healthy
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "webcheck",
+      "image": "ghcr.io/lissy93/web-check:2.3.0",
+      "isMain": true,
+      "internalPort": 3000,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/data"
+        }
+      ]
+    }
+  ]
+}

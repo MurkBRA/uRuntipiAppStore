@@ -1,0 +1,59 @@
+{
+  "name": "LnVisualizer",
+  "available": true,
+  "port": 5646,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "ln-visualizer",
+  "description": "Your Lightning node is continuously receiving, storing, and transmitting graph information. LnVisualizer takes this data and transforms it into an interactive, 3D graph. Search for nodes, filter the graph, and write custom queries to help understand your position in the network.",
+  "tipi_version": 1,
+  "version": "0.0.28",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "View the Lightning Network from your node's perspective",
+  "author": "Max Kotlan",
+  "source": "https://github.com/MaxKotlan/LN-Visualizer",
+  "website": "https://lnvisualizer.com",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501500371,
+  "updated_at": 1792501560371,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

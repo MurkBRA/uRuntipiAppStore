@@ -1,0 +1,26 @@
+{
+  "name": "Telegrapho",
+  "available": true,
+  "port": 3712,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "telegrapho",
+  "description": "Stop pasting sensitive text into third-party apps.",
+  "tipi_version": 1,
+  "version": "1.0.1",
+  "categories": [
+    "network"
+  ],
+  "short_desc": "Private copy and paste between your devices",
+  "author": "egzola",
+  "source": "https://github.com/egzola/telegrapho",
+  "website": "https://github.com/egzola/telegrapho",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501511014,
+  "updated_at": 1792501571014,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

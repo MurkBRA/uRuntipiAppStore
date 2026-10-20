@@ -1,0 +1,37 @@
+services:
+  bitfeed:
+    image: ghcr.io/bitfeed-project/bitfeed-client:v2.3.4
+    environment:
+      - TARGET=umbrel
+      - BACKEND_HOST=bitfeed-api
+      - BACKEND_PORT=8315
+    depends_on:
+      - bitfeed-api
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 80
+      add_to_main_network: true
+      is_main: true
+  bitfeed-api:
+    image: ghcr.io/bitfeed-project/bitfeed-server:v2.3.4
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+    environment:
+      - PORT=8315
+      - BITCOIN_HOST=${APP_BITCOIN_NODE_IP}
+      - BITCOIN_ZMQ_RAWTX_PORT=${APP_BITCOIN_ZMQ_RAWTX_PORT}
+      - BITCOIN_ZMQ_RAWBLOCK_PORT=${APP_BITCOIN_ZMQ_RAWBLOCK_PORT}
+      - BITCOIN_ZMQ_SEQUENCE_PORT=${APP_BITCOIN_ZMQ_SEQUENCE_PORT}
+      - BITCOIN_RPC_PORT=${APP_BITCOIN_RPC_PORT}
+      - BITCOIN_RPC_USER=${APP_BITCOIN_RPC_USER}
+      - BITCOIN_RPC_PASS=${APP_BITCOIN_RPC_PASS}
+      - TARGET=umbrel
+      - RPC_POOLS=1
+      - RPC_POOL_SIZE=16
+      - LOG_LEVEL=info
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

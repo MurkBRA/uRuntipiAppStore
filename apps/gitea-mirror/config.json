@@ -1,0 +1,37 @@
+{
+  "name": "Gitea Mirror",
+  "available": true,
+  "port": 4322,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "gitea-mirror",
+  "description": "Gitea Mirror automatically mirrors your GitHub repositories to a self-hosted Gitea instance. It supports mirroring public and private repositories, organizations, starred repos, issues, wikis, and pull requests.",
+  "tipi_version": 1,
+  "version": "3.41.0",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "Mirror your GitHub repositories to a Gitea instance automatically",
+  "author": "RayLabs HQ",
+  "source": "https://github.com/raylabshq/gitea-mirror",
+  "website": "https://github.com/raylabshq/gitea-mirror",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Gitea Mirror seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501496571,
+  "updated_at": 1792501556571,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

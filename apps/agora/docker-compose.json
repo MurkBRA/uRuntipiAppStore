@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "agora",
+      "image": "nginx:1.19-alpine",
+      "isMain": true,
+      "internalPort": 80,
+      "addToMainNetwork": true,
+      "environment": [
+        {
+          "key": "NGINX_ENVSUBST_OUTPUT_DIR",
+          "value": "/etc/nginx/"
+        },
+        {
+          "key": "APP_AGORA_SERVER_IP",
+          "value": "agora-agora-sidecar"
+        },
+        {
+          "key": "APP_AGORA_FILEBROWSER_IP",
+          "value": "agora-filebrowser"
+        },
+        {
+          "key": "APP_HIDDEN_SERVICE",
+          "value": "${APP_DOMAIN}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/nginx/nginx.conf.template",
+          "containerPath": "/etc/nginx/templates/nginx.conf.template"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/www",
+          "containerPath": "/usr/share/nginx/html"
+        }
+      ],
+      "dependsOn": [
+        "agora-agora-sidecar",
+        "agora-filebrowser"
+      ]
+    },
+    {
+      "name": "agora-filebrowser",
+      "image": "filebrowser/filebrowser:v2.21.1",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "entrypoint": "/data/entrypoint.sh",
+      "environment": [
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/files",
+          "containerPath": "/srv"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/database/filebrowser.db",
+          "containerPath": "/database.db"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    },
+    {
+      "name": "agora-agora-sidecar",
+      "image": "ghcr.io/agora-org/agora:sha-48d3205",
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "LND_RPC_AUTHORITY",
+          "value": "${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}"
+        },
+        {
+          "key": "TLS_CERT_PATH",
+          "value": "/lnd/tls.cert"
+        },
+        {
+          "key": "INVOICES_MACAROON_PATH",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/invoice.macaroon"
+        },
+        {
+          "key": "FILES_DIR",
+          "value": "/files"
+        },
+        {
+          "key": "AGORA_PORT",
+          "value": 8080
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/files",
+          "containerPath": "/files"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

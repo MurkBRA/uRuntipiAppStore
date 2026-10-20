@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "manifold-fedimint-guardian",
+      "image": "ghcr.io/fedibtc/manifold-fman:99d518ffb4c247fd7616783b9f6b20a9dbc1a739",
+      "isMain": true,
+      "internalPort": 8181,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "FLEET_MANAGER_MANIFOLD_ENVIRONMENT",
+          "value": "production"
+        },
+        {
+          "key": "FLEET_MANAGER_ESPLORA_URL",
+          "value": "https://mempool.space/api"
+        },
+        {
+          "key": "FLEET_MANAGER_BITCOIND_URL",
+          "value": "http://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "FLEET_MANAGER_BITCOIND_USERNAME",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "FLEET_MANAGER_BITCOIND_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "FLEET_MANAGER_ADMIN_HTTP_BIND",
+          "value": "0.0.0.0:8181"
+        },
+        {
+          "key": "FLEET_MANAGER_ADMIN_HTTP_AUTH",
+          "value": "password"
+        },
+        {
+          "key": "FLEET_MANAGER_ADMIN_HTTP_PASSWORD_FILE",
+          "value": "/admin-password"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/admin-password",
+          "containerPath": "/admin-password",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

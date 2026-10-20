@@ -1,0 +1,192 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "passky-server",
+      "image": "rabbitcompany/passky-server:8.1.8",
+      "isMain": true,
+      "internalPort": 80,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "SERVER_LOCATION",
+          "value": "US"
+        },
+        {
+          "key": "SERVER_CORES",
+          "value": 1
+        },
+        {
+          "key": "ADMIN_USERNAME",
+          "value": "admin"
+        },
+        {
+          "key": "ADMIN_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "CF_TURNSTILE_SITE_KEY",
+          "value": "1x00000000000000000000AA"
+        },
+        {
+          "key": "CF_TURNSTILE_SECRET_KEY",
+          "value": "1x0000000000000000000000000000000AA"
+        },
+        {
+          "key": "DATABASE_ENGINE",
+          "value": "sqlite"
+        },
+        {
+          "key": "DATABASE_FILE",
+          "value": "passky"
+        },
+        {
+          "key": "MYSQL_PORT",
+          "value": 3306
+        },
+        {
+          "key": "MYSQL_DATABASE",
+          "value": "passky"
+        },
+        {
+          "key": "MYSQL_USER",
+          "value": "passky"
+        },
+        {
+          "key": "MYSQL_SSL",
+          "value": "false"
+        },
+        {
+          "key": "MYSQL_SSL_CA",
+          "value": "/etc/ssl/certs/ca-certificates.crt"
+        },
+        {
+          "key": "MYSQL_CACHE_MODE",
+          "value": 0
+        },
+        {
+          "key": "REDIS_HOST",
+          "value": "127.0.0.1"
+        },
+        {
+          "key": "REDIS_PORT",
+          "value": 6379
+        },
+        {
+          "key": "REDIS_LOCAL_HOST",
+          "value": "127.0.0.1"
+        },
+        {
+          "key": "REDIS_LOCAL_PORT",
+          "value": 6379
+        },
+        {
+          "key": "MAIL_ENABLED",
+          "value": "false"
+        },
+        {
+          "key": "ACCOUNT_MAX",
+          "value": 100
+        },
+        {
+          "key": "ACCOUNT_MAX_PASSWORDS",
+          "value": 1000
+        },
+        {
+          "key": "ACCOUNT_PREMIUM",
+          "value": -1
+        },
+        {
+          "key": "YUBI_CLOUD",
+          "value": "https://api.yubico.com/wsapi/2.0/verify"
+        },
+        {
+          "key": "YUBI_ID",
+          "value": 67857
+        },
+        {
+          "key": "LIMITER_ENABLED",
+          "value": "true"
+        },
+        {
+          "key": "LIMITER_GET_INFO",
+          "value": -1
+        },
+        {
+          "key": "LIMITER_GET_STATS",
+          "value": -1
+        },
+        {
+          "key": "LIMITER_GET_TOKEN",
+          "value": 3
+        },
+        {
+          "key": "LIMITER_GET_PASSWORDS",
+          "value": 2
+        },
+        {
+          "key": "LIMITER_SAVE_PASSWORD",
+          "value": 2
+        },
+        {
+          "key": "LIMITER_EDIT_PASSWORD",
+          "value": 2
+        },
+        {
+          "key": "LIMITER_DELETE_PASSWORD",
+          "value": 2
+        },
+        {
+          "key": "LIMITER_DELETE_PASSWORDS",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_CREATE_ACCOUNT",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_DELETE_ACCOUNT",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_IMPORT_PASSWORDS",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_FORGOT_USERNAME",
+          "value": 60
+        },
+        {
+          "key": "LIMITER_ENABLE_2FA",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_DISABLE_2FA",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_ADD_YUBIKEY",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_REMOVE_YUBIKEY",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_UPGRADE_ACCOUNT",
+          "value": 10
+        },
+        {
+          "key": "LIMITER_GET_REPORT",
+          "value": -1
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/passky",
+          "containerPath": "/var/www/html/databases"
+        }
+      ]
+    }
+  ]
+}

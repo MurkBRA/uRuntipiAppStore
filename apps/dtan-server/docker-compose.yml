@@ -1,0 +1,13 @@
+services:
+  dtan-server:
+    image: voidic/dtan-server:v0.2.0
+    volumes:
+      - ${APP_DATA_DIR}/data/app:/app/data
+      - ${APP_DATA_DIR}/data/config/config.yml:/app/config.yml
+    environment:
+      - RUST_LOG=info
+    x-runtipi:
+      internal_port: 8000
+      is_main: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,12 @@
+services:
+  jupyterlab:
+    image: quay.io/jupyter/base-notebook:lab-4.6.4
+    command: start-notebook.py --IdentityProvider.token=${APP_PASSWORD}
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/home/jovyan/work
+    x-runtipi:
+      internal_port: 8888
+      is_main: true
+x-runtipi:
+  schema_version: 2

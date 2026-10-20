@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "strix",
+      "image": "eduard256/strix:2.2.0",
+      "isMain": true,
+      "internalPort": 4567,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m"
+    }
+  ]
+}

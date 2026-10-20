@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "ride-the-lightning",
+      "image": "shahanafarooqui/rtl:v0.15.13",
+      "isMain": true,
+      "internalPort": 3001,
+      "addToMainNetwork": true,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "entrypoint": "/data/entrypoint.sh",
+      "environment": [
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "PORT",
+          "value": 3001
+        },
+        {
+          "key": "RTL_CONFIG_PATH",
+          "value": "/data"
+        },
+        {
+          "key": "DB_DIRECTORY_PATH",
+          "value": "/data"
+        },
+        {
+          "key": "CHANNEL_BACKUP_PATH",
+          "value": "/data/backup"
+        },
+        {
+          "key": "LN_IMPLEMENTATION",
+          "value": "LND"
+        },
+        {
+          "key": "BLOCK_EXPLORER_URL",
+          "value": "${BLOCK_EXPLORER_URL}"
+        },
+        {
+          "key": "LN_SERVER_URL",
+          "value": "https://${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_REST_PORT}"
+        },
+        {
+          "key": "MACAROON_PATH",
+          "value": "/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "CONFIG_PATH",
+          "value": "/lnd/umbrel-lnd.conf"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/rtl",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_LIGHTNING_NODE_DATA_DIR}",
+          "containerPath": "/lnd",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_BITCOIN_DATA_DIR}",
+          "containerPath": "/bitcoin",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

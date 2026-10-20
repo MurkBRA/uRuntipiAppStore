@@ -1,0 +1,43 @@
+services:
+  fulcrum:
+    image: nmfretz/umbrel-fulcrum:1.0.1
+    volumes:
+      - ${APP_DATA_DIR}/data/fulcrum-logs:/fulcrum-logs
+    environment:
+      - ELECTRUM_HIDDEN_SERVICE=${APP_FULCRUM_RPC_HIDDEN_SERVICE}
+      - ELECTRUM_LOCAL_SERVICE=${APP_DOMAIN}
+      - ELECTRUM_HOST=fulcrum-fulcrum-sidecar
+      - ELECTRUM_PUBLIC_CONNECTION_PORT=50002
+      - BITCOIN_HOST=${APP_BITCOIN_NODE_IP}
+      - RPC_USER=${APP_BITCOIN_RPC_USER}
+      - RPC_PASSWORD=${APP_BITCOIN_RPC_PASS}
+      - RPC_PORT=${APP_BITCOIN_RPC_PORT}
+    depends_on:
+      - fulcrum-fulcrum-sidecar
+    x-runtipi:
+      internal_port: 3006
+      add_to_main_network: true
+      is_main: true
+  fulcrum-fulcrum-sidecar:
+    image: cculianu/fulcrum:v2.1.4
+    command: sh -c 'rm -f /tmp/fulcrum.pipe; mkfifo /tmp/fulcrum.pipe; tee -a /logs/fulcrum.log < /tmp/fulcrum.pipe & exec Fulcrum -D /data _ENV_ > /tmp/fulcrum.pipe 2>&1'
+    user: '1000:1000'
+    ports:
+      - 50002:50002/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/fulcrum:/data
+      - ${APP_DATA_DIR}/data/fulcrum-logs:/logs
+    environment:
+      - TCP=0.0.0.0:50002
+      - ADMIN=0.0.0.0:8000
+      - BITCOIND=${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}
+      - RPCUSER=${APP_BITCOIN_RPC_USER}
+      - RPCPASSWORD=${APP_BITCOIN_RPC_PASS}
+      - PEERING=false
+      - ANNOUNCE=false
+      - DATA_DIR=/data
+    stop_grace_period: 5m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

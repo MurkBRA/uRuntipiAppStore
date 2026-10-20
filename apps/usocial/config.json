@@ -1,0 +1,55 @@
+{
+  "name": "usocial",
+  "available": true,
+  "port": 8448,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "usocial",
+  "description": "The podcast client and feed reader for your personal server. With Lightning Network support.",
+  "tipi_version": 1,
+  "version": "v0.1.5-buster",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Read. Listen. Pay back.",
+  "author": "Ioan Bizău",
+  "source": "https://github.com/ibz/usocial",
+  "website": "http://usocial.me",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "usocial password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Node Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "APP_LIGHTNING_NODE_IP"
+    },
+    {
+      "type": "number",
+      "label": "Lightning (LND) gRPC Port",
+      "required": false,
+      "default": 10009,
+      "env_variable": "APP_LIGHTNING_NODE_GRPC_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501512173,
+  "updated_at": 1792501572173,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "wingfit",
+      "image": "ghcr.io/itskovacs/wingfit:5.3.1",
+      "isMain": true,
+      "internalPort": 8000,
+      "command": [
+        "fastapi",
+        "run",
+        "/app/wingfit/main.py",
+        "--host",
+        "0.0.0.0"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/app/storage"
+        }
+      ]
+    }
+  ]
+}

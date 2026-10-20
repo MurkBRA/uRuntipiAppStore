@@ -1,0 +1,21 @@
+services:
+  satsbook:
+    image: ghcr.io/satsbook/satsbook:2.1.0
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    environment:
+      - SATSBOOK_LND_HOST=${APP_LIGHTNING_NODE_IP}
+      - SATSBOOK_LND_PORT=${APP_LIGHTNING_NODE_GRPC_PORT}
+      - SATSBOOK_LND_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/readonly.macaroon
+      - SATSBOOK_LND_TLS_CERT_PATH=/lnd/tls.cert
+      - SATSBOOK_DATABASE_PATH=/data/satsbook.db
+      - SATSBOOK_APP_PORT=3017
+      - SATSBOOK_LOG_LEVEL=info
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 3017
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

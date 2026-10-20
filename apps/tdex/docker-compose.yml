@@ -1,0 +1,46 @@
+services:
+  tdex:
+    image: caddy:2.6.4-alpine
+    volumes:
+      - ${APP_DATA_DIR}/data/caddy-data/Caddyfile:/etc/caddy/Caddyfile
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+  tdex-oceand:
+    image: ghcr.io/vulpemventures/oceand:v0.1.17
+    volumes:
+      - ${APP_DATA_DIR}/data/ocean-data:/home/ocean/.oceand
+    environment:
+      - OCEAN_LOG_LEVEL=5
+      - OCEAN_DB_TYPE=badger
+      - OCEAN_NO_TLS=true
+      - OCEAN_NO_PROFILER=true
+      - OCEAN_UTXO_EXPIRY_DURATION_IN_SECONDS=240
+    tty: true
+    stop_grace_period: 1m
+  tdex-tdexd:
+    image: ghcr.io/tdex-network/tdexd:v1.0.1
+    ports:
+      - 9092:9092/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/tdexd:/home/tdex/.tdex-daemon
+    environment:
+      - TDEX_LOG_LEVEL=5
+      - TDEX_OPERATOR_LISTENING_PORT=9092
+      - TDEX_TRADE_LISTENING_PORT=9092
+      - TDEX_NO_OPERATOR_TLS=true
+      - TDEX_WALLET_ADDR=oceand:18000
+      - TDEX_CONNECT_ADDR=${APP_TDEX_DAEMON_HIDDEN_SERVICE}
+      - TDEX_CONNECT_PROTO=http
+    depends_on:
+      - tdex-oceand
+    tty: true
+    stop_grace_period: 1m
+  tdex-dashboard:
+    image: ghcr.io/tdex-network/dashboard:v1.0.2
+    environment:
+      - USE_PROXY=false
+      - IS_PACKAGED=true
+      - TRADER_HIDDEN_SERVICE=${APP_TDEX_DAEMON_HIDDEN_SERVICE}
+x-runtipi:
+  schema_version: 2

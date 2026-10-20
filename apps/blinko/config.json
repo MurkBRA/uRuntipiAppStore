@@ -1,0 +1,38 @@
+{
+  "name": "Blinko",
+  "available": true,
+  "port": 20146,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "blinko",
+  "description": "😉 Blinko is an open-source application that combines note-taking, microblogging, pastebin functionality, task management, and AI-powered features in a self-hosted environment. The platform allows users to quickly and efficiently capture their thoughts, with full Markdown support for easy formatting.",
+  "tipi_version": 1,
+  "version": "1.8.8",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An AI-powered hub for your ideas and notes",
+  "author": "Blinko",
+  "source": "https://github.com/blinko-space/blinko",
+  "website": "https://blinko-demo.vercel.app/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Blinko seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501490540,
+  "updated_at": 1792501550540,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

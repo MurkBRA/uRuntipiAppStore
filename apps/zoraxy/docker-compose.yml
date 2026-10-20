@@ -1,0 +1,19 @@
+services:
+  zoraxy:
+    image: zoraxydocker/zoraxy:v3.3.4
+    ports:
+      - 41080:80/tcp
+      - 41443:443/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/config/:/opt/zoraxy/config
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - FASTGEOIP=false
+      - ZEROTIER=false
+      - DOCKER=false
+      - NOAUTH=true
+    x-runtipi:
+      internal_port: 8000
+      is_main: true
+x-runtipi:
+  schema_version: 2

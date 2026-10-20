@@ -1,0 +1,51 @@
+services:
+  elements:
+    image: ghcr.io/tiero/elements-web:v0.0.3
+    user: '1000:1000'
+    environment:
+      - RPC_USER=elements
+      - RPC_PASS=${APP_PASSWORD}
+      - RPC_PORT=7041
+      - RPC_HOST=elements-node
+      - P2P_PORT=18332
+      - REMOTE_RPC_HOST=${APP_ELEMENTS_RPC_HIDDEN_SERVICE}
+      - REMOTE_P2P_HOST=${APP_ELEMENTS_P2P_HIDDEN_SERVICE}
+    depends_on:
+      - elements-node
+    x-runtipi:
+      internal_port: 8080
+      add_to_main_network: true
+      is_main: true
+  elements-node:
+    image: ghcr.io/impa10r/elements:23.3.4
+    command:
+      - '-listen=0'
+      - '-txindex=1'
+      - '-trim_headers=1'
+      - '-assumevalid=546a756e0238e8c5c2c8bee43f0395740519f96aaee5994d05ef6569ce2d0821'
+      - '-validatepegin=1'
+      - '-fallbackfee=0.000001'
+      - '-mainchainrpchost=${APP_BITCOIN_NODE_IP}'
+      - '-mainchainrpcport=${APP_BITCOIN_RPC_PORT}'
+      - '-mainchainrpcuser=${APP_BITCOIN_RPC_USER}'
+      - '-mainchainrpcpassword=${APP_BITCOIN_RPC_PASS}'
+      - '-rpcuser=elements'
+      - '-rpcpassword=${APP_PASSWORD}'
+      - '-rpcbind=0.0.0.0'
+      - '-rpcallowip=0.0.0.0/0'
+      - '-rpcport=7041'
+      - '-port=18332'
+      - '-blockfilterindex=1'
+      - '-peerblockfilters=1'
+      - '-creatediscountct=1'
+    user: '1000:1000'
+    ports:
+      - 7041:7041/tcp
+      - 18332:18332/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data:/home/elements/.elements
+    stop_grace_period: 1m
+    x-runtipi:
+      add_to_main_network: true
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "specter-desktop",
+      "image": "ghcr.io/cryptoadvance/specter-desktop:v2.1.11",
+      "isMain": true,
+      "internalPort": 25441,
+      "addToMainNetwork": true,
+      "stopSignal": "SIGINT",
+      "stopGracePeriod": "1m",
+      "command": [
+        "--host=0.0.0.0",
+        "--specter-data-folder=/data"
+      ],
+      "environment": [
+        {
+          "key": "BTC_RPC_USER",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "BTC_RPC_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "BTC_RPC_HOST",
+          "value": "${APP_BITCOIN_NODE_IP}"
+        },
+        {
+          "key": "BTC_RPC_PORT",
+          "value": "${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "BTC_RPC_PROTOCOL",
+          "value": "http"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

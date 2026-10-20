@@ -1,0 +1,38 @@
+{
+  "name": "Donetick",
+  "available": true,
+  "port": 27781,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "donetick",
+  "description": "Donetick is an open-source task management application designed to streamline the organization of household chores and other recurring responsibilities. It provides a flexible system for assigning tasks to multiple users, using various selection strategies such as random allocation or assignment based on the fewest completed tasks. Tasks can be scheduled with customizable recurrence patterns, making it easy to manage both daily routines and less frequent responsibilities.",
+  "tipi_version": 1,
+  "version": "0.1.83",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An intelligent way to organize tasks and chores",
+  "author": "Donetick",
+  "source": "https://github.com/donetick/donetick",
+  "website": "https://donetick.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Donetick seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501494308,
+  "updated_at": 1792501554308,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

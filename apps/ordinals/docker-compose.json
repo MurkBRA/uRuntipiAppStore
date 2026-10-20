@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "ordinals",
+      "image": "nmfretz/ord:0.27.1",
+      "isMain": true,
+      "internalPort": 80,
+      "addToMainNetwork": true,
+      "stopGracePeriod": "15m30s",
+      "command": "ord server --http",
+      "environment": [
+        {
+          "key": "ORD_DATA_DIR",
+          "value": "/var/lib/ord"
+        },
+        {
+          "key": "ORD_BITCOIN_DATA_DIR",
+          "value": "/var/lib/bitcoind"
+        },
+        {
+          "key": "ORD_COOKIE_FILE",
+          "value": "/var/lib/bitcoind/.cookie"
+        },
+        {
+          "key": "ORD_BITCOIN_RPC_USERNAME",
+          "value": "${APP_BITCOIN_RPC_USER}"
+        },
+        {
+          "key": "ORD_BITCOIN_RPC_PASSWORD",
+          "value": "${APP_BITCOIN_RPC_PASS}"
+        },
+        {
+          "key": "ORD_BITCOIN_RPC_URL",
+          "value": "${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT}"
+        },
+        {
+          "key": "ORD_CHAIN",
+          "value": "${APP_BITCOIN_NETWORK}"
+        },
+        {
+          "key": "ORD_INDEX_RUNES",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/ord",
+          "containerPath": "/var/lib/ord"
+        },
+        {
+          "hostPath": "${APP_BITCOIN_DATA_DIR}",
+          "containerPath": "/var/lib/bitcoind",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

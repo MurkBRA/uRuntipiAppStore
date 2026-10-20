@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "chantools",
+      "image": "guggero/chantools:v0.14.1-umbrel",
+      "isMain": true,
+      "internalPort": 7682,
+      "user": "1000:1000",
+      "stopGracePeriod": "1s",
+      "command": [
+        "ttyd",
+        "-W",
+        "-p",
+        "7682",
+        "bash",
+        "-c",
+        "/bash-wrapper.sh"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data",
+          "containerPath": "/chantools"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app-data/lightning/data/lnd",
+          "containerPath": "/lnd",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

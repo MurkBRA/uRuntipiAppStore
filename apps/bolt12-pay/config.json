@@ -1,0 +1,43 @@
+{
+  "name": "BOLT12 Pay",
+  "available": true,
+  "port": 8367,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bolt12-pay",
+  "description": "BOLT12 Pay is a self-hosted Lightning payments and identity app for LND nodes. It supports BOLT12 Offers, BIP353 and LNURL Lightning Addresses, optional BOLT11 fallback invoices, Nostr identities, NIP-05 and Zaps.",
+  "tipi_version": 1,
+  "version": "0.3.14",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Self-hosted Lightning payments and identity with BOLT12, BIP353, LNURL, and Nostr",
+  "author": "Alex71btc",
+  "source": "https://github.com/Alex71btc/lndk-pay",
+  "website": "https://github.com/Alex71btc",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501490959,
+  "updated_at": 1792501550959,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

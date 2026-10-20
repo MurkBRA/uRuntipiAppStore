@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "mainsail",
+      "image": "ghcr.io/mainsail-crew/mainsail:v2.19.0",
+      "isMain": true,
+      "internalPort": 80,
+      "stopGracePeriod": "1m",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config.json",
+          "containerPath": "/usr/share/nginx/html/config.json",
+          "readOnly": true
+        }
+      ]
+    }
+  ]
+}

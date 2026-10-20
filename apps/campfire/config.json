@@ -1,0 +1,58 @@
+{
+  "name": "Campfire",
+  "available": true,
+  "port": 8004,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "campfire",
+  "description": "Campfire is a web-based chat application for teams. Run your own private chat server with all the features you need.",
+  "tipi_version": 1,
+  "version": "1.5.4",
+  "categories": [
+    "social"
+  ],
+  "short_desc": "Self-hosted chat for teams",
+  "author": "basecamp",
+  "source": "https://github.com/basecamp/once-campfire",
+  "website": "https://once.com/campfire",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Campfire seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    },
+    {
+      "type": "text",
+      "label": "VAPID Public Key (Optional)",
+      "required": false,
+      "default": "none",
+      "env_variable": "VAPID_PUBLIC_KEY"
+    },
+    {
+      "type": "text",
+      "label": "VAPID Private Key (Optional)",
+      "required": false,
+      "default": "none",
+      "env_variable": "VAPID_PRIVATE_KEY"
+    },
+    {
+      "type": "text",
+      "label": "Sentry DSN (Optional)",
+      "required": false,
+      "default": "https://examplePublicKey@o0.ingest.sentry.io/0",
+      "env_variable": "SENTRY_DSN"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501491867,
+  "updated_at": 1792501551867,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

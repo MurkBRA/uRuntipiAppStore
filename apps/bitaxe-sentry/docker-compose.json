@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "bitaxe-sentry",
+      "image": "zachprice105/bitaxe-sentry:v0.8.0",
+      "isMain": true,
+      "internalPort": 7070,
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "command": "uvicorn bitaxe_sentry.sentry.webapp:app --host 0.0.0.0 --port 7070",
+      "environment": [
+        {
+          "key": "DB_PATH",
+          "value": "/var/lib/bitaxe/bitaxe_sentry.db"
+        },
+        {
+          "key": "DB_DATA_DIR",
+          "value": "/var/lib/bitaxe"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/sentry",
+          "containerPath": "/var/lib/bitaxe"
+        }
+      ],
+      "dependsOn": [
+        "bitaxe-sentry-sentry"
+      ]
+    },
+    {
+      "name": "bitaxe-sentry-sentry",
+      "image": "zachprice105/bitaxe-sentry:v0.8.0",
+      "user": "1000:1000",
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "DB_PATH",
+          "value": "/var/lib/bitaxe/bitaxe_sentry.db"
+        },
+        {
+          "key": "DB_DATA_DIR",
+          "value": "/var/lib/bitaxe"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/sentry",
+          "containerPath": "/var/lib/bitaxe"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+services:
+  helipad:
+    image: podcastindexorg/podcasting20-helipad:0.2.2
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
+    environment:
+      - LND_URL=${APP_LIGHTNING_NODE_IP}:${APP_LIGHTNING_NODE_GRPC_PORT}
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 2112
+      add_to_main_network: true
+      is_main: true
+x-runtipi:
+  schema_version: 2

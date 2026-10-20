@@ -1,0 +1,18 @@
+services:
+  silo:
+    image: pgsty/silo:RELEASE.2026-10-18T00-00-00Z
+    command: server /data --console-address :9001
+    user: '1000:1000'
+    ports:
+      - 9131:9000/tcp
+    volumes:
+      - ${APP_DATA_DIR}/data/objects:/data
+    environment:
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 9001
+      is_main: true
+x-runtipi:
+  schema_version: 2

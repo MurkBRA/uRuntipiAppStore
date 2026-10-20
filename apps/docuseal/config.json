@@ -1,0 +1,29 @@
+{
+  "name": "DocuSeal",
+  "available": true,
+  "port": 8387,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "docuseal",
+  "description": "DocuSeal is an open source platform that provides secure and efficient digital document signing and processing.",
+  "tipi_version": 1,
+  "version": "3.3.3",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Open source document filling and signing",
+  "author": "docusealco",
+  "source": "https://github.com/docusealco/docuseal",
+  "website": "https://www.docuseal.com/",
+  "uid": 1000,
+  "gid": 1000,
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501494122,
+  "updated_at": 1792501554122,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

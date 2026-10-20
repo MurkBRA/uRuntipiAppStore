@@ -1,0 +1,36 @@
+{
+  "name": "Yuvomi",
+  "available": true,
+  "port": 26765,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "yuvomi",
+  "description": "Yuvomi is a self-hosted, privacy-focused family planner that bundles everything a household needs into a single fast PWA — no cloud, no tracking, no ads.",
+  "tipi_version": 1,
+  "version": "2.78.0",
+  "categories": [
+    "utilities",
+    "data"
+  ],
+  "short_desc": "Self-hosted family planner — calendar, tasks, shopping, meals & budget",
+  "author": "Ulas Kalayci",
+  "source": "https://github.com/ulsklyc/yuvomi",
+  "website": "https://github.com/ulsklyc/yuvomi",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Yuvomi seed",
+      "min": 64,
+      "encoding": "hex",
+      "env_variable": "APP_SEED"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501513448,
+  "updated_at": 1792501573448,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

@@ -1,0 +1,76 @@
+services:
+  sure:
+    image: ghcr.io/we-promise/sure:0.7.5
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/rails:/rails/storage
+    environment:
+      - POSTGRES_USER=sure_user
+      - POSTGRES_PASSWORD=sure_password
+      - POSTGRES_DB=sure_production
+      - SECRET_KEY_BASE=${APP_SEED}
+      - SELF_HOSTED=true
+      - RAILS_FORCE_SSL=false
+      - RAILS_ASSUME_SSL=false
+      - DB_HOST=sure-db
+      - DB_PORT=5432
+      - REDIS_URL=redis://sure-redis:6379/1
+    depends_on:
+      sure-db:
+        condition: service_healthy
+      sure-redis:
+        condition: service_healthy
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  sure-worker:
+    image: ghcr.io/we-promise/sure:0.7.5
+    command: bundle exec sidekiq
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/rails:/rails/storage
+    environment:
+      - POSTGRES_USER=sure_user
+      - POSTGRES_PASSWORD=sure_password
+      - POSTGRES_DB=sure_production
+      - SECRET_KEY_BASE=${APP_SEED}
+      - SELF_HOSTED=true
+      - RAILS_FORCE_SSL=false
+      - RAILS_ASSUME_SSL=false
+      - DB_HOST=sure-db
+      - DB_PORT=5432
+      - REDIS_URL=redis://sure-redis:6379/1
+    depends_on:
+      sure-db:
+        condition: service_healthy
+      sure-redis:
+        condition: service_healthy
+  sure-db:
+    image: postgres:18.3-alpine
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/postgres:/data
+    environment:
+      - POSTGRES_USER=sure_user
+      - POSTGRES_PASSWORD=sure_password
+      - POSTGRES_DB=sure_production
+      - PGDATA=/data/pgdata
+    healthcheck:
+      test: pg_isready -U sure_user -h localhost -d sure_production
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+  sure-redis:
+    image: redis:8.4.2
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+    healthcheck:
+      test: redis-cli ping
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+x-runtipi:
+  schema_version: 2

@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "localai",
+      "image": "localai/localai:v4.11.0",
+      "isMain": true,
+      "internalPort": 8080,
+      "environment": [
+        {
+          "key": "MODELS_PATH",
+          "value": "/models"
+        },
+        {
+          "key": "LOCALAI_BACKENDS_PATH",
+          "value": "/backends"
+        },
+        {
+          "key": "LOCALAI_EXTERNAL_BACKENDS",
+          "value": "cpu-llama-cpp"
+        },
+        {
+          "key": "LOCALAI_FORCE_META_BACKEND_CAPABILITY_RUN_FILE",
+          "value": "/nonexistent"
+        },
+        {
+          "key": "NVIDIA_DISABLE_REQUIRE",
+          "value": "true"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/models",
+          "containerPath": "/models"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/backends",
+          "containerPath": "/backends"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/data",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/configuration",
+          "containerPath": "/configuration"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/images/",
+          "containerPath": "/tmp/generated/images/"
+        }
+      ],
+      "healthCheck": {
+        "test": "curl -f http://localhost:8080/readyz",
+        "interval": "1m",
+        "timeout": "20m",
+        "retries": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+services:
+  twenty:
+    image: twentycrm/twenty:v2.49.0
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/server-local-data:/app/packages/twenty-server/.local-storage
+      - ${APP_DATA_DIR}/data/docker-data:/app/docker-data
+    environment:
+      - NODE_PORT=3000
+      - PG_DATABASE_URL=postgres://postgres:postgres@twenty-db:5432/default
+      - SERVER_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - FRONT_AUTO_BASE_URL=true
+      - REDIS_URL=redis://twenty-redis:6379
+      - APP_SECRET=2Gn5puuVCH0SI386E9RqOqHm0hGIAyrB
+    depends_on:
+      twenty-db:
+        condition: service_healthy
+      twenty-redis:
+        condition: service_started
+    healthcheck:
+      test: curl --fail http://localhost:3000/healthz
+      interval: 10s
+      timeout: 30s
+      retries: 10
+      start_period: 120s
+    x-runtipi:
+      internal_port: 3000
+      is_main: true
+  twenty-worker:
+    image: twentycrm/twenty:v2.49.0
+    command:
+      - yarn
+      - worker:prod
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/server-local-data:/app/packages/twenty-server/.local-storage
+    environment:
+      - PG_DATABASE_URL=postgres://postgres:postgres@twenty-db:5432/default
+      - SERVER_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - REDIS_URL=redis://twenty-redis:6379
+      - DISABLE_DB_MIGRATIONS=true
+      - DISABLE_CRON_JOBS_REGISTRATION=true
+      - APP_SECRET=2Gn5puuVCH0SI386E9RqOqHm0hGIAyrB
+    depends_on:
+      twenty-db:
+        condition: service_healthy
+      twenty:
+        condition: service_healthy
+  twenty-db:
+    image: postgres:16.8
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=default
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    healthcheck:
+      test: pg_isready -U postgres -h localhost -d postgres
+      interval: 10s
+      timeout: 30s
+      retries: 10
+  twenty-redis:
+    image: redis:7.4.2
+    user: '1000:1000'
+    volumes:
+      - ${APP_DATA_DIR}/data/redis:/data
+x-runtipi:
+  schema_version: 2

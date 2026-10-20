@@ -1,0 +1,41 @@
+services:
+  ee-gateway:
+    image: encryptedenergy/ee-gateway-ui:0.6.5
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+    environment:
+      - EE_DATA_DIR=/data
+      - EE_UI_PORT=8080
+      - EE_GATEWAY_VERSION=0.10.7
+    depends_on:
+      ee-gateway-init_perms:
+        condition: service_completed_successfully
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+  ee-gateway-init_perms:
+    image: encryptedenergy/ee-gateway-worker:0.8.1
+    entrypoint:
+      - sh
+      - '-c'
+      - chown -R 1000:1000 /data
+    user: '0:0'
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+  ee-gateway-worker:
+    image: encryptedenergy/ee-gateway-worker:0.8.1
+    volumes:
+      - ${APP_DATA_DIR}/data:/data
+      - /var/run/dbus:/var/run/dbus:ro
+      - /dev:/dev
+    environment:
+      - EE_DATA_DIR=/data
+    depends_on:
+      ee-gateway-init_perms:
+        condition: service_completed_successfully
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+x-runtipi:
+  schema_version: 2

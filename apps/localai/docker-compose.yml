@@ -1,0 +1,25 @@
+services:
+  localai:
+    image: localai/localai:v4.11.0
+    volumes:
+      - ${APP_DATA_DIR}/data/models:/models
+      - ${APP_DATA_DIR}/data/backends:/backends
+      - ${APP_DATA_DIR}/data/data:/data
+      - ${APP_DATA_DIR}/data/configuration:/configuration
+      - ${APP_DATA_DIR}/data/images/:/tmp/generated/images/
+    environment:
+      - MODELS_PATH=/models
+      - LOCALAI_BACKENDS_PATH=/backends
+      - LOCALAI_EXTERNAL_BACKENDS=cpu-llama-cpp
+      - LOCALAI_FORCE_META_BACKEND_CAPABILITY_RUN_FILE=/nonexistent
+      - NVIDIA_DISABLE_REQUIRE=true
+    healthcheck:
+      test: curl -f http://localhost:8080/readyz
+      interval: 1m
+      timeout: 20m
+      retries: 5
+    x-runtipi:
+      internal_port: 8080
+      is_main: true
+x-runtipi:
+  schema_version: 2

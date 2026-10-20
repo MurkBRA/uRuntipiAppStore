@@ -1,0 +1,26 @@
+{
+  "name": "Rusty Kaspad",
+  "available": true,
+  "port": 4321,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "rusty-kaspad",
+  "description": "Rusty Kaspad is a Rust implementation of a Kaspa full node. This node software provides essential Kaspa network services including peer-to-peer networking and RPC functionality.",
+  "tipi_version": 1,
+  "version": "v0.4.1",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "A Rust implementation of a Kaspa full node",
+  "author": "Kaspa Community",
+  "source": "https://github.com/kaspanet/rusty-kaspa",
+  "website": "https://github.com/kaspanet/rusty-kaspa",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501507231,
+  "updated_at": 1792501567231,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

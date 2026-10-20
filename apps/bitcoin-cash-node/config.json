@@ -1,0 +1,37 @@
+{
+  "name": "Bitcoin Cash Node",
+  "available": true,
+  "port": 3330,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "bitcoin-cash-node",
+  "description": "Run your own Bitcoin Cash full node powered by Bitcoin Cash Node (BCHN). Independently validate every block and transaction without relying on a third party.",
+  "tipi_version": 1,
+  "version": "8bb17f3689d837dbd370ac0d35e4a158ea12b75a",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Run your own Bitcoin Cash full node (BCHN)",
+  "author": "LoneStrike Labs",
+  "source": "https://github.com/danhaus93-ops/umbrel-bch-apps",
+  "website": "https://bitcoincashnode.org",
+  "uid": 1000,
+  "gid": 1000,
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Bitcoin Cash Node rpc pass",
+      "min": 32,
+      "encoding": "hex",
+      "env_variable": "APP_BITCOIN_CASH_NODE_RPC_PASS"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501489860,
+  "updated_at": 1792501549860,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

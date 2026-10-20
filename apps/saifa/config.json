@@ -1,0 +1,63 @@
+{
+  "name": "Saifa",
+  "available": true,
+  "port": 9989,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "saifa",
+  "description": "Saifa is designed to enhance the interoperability and efficiency of applications interacting with the Lightning Network Daemon (LND).",
+  "tipi_version": 1,
+  "version": "v1.3.2",
+  "categories": [
+    "finance"
+  ],
+  "short_desc": "Lightning network invoice manager",
+  "author": "patra nakamo",
+  "source": "https://github.com/patranakamo/saifa-be",
+  "website": "https://github.com/patranakamo",
+  "form_fields": [
+    {
+      "type": "random",
+      "label": "Saifa password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "Bitcoin Network",
+      "required": false,
+      "default": "mainnet",
+      "hint": "Network mode for Bitcoin node (mainnet, testnet, signet, regtest)",
+      "env_variable": "APP_BITCOIN_NETWORK"
+    },
+    {
+      "type": "text",
+      "label": "LND Host / IP",
+      "required": false,
+      "default": "lightning",
+      "env_variable": "LND_IP"
+    },
+    {
+      "type": "number",
+      "label": "LND REST Port",
+      "required": false,
+      "default": 8080,
+      "env_variable": "LND_REST_PORT"
+    },
+    {
+      "type": "text",
+      "label": "Lightning (LND) Data Directory",
+      "required": false,
+      "default": "/data/lnd",
+      "env_variable": "APP_LIGHTNING_NODE_DATA_DIR"
+    }
+  ],
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1792501507302,
+  "updated_at": 1792501567302,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}
