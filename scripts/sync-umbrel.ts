@@ -52,6 +52,7 @@ function parseCliArgs(argv: string[]) {
   let umbrelDir = "";
   let galleryDir = "";
   let force = false;
+  let only = "";
 
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -61,10 +62,14 @@ function parseCliArgs(argv: string[]) {
       galleryDir = path.resolve(argv[++i]);
     } else if (arg === "--force") {
       force = true;
+    } else if (arg.startsWith("--only=")) {
+      only = arg.slice("--only=".length).trim();
+    } else if (arg === "--only" && argv[i + 1]) {
+      only = argv[++i].trim();
     }
   }
 
-  return { umbrelDir, galleryDir, force };
+  return { umbrelDir, galleryDir, force, only };
 }
 
 function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string }) {
@@ -148,6 +153,10 @@ export async function runSync() {
     const manifestRaw = fs.readFileSync(path.join(srcAppDir, "umbrel-app.yml"), "utf8");
     const manifest = YAML.parse(manifestRaw) as Record<string, any>;
     const appId = String(manifest.id || dirName).trim();
+
+    if (cli.only && appId !== cli.only && dirName !== cli.only) {
+      continue;
+    }
 
     if (manifest.disabled === true || blacklistedIds.has(appId) || officialRuntipiIds.has(appId)) {
       skippedBlacklistCount++;
@@ -269,15 +278,16 @@ export async function runSync() {
   syncState.last_synced_at = new Date().toISOString();
   fs.writeFileSync(statePath, `${JSON.stringify(syncState, null, 2)}\n`, "utf8");
 
-  // Generate README.md
-  const readmeRows = portedSummary
-    .map(
-      (a, idx) =>
-        `| ${idx + 1} | \`${a.id}\` | **${a.name}** | \`${a.version}\` | \`${a.port}\` | \`${a.categories.join(", ")}\` |`,
-    )
-    .join("\n");
+  // Generate README.md (only when doing full sync)
+  if (!cli.only) {
+    const readmeRows = portedSummary
+      .map(
+        (a, idx) =>
+          `| ${idx + 1} | \`${a.id}\` | **${a.name}** | \`${a.version}\` | \`${a.port}\` | \`${a.categories.join(", ")}\` |`,
+      )
+      .join("\n");
 
-  const readmeContent = `# uRuntipiAppStore — UmbrelOS App Store Port for Runtipi
+    const readmeContent = `# uRuntipiAppStore — UmbrelOS App Store Port for Runtipi
 
 Automated, tested port of **${portedSummary.length}** non-duplicate apps from [\`getumbrel/umbrel-apps\`](https://github.com/getumbrel/umbrel-apps) to the [Runtipi](https://runtipi.io) App Store format (\`schema_version: 2\` YAML + Dynamic Compose JSON v2).
 
@@ -296,7 +306,8 @@ Automated, tested port of **${portedSummary.length}** non-duplicate apps from [\
 ${readmeRows}
 `;
 
-  fs.writeFileSync(path.join(ROOT_DIR, "README.md"), readmeContent, "utf8");
+    fs.writeFileSync(path.join(ROOT_DIR, "README.md"), readmeContent, "utf8");
+  }
 
   console.log(
     `Sync complete: ${portedSummary.length} total apps (${createdCount} created, ${updatedCount} updated, ${unchangedCount} unchanged, ${skippedBlacklistCount} skipped via blacklist).`,

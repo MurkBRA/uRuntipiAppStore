@@ -6,7 +6,7 @@ services:
       - APP_MEMPOOL_IP=${APP_MEMPOOL_IP}
       - APP_MEMPOOL_PORT=${APP_MEMPOOL_PORT}
       - APP_MEMPOOL_HIDDEN_SERVICE=${APP_MEMPOOL_HIDDEN_SERVICE}
-      - APP_TOR_PROXY_IP=tor-proxy
+      - APP_TOR_PROXY_IP=am-i-exposed-tor-proxy
       - APP_TOR_PROXY_PORT=3001
     depends_on:
       - am-i-exposed-tor-proxy

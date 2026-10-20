@@ -217,7 +217,7 @@
         },
         {
           "key": "BACKEND_HOST",
-          "value": "backend"
+          "value": "bffless-backend"
         },
         {
           "key": "PROXY_MODE",

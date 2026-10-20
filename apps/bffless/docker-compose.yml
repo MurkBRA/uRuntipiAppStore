@@ -84,7 +84,7 @@ services:
       - NGINX_SITES_PATH=/etc/nginx/sites-enabled
       - NGINX_RELOAD_WAIT_MS=3000
       - NGINX_LISTEN_PORT=5537
-      - BACKEND_HOST=backend
+      - BACKEND_HOST=bffless-backend
       - PROXY_MODE=cloudflare-tunnel
       - FEATURE_WILDCARD_SSL=false
       - FEATURE_WILDCARD_SSL_BANNER=false

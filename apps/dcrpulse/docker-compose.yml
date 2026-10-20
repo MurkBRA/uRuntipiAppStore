@@ -6,12 +6,12 @@ services:
       - ${APP_DATA_DIR}/data:/app-data:ro
     environment:
       - PORT=8735
-      - DCRD_RPC_HOST=dcrd
+      - DCRD_RPC_HOST=dcrpulse-dcrd
       - DCRD_RPC_PORT=9109
       - DCRD_RPC_USER=${APP_SEED}
       - DCRD_RPC_PASS=${APP_SEED}
       - DCRD_RPC_CERT=/app-data/dcrd/rpc.cert
-      - DCRWALLET_RPC_HOST=dcrwallet
+      - DCRWALLET_RPC_HOST=dcrpulse-dcrwallet
       - DCRWALLET_RPC_PORT=9110
       - DCRWALLET_GRPC_PORT=9111
       - DCRWALLET_RPC_USER=${APP_SEED}
@@ -55,7 +55,7 @@ services:
       - DCRWALLET_RPC_PASS=${APP_SEED}
       - DCRD_RPC_USER=${APP_SEED}
       - DCRD_RPC_PASS=${APP_SEED}
-      - DCRD_RPC_HOST=dcrd
+      - DCRD_RPC_HOST=dcrpulse-dcrd
       - DCRWALLET_GAP_LIMIT=400
       - TOR_PROXY_IP=${TOR_PROXY_IP}
       - TOR_PROXY_PORT=${TOR_PROXY_PORT}

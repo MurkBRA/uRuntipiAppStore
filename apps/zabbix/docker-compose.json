@@ -10,7 +10,7 @@
       "environment": [
         {
           "key": "DB_SERVER_HOST",
-          "value": "zabbix-database"
+          "value": "zabbix-zabbix-database"
         },
         {
           "key": "POSTGRES_USER",
@@ -22,7 +22,7 @@
         },
         {
           "key": "ZBX_SERVER_HOST",
-          "value": "zabbix-server"
+          "value": "zabbix-zabbix-server"
         },
         {
           "key": "PHP_TZ",
@@ -41,7 +41,7 @@
       "environment": [
         {
           "key": "DB_SERVER_HOST",
-          "value": "zabbix-database"
+          "value": "zabbix-zabbix-database"
         },
         {
           "key": "POSTGRES_USER",
@@ -74,7 +74,7 @@
         },
         {
           "key": "ZBX_SERVER_HOST",
-          "value": "zabbix-server"
+          "value": "zabbix-zabbix-server"
         }
       ]
     },

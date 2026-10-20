@@ -16,7 +16,7 @@ services:
       - PORT=4001
       - WALLET_DIR=/wallet-data/.bark
       - WALLET_DATA_PATH=/Apps/bark-wallet/data/wallet/.bark/
-      - BARKD_URL=http://barkd:4000
+      - BARKD_URL=http://bark-wallet-barkd:4000
       - ARK_SERVER=https://ark.second.tech
       - CHAIN_SOURCE=https://mempool.second.tech/api
       - BARK_NETWORK=mainnet

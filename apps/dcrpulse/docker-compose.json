@@ -14,7 +14,7 @@
         },
         {
           "key": "DCRD_RPC_HOST",
-          "value": "dcrd"
+          "value": "dcrpulse-dcrd"
         },
         {
           "key": "DCRD_RPC_PORT",
@@ -34,7 +34,7 @@
         },
         {
           "key": "DCRWALLET_RPC_HOST",
-          "value": "dcrwallet"
+          "value": "dcrpulse-dcrwallet"
         },
         {
           "key": "DCRWALLET_RPC_PORT",
@@ -140,7 +140,7 @@
         },
         {
           "key": "DCRD_RPC_HOST",
-          "value": "dcrd"
+          "value": "dcrpulse-dcrd"
         },
         {
           "key": "DCRWALLET_GAP_LIMIT",

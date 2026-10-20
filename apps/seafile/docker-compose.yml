@@ -24,7 +24,7 @@ services:
       - ENABLE_SEADOC=true
       - SEADOC_SERVER_URL=http://${APP_DOMAIN}:8921
       - CACHE_PROVIDER=memcached
-      - MEMCACHED_HOST=memcached
+      - MEMCACHED_HOST=seafile-memcached
       - MEMCACHED_PORT=11211
     depends_on:
       - seafile-db

@@ -3,10 +3,10 @@ services:
     image: zabbix/zabbix-web-nginx-pgsql:7.4.15-alpine
     hostname: zabbix-frontend
     environment:
-      - DB_SERVER_HOST=zabbix-database
+      - DB_SERVER_HOST=zabbix-zabbix-database
       - POSTGRES_USER=zabbix
       - POSTGRES_PASSWORD=zabbix
-      - ZBX_SERVER_HOST=zabbix-server
+      - ZBX_SERVER_HOST=zabbix-zabbix-server
       - PHP_TZ=UTC
     depends_on:
       - zabbix-zabbix-server
@@ -20,7 +20,7 @@ services:
     ports:
       - 10050:10050/tcp
     environment:
-      - DB_SERVER_HOST=zabbix-database
+      - DB_SERVER_HOST=zabbix-zabbix-database
       - POSTGRES_USER=zabbix
       - POSTGRES_PASSWORD=zabbix
     depends_on:
@@ -30,7 +30,7 @@ services:
     hostname: zabbix-agent
     environment:
       - ZBX_HOSTNAME=zabbix-agent
-      - ZBX_SERVER_HOST=zabbix-server
+      - ZBX_SERVER_HOST=zabbix-zabbix-server
   zabbix-zabbix-database:
     image: postgres:13.18-alpine3.20
     hostname: zabbix-database

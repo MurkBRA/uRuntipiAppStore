@@ -66,6 +66,10 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
           image: "ghcr.io/org/my-app:1.2.3@sha256:abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
           environment: {
             DB_HOST: "my-app_db_1",
+            BACKEND_HOST: "postgres",
+            DATABASE_URL: "postgres://user:pass@db:5432/mydb",
+            POSTGRES_USER: "postgres",
+            DB_TYPE: "postgres",
             PUBLIC_URL: "http://${DEVICE_DOMAIN_NAME}:8123",
             SECRET: "${APP_PASSWORD}",
             BITCOIN_HOST: "${APP_BITCOIN_NODE_IP}",
@@ -74,6 +78,9 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
           depends_on: {
             db: { condition: "service_healthy" },
           },
+        },
+        postgres: {
+          image: "postgres:16.2@sha256:2222222222222222222222222222222222222222222222222222222222222222",
         },
         db: {
           image: "postgres:16.2@sha256:1111111111111111111111111111111111111111111111111111111111111111",
@@ -111,6 +118,12 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
       add_to_main_network: true,
     });
     expect(res.composeYamlObj.services["my-app"].environment).toContain("DB_HOST=my-app-db");
+    expect(res.composeYamlObj.services["my-app"].environment).toContain("BACKEND_HOST=my-app-postgres");
+    expect(res.composeYamlObj.services["my-app"].environment).toContain(
+      "DATABASE_URL=postgres://user:pass@my-app-db:5432/mydb",
+    );
+    expect(res.composeYamlObj.services["my-app"].environment).toContain("POSTGRES_USER=postgres");
+    expect(res.composeYamlObj.services["my-app"].environment).toContain("DB_TYPE=postgres");
     expect(res.composeYamlObj.services["my-app"].environment).toContain(
       "PUBLIC_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}",
     );

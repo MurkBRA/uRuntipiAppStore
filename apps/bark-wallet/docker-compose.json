@@ -31,7 +31,7 @@
         },
         {
           "key": "BARKD_URL",
-          "value": "http://barkd:4000"
+          "value": "http://bark-wallet-barkd:4000"
         },
         {
           "key": "ARK_SERVER",

@@ -28,8 +28,8 @@ services:
       - CSRF_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:8450,${ips_with_port}
       - SITE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
       - MEDIA_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}/media/
-      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
-      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+      - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger
       - POWERSYNC_URL_PATH=ps
     depends_on:
       wger-db:
@@ -50,8 +50,8 @@ services:
     user: '1000:1000'
     environment:
       - SECRET_KEY=${APP_SEED}
-      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
-      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+      - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger
     depends_on:
       wger-db:
         condition: service_healthy
@@ -67,8 +67,8 @@ services:
     environment:
       - POWERSYNC_CONFIG_PATH=/config/powersync.yaml
       - PS_JWKS_URL=http://wger-web:8000/api/v2/powersync-keys
-      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
-      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+      - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger
       - PS_PORT=8080
     depends_on:
       wger-db:
@@ -127,8 +127,8 @@ services:
       - ${APP_DATA_DIR}/data/media:/home/wger/media
     environment:
       - SECRET_KEY=${APP_SEED}
-      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
-      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+      - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger
     depends_on:
       wger-web:
         condition: service_healthy
@@ -146,8 +146,8 @@ services:
       - ${APP_DATA_DIR}/data/celery-beat:${APP_DATA_DIR}/beat/
     environment:
       - SECRET_KEY=${APP_SEED}
-      - PS_DATABASE_URI=postgres://wger:wger@db:5432/wger
-      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@db:5432/wger
+      - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
+      - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger
     depends_on:
       wger-celery_worker:
         condition: service_healthy

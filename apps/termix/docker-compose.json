@@ -9,11 +9,11 @@
       "environment": [
         {
           "key": "GUACD_HOST",
-          "value": "guacd"
+          "value": "termix-guacd"
         },
         {
           "key": "GUACD_TUNNEL_HOST",
-          "value": "web"
+          "value": "termix"
         },
         {
           "key": "GUACD_RECORDING_PATH",

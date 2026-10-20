@@ -230,10 +230,20 @@ export function transpileCompose(params: {
       return full;
     });
 
-    // 2. Replace Umbrel container DNS names: <appId>_<origService>_1 -> renamed service
+    // 2. Replace Umbrel container DNS names & internal service hosts -> renamed service
     for (const [origKey, finalKey] of Object.entries(serviceRenameMap)) {
       const umbrelContainerName = `${appId}_${origKey}_1`;
       out = out.replaceAll(umbrelContainerName, finalKey);
+
+      // If the service was prefixed, also replace internal URL / URI references to the raw original service name
+      if (origKey !== finalKey) {
+        // Replace URL / URI hostnames: http://origKey:port, postgres://user:pass@origKey:5432, etc.
+        const urlHostRegex = new RegExp(
+          `((?:https?|postgres|postgresql|mysql|redis|mongodb|grpc|wss?):\\/\\/(?:[^@\\/\\s"']+@)?)${origKey}((?::\\d+)?(?:\\/|["'\\s]|$))`,
+          "g",
+        );
+        out = out.replace(urlHostRegex, `$1${finalKey}$2`);
+      }
     }
     // Also catch any removed tor service references
     out = out.replaceAll(`${appId}_tor_1`, "127.0.0.1");
@@ -446,7 +456,17 @@ export function transpileCompose(params: {
       if (typeof entry.value === "number" || typeof entry.value === "boolean") {
         transformedEnv.push(entry);
       } else {
-        const val = transformString(entry.value).trim();
+        let rawVal = entry.value;
+        const trimmed = rawVal.trim();
+        // Only rewrite bare service name if the env variable key explicitly represents a host or IP
+        if (
+          /^(?:HOST|.*_(?:HOST|IP))$/i.test(entry.key) &&
+          serviceRenameMap[trimmed] &&
+          serviceRenameMap[trimmed] !== trimmed
+        ) {
+          rawVal = serviceRenameMap[trimmed];
+        }
+        const val = transformString(rawVal).trim();
         // Schema rule: string env value must have minLength: 1
         if (val.length > 0) {
           transformedEnv.push({ key: entry.key, value: val });

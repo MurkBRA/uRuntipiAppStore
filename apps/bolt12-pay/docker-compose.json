@@ -42,7 +42,7 @@
         },
         {
           "key": "LNDK_GRPC_HOST",
-          "value": "https://lndk"
+          "value": "https://bolt12-pay-lndk"
         },
         {
           "key": "LNDK_GRPC_PORT",

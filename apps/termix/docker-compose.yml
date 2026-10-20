@@ -4,8 +4,8 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data:/app/data
     environment:
-      - GUACD_HOST=guacd
-      - GUACD_TUNNEL_HOST=web
+      - GUACD_HOST=termix-guacd
+      - GUACD_TUNNEL_HOST=termix
       - GUACD_RECORDING_PATH=/termix-data/session_recordings/guacamole
       - ENABLE_TELEMETRY=false
     depends_on:

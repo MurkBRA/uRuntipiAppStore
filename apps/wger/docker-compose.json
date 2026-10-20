@@ -58,11 +58,11 @@
         },
         {
           "key": "PS_DATABASE_URI",
-          "value": "postgres://wger:wger@db:5432/wger"
+          "value": "postgres://wger:wger@wger-db:5432/wger"
         },
         {
           "key": "PS_STORAGE_PG_URI",
-          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+          "value": "postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger"
         },
         {
           "key": "POWERSYNC_URL_PATH",
@@ -110,11 +110,11 @@
         },
         {
           "key": "PS_DATABASE_URI",
-          "value": "postgres://wger:wger@db:5432/wger"
+          "value": "postgres://wger:wger@wger-db:5432/wger"
         },
         {
           "key": "PS_STORAGE_PG_URI",
-          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+          "value": "postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger"
         }
       ],
       "dependsOn": {
@@ -142,11 +142,11 @@
         },
         {
           "key": "PS_DATABASE_URI",
-          "value": "postgres://wger:wger@db:5432/wger"
+          "value": "postgres://wger:wger@wger-db:5432/wger"
         },
         {
           "key": "PS_STORAGE_PG_URI",
-          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+          "value": "postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger"
         },
         {
           "key": "PS_PORT",
@@ -259,11 +259,11 @@
         },
         {
           "key": "PS_DATABASE_URI",
-          "value": "postgres://wger:wger@db:5432/wger"
+          "value": "postgres://wger:wger@wger-db:5432/wger"
         },
         {
           "key": "PS_STORAGE_PG_URI",
-          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+          "value": "postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger"
         }
       ],
       "volumes": [
@@ -297,11 +297,11 @@
         },
         {
           "key": "PS_DATABASE_URI",
-          "value": "postgres://wger:wger@db:5432/wger"
+          "value": "postgres://wger:wger@wger-db:5432/wger"
         },
         {
           "key": "PS_STORAGE_PG_URI",
-          "value": "postgres://powersync_storage:${APP_SEED}@db:5432/wger"
+          "value": "postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger"
         }
       ],
       "volumes": [

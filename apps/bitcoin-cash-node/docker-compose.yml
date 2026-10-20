@@ -8,7 +8,7 @@ services:
       - PORT=3000
       - APP_VERSION=v29.1.37
       - TOR_IP=10.21.22.50
-      - RPC_HOST=bitcoind
+      - RPC_HOST=bitcoin-cash-node-bitcoind
       - RPC_PORT=8332
       - RPC_USER=umbrel
       - RPC_PASS=${APP_BITCOIN_CASH_NODE_RPC_PASS}

@@ -22,7 +22,7 @@
         },
         {
           "key": "RPC_HOST",
-          "value": "bitcoind"
+          "value": "bitcoin-cash-node-bitcoind"
         },
         {
           "key": "RPC_PORT",

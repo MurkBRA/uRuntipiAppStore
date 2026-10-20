@@ -24,7 +24,7 @@
         },
         {
           "key": "APP_TOR_PROXY_IP",
-          "value": "tor-proxy"
+          "value": "am-i-exposed-tor-proxy"
         },
         {
           "key": "APP_TOR_PROXY_PORT",

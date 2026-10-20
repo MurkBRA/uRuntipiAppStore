@@ -89,7 +89,7 @@
         },
         {
           "key": "MEMCACHED_HOST",
-          "value": "memcached"
+          "value": "seafile-memcached"
         },
         {
           "key": "MEMCACHED_PORT",

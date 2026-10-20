@@ -13,7 +13,7 @@ services:
       - CORS_ORIGINS=*
       - LNDK_CLI=/usr/local/bin/lndk-cli
       - LNDK_NETWORK=bitcoin
-      - LNDK_GRPC_HOST=https://lndk
+      - LNDK_GRPC_HOST=https://bolt12-pay-lndk
       - LNDK_GRPC_PORT=7000
       - LNDK_CERT_PATH=/data/lndk/tls-cert.pem
       - LNDK_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
