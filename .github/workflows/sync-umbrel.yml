@@ -48,7 +48,8 @@ jobs:
       - name: Check for changes and classify PR labels
         id: diff_check
         run: |
-          if [ -z "$(git status --porcelain apps/ blacklist.json state/ README.md)" ]; then
+          rm -rf .tmp
+          if [ -z "$(git status --porcelain apps/ blacklist.json README.md)" ]; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT

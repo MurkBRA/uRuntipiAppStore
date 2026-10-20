@@ -61,13 +61,41 @@ export function updateBlacklist(): void {
     });
   }
 
-  blacklist.generated_at = new Date().toISOString();
-  blacklist.runtipi_official_apps = runtipiOfficialApps;
-  blacklist.stats.runtipi_official_total = runtipiOfficialApps.length;
-  blacklist.reserved_runtipi_ports = runtipiOfficialApps
+  const newReservedPorts = runtipiOfficialApps
     .filter((r) => r.port !== null)
     .map((r) => ({ port: r.port, runtipi_id: r.id }))
     .sort((a, b) => a.port - b.port);
+
+  // Also ensure any new official Runtipi app ID is added to blacklisted_umbrel_ids
+  const blacklistedSet = new Set<string>(blacklist.blacklisted_umbrel_ids || []);
+  for (const app of runtipiOfficialApps) {
+    if (fs.existsSync(path.join(ROOT_DIR, "apps", app.id))) {
+      blacklistedSet.add(app.id);
+    }
+  }
+  const updatedBlacklistedIds = Array.from(blacklistedSet).sort((a, b) => a.localeCompare(b));
+
+  const prevComparable = JSON.stringify({
+    apps: blacklist.runtipi_official_apps,
+    ports: blacklist.reserved_runtipi_ports,
+    blocked: blacklist.blacklisted_umbrel_ids,
+  });
+  const nextComparable = JSON.stringify({
+    apps: runtipiOfficialApps,
+    ports: newReservedPorts,
+    blocked: updatedBlacklistedIds,
+  });
+
+  if (prevComparable === nextComparable) {
+    console.log(`blacklist.json is already up to date (${runtipiOfficialApps.length} official Runtipi apps).`);
+    return;
+  }
+
+  blacklist.generated_at = new Date().toISOString();
+  blacklist.blacklisted_umbrel_ids = updatedBlacklistedIds;
+  blacklist.runtipi_official_apps = runtipiOfficialApps;
+  blacklist.stats.runtipi_official_total = runtipiOfficialApps.length;
+  blacklist.reserved_runtipi_ports = newReservedPorts;
 
   fs.writeFileSync(blacklistPath, `${JSON.stringify(blacklist, null, 2)}\n`, "utf8");
   console.log(`Updated blacklist.json with ${runtipiOfficialApps.length} official Runtipi apps.`);

@@ -160,6 +160,13 @@ export async function runSync() {
 
     if (manifest.disabled === true || blacklistedIds.has(appId) || officialRuntipiIds.has(appId)) {
       skippedBlacklistCount++;
+      // If a previously ported app became disabled or blacklisted, remove it from apps/ and state
+      const staleDir = path.join(appsOutputDir, appId);
+      if (fs.existsSync(staleDir)) {
+        fs.rmSync(staleDir, { recursive: true, force: true });
+        delete syncState.apps[appId];
+        updatedCount++;
+      }
       continue;
     }
 
@@ -274,9 +281,11 @@ export async function runSync() {
     }
   }
 
-  fs.mkdirSync(path.dirname(statePath), { recursive: true });
-  syncState.last_synced_at = new Date().toISOString();
-  fs.writeFileSync(statePath, `${JSON.stringify(syncState, null, 2)}\n`, "utf8");
+  if (createdCount > 0 || updatedCount > 0 || !fs.existsSync(statePath)) {
+    fs.mkdirSync(path.dirname(statePath), { recursive: true });
+    syncState.last_synced_at = new Date().toISOString();
+    fs.writeFileSync(statePath, `${JSON.stringify(syncState, null, 2)}\n`, "utf8");
+  }
 
   // Generate README.md (only when doing full sync)
   if (!cli.only) {
