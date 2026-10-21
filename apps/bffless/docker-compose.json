@@ -201,7 +201,7 @@
         },
         {
           "key": "COOKIE_DOMAIN",
-          "value": "umbrel.local"
+          "value": "${LOCAL_DOMAIN}"
         },
         {
           "key": "NGINX_SITES_PATH",

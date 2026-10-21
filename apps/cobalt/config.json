@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "cobalt",
-  "description": "⚙️ In order use your own cobalt instance, go to settings > instances > and toggle \"use a custom processing server\". Add http://umbrel.local:9013 as your server.",
+  "description": "⚙️ In order use your own cobalt instance, go to settings > instances > and toggle \"use a custom processing server\". Add http://<IP-DO-SERVIDOR>:9013 as your server.",
   "tipi_version": 1,
   "version": "11.5",
   "categories": [

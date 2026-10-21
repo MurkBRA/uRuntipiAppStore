@@ -80,7 +80,7 @@ services:
       - API_DOMAIN=http://localhost:5537
       - ADMIN_DOMAIN=localhost
       - COOKIE_SECURE=false
-      - COOKIE_DOMAIN=umbrel.local
+      - COOKIE_DOMAIN=${LOCAL_DOMAIN}
       - NGINX_SITES_PATH=/etc/nginx/sites-enabled
       - NGINX_RELOAD_WAIT_MS=3000
       - NGINX_LISTEN_PORT=5537

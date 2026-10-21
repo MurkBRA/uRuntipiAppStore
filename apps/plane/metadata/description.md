@@ -13,7 +13,7 @@ Meet Plane, an open-source project management tool to track issues, run sprints 
   - Analytics Access real-time insights across all your Plane data. Visualize trends, remove blockers, and keep your projects moving forward.
 
 
-The Plane admin panel can be reached at `umbrel.local:8762/god-mode`
+The Plane admin panel can be reached at `<IP-DO-SERVIDOR>:8762/god-mode`
 
 ## Links
 - **Upstream Version**: `1.4.2`

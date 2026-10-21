@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "etherpad",
-  "description": "⚙️ The admin panel for Etherpad is accessible at \"http://umbrel.local:9002/admin/\". You can find your unique credentials by right-clicking on the Etherpad app icon on the umbrelOS homescreen and selecting \"Show default credentials\".",
+  "description": "⚙️ The admin panel for Etherpad is accessible at \"http://<IP-DO-SERVIDOR>:9002/admin/\". You can find your unique credentials by right-clicking on the Etherpad app icon on the umbrelOS homescreen and selecting \"Show default credentials\".",
   "tipi_version": 1,
   "version": "3.3.9",
   "categories": [

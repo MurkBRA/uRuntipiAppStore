@@ -123,7 +123,7 @@ export function copyAndPrepareAppDataFiles(
 ): void {
   const destDataRoot = path.join(destAppDir, "data");
 
-  function transformFileContent(content: string): string {
+  function transformFileContent(content: string, isHtml = false): string {
     let out = content;
     // Rewrite Umbrel container DNS names <appId>_<service>_1 -> renamed service
     for (const [origService, newService] of Object.entries(serviceRenameMap)) {
@@ -134,6 +134,9 @@ export function copyAndPrepareAppDataFiles(
       .replace(/\$\{?APP_HIDDEN_SERVICE\}?/g, "localhost")
       .replace(/\$\{?DEVICE_DOMAIN_NAME\}?/g, "localhost")
       .replace(/\$\{?DEVICE_HOSTNAME\}?/g, "localhost");
+    if (isHtml) {
+      out = out.replace(/(?<!@)\bumbrel\.local\b/gi, "<IP-DO-SERVIDOR>");
+    }
     return out;
   }
 
@@ -172,7 +175,7 @@ export function copyAndPrepareAppDataFiles(
 
       if (isTextFile && stat.size < 512 * 1024) {
         const raw = fs.readFileSync(fullSrcPath, "utf8");
-        fs.writeFileSync(fullDestPath, transformFileContent(raw), "utf8");
+        fs.writeFileSync(fullDestPath, transformFileContent(raw, /\.html?$/i.test(fullDestPath)), "utf8");
       } else {
         fs.copyFileSync(fullSrcPath, fullDestPath);
       }

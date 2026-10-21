@@ -270,6 +270,7 @@ export function transpileCompose(params: {
       .replace(/\$\{TOR_DATA_DIR(?::-[^}]*)?\}|\$TOR_DATA_DIR\b/g, "${APP_DATA_DIR}/data/tor")
       .replace(/\$\{DEVICE_DOMAIN_NAME(?::-[^}]*)?\}|\$DEVICE_DOMAIN_NAME\b/g, "${APP_DOMAIN}")
       .replace(/\$\{DEVICE_HOSTNAME(?::-[^}]*)?\}|\$DEVICE_HOSTNAME\b/g, "${LOCAL_DOMAIN}")
+      .replace(/(?<!@)\bumbrel\.local\b/g, "${LOCAL_DOMAIN}")
       .replace(/\$\{APP_HIDDEN_SERVICE(?::-[^}]*)?\}|\$APP_HIDDEN_SERVICE\b/g, "${APP_DOMAIN}")
       .replace(/\$\{APP_PROXY_PORT(?::-[^}]*)?\}|\$APP_PROXY_PORT\b/g, String(allocatedPort))
       .replace(/\$\{NETWORK_IP(?::-[^}]*)?\}|\$NETWORK_IP\b/g, "${INTERNAL_IP}");

@@ -36,6 +36,28 @@ export function mapUmbrelCategory(category: string, tagline = "", description = 
   return base;
 }
 
+export function sanitizeUmbrelDescriptionText(
+  text: string,
+  manifestPort: number,
+  allocatedPort: number,
+): string {
+  if (!text) return text;
+  let out = text;
+
+  // Replace umbrel.local:<port> (when not part of an email address like umbrel@umbrel.local)
+  // Also translates manifestPort -> allocatedPort if the port was reallocated for Runtipi
+  out = out.replace(/(?<!@)\bumbrel\.local:(\d+)/gi, (_match, portStr) => {
+    const portNum = Number.parseInt(portStr, 10);
+    const finalPort = portNum === manifestPort ? allocatedPort : portNum;
+    return `<IP-DO-SERVIDOR>:${finalPort}`;
+  });
+
+  // Replace remaining standalone umbrel.local hostnames (not preceded by @)
+  out = out.replace(/(?<!@)\bumbrel\.local\b/gi, "<IP-DO-SERVIDOR>");
+
+  return out;
+}
+
 export function buildRuntipiConfigAndDescription(params: {
   appId: string;
   umbrelManifest: Record<string, any>;
@@ -62,8 +84,17 @@ export function buildRuntipiConfigAndDescription(params: {
   } = params;
 
   const name = String(umbrelManifest.name ?? appId).trim();
-  const tagline = String(umbrelManifest.tagline ?? name).trim();
-  const fullDescription = String(umbrelManifest.description ?? tagline).trim();
+  const manifestPort = Number(umbrelManifest.port) || allocatedPort;
+  const tagline = sanitizeUmbrelDescriptionText(
+    String(umbrelManifest.tagline ?? name).trim(),
+    manifestPort,
+    allocatedPort,
+  );
+  const fullDescription = sanitizeUmbrelDescriptionText(
+    String(umbrelManifest.description ?? tagline).trim(),
+    manifestPort,
+    allocatedPort,
+  );
   const firstParagraph = fullDescription.split(/\r?\n\r?\n/)[0]?.replace(/\r?\n/g, " ").trim() || tagline;
 
   const rawManifestVersion = String(umbrelManifest.version ?? "1.0.0").trim();

@@ -20,7 +20,7 @@ The platform is designed to bridge the gap between simplicity and advanced contr
 
 3. Restart behavior: Configure your containers with the restart policy set to unless stopped or always. This ensures they automatically restart after Arcane restarts or updates.  
 
-4. Web access: You can access any container that exposes a web interface at `umbrel.local:PORT_NUMBER`. For example, if your app runs on port 5050, open `http://umbrel.local:5050` in your browser.
+4. Web access: You can access any container that exposes a web interface at `<IP-DO-SERVIDOR>:PORT_NUMBER`. For example, if your app runs on port 5050, open `http://<IP-DO-SERVIDOR>:5050` in your browser.
 
 ## Default Credentials
 - **Username**: `arcane`

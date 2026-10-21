@@ -11,7 +11,7 @@ Organize files into libraries. A library can be selectively synced into any devi
 A library can be encrypted by a password choosen by you. Files are encrypted before syncing to the server. Even the system admin can't view the files.
 
 🛠️ SET-UP:
-Seafile is configured to work out-of-the-box when installed on Umbrel. However, if you want to be able to upload files from a domain name that is not umbrel.local, open the Seafile app, go to System Admin > Settings and change "FILE_SERVER_ROOT" to /seafhttp.
+Seafile is configured to work out-of-the-box when installed on Umbrel. However, if you want to be able to upload files from a domain name that is not <IP-DO-SERVIDOR>, open the Seafile app, go to System Admin > Settings and change "FILE_SERVER_ROOT" to /seafhttp.
 
 ## Default Credentials
 - **Username**: `umbrel`

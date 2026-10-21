@@ -18,7 +18,7 @@ Element is a new type of messaging app. You choose where your messages are store
 
 An easy way to get started is to install the "Synapse" app on your Umbrel. Synapse is a Matrix homeserver that stores all your personal chat history and user account information.
 
-When you register or login through Element, you will need to change the address of the homeserver you are logging into from the default matrix.org to http://umbrel.local:8008 for local access.
+When you register or login through Element, you will need to change the address of the homeserver you are logging into from the default matrix.org to http://<IP-DO-SERVIDOR>:8008 for local access.
 
 For seamless connection even when you are accessing Element away from home, simply install the "Tailscale" app on your Umbrel and your device you are using to access Element, and use http://umbrel:8008 as the address of your server.
 

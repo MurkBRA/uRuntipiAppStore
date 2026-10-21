@@ -6,9 +6,9 @@ Kokoro is an advanced Text-to-Speech (TTS) model that delivers impressive speech
 
 Its lightweight architecture ensures that Kokoro can be deployed even on less powerful devices, making it easier to integrate into various applications. Developers can use Kokoro in a wide range of projects, whether for virtual assistants, interactive systems, or enhancing accessibility. The model not only provides accurate and intelligible speech, but also introduces emotional nuances that enhance the user experience. With its flexibility and ability to be applied across diverse scenarios, Kokoro is a valuable resource for anyone seeking an efficient, lightweight, and powerful speech synthesis solution in their projects.
 
-⚠️ This app only works in Chromium-based browsers (e.g., Chrome, Edge, Brave) and is available at "umbrel.local:8877/web/". Please note that the app is approximately 4GB in size, so the loading process may take a few moments.
+⚠️ This app only works in Chromium-based browsers (e.g., Chrome, Edge, Brave) and is available at "<IP-DO-SERVIDOR>:8877/web/". Please note that the app is approximately 4GB in size, so the loading process may take a few moments.
 
-⚙️ The API is available at "umbrel.local:8877", and the API documentation can be found at "umbrel.local:8877/docs".
+⚙️ The API is available at "<IP-DO-SERVIDOR>:8877", and the API documentation can be found at "<IP-DO-SERVIDOR>:8877/docs".
 
 ## Links
 - **Upstream Version**: `0.9.0`

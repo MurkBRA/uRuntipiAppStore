@@ -4,7 +4,7 @@
 
 📝 Poznote is a clean and focused application designed to help users capture, structure, and refine information in a flexible workspace. It combines a rich text editor with Markdown formatting to support both quick jotting and long form writing, allowing thoughts to grow and change without friction.
 
-External MCP clients require an access token. Sign in to Poznote as an administrator, then open http://umbrel.local:8389/umbrel-mcp.php to get your connection URL and token. If your Umbrel uses a different address, use that address instead of umbrel.local.
+External MCP clients require an access token. Sign in to Poznote as an administrator, then open http://<IP-DO-SERVIDOR>:8389/umbrel-mcp.php to get your connection URL and token. If your Umbrel uses a different address, use that address instead of <IP-DO-SERVIDOR>.
 
 The interface encourages fluid organization through tags, search, and customizable workspaces so ideas remain easy to find even as the collection expands. Poznote supports attachments for images, documents, and other files, making it possible to keep related material together within a single note.
 

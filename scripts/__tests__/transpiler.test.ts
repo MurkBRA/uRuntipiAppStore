@@ -141,15 +141,17 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
         name: "My App",
         version: "1.2.3",
         tagline: "Awesome self-hosted tool",
-        description: "First paragraph.\n\nSecond paragraph.",
+        description:
+          "First paragraph available at umbrel.local:8877/web/ and API docs at http://umbrel.local:8877/docs.\n\nSecond paragraph.",
         category: "developer",
+        port: 8877,
         developer: 42,
         website: "https://example.com",
         repo: "",
-        defaultUsername: "admin",
+        defaultUsername: "umbrel@umbrel.local",
         defaultPassword: "changeme",
       },
-      allocatedPort: 8123,
+      allocatedPort: 18877,
       mainImageTag: "v1.2.3",
       formFields: [contractField],
       tipiVersion: 1,
@@ -164,6 +166,9 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
     expect(config.author).toBe("42");
     expect(config.source).toBe("https://example.com");
     expect(config.categories).toEqual(["development"]);
+    expect(config.description).toContain("<IP-DO-SERVIDOR>:18877/web/");
+    expect(config.description).toContain("http://<IP-DO-SERVIDOR>:18877/docs");
     expect(descriptionMd).toContain("Default Credentials");
+    expect(descriptionMd).toContain("umbrel@umbrel.local");
   });
 });
