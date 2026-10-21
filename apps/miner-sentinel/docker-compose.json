@@ -105,7 +105,7 @@
         },
         {
           "key": "DJANGO_SUPERUSER_EMAIL",
-          "value": "admin@umbrel.local"
+          "value": "${DJANGO_SUPERUSER_EMAIL}"
         },
         {
           "key": "API_BASE_URL",

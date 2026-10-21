@@ -19,6 +19,13 @@
   "gid": 1000,
   "form_fields": [
     {
+      "type": "text",
+      "label": "Akaunting Admin Email",
+      "required": false,
+      "default": "admin@tipi.local",
+      "env_variable": "ADMIN_EMAIL"
+    },
+    {
       "type": "random",
       "label": "Akaunting password",
       "min": 32,

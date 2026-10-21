@@ -459,8 +459,18 @@ export function transpileCompose(params: {
       } else {
         let rawVal = entry.value;
         const trimmed = rawVal.trim();
-        // Only rewrite bare service name if the env variable key explicitly represents a host or IP
-        if (
+        // Convert hardcoded Umbrel admin emails into configurable Runtipi form_fields
+        if (/^(?:umbrel|admin)@umbrel\.local$/i.test(trimmed)) {
+          ensureFormField({
+            type: "text",
+            label: `${appName} Admin Email`,
+            required: false,
+            default: "admin@tipi.local",
+            env_variable: entry.key,
+          });
+          rawVal = `\${${entry.key}}`;
+        } else if (
+          // Only rewrite bare service name if the env variable key explicitly represents a host or IP
           /^(?:HOST|.*_(?:HOST|IP))$/i.test(entry.key) &&
           serviceRenameMap[trimmed] &&
           serviceRenameMap[trimmed] !== trimmed
@@ -473,6 +483,23 @@ export function transpileCompose(params: {
           transformedEnv.push({ key: entry.key, value: val });
         }
       }
+    }
+    if (appId === "pocketbase" && isMain) {
+      ensureFormField({
+        type: "text",
+        label: `${appName} Admin Email`,
+        required: false,
+        default: "admin@tipi.local",
+        env_variable: "PB_ADMIN_EMAIL",
+      });
+      ensureFormField({
+        type: "random",
+        label: `${appName} password`,
+        min: 32,
+        env_variable: "APP_PASSWORD",
+      });
+      transformedEnv.push({ key: "PB_ADMIN_EMAIL", value: "${PB_ADMIN_EMAIL}" });
+      transformedEnv.push({ key: "APP_PASSWORD", value: "${APP_PASSWORD}" });
     }
     if (transformedEnv.length > 0) {
       svc.environment = transformedEnv;

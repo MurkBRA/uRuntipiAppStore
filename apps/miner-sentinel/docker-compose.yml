@@ -47,7 +47,7 @@ services:
       - CSRF_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://*.ts.net:3082
       - DJANGO_SUPERUSER_USERNAME=admin
       - DJANGO_SUPERUSER_PASSWORD=${APP_PASSWORD}
-      - DJANGO_SUPERUSER_EMAIL=admin@umbrel.local
+      - DJANGO_SUPERUSER_EMAIL=${DJANGO_SUPERUSER_EMAIL}
       - API_BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
     depends_on:
       - miner-sentinel-db

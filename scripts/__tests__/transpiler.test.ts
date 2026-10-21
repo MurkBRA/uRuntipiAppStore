@@ -169,6 +169,6 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
     expect(config.description).toContain("<IP-DO-SERVIDOR>:18877/web/");
     expect(config.description).toContain("http://<IP-DO-SERVIDOR>:18877/docs");
     expect(descriptionMd).toContain("Default Credentials");
-    expect(descriptionMd).toContain("umbrel@umbrel.local");
+    expect(descriptionMd).toContain("admin@tipi.local");
   });
 });

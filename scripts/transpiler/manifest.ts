@@ -148,12 +148,30 @@ export function buildRuntipiConfigAndDescription(params: {
   const defaultUser = String(umbrelManifest.defaultUsername ?? "").trim();
   const defaultPass = String(umbrelManifest.defaultPassword ?? "").trim();
   const detPass = Boolean(umbrelManifest.deterministicPassword);
+  const adminEmailField = formFields.find((f) =>
+    ["ADMIN_EMAIL", "APP_ADMIN_EMAIL", "SUPER_ADMINS", "DJANGO_SUPERUSER_EMAIL", "PB_ADMIN_EMAIL"].includes(
+      f.env_variable,
+    ),
+  );
+  const hasGeneratedAppPassword = formFields.some((f) => f.env_variable === "APP_PASSWORD");
 
-  if (defaultUser || defaultPass || detPass) {
+  if (defaultUser || defaultPass || detPass || adminEmailField) {
     const credLines: string[] = ["## Default Credentials"];
-    if (defaultUser) credLines.push(`- **Username**: \`${defaultUser}\``);
-    if (defaultPass) credLines.push(`- **Password**: \`${defaultPass}\``);
-    if (detPass && !defaultPass) {
+    if (adminEmailField) {
+      credLines.push(
+        `- **Username / Email**: Configured via \`${adminEmailField.env_variable}\` in your Runtipi app settings (default: \`${adminEmailField.default || "admin@tipi.local"}\`)`,
+      );
+    } else if (defaultUser) {
+      const normalizedUser = /^(?:umbrel|admin)@umbrel\.local$/i.test(defaultUser) ? "admin@tipi.local" : defaultUser;
+      credLines.push(`- **Username**: \`${normalizedUser}\``);
+    }
+    if (hasGeneratedAppPassword) {
+      credLines.push(
+        "- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.",
+      );
+    } else if (defaultPass) {
+      credLines.push(`- **Password**: \`${defaultPass}\``);
+    } else if (detPass) {
       credLines.push(
         "- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.",
       );

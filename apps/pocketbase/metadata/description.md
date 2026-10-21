@@ -17,8 +17,8 @@ Sanely store files locally or in a S3 storage. Easily attach media to your datab
 Use as a standalone app OR as a framework, that you can extend via Go and JavaScript hooks to create your own custom portable backend.
 
 ## Default Credentials
-- **Username**: `umbrel@umbrel.local`
-- **Password**: `umbrel-pocketbase`
+- **Username / Email**: Configured via `PB_ADMIN_EMAIL` in your Runtipi app settings (default: `admin@tipi.local`)
+- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
 - **Upstream Version**: `0.40.5`

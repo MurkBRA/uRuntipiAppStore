@@ -50,7 +50,7 @@
         },
         {
           "key": "SUPER_ADMINS",
-          "value": "umbrel@umbrel.local"
+          "value": "${SUPER_ADMINS}"
         },
         {
           "key": "LOG_CHANNEL",
@@ -179,7 +179,7 @@
         },
         {
           "key": "SUPER_ADMINS",
-          "value": "umbrel@umbrel.local"
+          "value": "${SUPER_ADMINS}"
         },
         {
           "key": "LOG_CHANNEL",
@@ -312,7 +312,7 @@
         },
         {
           "key": "SUPER_ADMINS",
-          "value": "umbrel@umbrel.local"
+          "value": "${SUPER_ADMINS}"
         },
         {
           "key": "LOG_CHANNEL",

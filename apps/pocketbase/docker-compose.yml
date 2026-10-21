@@ -6,6 +6,9 @@ services:
       - ${APP_DATA_DIR}/data/public:/pb_public
       - ${APP_DATA_DIR}/data/hooks:/pb_hooks
       - ${APP_DATA_DIR}/data/migrations:/pb_migrations
+    environment:
+      - PB_ADMIN_EMAIL=${PB_ADMIN_EMAIL}
+      - APP_PASSWORD=${APP_PASSWORD}
     stop_grace_period: 1m
     x-runtipi:
       internal_port: 8090

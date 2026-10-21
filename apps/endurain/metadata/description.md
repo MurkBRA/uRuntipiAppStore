@@ -18,7 +18,7 @@ Features:
 
 ## Default Credentials
 - **Username**: `admin`
-- **Password**: `admin`
+- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
 - **Upstream Version**: `0.19.4`

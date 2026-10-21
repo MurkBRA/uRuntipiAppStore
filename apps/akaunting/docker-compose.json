@@ -49,7 +49,7 @@
         },
         {
           "key": "ADMIN_EMAIL",
-          "value": "umbrel@umbrel.local"
+          "value": "${ADMIN_EMAIL}"
         },
         {
           "key": "ADMIN_PASSWORD",

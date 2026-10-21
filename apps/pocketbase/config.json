@@ -16,6 +16,21 @@
   "source": "https://github.com/pocketbase/pocketbase",
   "website": "https://pocketbase.io/",
   "url_suffix": "_/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "PocketBase Admin Email",
+      "required": false,
+      "default": "admin@tipi.local",
+      "env_variable": "PB_ADMIN_EMAIL"
+    },
+    {
+      "type": "random",
+      "label": "PocketBase password",
+      "min": 32,
+      "env_variable": "APP_PASSWORD"
+    }
+  ],
   "supported_architectures": [
     "arm64",
     "amd64"

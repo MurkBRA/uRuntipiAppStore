@@ -9,7 +9,7 @@
       "environment": [
         {
           "key": "APP_ADMIN_EMAIL",
-          "value": "umbrel@umbrel.local"
+          "value": "${APP_ADMIN_EMAIL}"
         },
         {
           "key": "APP_ADMIN_PASSWORD",

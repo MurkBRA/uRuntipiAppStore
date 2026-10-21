@@ -30,6 +30,13 @@
       "label": "MinerSentinel password",
       "min": 32,
       "env_variable": "APP_PASSWORD"
+    },
+    {
+      "type": "text",
+      "label": "MinerSentinel Admin Email",
+      "required": false,
+      "default": "admin@tipi.local",
+      "env_variable": "DJANGO_SUPERUSER_EMAIL"
     }
   ],
   "supported_architectures": [

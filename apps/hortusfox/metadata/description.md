@@ -15,7 +15,7 @@ The interface is responsive and works across devices, ensuring that plant inform
 HortusFox is ideal for individuals and families who enjoy caring for plants and want a modern, secure, and customizable way to support their gardening routines. With its thoughtful design and rich feature set, it transforms the way people interact with their green spaces.
 
 ## Default Credentials
-- **Username**: `umbrel@umbrel.local`
+- **Username / Email**: Configured via `APP_ADMIN_EMAIL` in your Runtipi app settings (default: `admin@tipi.local`)
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links

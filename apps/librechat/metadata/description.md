@@ -67,7 +67,7 @@ Enhanced ChatGPT Clone: Features Agents, DeepSeek, Anthropic, AWS, OpenAI, Assis
     - Community-driven development, support, and feedback
 
 ## Default Credentials
-- **Username**: `umbrel@umbrel.local`
+- **Username**: `admin@tipi.local`
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links

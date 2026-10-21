@@ -137,6 +137,21 @@ export function copyAndPrepareAppDataFiles(
     if (isHtml) {
       out = out.replace(/(?<!@)\bumbrel\.local\b/gi, "<IP-DO-SERVIDOR>");
     }
+    if (appId === "pocketbase") {
+      out = out
+        .replace(
+          'record.set("email", "umbrel@umbrel.local")',
+          'record.set("email", $os.getenv("PB_ADMIN_EMAIL") || "admin@tipi.local")',
+        )
+        .replace(
+          'record.set("password", "umbrel-pocketbase")',
+          'record.set("password", $os.getenv("APP_PASSWORD") || "tipi-pocketbase")',
+        )
+        .replace(
+          'findAuthRecordByEmail("_superusers", "umbrel@umbrel.local")',
+          'findAuthRecordByEmail("_superusers", $os.getenv("PB_ADMIN_EMAIL") || "admin@tipi.local")',
+        );
+    }
     return out;
   }
 

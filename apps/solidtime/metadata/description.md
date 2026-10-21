@@ -21,7 +21,7 @@
 The application takes a few minutes until it becomes available after installation. Please be patient.
 
 ## Default Credentials
-- **Username**: `umbrel@umbrel.local`
+- **Username / Email**: Configured via `SUPER_ADMINS` in your Runtipi app settings (default: `admin@tipi.local`)
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links

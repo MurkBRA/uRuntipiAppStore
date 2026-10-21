@@ -29,7 +29,7 @@ Key Features:
 🔧 App Store Extensions - Expand functionality with add-ons like payroll, advanced reports, or project management.
 
 ## Default Credentials
-- **Username**: `umbrel@umbrel.local`
+- **Username / Email**: Configured via `ADMIN_EMAIL` in your Runtipi app settings (default: `admin@tipi.local`)
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links

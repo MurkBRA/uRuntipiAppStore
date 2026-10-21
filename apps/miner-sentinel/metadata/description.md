@@ -23,7 +23,7 @@ In-app Activity journal plus Telegram, Discord, ntfy, Gotify, or webhook notific
 Runs entirely on your own hardware. All metrics stay in your PostgreSQL database. Packaged for Umbrel with multi-architecture Docker images.
 
 ## Default Credentials
-- **Username**: `admin`
+- **Username / Email**: Configured via `DJANGO_SUPERUSER_EMAIL` in your Runtipi app settings (default: `admin@tipi.local`)
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links

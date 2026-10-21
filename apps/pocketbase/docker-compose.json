@@ -7,6 +7,16 @@
       "isMain": true,
       "internalPort": 8090,
       "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "PB_ADMIN_EMAIL",
+          "value": "${PB_ADMIN_EMAIL}"
+        },
+        {
+          "key": "APP_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        }
+      ],
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/data",
