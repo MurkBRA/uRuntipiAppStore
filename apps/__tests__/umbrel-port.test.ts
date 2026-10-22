@@ -169,6 +169,18 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           composeYml.networks,
           `App ${id}/docker-compose.yml must not specify hardcoded "networks:" (Runtipi manages dynamic network isolation)`,
         ).toBeUndefined();
+
+        // 8. Specific app regression checks
+        if (id === "airtrail") {
+          const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
+          expect(
+            configJson.form_fields,
+            "airtrail must not define form_fields (such as APP_CONTAINER_USER)",
+          ).toBeUndefined();
+          for (const [sName, sVal] of Object.entries(composeYml.services || {})) {
+            expect((sVal as any).user, `airtrail service "${sName}" must not specify user:`).toBeUndefined();
+          }
+        }
       });
     }
   });
