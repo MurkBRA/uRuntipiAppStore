@@ -10,7 +10,7 @@ services:
       - ${APP_DATA_DIR}/data/config:/config
       - ${APP_DATA_DIR}/data/storage:/media/frigate
     environment:
-      - FRIGATE_RTSP_PASSWORD=${APP_PASSWORD}
+      - FRIGATE_RTSP_PASSWORD=${APP_RTSP_PASSWORD:-${APP_PASSWORD}}
     shm_size: 128mb
     privileged: true
     x-runtipi:

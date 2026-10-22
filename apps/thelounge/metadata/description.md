@@ -10,9 +10,12 @@ The Lounge can be installed on a continuously running server for optimal perform
 
 It offers both private mode, combining the functionalities of a bouncer and a client for a modern chat experience, and public mode, allowing open chat access without registration.
 
-## Default Credentials
-- **Username**: `umbrel`
-- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
+## User Management
+- **User Creation**: The Lounge requires adding users via the command line. Run:
+  ```bash
+  docker exec -it thelounge-thelounge-1 s6-setuidgid node thelounge add <username>
+  ```
+  Follow the on-screen prompt to set your password.
 
 ## Links
 - **Upstream Version**: `4.4.3`

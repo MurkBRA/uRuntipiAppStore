@@ -239,6 +239,15 @@ Durante a inspeção cruzada do código-fonte do `runtipi/runtipi-appstore` (`ap
 >   2. **Especialização de Variáveis de Criptografia**: Em `scripts/transpiler/compose.ts`, quando uma variável de ambiente representa `ENCRYPTION_KEY`, `SECRET_KEY` ou `JWT_SECRET`, ela é mapeada para uma variável dedicada (`APP_ENCRYPTION_KEY`, `APP_SECRET_KEY`, `APP_JWT_SECRET`) com label transparente no formulário da interface ("Arcane encryption key", "Endurain secret key", etc.) e fallback `${APP_NOVA:-${APP_PASSWORD}}` para preservar instalações anteriores.
 >   3. **Proteção Anti-Regressão**: Testes unitários no `transpiler.test.ts` e de integração no `umbrel-port.test.ts` validam continuamente essa integridade.
 
+> [!IMPORTANT]
+> **Armadilha #14: Senhas de Primeiro Acesso Geradas no Console/Logs (ex: Frigate) e Senhas de Serviços Secundários (RTSP)**
+> - **O Problema**: No Umbrel, aplicativos como `frigate` utilizavam `deterministicPassword: true` no manifesto e vinculavam `${APP_PASSWORD}` apenas para serviços secundários de rede (como `FRIGATE_RTSP_PASSWORD`). Como a interface web do Frigate (v0.14+) não lê variáveis de ambiente de senha e gera um segredo aleatório impresso exclusivamente nos logs do console do container no primeiro boot, transpor `APP_PASSWORD` com label genérico "Frigate password" e documentar `Password: Generated automatically via the APP_PASSWORD field...` faz o usuário tentar autenticar na interface web com a credencial de RTSP e falhar. Adicionalmente, manifestos com `deterministicPassword: true` que não geravam campo `APP_PASSWORD` no Runtipi (`datum`, `librechat`, `solidtime`, `thelounge`, etc.) acabavam com documentações "fantasma" prometendo um campo inexistente.
+> - **Nossa Solução**:
+>   1. **Especialização de Variáveis Secundárias / RTSP**: Em `scripts/transpiler/compose.ts`, variáveis como `FRIGATE_RTSP_PASSWORD` e `*_RTSP_PASSWORD` são especializadas como `APP_RTSP_PASSWORD` com label transparente ("Frigate RTSP password") e hint explicativo diferenciando do login web.
+>   2. **Documentação Explícita de Console/Logs**: Em `scripts/transpiler/manifest.ts`, aplicativos com autenticação baseada em console (Frigate) têm a seção `Default Credentials` configurada para instruir a consulta aos logs do container (`docker logs frigate`) e o procedimento de reset (`auth.reset_admin_password: true`).
+>   3. **Eliminação de Senhas Fantasma**: No `manifest.ts`, nunca é emitido texto de `APP_PASSWORD` a menos que o campo `APP_PASSWORD` de fato exista em `form_fields`.
+>   4. **Verificação Global Anti-Regressão**: O teste `umbrel-port.test.ts` garante que nenhum app da loja contenha promessa de `APP_PASSWORD` na descrição sem possuir o respectivo `form_field` e uso no `docker-compose.yml`.
+
 ---
 
 ## 4. Esquematização Completa de Todos os Testes (Pirâmide em 5 Camadas)

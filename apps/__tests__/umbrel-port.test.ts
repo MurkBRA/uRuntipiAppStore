@@ -216,6 +216,21 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(backendHostEnv?.value).toBe("backend");
         }
 
+        if (id === "frigate") {
+          const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
+          const descMd = fs.readFileSync(path.join(appDir, "metadata", "description.md"), "utf8");
+          // RTSP stream password must not be mislabeled as admin login password
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_PASSWORD")).toBe(false);
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_RTSP_PASSWORD")).toBe(true);
+          const rtspField = configJson.form_fields.find((f: any) => f.env_variable === "APP_RTSP_PASSWORD");
+          expect(rtspField.label).toContain("RTSP");
+          expect(descMd).toContain("console/logs");
+          expect(descMd).toContain("APP_RTSP_PASSWORD");
+          expect(descMd).not.toContain("Generated automatically via the `APP_PASSWORD` field");
+          expect(composeYmlRaw).toContain("FRIGATE_RTSP_PASSWORD=${APP_RTSP_PASSWORD:-${APP_PASSWORD}}");
+          expect(composeJsonRaw).toContain("${APP_RTSP_PASSWORD:-${APP_PASSWORD}}");
+        }
+
         // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose
         const configJsonPath = path.join(appDir, "config.json");
         const appConfig = JSON.parse(fs.readFileSync(configJsonPath, "utf8"));
@@ -246,6 +261,18 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           configDescProse,
           `App ${id}/config.json leaks "Umbrel" platform reference in description/short_desc`,
         ).not.toMatch(/\bUmbrel\b/);
+
+        // 10. Credentials integrity: if description mentions generated APP_PASSWORD, the app MUST declare that form field and use it
+        if (descMd.includes("Generated automatically via the `APP_PASSWORD` field")) {
+          expect(
+            appConfig.form_fields?.some((f: any) => f.env_variable === "APP_PASSWORD"),
+            `App ${id} promises generated APP_PASSWORD in description.md but has no APP_PASSWORD form_field in config.json`,
+          ).toBe(true);
+          expect(
+            composeYmlRaw.includes("APP_PASSWORD"),
+            `App ${id} promises generated APP_PASSWORD in description.md but does not use APP_PASSWORD in docker-compose.yml`,
+          ).toBe(true);
+        }
       });
     }
   });

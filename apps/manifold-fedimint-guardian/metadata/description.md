@@ -9,7 +9,7 @@ As part of a federation, you participate in the consensus with other guardians. 
 Manifold Fedimint Guardian is part of Manifold, the protocol for accelerating the deployment and decentralisation of Fedimint federations.
 
 ## Default Credentials
-- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
+- **Password**: Stored on your host in `${APP_DATA_DIR}/data/admin-password` (generated during guardian provisioning).
 
 ## Inter-App Connections
 

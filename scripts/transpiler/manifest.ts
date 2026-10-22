@@ -179,7 +179,16 @@ export function buildRuntipiConfigAndDescription(params: {
   );
   const hasGeneratedAppPassword = formFields.some((f) => f.env_variable === "APP_PASSWORD");
 
-  if (defaultUser || defaultPass || detPass || adminEmailField) {
+  if (umbrelManifest.id === "frigate") {
+    const credLines: string[] = [
+      "## Default Credentials",
+      "- **Username**: `admin`",
+      "- **Password**: Generated automatically in the container console/logs on first launch. View your container logs (`docker logs frigate` or check the Runtipi logs viewer) to retrieve your initial password.",
+      "- **Password Reset**: If you need to reset the admin password later, set `auth.reset_admin_password: true` in your Frigate configuration and restart the container.",
+      "- **RTSP Stream Password**: Configured via the `APP_RTSP_PASSWORD` field in your Runtipi app configuration.",
+    ];
+    mdSections.push(credLines.join("\n"));
+  } else if (defaultUser || defaultPass || (detPass && hasGeneratedAppPassword) || adminEmailField) {
     const credLines: string[] = ["## Default Credentials"];
     if (adminEmailField) {
       credLines.push(
@@ -199,7 +208,7 @@ export function buildRuntipiConfigAndDescription(params: {
       }
       if (defaultPass) {
         credLines.push(`- **Password**: \`${defaultPass}\``);
-      } else if (hasGeneratedAppPassword || detPass) {
+      } else if (hasGeneratedAppPassword) {
         credLines.push(
           "- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.",
         );

@@ -67,8 +67,7 @@ Enhanced ChatGPT Clone: Features Agents, DeepSeek, Anthropic, AWS, OpenAI, Assis
     - Community-driven development, support, and feedback
 
 ## Default Credentials
-- **Username**: `admin@tipi.local`
-- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
+- **First-time Setup**: On initial launch, navigate to the LibreChat web interface and register your administrator account via the Sign Up form.
 
 ## Links
 - **Upstream Version**: `0.8.7`

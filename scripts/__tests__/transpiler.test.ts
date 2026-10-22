@@ -447,4 +447,88 @@ Access at umbrel.local:8080.
     expect(res.composeYamlObj.services.bffless.depends_on).toContain("backend");
     expect(res.composeYamlObj.services.bffless.depends_on).toContain("frontend");
   });
+
+  it("transpileCompose specializes FRIGATE_RTSP_PASSWORD into APP_RTSP_PASSWORD form_field", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        frigate: {
+          image: "ghcr.io/blakeblackshear/frigate:0.18.2",
+          environment: {
+            FRIGATE_RTSP_PASSWORD: "${APP_PASSWORD}",
+          },
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "frigate",
+      appName: "Frigate",
+      manifestPort: 8971,
+      allocatedPort: 5004,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    expect(res.formFields.some((f) => f.env_variable === "APP_PASSWORD")).toBe(false);
+    expect(res.formFields.some((f) => f.env_variable === "APP_RTSP_PASSWORD" && f.label === "Frigate RTSP password")).toBe(true);
+    const frigateSvc = res.composeJson.services.find((s: any) => s.name === "frigate");
+    const rtspEnv = frigateSvc.environment.find((e: any) => e.key === "FRIGATE_RTSP_PASSWORD");
+    expect(rtspEnv.value).toBe("${APP_RTSP_PASSWORD:-${APP_PASSWORD}}");
+  });
+
+  it("buildRuntipiConfigAndDescription documents console/logs credentials for frigate and avoids phantom APP_PASSWORD", () => {
+    const { descriptionMd: frigateDesc } = buildRuntipiConfigAndDescription({
+      appId: "frigate",
+      umbrelManifest: {
+        id: "frigate",
+        name: "Frigate",
+        version: "0.18.2",
+        category: "automation",
+        port: 8971,
+        developer: "Blake Blackshear",
+        deterministicPassword: true,
+      },
+      allocatedPort: 5004,
+      mainImageTag: "0.18.2",
+      formFields: [
+        {
+          type: "random",
+          label: "Frigate RTSP password",
+          env_variable: "APP_RTSP_PASSWORD",
+        },
+      ],
+      tipiVersion: 1,
+      createdAt: 1700000000000,
+      updatedAt: 1700000005000,
+    });
+
+    expect(frigateDesc).toContain("console/logs");
+    expect(frigateDesc).toContain("APP_RTSP_PASSWORD");
+    expect(frigateDesc).not.toContain("Generated automatically via the `APP_PASSWORD` field");
+
+    // An app with deterministicPassword: true but NO APP_PASSWORD field must NOT claim APP_PASSWORD
+    const { descriptionMd: genericDesc } = buildRuntipiConfigAndDescription({
+      appId: "sample-no-app-pass",
+      umbrelManifest: {
+        id: "sample-no-app-pass",
+        name: "Sample App",
+        version: "1.0.0",
+        category: "utilities",
+        port: 8080,
+        developer: "Dev",
+        deterministicPassword: true,
+      },
+      allocatedPort: 8080,
+      mainImageTag: "1.0.0",
+      formFields: [],
+      tipiVersion: 1,
+      createdAt: 1700000000000,
+      updatedAt: 1700000005000,
+    });
+
+    expect(genericDesc).not.toContain("Generated automatically via the `APP_PASSWORD` field");
+  });
 });

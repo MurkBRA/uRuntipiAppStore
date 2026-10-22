@@ -543,6 +543,21 @@ export function transpileCompose(params: {
           transformedEnv.push({ key: entry.key, value: "${APP_ENCRYPTION_KEY:-${APP_PASSWORD}}" });
           continue;
         } else if (
+          (entry.key === "FRIGATE_RTSP_PASSWORD" ||
+            entry.key.endsWith("_RTSP_PASSWORD") ||
+            entry.key === "RTSP_PASSWORD") &&
+          (trimmed === "${APP_PASSWORD}" || trimmed === "$APP_PASSWORD")
+        ) {
+          ensureFormField({
+            type: "random",
+            label: `${appName} RTSP password`,
+            hint: "Password used for RTSP camera stream authentication. Web UI admin password is generated in container console/logs.",
+            min: 32,
+            env_variable: "APP_RTSP_PASSWORD",
+          });
+          transformedEnv.push({ key: entry.key, value: "${APP_RTSP_PASSWORD:-${APP_PASSWORD}}" });
+          continue;
+        } else if (
           (entry.key === "JWT_SECRET_KEY" ||
             entry.key === "JWT_SECRET" ||
             entry.key.endsWith("_JWT_SECRET") ||

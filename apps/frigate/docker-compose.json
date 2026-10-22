@@ -11,7 +11,7 @@
       "environment": [
         {
           "key": "FRIGATE_RTSP_PASSWORD",
-          "value": "${APP_PASSWORD}"
+          "value": "${APP_RTSP_PASSWORD:-${APP_PASSWORD}}"
         }
       ],
       "volumes": [

@@ -11,9 +11,8 @@ Features:
   - Email and webhook notifications
   - PGP encrypted email
 
-## Default Credentials
-- **Username**: `satwatch`
-- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
+## Authentication
+- **Access**: sat.watch does not require default login credentials; access the web dashboard directly from your Runtipi home screen.
 
 ## Inter-App Connections
 

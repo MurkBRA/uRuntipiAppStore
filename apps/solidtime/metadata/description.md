@@ -20,9 +20,12 @@
 
 The application takes a few minutes until it becomes available after installation. Please be patient.
 
-## Default Credentials
-- **Username / Email**: Configured via `SUPER_ADMINS` in your Runtipi app settings (default: `admin@tipi.local`)
-- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
+## User Management
+- **Initial User Creation**: Create your administrator user via the terminal command shown in the setup instructions above:
+  ```bash
+  docker exec -i solidtime-scheduler-1 bash -c "echo '<password>' | php artisan admin:user:create '<username>' '<email>' --ask-for-password --verify-email"
+  ```
+- **Admin Email Configuration**: Configured via `SUPER_ADMINS` in your Runtipi app settings (default: `admin@tipi.local`).
 
 ## Links
 - **Upstream Version**: `0.22.0`
