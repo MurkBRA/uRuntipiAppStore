@@ -26,9 +26,9 @@
     },
     {
       "type": "random",
-      "label": "Endurain password",
+      "label": "Endurain secret key",
       "min": 32,
-      "env_variable": "APP_PASSWORD"
+      "env_variable": "APP_SECRET_KEY"
     }
   ],
   "supported_architectures": [

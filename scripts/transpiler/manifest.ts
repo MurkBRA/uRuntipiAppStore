@@ -120,7 +120,9 @@ export function buildRuntipiConfigAndDescription(params: {
   const rawManifestVersion = String(umbrelManifest.version ?? "1.0.0").trim();
   // Ensure version matches dockerCompose.services[app.id].image tag rule in apps.test.ts
   const resolvedVersion =
-    rawManifestVersion && mainImageTag.includes(rawManifestVersion) ? rawManifestVersion : mainImageTag;
+    rawManifestVersion && mainImageTag && mainImageTag.includes(rawManifestVersion)
+      ? rawManifestVersion
+      : mainImageTag || rawManifestVersion;
 
   const author = String(umbrelManifest.developer || umbrelManifest.submitter || "Community").trim();
   const website = String(umbrelManifest.website || umbrelManifest.repo || "https://umbrel.com").trim();
@@ -183,20 +185,25 @@ export function buildRuntipiConfigAndDescription(params: {
       credLines.push(
         `- **Username / Email**: Configured via \`${adminEmailField.env_variable}\` in your Runtipi app settings (default: \`${adminEmailField.default || "admin@tipi.local"}\`)`,
       );
-    } else if (defaultUser) {
-      const normalizedUser = /^(?:umbrel|admin)@umbrel\.local$/i.test(defaultUser) ? "admin@tipi.local" : defaultUser;
-      credLines.push(`- **Username**: \`${normalizedUser}\``);
-    }
-    if (hasGeneratedAppPassword) {
-      credLines.push(
-        "- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.",
-      );
-    } else if (defaultPass) {
-      credLines.push(`- **Password**: \`${defaultPass}\``);
-    } else if (detPass) {
-      credLines.push(
-        "- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.",
-      );
+      if (hasGeneratedAppPassword) {
+        credLines.push(
+          "- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.",
+        );
+      } else if (defaultPass) {
+        credLines.push(`- **Password**: \`${defaultPass}\``);
+      }
+    } else {
+      if (defaultUser) {
+        const normalizedUser = /^(?:umbrel|admin)@umbrel\.local$/i.test(defaultUser) ? "admin@tipi.local" : defaultUser;
+        credLines.push(`- **Username**: \`${normalizedUser}\``);
+      }
+      if (defaultPass) {
+        credLines.push(`- **Password**: \`${defaultPass}\``);
+      } else if (hasGeneratedAppPassword || detPass) {
+        credLines.push(
+          "- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.",
+        );
+      }
     }
     mdSections.push(credLines.join("\n"));
   }

@@ -113,7 +113,7 @@ Na nossa varredura dos 396 apps do Umbrel, identificamos o uso exato das variáv
 | Variável / Função no Umbrel | Ocorrências no Umbrel | Tradução Determinística para Runtipi |
 | :--- | :---: | :--- |
 | `${APP_DATA_DIR}/data/...` | 396 apps | Mantido como `${APP_DATA_DIR}/data/...` (o Runtipi injeta `APP_DATA_DIR` nativamente apontando para o diretório de dados do app!). |
-| `${APP_PASSWORD}` | 78 apps | Convertido em um `form_field` no `config.json`: `{ "type": "random", "label": "App Password", "min": 32, "env_variable": "UMBREL_APP_PASSWORD" }` (ou `"type": "password"` quando exibido ao usuário para login no web UI). |
+| `${APP_PASSWORD}` | 78 apps | Convertido em `form_field` no `config.json`. **Regra de Especialização**: quando a chave receptora é `ENCRYPTION_KEY`, `SECRET_KEY` ou `JWT_SECRET_KEY`, é mapeada para variável dedicada (`APP_ENCRYPTION_KEY`, `APP_SECRET_KEY`, `APP_JWT_SECRET`) com label explícito ("encryption key", "secret key", "JWT secret") e fallback `${APP_NOVA:-${APP_PASSWORD}}`, evitando que chaves internas de banco/criptografia sejam confundidas com senhas de login de usuário. |
 | `${APP_SEED}` | 61 apps | Convertido em `form_field`: `{ "type": "random", "label": "App Seed", "min": 64, "encoding": "hex", "env_variable": "APP_SEED" }`. |
 | `derive_entropy "..."` em `exports.sh` | 16 apps | Analisado via regex no `exports.sh`: cada `export VAR=$(derive_entropy ...)` vira um `form_field` do tipo `"random"` (`min: 32`) no `config.json` do Runtipi! |
 | `http://${DEVICE_DOMAIN_NAME}:${APP_PROXY_PORT}` | 69 apps | Substituído por `${APP_PROTOCOL:-http}://${APP_DOMAIN}` (variável nativa do Runtipi que resolve para o domínio exposto ou `${LOCAL_DOMAIN}:${APP_PORT}`). |
@@ -230,6 +230,14 @@ Durante a inspeção cruzada do código-fonte do `runtipi/runtipi-appstore` (`ap
 > **Armadilha #12: Rate Limiting de Docker Hub / GHCR e GitHub API na GitHub Actions**
 > - **O Problema**: Validar manifestos OCI de 249 apps em todo commit estouraria o limite de pulls anônimos do Docker Hub (100/6h por IP).
 > - **Nossa Solução**: O workflow de CI valida imagens remotas **apenas** para os apps alterados no diff do PR (`--changed`) e autentica no Docker Hub / `ghcr.io` usando `GITHUB_TOKEN` + cache de digests SHA256.
+
+> [!IMPORTANT]
+> **Armadilha #13: Precedência de `defaultPassword` vs Chaves de Criptografia (`ENCRYPTION_KEY` / `SECRET_KEY` / `JWT_SECRET`)**
+> - **O Problema**: No Umbrel, aplicativos como `arcane` definem em `umbrel-app.yml` credenciais estáticas de primeiro acesso (ex: `defaultUsername: "arcane"`, `defaultPassword: "arcane-admin"`). No entanto, seus arquivos compose usam `ENCRYPTION_KEY: ${APP_PASSWORD}` para o banco SQLite interno. Se o transpilador gerar um campo `APP_PASSWORD` rotulado como "Arcane password" e sobrepor a seção `Default Credentials` com a mensagem genérica de `APP_PASSWORD`, o usuário tenta autenticar com a string randômica gerada e tem seu login rejeitado.
+> - **Nossa Solução**:
+>   1. **Precedência de Documentação**: Em `scripts/transpiler/manifest.ts`, quando `defaultPassword` é especificado explicitamente no manifesto do upstream (e o app não possui rotina de superuser dinâmico com email), ele possui precedência absoluta na documentação de `description.md`, preservando as credenciais de fábrica (ex: `arcane-admin`).
+>   2. **Especialização de Variáveis de Criptografia**: Em `scripts/transpiler/compose.ts`, quando uma variável de ambiente representa `ENCRYPTION_KEY`, `SECRET_KEY` ou `JWT_SECRET`, ela é mapeada para uma variável dedicada (`APP_ENCRYPTION_KEY`, `APP_SECRET_KEY`, `APP_JWT_SECRET`) com label transparente no formulário da interface ("Arcane encryption key", "Endurain secret key", etc.) e fallback `${APP_NOVA:-${APP_PASSWORD}}` para preservar instalações anteriores.
+>   3. **Proteção Anti-Regressão**: Testes unitários no `transpiler.test.ts` e de integração no `umbrel-port.test.ts` validam continuamente essa integridade.
 
 ---
 

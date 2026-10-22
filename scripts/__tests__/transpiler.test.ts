@@ -330,4 +330,76 @@ Access at umbrel.local:8080.
     expect(sanitized).not.toMatch(/\bumbrelOS\b/i);
     expect(sanitized).not.toMatch(/\bUmbrel\b/);
   });
+
+  it("buildRuntipiConfigAndDescription respects explicit defaultPassword even when APP_PASSWORD exists", () => {
+    const umbrelManifest = {
+      id: "arcane",
+      name: "Arcane",
+      version: "2.17.0",
+      description: "An easy and modern Docker management platform",
+      defaultUsername: "arcane",
+      defaultPassword: "arcane-admin",
+    };
+
+    const formFieldsWithPassword: any[] = [
+      {
+        type: "random",
+        label: "Arcane password",
+        min: 32,
+        env_variable: "APP_PASSWORD",
+      },
+    ];
+
+    const res = buildRuntipiConfigAndDescription({
+      umbrelManifest,
+      manifestPort: 3552,
+      allocatedPort: 3552,
+      formFields: formFieldsWithPassword,
+    });
+
+    expect(res.descriptionMd).toContain("- **Username**: `arcane`");
+    expect(res.descriptionMd).toContain("- **Password**: `arcane-admin`");
+    expect(res.descriptionMd).not.toContain("Generated automatically via the `APP_PASSWORD` field");
+  });
+
+  it("transpileCompose maps ENCRYPTION_KEY, SECRET_KEY and JWT_SECRET to dedicated random fields without creating APP_PASSWORD", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        app: {
+          image: "ghcr.io/sample/app:latest",
+          environment: {
+            ENCRYPTION_KEY: "${APP_PASSWORD}",
+            SECRET_KEY: "${APP_PASSWORD}",
+            JWT_SECRET_KEY: "${APP_PASSWORD}",
+          },
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "sample",
+      appName: "SampleApp",
+      manifestPort: 8080,
+      allocatedPort: 8080,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    expect(res.formFields.some((f) => f.env_variable === "APP_PASSWORD")).toBe(false);
+    expect(res.formFields.some((f) => f.env_variable === "APP_ENCRYPTION_KEY" && f.label === "SampleApp encryption key")).toBe(true);
+    expect(res.formFields.some((f) => f.env_variable === "APP_SECRET_KEY" && f.label === "SampleApp secret key")).toBe(true);
+    expect(res.formFields.some((f) => f.env_variable === "APP_JWT_SECRET" && f.label === "SampleApp JWT secret")).toBe(true);
+
+    const appSvc = res.composeJson.services.find((s: any) => s.name === "sample");
+    const encEntry = appSvc.environment.find((e: any) => e.key === "ENCRYPTION_KEY");
+    const secEntry = appSvc.environment.find((e: any) => e.key === "SECRET_KEY");
+    const jwtEntry = appSvc.environment.find((e: any) => e.key === "JWT_SECRET_KEY");
+
+    expect(encEntry.value).toBe("${APP_ENCRYPTION_KEY:-${APP_PASSWORD}}");
+    expect(secEntry.value).toBe("${APP_SECRET_KEY:-${APP_PASSWORD}}");
+    expect(jwtEntry.value).toBe("${APP_JWT_SECRET:-${APP_PASSWORD}}");
+  });
 });

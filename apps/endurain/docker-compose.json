@@ -25,7 +25,7 @@
         },
         {
           "key": "SECRET_KEY",
-          "value": "${APP_PASSWORD}"
+          "value": "${APP_SECRET_KEY:-${APP_PASSWORD}}"
         },
         {
           "key": "BEHIND_PROXY",

@@ -24,7 +24,7 @@ The platform is designed to bridge the gap between simplicity and advanced contr
 
 ## Default Credentials
 - **Username**: `arcane`
-- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
+- **Password**: `arcane-admin` (You will be prompted to change it on first login)
 
 ## Links
 - **Upstream Version**: `2.17.0`

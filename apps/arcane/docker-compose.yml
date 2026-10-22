@@ -9,7 +9,7 @@ services:
       - APP_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
       - PUID=1000
       - PGID=1000
-      - ENCRYPTION_KEY=${APP_PASSWORD}
+      - ENCRYPTION_KEY=${APP_ENCRYPTION_KEY:-${APP_PASSWORD}}
     depends_on:
       - arcane-docker
     stop_grace_period: 15s

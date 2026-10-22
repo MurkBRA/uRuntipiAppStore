@@ -9,7 +9,7 @@ services:
       - DB_HOST=endurain-db
       - DB_PORT=5432
       - DB_PASSWORD=endurain
-      - SECRET_KEY=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SECRET_KEY:-${APP_PASSWORD}}
       - BEHIND_PROXY=true
       - TRUSTED_PROXIES=${INTERNAL_IP}/16
       - DEPLOYMENT_PROFILE=local

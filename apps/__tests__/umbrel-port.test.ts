@@ -182,6 +182,28 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           }
         }
 
+        if (id === "arcane") {
+          const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
+          const descMd = fs.readFileSync(path.join(appDir, "metadata", "description.md"), "utf8");
+          // Encryption key must not be mislabeled as password
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_PASSWORD")).toBe(false);
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_ENCRYPTION_KEY")).toBe(true);
+          expect(descMd).toContain("`arcane-admin`");
+          expect(descMd).not.toContain("Generated automatically via the `APP_PASSWORD` field");
+          expect(composeYmlRaw).toContain("ENCRYPTION_KEY=${APP_ENCRYPTION_KEY:-${APP_PASSWORD}}");
+          expect(composeJsonRaw).toContain("${APP_ENCRYPTION_KEY:-${APP_PASSWORD}}");
+        }
+
+        if (id === "endurain") {
+          const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
+          const descMd = fs.readFileSync(path.join(appDir, "metadata", "description.md"), "utf8");
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_PASSWORD")).toBe(false);
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_SECRET_KEY")).toBe(true);
+          expect(descMd).toContain("- **Password**: `admin`");
+          expect(descMd).not.toContain("Generated automatically via the `APP_PASSWORD` field");
+          expect(composeYmlRaw).toContain("SECRET_KEY=${APP_SECRET_KEY:-${APP_PASSWORD}}");
+        }
+
         // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose
         const configJsonPath = path.join(appDir, "config.json");
         const appConfig = JSON.parse(fs.readFileSync(configJsonPath, "utf8"));

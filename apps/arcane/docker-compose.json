@@ -22,7 +22,7 @@
         },
         {
           "key": "ENCRYPTION_KEY",
-          "value": "${APP_PASSWORD}"
+          "value": "${APP_ENCRYPTION_KEY:-${APP_PASSWORD}}"
         }
       ],
       "volumes": [

@@ -18,9 +18,9 @@
   "form_fields": [
     {
       "type": "random",
-      "label": "Arcane password",
+      "label": "Arcane encryption key",
       "min": 32,
-      "env_variable": "APP_PASSWORD"
+      "env_variable": "APP_ENCRYPTION_KEY"
     }
   ],
   "supported_architectures": [

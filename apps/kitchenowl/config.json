@@ -31,9 +31,9 @@
     },
     {
       "type": "random",
-      "label": "KitchenOwl password",
+      "label": "KitchenOwl JWT secret",
       "min": 32,
-      "env_variable": "APP_PASSWORD"
+      "env_variable": "APP_JWT_SECRET"
     }
   ],
   "supported_architectures": [

@@ -524,6 +524,45 @@ export function transpileCompose(params: {
           });
           rawVal = `\${${entry.key}}`;
         } else if (
+          (entry.key === "ENCRYPTION_KEY" || entry.key.endsWith("_ENCRYPTION_KEY")) &&
+          (trimmed === "${APP_PASSWORD}" || trimmed === "$APP_PASSWORD")
+        ) {
+          ensureFormField({
+            type: "random",
+            label: `${appName} encryption key`,
+            min: 32,
+            env_variable: "APP_ENCRYPTION_KEY",
+          });
+          transformedEnv.push({ key: entry.key, value: "${APP_ENCRYPTION_KEY:-${APP_PASSWORD}}" });
+          continue;
+        } else if (
+          (entry.key === "JWT_SECRET_KEY" ||
+            entry.key === "JWT_SECRET" ||
+            entry.key.endsWith("_JWT_SECRET") ||
+            entry.key.endsWith("_JWT_SECRET_KEY")) &&
+          (trimmed === "${APP_PASSWORD}" || trimmed === "$APP_PASSWORD")
+        ) {
+          ensureFormField({
+            type: "random",
+            label: `${appName} JWT secret`,
+            min: 32,
+            env_variable: "APP_JWT_SECRET",
+          });
+          transformedEnv.push({ key: entry.key, value: "${APP_JWT_SECRET:-${APP_PASSWORD}}" });
+          continue;
+        } else if (
+          (entry.key === "SECRET_KEY" || entry.key.endsWith("_SECRET_KEY")) &&
+          (trimmed === "${APP_PASSWORD}" || trimmed === "$APP_PASSWORD")
+        ) {
+          ensureFormField({
+            type: "random",
+            label: `${appName} secret key`,
+            min: 32,
+            env_variable: "APP_SECRET_KEY",
+          });
+          transformedEnv.push({ key: entry.key, value: "${APP_SECRET_KEY:-${APP_PASSWORD}}" });
+          continue;
+        } else if (
           // Only rewrite bare service or container name if the env variable key explicitly represents a host or IP
           /^(?:HOST|PGHOST|.*_(?:HOST|IP))$/i.test(entry.key) &&
           (containerNameMap[trimmed] || (serviceRenameMap[trimmed] && serviceRenameMap[trimmed] !== trimmed))

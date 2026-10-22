@@ -10,7 +10,7 @@
       "environment": [
         {
           "key": "JWT_SECRET_KEY",
-          "value": "${APP_PASSWORD}"
+          "value": "${APP_JWT_SECRET:-${APP_PASSWORD}}"
         },
         {
           "key": "DB_DRIVER",
