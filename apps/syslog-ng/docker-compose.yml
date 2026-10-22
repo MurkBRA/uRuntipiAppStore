@@ -1,7 +1,7 @@
 services:
   syslog-ng:
     image: rickraven/logdy:0.17.1
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/logs:/data:ro
     environment:
@@ -16,7 +16,7 @@ services:
       is_main: true
   syslog-ng-syslog:
     image: linuxserver/syslog-ng:4.10.2
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 514:5514/udp
       - 601:6601/tcp

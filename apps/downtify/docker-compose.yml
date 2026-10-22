@@ -1,6 +1,6 @@
 services:
   downtify:
-    image: ghcr.io/henriquesebastiao/downtify:3.5.0
+    image: ghcr.io/henriquesebastiao/downtify:3.7.0
     volumes:
       - ${APP_DATA_DIR}/data/downloads/downtify:/downloads
       - ${APP_DATA_DIR}/data:/data

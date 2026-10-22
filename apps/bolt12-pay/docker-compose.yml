@@ -1,6 +1,6 @@
 services:
   bolt12-pay:
-    image: alex71btc/bolt12-pay:0.3.14
+    image: alex71btc/bolt12-pay:0.3.15
     volumes:
       - ${APP_DATA_DIR}/data:/data
       - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
@@ -37,7 +37,7 @@ services:
       add_to_main_network: true
       is_main: true
   bolt12-pay-lndk:
-    image: alex71btc/lndk:bolt12-pay-89a06db-multiarch
+    image: alex71btc/lndk:bolt12-pay-295b537-multiarch
     command:
       - |
         echo "Waiting for LND TLS + macaroon..."

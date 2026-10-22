@@ -6,7 +6,7 @@
       "image": "ghcr.io/getalby/hub:v1.24.3",
       "isMain": true,
       "internalPort": 8080,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "3m",
       "environment": [
         {

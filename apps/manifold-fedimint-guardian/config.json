@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "manifold-fedimint-guardian",
   "description": "Manifold Fedimint Guardian lets you run guardian seats across multiple Fedimint federations from a single machine. Advertise your available capacity, get selected for federations, provision guardian seats locally, and earn fees for the seats you operate. Each seat runs as a distinct guardian with its own fedimintd instance and key, so you can serve multiple communities and earn fees.",
-  "tipi_version": 1,
-  "version": "99d518ffb4c247fd7616783b9f6b20a9dbc1a739",
+  "tipi_version": 2,
+  "version": "61d28d774e72f27d25e41489e33126ae3184e170",
   "categories": [
     "finance"
   ],
@@ -51,7 +51,7 @@
     "amd64"
   ],
   "created_at": 1792501501284,
-  "updated_at": 1792501561284,
+  "updated_at": 1792665342464,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

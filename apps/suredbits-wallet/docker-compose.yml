@@ -1,7 +1,7 @@
 services:
   suredbits-wallet:
     image: bitcoinscala/wallet-server-ui:1.9.7
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/wallet:/bitcoin-s
       - ${APP_DATA_DIR}/data/log:/log
@@ -28,7 +28,7 @@ services:
       - /bitcoin-s
       - '--conf'
       - /opt/docker/docker-application.conf
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 2862:2862/tcp
     volumes:

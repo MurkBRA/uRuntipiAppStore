@@ -6,7 +6,7 @@
       "image": "mintplexlabs/anythingllm:1.18.0",
       "isMain": true,
       "internalPort": 3001,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "SERVER_PORT",

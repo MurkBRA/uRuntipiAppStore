@@ -6,7 +6,7 @@
       "image": "ghcr.io/zapomatic/bitwatch:v1.8.0",
       "isMain": true,
       "internalPort": 3117,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "volumes": [
         {

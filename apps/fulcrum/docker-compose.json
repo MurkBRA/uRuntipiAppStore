@@ -55,7 +55,7 @@
       "name": "fulcrum-fulcrum-sidecar",
       "image": "cculianu/fulcrum:v2.1.4",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "5m",
       "command": "sh -c 'rm -f /tmp/fulcrum.pipe; mkfifo /tmp/fulcrum.pipe; tee -a /logs/fulcrum.log < /tmp/fulcrum.pipe & exec Fulcrum -D /data _ENV_ > /tmp/fulcrum.pipe 2>&1'",
       "environment": [

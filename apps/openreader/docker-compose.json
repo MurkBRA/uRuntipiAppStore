@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 8080,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "entrypoint": [
         "nginx",
         "-g",
@@ -26,9 +26,9 @@
     },
     {
       "name": "openreader-web",
-      "image": "ghcr.io/richardr1126/openreader:5.2.0",
+      "image": "ghcr.io/richardr1126/openreader:5.3.0",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "API_BASE",

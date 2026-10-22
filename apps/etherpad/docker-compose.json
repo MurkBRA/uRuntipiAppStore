@@ -98,7 +98,7 @@
     {
       "name": "etherpad-postgres",
       "image": "postgres:15-alpine",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_DB",

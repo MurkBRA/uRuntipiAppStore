@@ -1,7 +1,7 @@
 services:
   peerswap:
     image: ghcr.io/impa10r/peerswap-web:v7.0.2
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data:/home/peerswap/.peerswap
       - ${APP_LIGHTNING_NODE_DATA_DIR}:/home/peerswap/.lnd:ro

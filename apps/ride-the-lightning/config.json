@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "ride-the-lightning",
   "description": "RTL is a full function, device agnostic, web user interface to help manage lightning node operation. It enables full control over your lightning node with rich functionality for Bitcoin base layer and Lightning Network. Some cool features available on RTL are:",
-  "tipi_version": 1,
-  "version": "v0.15.13",
+  "tipi_version": 2,
+  "version": "v0.15.15",
   "categories": [
     "finance"
   ],
@@ -18,6 +18,16 @@
   "uid": 1000,
   "gid": 1000,
   "form_fields": [
+    {
+      "type": "text",
+      "label": "Container User (UID:GID)",
+      "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
+      "required": false,
+      "default": "1000:1000",
+      "regex": "^[0-9]+(:[0-9]+)?$",
+      "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
+      "env_variable": "APP_CONTAINER_USER"
+    },
     {
       "type": "random",
       "label": "Ride The Lightning password",
@@ -73,7 +83,7 @@
     "amd64"
   ],
   "created_at": 1792501506848,
-  "updated_at": 1792501566848,
+  "updated_at": 1792665344980,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -6,7 +6,7 @@
       "image": "chronograf:1.11.4",
       "isMain": true,
       "internalPort": 8888,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "INFLUXDB_URL",
@@ -34,7 +34,7 @@
     {
       "name": "influxdb-influxdb-sidecar",
       "image": "influxdb:1.13.1",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

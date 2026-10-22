@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "pogolo",
   "description": "solo db-less bitcoin-only mining pool, meant for lan swarms, not the internet;",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v1.x",
   "categories": [
     "finance"
@@ -18,6 +18,16 @@
   "uid": 1000,
   "gid": 1000,
   "form_fields": [
+    {
+      "type": "text",
+      "label": "Container User (UID:GID)",
+      "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
+      "required": false,
+      "default": "1000:1000",
+      "regex": "^[0-9]+(:[0-9]+)?$",
+      "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
+      "env_variable": "APP_CONTAINER_USER"
+    },
     {
       "type": "text",
       "label": "Bitcoin Node Host / IP",
@@ -60,7 +70,7 @@
     "amd64"
   ],
   "created_at": 1792501505650,
-  "updated_at": 1792501565650,
+  "updated_at": 1792665344539,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

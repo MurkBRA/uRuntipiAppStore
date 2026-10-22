@@ -1,7 +1,7 @@
 services:
   strix:
     image: eduard256/strix:2.2.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     stop_grace_period: 1m
     x-runtipi:
       internal_port: 4567

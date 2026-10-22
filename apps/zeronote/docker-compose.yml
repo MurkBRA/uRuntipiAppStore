@@ -1,7 +1,7 @@
 services:
   zeronote:
     image: ghcr.io/besoeasy/zeronote:1.0.12
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - NODE_ENV=production
     stop_grace_period: 5m

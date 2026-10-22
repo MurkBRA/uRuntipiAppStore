@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 5023,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "HASS_URL",

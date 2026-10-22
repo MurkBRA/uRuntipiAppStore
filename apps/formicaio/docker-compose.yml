@@ -1,7 +1,7 @@
 services:
   formicaio:
     image: bochaco/formicaio_proxy:0.3.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - FORMICAIO_ADDR=host.docker.internal:3000
       - FORMICAIO_PROXY_PORT=52100
@@ -12,7 +12,7 @@ services:
       is_main: true
   formicaio-app:
     image: bochaco/formicaio:0.8.9-native-lcd-disabled
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/formicaio:/data
     environment:

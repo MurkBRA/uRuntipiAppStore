@@ -6,7 +6,7 @@
       "image": "dennysubke/cobalt:11.5",
       "isMain": true,
       "internalPort": 9001,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "readOnly": true,
       "environment": [
         {

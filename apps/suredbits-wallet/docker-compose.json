@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 3002,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -57,7 +57,7 @@
       "name": "suredbits-wallet-walletserver",
       "image": "bitcoinscala/bitcoin-s-server:1.9.7",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "entrypoint": [
         "/opt/docker/bin/bitcoin-s-server",
         "--datadir",

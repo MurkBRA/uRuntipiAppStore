@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "murmur",
   "description": "Murmur is a calm, beautiful home for your Hermes agents. Open it on your phone or computer and just talk. Murmur comes with Hermes built in, so there's nothing else to install.",
-  "tipi_version": 1,
-  "version": "0.6.0",
+  "tipi_version": 2,
+  "version": "0.7.0",
   "categories": [
     "ai"
   ],
@@ -31,6 +31,16 @@
       "min": 32,
       "encoding": "hex",
       "env_variable": "APP_MURMUR_HERMES_SECRET"
+    },
+    {
+      "type": "text",
+      "label": "Container User (UID:GID)",
+      "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
+      "required": false,
+      "default": "1000:1000",
+      "regex": "^[0-9]+(:[0-9]+)?$",
+      "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
+      "env_variable": "APP_CONTAINER_USER"
     }
   ],
   "supported_architectures": [
@@ -38,7 +48,7 @@
     "amd64"
   ],
   "created_at": 1792501502335,
-  "updated_at": 1792501562335,
+  "updated_at": 1792665342961,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

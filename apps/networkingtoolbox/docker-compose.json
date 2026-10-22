@@ -6,7 +6,7 @@
       "image": "ghcr.io/lissy93/networking-toolbox:1.6.0",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "NODE_ENV",

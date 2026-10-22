@@ -19,7 +19,7 @@ services:
       is_main: true
   wger-web:
     image: wger/server:2.7
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/static:/home/wger/static
       - ${APP_DATA_DIR}/data/media:/home/wger/media
@@ -47,7 +47,7 @@ services:
   wger-powersync_setup:
     image: wger/server:2.7
     command: ./manage.py setup-powersync-storage
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - SECRET_KEY=${APP_SEED}
       - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
@@ -93,7 +93,7 @@ services:
       - random_page_cost=1.1
       - '-c'
       - max_connections=30
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/postgres-data:/var/lib/postgresql/data/
     environment:
@@ -110,7 +110,7 @@ services:
     shm_size: 256mb
   wger-cache:
     image: redis:8.0.3-alpine
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/redis-data:/data
     healthcheck:
@@ -122,7 +122,7 @@ services:
   wger-celery_worker:
     image: wger/server:2.7
     command: /start-worker
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/media:/home/wger/media
     environment:
@@ -141,7 +141,7 @@ services:
   wger-celery_beat:
     image: wger/server:2.7
     command: /start-beat
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/celery-beat:${APP_DATA_DIR}/beat/
     environment:

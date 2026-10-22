@@ -13,7 +13,7 @@ Trusted by over 10,000 teams across 150 countries—including organizations like
 Whether you're a startup looking to accelerate development or an enterprise seeking customizable internal solutions, Appsmith offers the tools and flexibility to meet your needs.
 
 ## Links
-- **Upstream Version**: `v2.5.0`
+- **Upstream Version**: `v2.5.1`
 - **Website**: https://www.appsmith.com/
 - **Source Repository**: https://github.com/appsmithorg/appsmith
 - **Support**: https://discord.com/invite/rBTTVJp

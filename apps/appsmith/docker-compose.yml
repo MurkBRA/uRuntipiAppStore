@@ -1,6 +1,6 @@
 services:
   appsmith:
-    image: appsmith/appsmith-ce:v2.5.0
+    image: appsmith/appsmith-ce:v2.5.1
     volumes:
       - ${APP_DATA_DIR}/data/app:/appsmith-stacks
     environment:

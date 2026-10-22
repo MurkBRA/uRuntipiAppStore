@@ -6,7 +6,7 @@
       "image": "corentinth/enclosed:1.16.0-rootless",
       "isMain": true,
       "internalPort": 8787,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "volumes": [
         {

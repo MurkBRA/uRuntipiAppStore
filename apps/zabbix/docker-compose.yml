@@ -1,6 +1,6 @@
 services:
   zabbix:
-    image: zabbix/zabbix-web-nginx-pgsql:7.4.15-alpine
+    image: zabbix/zabbix-web-nginx-pgsql:7.4.16-alpine
     hostname: zabbix-frontend
     environment:
       - DB_SERVER_HOST=zabbix-zabbix-database
@@ -15,7 +15,7 @@ services:
       internal_port: 8080
       is_main: true
   zabbix-zabbix-server:
-    image: zabbix/zabbix-server-pgsql:7.4.15-alpine
+    image: zabbix/zabbix-server-pgsql:7.4.16-alpine
     hostname: zabbix-server
     ports:
       - 10050:10050/tcp
@@ -26,7 +26,7 @@ services:
     depends_on:
       - zabbix-zabbix-database
   zabbix-zabbix-agent:
-    image: zabbix/zabbix-agent2:7.4.15-alpine
+    image: zabbix/zabbix-agent2:7.4.16-alpine
     hostname: zabbix-agent
     environment:
       - ZBX_HOSTNAME=zabbix-agent

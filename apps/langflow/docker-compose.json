@@ -3,10 +3,10 @@
   "services": [
     {
       "name": "langflow",
-      "image": "langflowai/langflow:1.12.6",
+      "image": "langflowai/langflow:1.12.7",
       "isMain": true,
       "internalPort": 7860,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "LANGFLOW_CONFIG_DIR",
@@ -43,7 +43,7 @@
     {
       "name": "langflow-db",
       "image": "postgres:16.14-trixie",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_USER",

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "omnitools",
-      "image": "iib0011/omni-tools:0.6.0",
+      "image": "iib0011/omni-tools:0.7.0",
       "isMain": true,
       "internalPort": 80,
       "securityOpt": [

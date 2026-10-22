@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 80,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "FOLDER",
@@ -67,7 +67,7 @@
       "name": "bassin-ckpool",
       "image": "ghcr.io/getumbrel/docker-ckpool-solo:v1.1.1",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "30s",
       "command": "-k -B -c /config/ckpool.conf",
       "volumes": [
@@ -98,7 +98,7 @@
       "name": "bassin-ui",
       "image": "ghcr.io/blockdyor/bassin-ui:0e779e6",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "entrypoint": "/bin/sh -c \"cp -r /ui/* /www/\"",
       "volumes": [
         {

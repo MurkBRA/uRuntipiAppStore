@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "arcane",
   "description": "⚠️ Make sure to only use named Docker volumes for your containers and projects. Data in bind-mounted volumes will be lost when the Arcane app is restarted or updated.",
-  "tipi_version": 1,
-  "version": "2.16.1",
+  "tipi_version": 2,
+  "version": "2.17.0",
   "categories": [
     "development"
   ],
@@ -28,7 +28,7 @@
     "amd64"
   ],
   "created_at": 1792501488729,
-  "updated_at": 1792501548729,
+  "updated_at": 1792665336848,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

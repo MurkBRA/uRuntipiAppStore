@@ -16,7 +16,7 @@ Powered by Bark, Second's implementation of the Ark protocol. Bitcoin is held in
 Proudly open source, built as a reference implementation for developers. Fork the code and ship your own.
 
 ## Links
-- **Upstream Version**: `0.8.0-patch.1`
+- **Upstream Version**: `0.9.0`
 - **Website**: https://second.tech
-- **Source Repository**: https://gitlab.com/ark-bitcoin/labs/bark-web
-- **Support**: https://gitlab.com/ark-bitcoin/labs/bark-web/-/issues
+- **Source Repository**: https://gitlab.com/ark-bitcoin/bark-web
+- **Support**: https://gitlab.com/ark-bitcoin/bark-web/-/issues

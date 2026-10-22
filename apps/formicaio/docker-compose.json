@@ -6,7 +6,7 @@
       "image": "bochaco/formicaio_proxy:0.3.0",
       "isMain": true,
       "internalPort": 52100,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "FORMICAIO_ADDR",
@@ -25,7 +25,7 @@
       "name": "formicaio-app",
       "image": "bochaco/formicaio:0.8.9-native-lcd-disabled",
       "networkMode": "host",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "5s",
       "environment": [
         {

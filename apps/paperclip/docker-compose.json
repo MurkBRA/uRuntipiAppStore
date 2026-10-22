@@ -6,7 +6,7 @@
       "image": "ghcr.io/paperclipai/paperclip:2026.1012.0",
       "isMain": true,
       "internalPort": 3100,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "HOST",

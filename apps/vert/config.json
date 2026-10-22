@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "vert",
   "description": "🔄 VERT is a modern and intelligent file conversion utility built to make transforming files effortless, secure, and efficient. It is designed to support a broad spectrum of file types including images, videos, audio, and documents, allowing users to convert between formats with precision and speed. Every conversion is handled smoothly, ensuring that the original quality and structure of the files are preserved as much as possible.",
-  "tipi_version": 1,
-  "version": "b3b04c2",
+  "tipi_version": 2,
+  "version": "257bcb3",
   "categories": [
     "utilities",
     "data"
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501512333,
-  "updated_at": 1792501572333,
+  "updated_at": 1792665347470,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

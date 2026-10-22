@@ -23,7 +23,7 @@ The Zabbix Agent listens on port 10050. To monitor the Zabbix server itself, nav
 - **Password**: `zabbix`
 
 ## Links
-- **Upstream Version**: `7.4.15`
+- **Upstream Version**: `7.4.16`
 - **Website**: https://www.zabbix.com/
 - **Source Repository**: https://github.com/zabbix/zabbix
 - **Support**: https://www.zabbix.com/support

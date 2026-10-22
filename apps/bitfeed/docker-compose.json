@@ -30,7 +30,7 @@
       "name": "bitfeed-api",
       "image": "ghcr.io/bitfeed-project/bitfeed-server:v2.3.4",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

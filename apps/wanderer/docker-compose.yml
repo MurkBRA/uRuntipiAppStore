@@ -1,7 +1,7 @@
 services:
   wanderer:
     image: flomp/wanderer-web:v0.21.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/uploads:/app/uploads
     environment:
@@ -43,7 +43,7 @@ services:
       start_period: 20s
   wanderer-db:
     image: flomp/wanderer-db:v0.21.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/pb_data:/pb_data
       - ${APP_DATA_DIR}/data/plugins:/data/plugins

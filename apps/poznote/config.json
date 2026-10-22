@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "poznote",
   "description": "📝 Poznote is a clean and focused application designed to help users capture, structure, and refine information in a flexible workspace. It combines a rich text editor with Markdown formatting to support both quick jotting and long form writing, allowing thoughts to grow and change without friction.",
-  "tipi_version": 1,
-  "version": "6.121.0",
+  "tipi_version": 2,
+  "version": "6.127.0",
   "categories": [
     "utilities",
     "data"
@@ -38,7 +38,7 @@
     "amd64"
   ],
   "created_at": 1792501505846,
-  "updated_at": 1792501565846,
+  "updated_at": 1792665344627,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

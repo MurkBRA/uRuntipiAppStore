@@ -1,7 +1,7 @@
 services:
   domain-locker:
     image: lissy93/domain-locker:0.3.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - DL_ENV_TYPE=selfHosted
       - DL_PG_HOST=domain-locker-postgres
@@ -22,7 +22,7 @@ services:
       is_main: true
   domain-locker-postgres:
     image: postgres:17.4
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db_data:/var/lib/postgresql/data
     environment:

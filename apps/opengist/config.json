@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "opengist",
   "description": "**Important:** After installation, create your account promptly. The first registered account becomes administrator. You can disable further registrations from the admin configuration.",
-  "tipi_version": 1,
-  "version": "1.15.2",
+  "tipi_version": 2,
+  "version": "1.15.3",
   "categories": [
     "development"
   ],
@@ -17,12 +17,24 @@
   "website": "https://opengist.io/",
   "uid": 1000,
   "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Container User (UID:GID)",
+      "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
+      "required": false,
+      "default": "1000:1000",
+      "regex": "^[0-9]+(:[0-9]+)?$",
+      "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
+      "env_variable": "APP_CONTAINER_USER"
+    }
+  ],
   "supported_architectures": [
     "arm64",
     "amd64"
   ],
   "created_at": 1792501504000,
-  "updated_at": 1792501564000,
+  "updated_at": 1792665343667,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

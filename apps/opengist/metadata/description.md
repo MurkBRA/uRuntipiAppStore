@@ -13,7 +13,7 @@ Opengist includes syntax highlighting, Markdown rendering, multiple files per sn
 It is a practical alternative to GitHub Gist for developers, self-hosters, administrators, and anyone who wants a simple place to store and share reusable code, commands, configuration examples, or technical notes.
 
 ## Links
-- **Upstream Version**: `1.15.2-patch.1`
+- **Upstream Version**: `1.15.3`
 - **Website**: https://opengist.io/
 - **Source Repository**: https://github.com/thomiceli/opengist
 - **Support**: https://github.com/thomiceli/opengist/issues

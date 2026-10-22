@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "bark-wallet",
-      "image": "secondark/bark-web:0.8.0",
+      "image": "secondark/bark-web:0.9.0",
       "isMain": true,
       "internalPort": 8080,
       "stopGracePeriod": "1m",
@@ -14,7 +14,7 @@
     },
     {
       "name": "bark-wallet-api",
-      "image": "secondark/bark-web-api:0.8.0",
+      "image": "secondark/bark-web-api:0.9.0",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -59,7 +59,7 @@
     },
     {
       "name": "bark-wallet-barkd",
-      "image": "secondark/bark:0.6.2",
+      "image": "secondark/bark:0.7.1",
       "user": "0:0",
       "stopGracePeriod": "1m",
       "command": "sh -c \"mkdir -p /data/.bark && chown -R 1000:1000 /data && exec setpriv --reuid 1000 --regid 1000 --clear-groups /usr/local/bin/barkd --port 4000 --host 0.0.0.0 --datadir /data/.bark --expose-mnemonic\"",

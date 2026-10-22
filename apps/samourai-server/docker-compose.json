@@ -75,7 +75,7 @@
       "name": "samourai-server-db",
       "image": "louneskmt/dojo-db:1.5.0-low-mem",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "5m",
       "environment": [
         {
@@ -106,7 +106,7 @@
       "name": "samourai-server-node",
       "image": "nmfretz/dojo-nodejs:1.16.1-rpcfix",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": "/home/node/app/wait-for-it.sh samourai-server-db:3306 --timeout=720 --strict -- /home/node/app/restart.sh",
       "environment": [
         {
@@ -274,7 +274,7 @@
       "name": "samourai-server-whirlpool",
       "image": "louneskmt/whirlpool:0.10.15",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": [
         "--listen",
         "--cli.apiKey=${APP_SAMOURAI_SERVER_WHIRLPOOL_API_KEY}",

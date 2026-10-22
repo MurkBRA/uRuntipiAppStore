@@ -1,7 +1,7 @@
 services:
   picoclaw:
     image: docker.io/sipeed/picoclaw:v0.3.1-launcher
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data:/data
     environment:

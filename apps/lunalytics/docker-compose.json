@@ -6,7 +6,7 @@
       "image": "ksjaay/lunalytics:0.10.23",
       "isMain": true,
       "internalPort": 2308,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/lunalytics_data",

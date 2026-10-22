@@ -1,6 +1,6 @@
 services:
   poznote:
-    image: ghcr.io/timothepoznanski/poznote:6.121.0
+    image: ghcr.io/timothepoznanski/poznote:6.127.0
     volumes:
       - ${APP_DATA_DIR}/data:/var/www/html/data
       - ${APP_DATA_DIR}/data/umbrel-mcp.php:/var/www/html/public/umbrel-mcp.php:ro
@@ -17,7 +17,7 @@ services:
       internal_port: 80
       is_main: true
   poznote-mcp:
-    image: ghcr.io/timothepoznanski/poznote-mcp:6.121.0
+    image: ghcr.io/timothepoznanski/poznote-mcp:6.127.0
     ports:
       - 8340:8045/tcp
     volumes:

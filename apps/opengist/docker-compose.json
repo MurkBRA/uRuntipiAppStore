@@ -3,10 +3,10 @@
   "services": [
     {
       "name": "opengist",
-      "image": "ghcr.io/thomiceli/opengist:1.15.2",
+      "image": "ghcr.io/thomiceli/opengist:1.15.3",
       "isMain": true,
       "internalPort": 6157,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "OG_SSH_PORT",

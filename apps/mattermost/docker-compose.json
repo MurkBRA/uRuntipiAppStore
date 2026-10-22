@@ -6,7 +6,7 @@
       "image": "alexlack/mattermost-app:v12.0.0",
       "isMain": true,
       "internalPort": 8000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -75,7 +75,7 @@
     {
       "name": "mattermost-db",
       "image": "alexlack/mattermost-db:v11.11.1",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

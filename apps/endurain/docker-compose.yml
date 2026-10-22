@@ -1,6 +1,6 @@
 services:
   endurain:
-    image: ghcr.io/endurain-project/endurain:v0.19.4
+    image: ghcr.io/endurain-project/endurain:v0.20.1
     volumes:
       - ${APP_DATA_DIR}/data/app:/app/backend/data
       - ${APP_DATA_DIR}/data/logs:/app/backend/logs
@@ -12,19 +12,17 @@ services:
       - SECRET_KEY=${APP_PASSWORD}
       - BEHIND_PROXY=true
       - TRUSTED_PROXIES=${INTERNAL_IP}/16
-      - RATE_LIMIT_STORAGE_URI=redis://:${APP_ENDURAIN_REDIS_PASSWORD}@endurain-redis:6379/0
-      - AUTH_SECURITY_STORAGE_URI=redis://:${APP_ENDURAIN_REDIS_PASSWORD}@endurain-redis:6379/0
+      - DEPLOYMENT_PROFILE=local
+      - WEB_WORKERS=1
     depends_on:
       endurain-db:
-        condition: service_healthy
-      endurain-redis:
         condition: service_healthy
     x-runtipi:
       internal_port: 8080
       is_main: true
   endurain-db:
     image: postgres:17.4
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
     environment:
@@ -34,23 +32,6 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     healthcheck:
       test: pg_isready -U endurain
-      interval: 5s
-      timeout: 5s
-      retries: 5
-  endurain-redis:
-    image: redis:8-alpine
-    command:
-      - redis-server
-      - '--appendonly'
-      - 'yes'
-      - '--requirepass'
-      - ${APP_ENDURAIN_REDIS_PASSWORD}
-    volumes:
-      - ${APP_DATA_DIR}/data/redis:/data
-    environment:
-      - REDISCLI_AUTH=${APP_ENDURAIN_REDIS_PASSWORD}
-    healthcheck:
-      test: redis-cli ping
       interval: 5s
       timeout: 5s
       retries: 5

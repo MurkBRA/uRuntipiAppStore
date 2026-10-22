@@ -1,7 +1,7 @@
 services:
   bassin:
     image: halverneus/static-file-server:v1.8.11
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/www:/www:ro
     environment:
@@ -36,7 +36,7 @@ services:
   bassin-ckpool:
     image: ghcr.io/getumbrel/docker-ckpool-solo:v1.1.1
     command: '-k -B -c /config/ckpool.conf'
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 3456:3333/tcp
     volumes:
@@ -51,7 +51,7 @@ services:
   bassin-ui:
     image: ghcr.io/blockdyor/bassin-ui:0e779e6
     entrypoint: /bin/sh -c "cp -r /ui/* /www/"
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/www:/www
     x-runtipi:

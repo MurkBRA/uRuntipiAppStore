@@ -1,7 +1,7 @@
 services:
   picsur:
     image: ghcr.io/caramelfur/picsur:0.5.6
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - PICSUR_PORT=8286
       - PICSUR_DB_HOST=picsur-db
@@ -19,7 +19,7 @@ services:
       is_main: true
   picsur-db:
     image: postgres:17.4
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
     environment:

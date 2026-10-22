@@ -6,7 +6,7 @@
       "image": "ghcr.io/monetr/monetr:1.19.0",
       "isMain": true,
       "internalPort": 4000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": [
         "serve",
         "--migrate",
@@ -80,7 +80,7 @@
     {
       "name": "monetr-db",
       "image": "postgres:17.9",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_PASSWORD",
@@ -111,7 +111,7 @@
     {
       "name": "monetr-valkey",
       "image": "valkey/valkey:9",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/valkey",

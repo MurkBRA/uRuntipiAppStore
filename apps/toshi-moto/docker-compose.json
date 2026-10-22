@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 8021,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -30,7 +30,7 @@
       "name": "toshi-moto-api_web",
       "image": "toshimoto821/toshi-moto-api:1.8.4",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -50,7 +50,7 @@
       "name": "toshi-moto-mongodb",
       "image": "mongo:8.0.10",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "command": "mongod --noauth",
       "volumes": [

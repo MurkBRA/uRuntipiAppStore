@@ -6,7 +6,7 @@
       "image": "tombursch/kitchenowl:v0.7.10",
       "isMain": true,
       "internalPort": 8080,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "JWT_SECRET_KEY",
@@ -46,7 +46,7 @@
     {
       "name": "kitchenowl-db",
       "image": "postgres:17.4",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_DB",

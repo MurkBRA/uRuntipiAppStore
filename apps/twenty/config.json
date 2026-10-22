@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "twenty",
   "description": "Twenty is the leading open-source CRM, built by a community of hundreds of contributors to meet the unique needs of your business. Designed for flexibility, it helps businesses of all sizes efficiently manage customer relationships and streamline workflows.",
-  "tipi_version": 1,
-  "version": "2.49.0",
+  "tipi_version": 2,
+  "version": "2.50.1",
   "categories": [
     "utilities",
     "data"
@@ -18,12 +18,24 @@
   "website": "https://twenty.com/",
   "uid": 1000,
   "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Container User (UID:GID)",
+      "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
+      "required": false,
+      "default": "1000:1000",
+      "regex": "^[0-9]+(:[0-9]+)?$",
+      "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
+      "env_variable": "APP_CONTAINER_USER"
+    }
+  ],
   "supported_architectures": [
     "arm64",
     "amd64"
   ],
   "created_at": 1792501511931,
-  "updated_at": 1792501571931,
+  "updated_at": 1792665347272,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

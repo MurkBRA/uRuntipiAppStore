@@ -9,7 +9,7 @@ services:
       internal_port: 3800
       is_main: true
   snowflake-proxy:
-    image: thetorproject/snowflake-proxy:v2.15.1
+    image: thetorproject/snowflake-proxy:v2.15.2
     command: '-log /data/snowflake.log -verbose'
     volumes:
       - ${APP_DATA_DIR}/data:/data

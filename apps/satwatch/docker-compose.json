@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 8080,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -57,7 +57,7 @@
       "name": "satwatch-db",
       "image": "docker.io/library/postgres:17",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_USER",

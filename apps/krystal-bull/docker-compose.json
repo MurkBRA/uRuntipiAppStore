@@ -6,7 +6,7 @@
       "image": "bitcoinscala/oracle-server-ui:1.9.7",
       "isMain": true,
       "internalPort": 3001,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -51,7 +51,7 @@
     {
       "name": "krystal-bull-oracleserver",
       "image": "bitcoinscala/bitcoin-s-oracle-server:1.9.7",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "entrypoint": [
         "/opt/docker/bin/bitcoin-s-oracle-server",
         "--datadir",

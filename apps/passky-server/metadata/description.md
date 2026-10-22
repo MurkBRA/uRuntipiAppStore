@@ -15,7 +15,7 @@ Plus, Passky is easy to use and available on all of your devices, so you can acc
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `8.1.8-patch.1`
+- **Upstream Version**: `9.0.0`
 - **Website**: https://passky.org
 - **Source Repository**: https://github.com/Rabbit-Company/Passky-Server
 - **Support**: https://passky.org/contact

@@ -6,7 +6,7 @@
       "image": "johly/airtrail:v3.13.0",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "UPLOAD_LOCATION",
@@ -32,7 +32,7 @@
     {
       "name": "airtrail-postgres",
       "image": "postgres:18.3-alpine",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

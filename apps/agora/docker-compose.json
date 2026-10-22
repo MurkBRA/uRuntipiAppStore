@@ -44,7 +44,7 @@
       "name": "agora-filebrowser",
       "image": "filebrowser/filebrowser:v2.21.1",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "entrypoint": "/data/entrypoint.sh",
       "environment": [
@@ -72,7 +72,7 @@
       "name": "agora-agora-sidecar",
       "image": "ghcr.io/agora-org/agora:sha-48d3205",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

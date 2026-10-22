@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 5663,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POGOLO_API_URL",
@@ -37,7 +37,7 @@
       "name": "pogolo-pogolo-sidecar",
       "image": "0xf0xx0/pogolo:v1.x",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "30s",
       "command": [
         "/pogolo",

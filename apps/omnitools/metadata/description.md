@@ -11,7 +11,7 @@ Beyond file processing OmniTools provides useful calculators and converters for 
 Whether you are a creative professional needing quick image edits a developer working with data formats or simply someone looking to streamline common file related tasks OmniTools offers a lightweight user friendly environment that brings a broad spectrum of functionality into one convenient place. It focuses on privacy performance and ease of use empowering you to get more done with less hassle.
 
 ## Links
-- **Upstream Version**: `0.6.0`
+- **Upstream Version**: `0.7.0`
 - **Website**: https://omnitools.app/
 - **Source Repository**: https://github.com/iib0011/omni-tools
 - **Support**: https://github.com/iib0011/omni-tools/issues

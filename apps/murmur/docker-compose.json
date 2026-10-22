@@ -3,10 +3,10 @@
   "services": [
     {
       "name": "murmur",
-      "image": "ghcr.io/getumbrel/murmur:v0.6.0",
+      "image": "ghcr.io/getumbrel/murmur:v0.7.0",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "MURMUR_BUILTIN_HERMES_URL",

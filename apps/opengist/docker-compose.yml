@@ -1,7 +1,7 @@
 services:
   opengist:
-    image: ghcr.io/thomiceli/opengist:1.15.2
-    user: '1000:1000'
+    image: ghcr.io/thomiceli/opengist:1.15.3
+    user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 2224:2224/tcp
     volumes:

@@ -4,7 +4,7 @@ services:
     entrypoint:
       - dotnet
       - BTCPayServer.dll
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/btcpay:/data
       - ${APP_DATA_DIR}/data/nbxplorer:/data/.nbxplorer
@@ -33,7 +33,7 @@ services:
       is_main: true
   btcpay-server-nbxplorer:
     image: nicolasdorier/nbxplorer:2.6.19
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/nbxplorer:/data
     environment:

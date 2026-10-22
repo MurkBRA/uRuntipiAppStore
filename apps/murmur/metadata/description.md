@@ -34,7 +34,7 @@ Add Murmur to your phone's home screen and it feels like a native app. There's a
 Voice input needs a secure connection, so the mic appears when you open Murmur over https. Reading replies aloud works everywhere.
 
 ## Links
-- **Upstream Version**: `0.6.0`
+- **Upstream Version**: `0.7.0`
 - **Website**: https://umbrel.com
 - **Source Repository**: https://github.com/getumbrel/murmur
 - **Support**: https://github.com/getumbrel/murmur/issues

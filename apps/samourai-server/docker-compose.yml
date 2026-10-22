@@ -26,7 +26,7 @@ services:
       is_main: true
   samourai-server-db:
     image: louneskmt/dojo-db:1.5.0-low-mem
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/mysql/data:/var/lib/mysql
     environment:
@@ -40,7 +40,7 @@ services:
   samourai-server-node:
     image: nmfretz/dojo-nodejs:1.16.1-rpcfix
     command: /home/node/app/wait-for-it.sh samourai-server-db:3306 --timeout=720 --strict -- /home/node/app/restart.sh
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - COMMON_BTC_NETWORK=${APP_BITCOIN_NETWORK}
       - DOJO_VERSION_TAG=1.16.1
@@ -100,7 +100,7 @@ services:
       - '--cli.mix.liquidityClient=true'
       - '--cli.mix.clientsPerPool=1'
       - '--resync'
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/whirlpool:/home/whirlpool/.whirlpool-cli
     environment:

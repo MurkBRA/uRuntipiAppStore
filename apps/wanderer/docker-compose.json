@@ -6,7 +6,7 @@
       "image": "flomp/wanderer-web:v0.21.0",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "ORIGIN",
@@ -114,7 +114,7 @@
     {
       "name": "wanderer-db",
       "image": "flomp/wanderer-db:v0.21.0",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POCKETBASE_ENCRYPTION_KEY",

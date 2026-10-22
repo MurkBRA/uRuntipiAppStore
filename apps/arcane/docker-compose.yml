@@ -1,6 +1,6 @@
 services:
   arcane:
-    image: ghcr.io/getarcaneapp/arcane:v2.16.1
+    image: ghcr.io/getarcaneapp/arcane:v2.17.0
     volumes:
       - ${APP_DATA_DIR}/data/app_data:/app/data
       - ${APP_DATA_DIR}/data/projects:/app/data/projects
@@ -12,6 +12,7 @@ services:
       - ENCRYPTION_KEY=${APP_PASSWORD}
     depends_on:
       - arcane-docker
+    stop_grace_period: 15s
     x-runtipi:
       internal_port: 3552
       is_main: true

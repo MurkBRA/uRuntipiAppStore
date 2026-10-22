@@ -116,7 +116,7 @@
       "name": "lightning-lnd",
       "image": "lightninglabs/lnd:v0.21.4-beta",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "hostname": "${APP_DOMAIN}",
       "command": "${APP_LIGHTNING_COMMAND}",
       "environment": [

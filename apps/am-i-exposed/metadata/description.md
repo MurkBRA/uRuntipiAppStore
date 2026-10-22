@@ -11,7 +11,7 @@ All analysis runs client-side in the browser. Blockchain data comes from the loc
 This package integrates with **mempool** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.43.1`
+- **Upstream Version**: `0.43.2`
 - **Website**: https://am-i.exposed
 - **Source Repository**: https://github.com/Copexit/am-i-exposed
 - **Support**: https://github.com/Copexit/am-i-exposed/issues

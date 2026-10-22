@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "hortusfox",
   "description": "🌿 HortusFox is a self-hosted web application designed for plant lovers who want to manage their houseplants and gardens in a structured and privacy-respecting way. It is completely free and open-source, allowing users to customize and extend the software to suit their personal needs. Whether you're taking care of a few potted plants on your windowsill or managing a large garden, HortusFox provides a digital space to track, organize, and plan all aspects of plant care.",
-  "tipi_version": 1,
-  "version": "6.3",
+  "tipi_version": 2,
+  "version": "6.4",
   "categories": [
     "utilities",
     "data"
@@ -36,7 +36,7 @@
     "amd64"
   ],
   "created_at": 1792501498113,
-  "updated_at": 1792501558113,
+  "updated_at": 1792665340572,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

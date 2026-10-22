@@ -17,7 +17,7 @@ Features:
 Get started by opening the Homey app on your iOS or Android device, adding a new Homey, and selecting "Self-Hosted Server".
 
 ## Links
-- **Upstream Version**: `13.5.2`
+- **Upstream Version**: `13.5.3`
 - **Website**: https://homey.app
 - **Source Repository**: https://homey.app
 - **Support**: https://community.homey.app

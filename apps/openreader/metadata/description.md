@@ -17,7 +17,7 @@ Additionally, OpenReader WebUI is available as an open-source project, allowing 
 This package integrates with **kokoro** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `5.2.0`
+- **Upstream Version**: `5.3.0`
 - **Website**: https://openreader.richardr.dev/
 - **Source Repository**: https://github.com/richardr1126/openreader
 - **Support**: https://github.com/richardr1126/openreader/issues

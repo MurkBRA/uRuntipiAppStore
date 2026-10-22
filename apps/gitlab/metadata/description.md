@@ -33,7 +33,7 @@ GitLab is your all-in-one DevOps platform, empowering your team to build, deploy
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `19.5.0`
+- **Upstream Version**: `19.5.1`
 - **Website**: https://about.gitlab.com
 - **Source Repository**: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/master/docker
 - **Support**: https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues

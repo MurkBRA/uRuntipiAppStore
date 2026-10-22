@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 3003,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "entrypoint": [
         "dotnet",
@@ -91,7 +91,7 @@
       "name": "btcpay-server-nbxplorer",
       "image": "nicolasdorier/nbxplorer:2.6.19",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

@@ -6,7 +6,7 @@
       "image": "decred/dcrdex:v1.0.5",
       "isMain": true,
       "internalPort": 5758,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "15m",
       "entrypoint": [
         "/bin/sh",

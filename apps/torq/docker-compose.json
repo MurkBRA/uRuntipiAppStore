@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 7028,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "command": [
         "--torq.port",
@@ -39,7 +39,7 @@
       "name": "torq-db",
       "image": "timescale/timescaledb:2.8.1-pg14",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

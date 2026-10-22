@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "am-i-exposed",
   "description": "Paste a Bitcoin address, transaction ID, xpub or descriptor, or an unsigned PSBT and get a privacy score from 0 to 100 with clear findings and fixes. The engine runs 34 heuristics and 10 chain analysis modules covering address reuse, change detection, CoinJoin detection (Whirlpool, WabiSabi, JoinMarket), script types, timing, wallet fingerprinting and entity proximity, plus Boltzmann entropy computed on-device and an interactive transaction graph explorer.",
-  "tipi_version": 1,
-  "version": "0.43.1",
+  "tipi_version": 2,
+  "version": "0.43.2",
   "categories": [
     "finance"
   ],
@@ -41,6 +41,16 @@
     },
     {
       "type": "text",
+      "label": "Container User (UID:GID)",
+      "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
+      "required": false,
+      "default": "1000:1000",
+      "regex": "^[0-9]+(:[0-9]+)?$",
+      "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
+      "env_variable": "APP_CONTAINER_USER"
+    },
+    {
+      "type": "text",
       "label": "Tor SOCKS Proxy Host / IP (Optional)",
       "required": false,
       "default": "127.0.0.1",
@@ -59,7 +69,7 @@
     "amd64"
   ],
   "created_at": 1792501488311,
-  "updated_at": 1792501548311,
+  "updated_at": 1792665336638,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

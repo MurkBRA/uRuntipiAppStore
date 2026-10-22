@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "passky-server",
-      "image": "rabbitcompany/passky-server:8.1.8",
+      "image": "rabbitcompany/passky-server:9.0.0",
       "isMain": true,
       "internalPort": 80,
       "stopGracePeriod": "1m",
@@ -39,46 +39,6 @@
         {
           "key": "DATABASE_FILE",
           "value": "passky"
-        },
-        {
-          "key": "MYSQL_PORT",
-          "value": 3306
-        },
-        {
-          "key": "MYSQL_DATABASE",
-          "value": "passky"
-        },
-        {
-          "key": "MYSQL_USER",
-          "value": "passky"
-        },
-        {
-          "key": "MYSQL_SSL",
-          "value": "false"
-        },
-        {
-          "key": "MYSQL_SSL_CA",
-          "value": "/etc/ssl/certs/ca-certificates.crt"
-        },
-        {
-          "key": "MYSQL_CACHE_MODE",
-          "value": 0
-        },
-        {
-          "key": "REDIS_HOST",
-          "value": "127.0.0.1"
-        },
-        {
-          "key": "REDIS_PORT",
-          "value": 6379
-        },
-        {
-          "key": "REDIS_LOCAL_HOST",
-          "value": "127.0.0.1"
-        },
-        {
-          "key": "REDIS_LOCAL_PORT",
-          "value": 6379
         },
         {
           "key": "MAIL_ENABLED",
@@ -184,7 +144,7 @@
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/passky",
-          "containerPath": "/var/www/html/databases"
+          "containerPath": "/app/databases"
         }
       ]
     }

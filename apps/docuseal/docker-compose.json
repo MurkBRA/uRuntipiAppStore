@@ -6,7 +6,7 @@
       "image": "docuseal/docuseal:3.3.3",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -27,7 +27,7 @@
     {
       "name": "docuseal-db",
       "image": "postgres:17.3",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_DB",

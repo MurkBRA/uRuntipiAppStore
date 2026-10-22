@@ -6,7 +6,7 @@
       "image": "zachprice105/bitaxe-sentry:v0.8.0",
       "isMain": true,
       "internalPort": 7070,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "command": "uvicorn bitaxe_sentry.sentry.webapp:app --host 0.0.0.0 --port 7070",
       "environment": [
@@ -32,7 +32,7 @@
     {
       "name": "bitaxe-sentry-sentry",
       "image": "zachprice105/bitaxe-sentry:v0.8.0",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

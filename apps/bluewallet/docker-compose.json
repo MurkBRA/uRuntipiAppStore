@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 3008,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -46,7 +46,7 @@
       "name": "bluewallet-redis",
       "image": "redis:6.2.2-buster",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "command": "redis-server --requirepass moneyprintergobrrr",
       "volumes": [

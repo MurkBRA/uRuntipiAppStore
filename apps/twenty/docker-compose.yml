@@ -1,7 +1,7 @@
 services:
   twenty:
-    image: twentycrm/twenty:v2.49.0
-    user: '1000:1000'
+    image: twentycrm/twenty:v2.50.1
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/server-local-data:/app/packages/twenty-server/.local-storage
       - ${APP_DATA_DIR}/data/docker-data:/app/docker-data
@@ -27,11 +27,11 @@ services:
       internal_port: 3000
       is_main: true
   twenty-worker:
-    image: twentycrm/twenty:v2.49.0
+    image: twentycrm/twenty:v2.50.1
     command:
       - yarn
       - worker:prod
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/server-local-data:/app/packages/twenty-server/.local-storage
     environment:
@@ -48,7 +48,7 @@ services:
         condition: service_healthy
   twenty-db:
     image: postgres:16.8
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db-data:/var/lib/postgresql/data
     environment:
@@ -62,7 +62,7 @@ services:
       retries: 10
   twenty-redis:
     image: redis:7.4.2
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/redis:/data
 x-runtipi:

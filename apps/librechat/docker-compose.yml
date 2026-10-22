@@ -2,7 +2,7 @@ services:
   librechat:
     image: ghcr.io/danny-avila/librechat:v0.8.7
     command: npm run backend
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/api/librechat.yaml:/app/librechat.yaml
       - ${APP_DATA_DIR}/data/api/images:/app/client/public/images
@@ -31,12 +31,12 @@ services:
   librechat-mongodb:
     image: mongo:8.0.10
     command: mongod --noauth
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/data/db
   librechat-meilisearch:
     image: getmeili/meilisearch:v1.12.3
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/meilisearch:/meili_data
     environment:

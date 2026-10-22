@@ -1,7 +1,7 @@
 services:
   blinko:
     image: blinkospace/blinko:1.8.8
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/app:/app/.blinko
     environment:
@@ -24,7 +24,7 @@ services:
       is_main: true
   blinko-db:
     image: postgres:17.3
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
     environment:

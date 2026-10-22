@@ -1,7 +1,7 @@
 services:
   kokoro:
     image: ghcr.io/remsky/kokoro-fastapi-cpu:v0.9.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     x-runtipi:
       internal_port: 8880
       is_main: true

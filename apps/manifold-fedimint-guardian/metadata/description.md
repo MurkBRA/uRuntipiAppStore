@@ -16,7 +16,7 @@ Manifold Fedimint Guardian is part of Manifold, the protocol for accelerating th
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.1.5`
+- **Upstream Version**: `0.1.6`
 - **Website**: https://manifold.fedi.xyz/
 - **Source Repository**: https://github.com/fedibtc/manifold
 - **Support**: https://support.fedi.xyz/

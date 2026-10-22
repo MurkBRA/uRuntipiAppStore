@@ -1,7 +1,7 @@
 services:
   airtrail:
     image: johly/airtrail:v3.13.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/uploads:/app/uploads
     environment:
@@ -15,7 +15,7 @@ services:
       is_main: true
   airtrail-postgres:
     image: postgres:18.3-alpine
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/data
     environment:

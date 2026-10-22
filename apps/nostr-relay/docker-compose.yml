@@ -1,7 +1,7 @@
 services:
   nostr-relay:
     image: getumbrel/umbrel-nostr-relay:v1.1.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - RELAY_HOST=nostr-relay-relay
       - RELAY_PORT=8080
@@ -12,13 +12,13 @@ services:
       is_main: true
   nostr-relay-relay:
     image: getumbrel/nostr-rs-relay:0.8.1
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/relay/config.toml:/app/config.toml
       - ${APP_DATA_DIR}/data/relay/db:/app/db
   nostr-relay-relay-proxy:
     image: getumbrel/umbrel-nostr-relay-proxy:v1.1.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/relay-proxy:/app/data
     environment:

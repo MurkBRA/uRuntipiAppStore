@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "core-lightning-rtl",
   "description": "This version of RTL is specifically configured to use your Core Lightning node. RTL provides a full function, device agnostic, web user interface to help manage lightning node operation. It enables full control over your lightning node with rich functionality for Bitcoin base layer and Lightning Network. Some cool features available on RTL are:",
-  "tipi_version": 1,
-  "version": "v0.15.13",
+  "tipi_version": 2,
+  "version": "v0.15.15",
   "categories": [
     "finance"
   ],
@@ -56,7 +56,7 @@
     "amd64"
   ],
   "created_at": 1792501493622,
-  "updated_at": 1792501553622,
+  "updated_at": 1792665338836,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

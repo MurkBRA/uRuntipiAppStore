@@ -1,6 +1,6 @@
 services:
   yuvomi:
-    image: ghcr.io/ulsklyc/yuvomi:2.78.0
+    image: ghcr.io/ulsklyc/yuvomi:2.79.0
     volumes:
       - ${APP_DATA_DIR}/data/app:/data
       - ${APP_DATA_DIR}/data/backups:/backups

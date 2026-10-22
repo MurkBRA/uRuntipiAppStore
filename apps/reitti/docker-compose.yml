@@ -1,6 +1,6 @@
 services:
   reitti:
-    image: dedicatedcode/reitti:5.7.0
+    image: dedicatedcode/reitti:5.8.0
     volumes:
       - ${APP_DATA_DIR}/data/app:/data
     environment:
@@ -20,7 +20,7 @@ services:
       is_main: true
   reitti-postgis:
     image: imresamu/postgis:17-3.5-alpine
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/postgis:/var/lib/postgresql/data
     environment:
@@ -34,7 +34,7 @@ services:
       retries: 5
   reitti-redis:
     image: redis:7.4.9-alpine
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/redis:/data
     healthcheck:
@@ -43,7 +43,7 @@ services:
       timeout: 5s
       retries: 5
   reitti-tile-cache:
-    image: dedicatedcode/reitti-tile-cache:5.7.0
+    image: dedicatedcode/reitti-tile-cache:5.8.0
     volumes:
       - ${APP_DATA_DIR}/data/title-cache:/var/cache/nginx
     healthcheck:

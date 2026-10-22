@@ -3,11 +3,11 @@
   "services": [
     {
       "name": "lightning-terminal",
-      "image": "lightninglabs/lightning-terminal:v0.17.6",
+      "image": "lightninglabs/lightning-terminal:v0.17.7",
       "isMain": true,
       "internalPort": 3004,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "command": [
         "--uipassword_env=APP_PASSWORD",

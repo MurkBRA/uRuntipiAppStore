@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 8080,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -83,7 +83,7 @@
       "name": "woofbot-lnd-mongodb",
       "image": "mongo:4.4.6-bionic",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "volumes": [
         {

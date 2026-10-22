@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "gitlab",
   "description": "⚠️ This app is RAM-intensive (+6GB recommended) and can take 15-20 minutes to start after installation on low-powered devices.",
-  "tipi_version": 1,
-  "version": "19.5.0",
+  "tipi_version": 2,
+  "version": "19.5.1",
   "categories": [
     "development"
   ],
@@ -28,7 +28,7 @@
     "amd64"
   ],
   "created_at": 1792501496766,
-  "updated_at": 1792501556766,
+  "updated_at": 1792665340155,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

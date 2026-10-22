@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "endurain",
-      "image": "ghcr.io/endurain-project/endurain:v0.19.4",
+      "image": "ghcr.io/endurain-project/endurain:v0.20.1",
       "isMain": true,
       "internalPort": 8080,
       "environment": [
@@ -36,12 +36,12 @@
           "value": "${INTERNAL_IP}/16"
         },
         {
-          "key": "RATE_LIMIT_STORAGE_URI",
-          "value": "redis://:${APP_ENDURAIN_REDIS_PASSWORD}@endurain-redis:6379/0"
+          "key": "DEPLOYMENT_PROFILE",
+          "value": "local"
         },
         {
-          "key": "AUTH_SECURITY_STORAGE_URI",
-          "value": "redis://:${APP_ENDURAIN_REDIS_PASSWORD}@endurain-redis:6379/0"
+          "key": "WEB_WORKERS",
+          "value": 1
         }
       ],
       "volumes": [
@@ -57,16 +57,13 @@
       "dependsOn": {
         "endurain-db": {
           "condition": "service_healthy"
-        },
-        "endurain-redis": {
-          "condition": "service_healthy"
         }
       }
     },
     {
       "name": "endurain-db",
       "image": "postgres:17.4",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_PASSWORD",
@@ -93,35 +90,6 @@
       ],
       "healthCheck": {
         "test": "pg_isready -U endurain",
-        "interval": "5s",
-        "timeout": "5s",
-        "retries": 5
-      }
-    },
-    {
-      "name": "endurain-redis",
-      "image": "redis:8-alpine",
-      "command": [
-        "redis-server",
-        "--appendonly",
-        "yes",
-        "--requirepass",
-        "${APP_ENDURAIN_REDIS_PASSWORD}"
-      ],
-      "environment": [
-        {
-          "key": "REDISCLI_AUTH",
-          "value": "${APP_ENDURAIN_REDIS_PASSWORD}"
-        }
-      ],
-      "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/redis",
-          "containerPath": "/data"
-        }
-      ],
-      "healthCheck": {
-        "test": "redis-cli ping",
         "interval": "5s",
         "timeout": "5s",
         "retries": 5

@@ -6,7 +6,7 @@
       "image": "quay.io/jupyter/base-notebook:lab-4.6.4",
       "isMain": true,
       "internalPort": 8888,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": "start-notebook.py --IdentityProvider.token=${APP_PASSWORD}",
       "volumes": [
         {

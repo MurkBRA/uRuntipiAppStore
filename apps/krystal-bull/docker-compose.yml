@@ -1,7 +1,7 @@
 services:
   krystal-bull:
     image: bitcoinscala/oracle-server-ui:1.9.7
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/oracleserver:/bitcoin-s
       - ${APP_DATA_DIR}/data/log:/log
@@ -26,7 +26,7 @@ services:
       - /bitcoin-s
       - '--conf'
       - /opt/docker/docker-application.conf
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/oracleserver:/bitcoin-s
     environment:

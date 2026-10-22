@@ -112,6 +112,7 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
     expect(res.composeYamlObj.services.app_proxy).toBeUndefined();
     expect(res.composeYamlObj.services["my-app"]).toBeDefined();
     expect(res.composeYamlObj.services["my-app"].image).toBe("ghcr.io/org/my-app:1.2.3");
+    expect(res.composeYamlObj.services["my-app"].user).toBe("${APP_CONTAINER_USER:-1000:1000}");
     expect(res.composeYamlObj.services["my-app"]["x-runtipi"]).toEqual({
       internal_port: 3000,
       is_main: true,
@@ -130,6 +131,7 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
     expect(res.composeYamlObj.services["my-app"].volumes).toContain("${APP_DATA_DIR}/data/config.yml:/app/config.yml:ro");
     expect(res.formFields.map((f) => f.env_variable)).toContain("APP_PASSWORD");
     expect(res.formFields.map((f) => f.env_variable)).toContain("APP_BITCOIN_NODE_IP");
+    expect(res.formFields.map((f) => f.env_variable)).toContain("APP_CONTAINER_USER");
   });
 
   it("buildRuntipiConfigAndDescription generates valid Runtipi config.json", () => {

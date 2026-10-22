@@ -3,10 +3,10 @@
   "services": [
     {
       "name": "twenty",
-      "image": "twentycrm/twenty:v2.49.0",
+      "image": "twentycrm/twenty:v2.50.1",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "NODE_PORT",
@@ -61,8 +61,8 @@
     },
     {
       "name": "twenty-worker",
-      "image": "twentycrm/twenty:v2.49.0",
-      "user": "1000:1000",
+      "image": "twentycrm/twenty:v2.50.1",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": [
         "yarn",
         "worker:prod"
@@ -111,7 +111,7 @@
     {
       "name": "twenty-db",
       "image": "postgres:16.8",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_DB",
@@ -142,7 +142,7 @@
     {
       "name": "twenty-redis",
       "image": "redis:7.4.2",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/redis",

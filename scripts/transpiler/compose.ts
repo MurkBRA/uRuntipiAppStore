@@ -24,6 +24,17 @@ const RUNTIPI_BUILTIN_ENV_VARS = new Set([
   " TIPI_VERSION",
 ]);
 
+export const CONTAINER_USER_FORM_FIELD: FormField = {
+  type: "text",
+  label: "Container User (UID:GID)",
+  hint: "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
+  required: false,
+  default: "1000:1000",
+  regex: "^[0-9]+(:[0-9]+)?$",
+  pattern_error: "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
+  env_variable: "APP_CONTAINER_USER",
+};
+
 function stripImageDigest(image: string): string {
   const withoutDigest = image.split("@sha256:")[0].trim();
   const lastSlash = withoutDigest.lastIndexOf("/");
@@ -389,11 +400,14 @@ export function transpileCompose(params: {
     }
 
     if (raw.user !== undefined) {
-      const userStr = String(raw.user).trim();
-      svc.user = userStr;
+      const userStr = String(raw.user).trim().replace(/^['"]|['"]$/g, "");
       if (userStr === "1000:1000") {
+        svc.user = "${APP_CONTAINER_USER:-1000:1000}";
         detectedUid = 1000;
         detectedGid = 1000;
+        ensureFormField(CONTAINER_USER_FORM_FIELD);
+      } else {
+        svc.user = userStr;
       }
     }
 

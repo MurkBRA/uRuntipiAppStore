@@ -17,6 +17,18 @@
   "website": "https://github.com/zachchan105/bitaxe-sentry",
   "uid": 1000,
   "gid": 1000,
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Container User (UID:GID)",
+      "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
+      "required": false,
+      "default": "1000:1000",
+      "regex": "^[0-9]+(:[0-9]+)?$",
+      "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
+      "env_variable": "APP_CONTAINER_USER"
+    }
+  ],
   "supported_architectures": [
     "arm64",
     "amd64"

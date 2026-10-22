@@ -76,7 +76,7 @@ Made for sovereign Bitcoin users.
 This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.3.14`
+- **Upstream Version**: `0.3.15`
 - **Website**: https://github.com/Alex71btc
 - **Source Repository**: https://github.com/Alex71btc/lndk-pay
 - **Support**: https://github.com/Alex71btc/lndk-pay/issues

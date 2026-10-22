@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "downtify",
-      "image": "ghcr.io/henriquesebastiao/downtify:3.5.0",
+      "image": "ghcr.io/henriquesebastiao/downtify:3.7.0",
       "isMain": true,
       "internalPort": 8000,
       "stopGracePeriod": "1m",

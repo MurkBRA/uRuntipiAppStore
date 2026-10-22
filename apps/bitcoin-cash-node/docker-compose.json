@@ -6,7 +6,7 @@
       "image": "ghcr.io/danhaus93-ops/bchn-dashboard:8bb17f3689d837dbd370ac0d35e4a158ea12b75a",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "PORT",
@@ -54,7 +54,7 @@
     {
       "name": "bitcoin-cash-node-bitcoind",
       "image": "mainnet/bitcoin-cash-node:v29.0.0",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "command": [
         "-datadir=/data",

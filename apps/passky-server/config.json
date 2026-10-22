@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "passky-server",
   "description": "With Passky, you can easily and securely store all of your passwords in one place.",
-  "tipi_version": 1,
-  "version": "8.1.8",
+  "tipi_version": 2,
+  "version": "9.0.0",
   "categories": [
     "utilities",
     "data"
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501504858,
-  "updated_at": 1792501564858,
+  "updated_at": 1792665344056,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

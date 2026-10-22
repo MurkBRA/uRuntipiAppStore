@@ -21,7 +21,7 @@ Benefits of using Twenty include improved organization, streamlined communicatio
 You can find detailed setup instructions here: https://twenty.com/developers/section/self-hosting/setup#for-gmail-and-google-calendar
 
 ## Links
-- **Upstream Version**: `2.49.0`
+- **Upstream Version**: `2.50.1`
 - **Website**: https://twenty.com/
 - **Source Repository**: https://github.com/twentyhq/twenty
 - **Support**: https://github.com/twentyhq/twenty/issues

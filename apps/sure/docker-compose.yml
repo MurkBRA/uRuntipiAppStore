@@ -1,7 +1,7 @@
 services:
   sure:
     image: ghcr.io/we-promise/sure:0.7.5
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/rails:/rails/storage
     environment:
@@ -26,7 +26,7 @@ services:
   sure-worker:
     image: ghcr.io/we-promise/sure:0.7.5
     command: bundle exec sidekiq
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/rails:/rails/storage
     environment:
@@ -47,7 +47,7 @@ services:
         condition: service_healthy
   sure-db:
     image: postgres:18.3-alpine
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/postgres:/data
     environment:
@@ -63,7 +63,7 @@ services:
       start_period: 30s
   sure-redis:
     image: redis:8.4.2
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/redis:/data
     healthcheck:

@@ -17,7 +17,7 @@
     },
     {
       "name": "snowflake-proxy",
-      "image": "thetorproject/snowflake-proxy:v2.15.1",
+      "image": "thetorproject/snowflake-proxy:v2.15.2",
       "stopGracePeriod": "1m",
       "command": "-log /data/snowflake.log -verbose",
       "volumes": [

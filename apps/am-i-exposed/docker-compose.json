@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "am-i-exposed",
-      "image": "ghcr.io/copexit/am-i-exposed-umbrel:v0.43.1",
+      "image": "ghcr.io/copexit/am-i-exposed-umbrel:v0.43.2",
       "isMain": true,
       "internalPort": 8080,
       "addToMainNetwork": true,
@@ -42,9 +42,9 @@
     },
     {
       "name": "am-i-exposed-tor-proxy",
-      "image": "ghcr.io/copexit/am-i-exposed-tor-proxy:v0.43.1",
+      "image": "ghcr.io/copexit/am-i-exposed-tor-proxy:v0.43.2",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "10s",
       "environment": [
         {

@@ -1,7 +1,7 @@
 services:
   elements:
     image: ghcr.io/tiero/elements-web:v0.0.3
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - RPC_USER=elements
       - RPC_PASS=${APP_PASSWORD}
@@ -38,7 +38,7 @@ services:
       - '-blockfilterindex=1'
       - '-peerblockfilters=1'
       - '-creatediscountct=1'
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 7041:7041/tcp
       - 18332:18332/tcp

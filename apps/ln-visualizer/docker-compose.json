@@ -19,7 +19,7 @@
       "name": "ln-visualizer-api",
       "image": "maxkotlan/ln-visualizer-api:v0.0.28",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

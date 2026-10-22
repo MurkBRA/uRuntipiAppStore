@@ -1,7 +1,7 @@
 services:
   l-town:
     image: ghcr.io/besoeasy/l-town:20260621
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     x-runtipi:
       internal_port: 30300
       is_main: true

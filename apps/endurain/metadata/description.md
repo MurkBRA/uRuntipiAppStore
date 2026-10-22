@@ -21,7 +21,7 @@ Features:
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `0.19.4`
+- **Upstream Version**: `0.20.1`
 - **Website**: https://docs.endurain.com/
 - **Source Repository**: https://github.com/endurain-project/endurain
 - **Support**: https://github.com/endurain-project/endurain/issues

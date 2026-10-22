@@ -17,7 +17,7 @@ services:
       is_main: true
   booklore-db:
     image: mariadb:12.0.2
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/mysql
     environment:

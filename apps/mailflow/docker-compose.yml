@@ -1,6 +1,6 @@
 services:
   mailflow:
-    image: ghcr.io/maathimself/mailflow-frontend:4.0.2
+    image: ghcr.io/maathimself/mailflow-frontend:4.0.3
     depends_on:
       mailflow-backend:
         condition: service_healthy
@@ -15,7 +15,7 @@ services:
       internal_port: 80
       is_main: true
   mailflow-backend:
-    image: ghcr.io/maathimself/mailflow-backend:4.0.2
+    image: ghcr.io/maathimself/mailflow-backend:4.0.3
     environment:
       - NODE_ENV=production
       - PORT=3000
@@ -44,7 +44,7 @@ services:
     stop_grace_period: 1m
   mailflow-postgres:
     image: postgres:16-alpine
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/postgres:/var/lib/postgresql/data
     environment:
@@ -60,7 +60,7 @@ services:
   mailflow-redis:
     image: redis:7-alpine
     command: redis-server --save 60 1 --loglevel warning
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/redis:/data
     healthcheck:

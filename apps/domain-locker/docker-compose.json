@@ -6,7 +6,7 @@
       "image": "lissy93/domain-locker:0.3.0",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "DL_ENV_TYPE",
@@ -47,7 +47,7 @@
     {
       "name": "domain-locker-postgres",
       "image": "postgres:17.4",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_DB",

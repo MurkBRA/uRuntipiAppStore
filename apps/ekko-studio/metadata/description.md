@@ -17,7 +17,7 @@ This package provides the browser interface. Native-app cloud connectivity, peer
 - **Password**: `123456`
 
 ## Links
-- **Upstream Version**: `0.7.37`
+- **Upstream Version**: `0.7.38`
 - **Website**: https://github.com/EKKOLearnAI/ekko-studio
 - **Source Repository**: https://github.com/EKKOLearnAI/ekko-studio
 - **Support**: https://github.com/EKKOLearnAI/ekko-studio/issues

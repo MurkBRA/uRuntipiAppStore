@@ -10,7 +10,7 @@ services:
       is_main: true
   plane-db:
     image: postgres:17.9-alpine
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
     environment:
@@ -26,7 +26,7 @@ services:
       - ${APP_DATA_DIR}/data/redis:/data
   plane-rabbitmq:
     image: rabbitmq:3.13.7-management-alpine
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/rabbitmq:/var/lib/rabbitmq
     environment:
@@ -34,7 +34,7 @@ services:
   plane-minio:
     image: alpine/minio:RELEASE.2025-10-15T17-29-55Z
     command: server /export --console-address ":8763"
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 8763:8763/tcp
     volumes:
@@ -43,7 +43,7 @@ services:
       - <<=[object Object]
   plane-api:
     image: makeplane/plane-backend:v1.4.2
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
     depends_on:
@@ -59,7 +59,7 @@ services:
       - sh
       - '-c'
       - celery -A plane worker --loglevel=info
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
     depends_on:
@@ -75,7 +75,7 @@ services:
       - sh
       - '-c'
       - celery -A plane beat --loglevel=info
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
     depends_on:
@@ -93,7 +93,7 @@ services:
       - sh
       - '-c'
       - python manage.py wait_for_db && python manage.py migrate
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
     depends_on:
@@ -107,14 +107,14 @@ services:
       - plane-api
   plane-live:
     image: makeplane/plane-live:v1.4.2
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
     depends_on:
       - plane-api
   plane-space:
     image: makeplane/plane-space:v1.4.2
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
     depends_on:

@@ -35,7 +35,7 @@ services:
   lightning-lnd:
     image: lightninglabs/lnd:v0.21.4-beta
     command: ${APP_LIGHTNING_COMMAND}
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     hostname: ${APP_DOMAIN}
     ports:
       - 9735:9735/tcp

@@ -12,7 +12,7 @@ Users are responsible for their actions and potential legal consequences. We do 
 - **Password**: `downtify`
 
 ## Links
-- **Upstream Version**: `3.5.0`
+- **Upstream Version**: `3.7.0`
 - **Website**: https://github.com/henriquesebastiao/downtify
 - **Source Repository**: https://github.com/henriquesebastiao/downtify
 - **Support**: https://github.com/henriquesebastiao/downtify/issues

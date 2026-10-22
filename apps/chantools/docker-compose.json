@@ -6,7 +6,7 @@
       "image": "guggero/chantools:v0.14.1-umbrel",
       "isMain": true,
       "internalPort": 7682,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1s",
       "command": [
         "ttyd",

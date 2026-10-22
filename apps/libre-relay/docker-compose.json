@@ -109,7 +109,7 @@
     {
       "name": "libre-relay-bitcoind",
       "image": "ghcr.io/petertodd/bitcoin:libre-relay-v30.2-2",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "15m30s",
       "command": "${APP_LIBRE_RELAY_COMMAND}",
       "volumes": [

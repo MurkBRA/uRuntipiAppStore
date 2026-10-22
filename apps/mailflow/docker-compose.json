@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "mailflow",
-      "image": "ghcr.io/maathimself/mailflow-frontend:4.0.2",
+      "image": "ghcr.io/maathimself/mailflow-frontend:4.0.3",
       "isMain": true,
       "internalPort": 80,
       "stopGracePeriod": "1m",
@@ -22,7 +22,7 @@
     },
     {
       "name": "mailflow-backend",
-      "image": "ghcr.io/maathimself/mailflow-backend:4.0.2",
+      "image": "ghcr.io/maathimself/mailflow-backend:4.0.3",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -97,7 +97,7 @@
     {
       "name": "mailflow-postgres",
       "image": "postgres:16-alpine",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_DB",
@@ -129,7 +129,7 @@
     {
       "name": "mailflow-redis",
       "image": "redis:7-alpine",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": "redis-server --save 60 1 --loglevel warning",
       "volumes": [
         {

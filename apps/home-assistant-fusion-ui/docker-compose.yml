@@ -1,7 +1,7 @@
 services:
   home-assistant-fusion-ui:
     image: ghcr.io/matt8707/ha-fusion:2024.10.1
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/fusion:/app/data
     environment:

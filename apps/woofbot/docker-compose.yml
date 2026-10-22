@@ -1,7 +1,7 @@
 services:
   woofbot:
     image: woofbot/woofbot:v0.9.8
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/server-logs:/app/logs
     environment:
@@ -22,7 +22,7 @@ services:
       is_main: true
   woofbot-mongodb:
     image: mongo:4.4.6-bionic
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/data/db
       - ${APP_DATA_DIR}/data/db/diagnostic.data:/data/db/diagnostic.data

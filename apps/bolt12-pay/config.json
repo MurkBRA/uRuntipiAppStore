@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "bolt12-pay",
   "description": "BOLT12 Pay is a self-hosted Lightning payments and identity app for LND nodes. It supports BOLT12 Offers, BIP353 and LNURL Lightning Addresses, optional BOLT11 fallback invoices, Nostr identities, NIP-05 and Zaps.",
-  "tipi_version": 1,
-  "version": "0.3.14",
+  "tipi_version": 2,
+  "version": "0.3.15",
   "categories": [
     "finance"
   ],
@@ -37,7 +37,7 @@
     "amd64"
   ],
   "created_at": 1792501490959,
-  "updated_at": 1792501550959,
+  "updated_at": 1792665338154,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

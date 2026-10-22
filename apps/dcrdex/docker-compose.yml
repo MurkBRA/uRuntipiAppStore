@@ -5,7 +5,7 @@ services:
       - /bin/sh
       - '-c'
       - exec ./bisonw --webaddr $(hostname -I|cut -d\  -f1 ):5758
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data:/dex/.dexc
     stop_grace_period: 15m

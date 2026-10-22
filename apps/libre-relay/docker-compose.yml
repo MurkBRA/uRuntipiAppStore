@@ -34,7 +34,7 @@ services:
   libre-relay-bitcoind:
     image: ghcr.io/petertodd/bitcoin:libre-relay-v30.2-2
     command: ${APP_LIBRE_RELAY_COMMAND}
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 8453:8453/tcp
       - 8452:8452/tcp

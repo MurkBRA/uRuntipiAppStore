@@ -1,7 +1,7 @@
 services:
   enclosed:
     image: corentinth/enclosed:1.16.0-rootless
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data:/app/.data
     stop_grace_period: 1m

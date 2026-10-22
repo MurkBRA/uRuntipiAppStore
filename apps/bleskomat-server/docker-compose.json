@@ -7,7 +7,7 @@
       "isMain": true,
       "internalPort": 3333,
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -78,7 +78,7 @@
       "name": "bleskomat-server-db",
       "image": "postgres:10.20-stretch",
       "addToMainNetwork": true,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

@@ -6,7 +6,7 @@
       "image": "coreylphillips/bitcoin-regtest-dashboard:v1.1.0",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "PORT",
@@ -57,7 +57,7 @@
     {
       "name": "bitcoin-regtest-dashboard-bitcoin",
       "image": "ghcr.io/getumbrel/docker-bitcoind:v31.1",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": [
         "rm -f /data/.bitcoin/regtest/.ready\nbitcoind -regtest \\\n  -server=1 \\\n  -rpcbind=0.0.0.0 \\\n  -rpcallowip=0.0.0.0/0 \\\n  -rpcport=18443 \\\n  -txindex=1 \\\n  -fallbackfee=0.00001 \\\n  -disablewallet=0 \\\n  -zmqpubrawblock=tcp://0.0.0.0:28332 \\\n  -zmqpubrawtx=tcp://0.0.0.0:28333 &\nBITCOIND_PID=$$!\nwhile [ ! -f /data/.bitcoin/regtest/.cookie ]; do sleep 1; done\nchmod 755 /data/.bitcoin/regtest\nchmod 644 /data/.bitcoin/regtest/.cookie\nchmod 644 /data/.bitcoin/regtest/debug.log 2>/dev/null || true\nsleep 2\nbitcoin-cli -regtest -rpccookiefile=/data/.bitcoin/regtest/.cookie createwallet \"regtest_wallet\" 2>/dev/null || \\\n  bitcoin-cli -regtest -rpccookiefile=/data/.bitcoin/regtest/.cookie loadwallet \"regtest_wallet\" 2>/dev/null || true\nbitcoin-cli -regtest -rpccookiefile=/data/.bitcoin/regtest/.cookie -rpcwallet=regtest_wallet -generate 1 >/dev/null 2>&1 || true\ntouch /data/.bitcoin/regtest/.ready\nwhile kill -0 $$BITCOIND_PID 2>/dev/null; do\n  chmod 755 /data/.bitcoin/regtest 2>/dev/null\n  chmod 644 /data/.bitcoin/regtest/.cookie 2>/dev/null\n  chmod 644 /data/.bitcoin/regtest/debug.log 2>/dev/null\n  sleep 5\ndone &\nwait $$BITCOIND_PID\n"
       ],
@@ -82,7 +82,7 @@
     {
       "name": "bitcoin-regtest-dashboard-electrs",
       "image": "getumbrel/electrs:v0.11.0",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "ELECTRS_ELECTRUM_RPC_ADDR",

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "yuvomi",
-      "image": "ghcr.io/ulsklyc/yuvomi:2.78.0",
+      "image": "ghcr.io/ulsklyc/yuvomi:2.79.0",
       "isMain": true,
       "internalPort": 3000,
       "stopGracePeriod": "1m",

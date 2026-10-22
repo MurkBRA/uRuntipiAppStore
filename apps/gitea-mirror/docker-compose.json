@@ -3,10 +3,10 @@
   "services": [
     {
       "name": "gitea-mirror",
-      "image": "ghcr.io/raylabshq/gitea-mirror:v3.41.0",
+      "image": "ghcr.io/raylabshq/gitea-mirror:v3.43.0",
       "isMain": true,
       "internalPort": 4321,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "BETTER_AUTH_SECRET",

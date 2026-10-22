@@ -3,9 +3,10 @@
   "services": [
     {
       "name": "arcane",
-      "image": "ghcr.io/getarcaneapp/arcane:v2.16.1",
+      "image": "ghcr.io/getarcaneapp/arcane:v2.17.0",
       "isMain": true,
       "internalPort": 3552,
+      "stopGracePeriod": "15s",
       "environment": [
         {
           "key": "APP_URL",

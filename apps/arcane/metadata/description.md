@@ -27,7 +27,7 @@ The platform is designed to bridge the gap between simplicity and advanced contr
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `2.16.1`
+- **Upstream Version**: `2.17.0`
 - **Website**: https://getarcane.app/
 - **Source Repository**: https://github.com/getarcaneapp/arcane
 - **Support**: https://github.com/getarcaneapp/arcane/issues

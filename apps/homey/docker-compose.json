@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "homey",
-      "image": "ghcr.io/athombv/homey-shs:13.5.2",
+      "image": "ghcr.io/athombv/homey-shs:13.5.3",
       "isMain": true,
       "internalPort": 4859,
       "privileged": true,

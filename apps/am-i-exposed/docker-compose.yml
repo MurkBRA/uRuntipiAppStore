@@ -1,6 +1,6 @@
 services:
   am-i-exposed:
-    image: ghcr.io/copexit/am-i-exposed-umbrel:v0.43.1
+    image: ghcr.io/copexit/am-i-exposed-umbrel:v0.43.2
     user: '101:101'
     environment:
       - APP_MEMPOOL_IP=${APP_MEMPOOL_IP}
@@ -20,8 +20,8 @@ services:
       add_to_main_network: true
       is_main: true
   am-i-exposed-tor-proxy:
-    image: ghcr.io/copexit/am-i-exposed-tor-proxy:v0.43.1
-    user: '1000:1000'
+    image: ghcr.io/copexit/am-i-exposed-tor-proxy:v0.43.2
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - PORT=3001
       - TOR_PROXY_IP=${TOR_PROXY_IP}

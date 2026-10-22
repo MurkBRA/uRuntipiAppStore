@@ -1,7 +1,7 @@
 services:
   copyparty:
     image: ghcr.io/9001/copyparty-ac:1.20.26
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/config/config.conf:/cfg/config.conf:ro
       - ${APP_DATA_DIR}/data/cp_data:/cfg/hists

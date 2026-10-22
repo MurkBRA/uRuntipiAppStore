@@ -1,7 +1,7 @@
 services:
   pastefy:
     image: interaapps/pastefy:7.1.6
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - HTTP_SERVER_CORS=*
       - DATABASE_DRIVER=mysql
@@ -18,7 +18,7 @@ services:
       is_main: true
   pastefy-db:
     image: mariadb:11.4.5
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/mysql
     environment:

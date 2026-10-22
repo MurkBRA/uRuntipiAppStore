@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "bolt12-pay",
-      "image": "alex71btc/bolt12-pay:0.3.14",
+      "image": "alex71btc/bolt12-pay:0.3.15",
       "isMain": true,
       "internalPort": 8081,
       "addToMainNetwork": true,
@@ -126,7 +126,7 @@
     },
     {
       "name": "bolt12-pay-lndk",
-      "image": "alex71btc/lndk:bolt12-pay-89a06db-multiarch",
+      "image": "alex71btc/lndk:bolt12-pay-295b537-multiarch",
       "addToMainNetwork": true,
       "command": [
         "echo \"Waiting for LND TLS + macaroon...\"\nwhile [ ! -f /lnd/tls.cert ] || [ ! -f /lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon ]; do\n  echo \"Waiting for cert/macaroon...\"\n  sleep 5\ndone\n\necho \"Starting LNDK with retry loop...\"\nwhile true; do\n  lndk --address=https://lightning_lnd_1:10009 --cert-path=/lnd/tls.cert --macaroon-path=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon --data-dir=/data/lndk --grpc-host=0.0.0.0 --grpc-port=7000\n  echo \"LNDK exited or failed. Retrying in 10s...\"\n  sleep 10\ndone\n"

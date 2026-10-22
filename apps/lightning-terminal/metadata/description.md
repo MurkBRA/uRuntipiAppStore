@@ -27,7 +27,7 @@ Why use Loop?
 This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.17.6`
+- **Upstream Version**: `0.17.7`
 - **Website**: https://lightning.engineering
 - **Source Repository**: https://github.com/lightninglabs/lightning-terminal
 - **Support**: https://github.com/lightninglabs/lightning-terminal/issues/new

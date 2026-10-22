@@ -6,7 +6,7 @@
       "image": "interaapps/pastefy:7.1.6",
       "isMain": true,
       "internalPort": 80,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "HTTP_SERVER_CORS",
@@ -48,7 +48,7 @@
     {
       "name": "pastefy-db",
       "image": "mariadb:11.4.5",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "MYSQL_ROOT_PASSWORD",

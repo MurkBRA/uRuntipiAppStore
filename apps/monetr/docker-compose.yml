@@ -5,7 +5,7 @@ services:
       - serve
       - '--migrate'
       - '--generate-certificates'
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/app:/etc/monetr
     environment:
@@ -31,7 +31,7 @@ services:
       is_main: true
   monetr-db:
     image: postgres:17.9
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
     environment:
@@ -45,7 +45,7 @@ services:
       retries: 10
   monetr-valkey:
     image: valkey/valkey:9
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/valkey:/data
     healthcheck:

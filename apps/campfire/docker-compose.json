@@ -3,10 +3,10 @@
   "services": [
     {
       "name": "campfire",
-      "image": "ghcr.io/basecamp/once-campfire:1.5.4",
+      "image": "ghcr.io/basecamp/once-campfire:1.5.6",
       "isMain": true,
       "internalPort": 80,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "RAILS_ENV",
@@ -50,7 +50,7 @@
     {
       "name": "campfire-redis",
       "image": "redis:7-alpine",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": "redis-server --save 60 1 --save 300 10 --save 900 100 --appendonly yes --loglevel warning",
       "volumes": [
         {

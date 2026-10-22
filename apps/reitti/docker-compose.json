@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "reitti",
-      "image": "dedicatedcode/reitti:5.7.0",
+      "image": "dedicatedcode/reitti:5.8.0",
       "isMain": true,
       "internalPort": 8080,
       "environment": [
@@ -45,7 +45,7 @@
     {
       "name": "reitti-postgis",
       "image": "imresamu/postgis:17-3.5-alpine",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_USER",
@@ -76,7 +76,7 @@
     {
       "name": "reitti-redis",
       "image": "redis:7.4.9-alpine",
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/redis",
@@ -92,7 +92,7 @@
     },
     {
       "name": "reitti-tile-cache",
-      "image": "dedicatedcode/reitti-tile-cache:5.7.0",
+      "image": "dedicatedcode/reitti-tile-cache:5.8.0",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/title-cache",

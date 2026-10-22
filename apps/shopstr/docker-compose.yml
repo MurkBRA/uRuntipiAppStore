@@ -1,7 +1,7 @@
 services:
   shopstr:
     image: calvadev/shopstr:v0.7.5
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - PORT=3000
     stop_grace_period: 1m

@@ -6,7 +6,7 @@
       "image": "dumbwareio/dumbpad:1.0.4",
       "isMain": true,
       "internalPort": 3000,
-      "user": "1000:1000",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "SITE_TITLE",

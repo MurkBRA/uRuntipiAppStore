@@ -1,6 +1,6 @@
 services:
   core-lightning-rtl:
-    image: shahanafarooqui/rtl:v0.15.13
+    image: shahanafarooqui/rtl:v0.15.15
     volumes:
       - ${APP_DATA_DIR}/data/rtl:/data
       - ${APP_CORE_LIGHTNING_DATA_DIR}:/root/.lightning:ro

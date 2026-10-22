@@ -19,7 +19,7 @@ HortusFox is ideal for individuals and families who enjoy caring for plants and 
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `6.3`
+- **Upstream Version**: `6.4`
 - **Website**: https://www.hortusfox.com/
 - **Source Repository**: https://github.com/danielbrendel/hortusfox-web
 - **Support**: https://github.com/danielbrendel/hortusfox-web/issues

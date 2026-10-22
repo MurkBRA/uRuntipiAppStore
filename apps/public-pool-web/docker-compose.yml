@@ -1,7 +1,7 @@
 services:
   public-pool-web:
     image: martinbarilik/public-pool-web:0.2.0
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - RAILS_MASTER_KEY=dbd1d33e19a5e0ca9b28c2c55803afef
       - DATABASE_URL=postgres://${APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME}:${APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD}@${APP_PUBLIC_POOL_WEB_POSTGRES_HOST}:${APP_PUBLIC_POOL_WEB_POSTGRES_PORT}/${APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME}
@@ -37,7 +37,7 @@ services:
       add_to_main_network: true
   public-pool-web-redis:
     image: valkey/valkey:8
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     healthcheck:
       test: redis-cli ping
       interval: 10s
@@ -48,7 +48,7 @@ services:
   public-pool-web-sidekiq:
     image: martinbarilik/public-pool-web:0.2.0
     command: bundle exec sidekiq
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - RAILS_MASTER_KEY=dbd1d33e19a5e0ca9b28c2c55803afef
       - REDIS_URL=redis://public-pool-web-redis:6379/0

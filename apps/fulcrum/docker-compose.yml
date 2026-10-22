@@ -21,7 +21,7 @@ services:
   fulcrum-fulcrum-sidecar:
     image: cculianu/fulcrum:v2.1.4
     command: sh -c 'rm -f /tmp/fulcrum.pipe; mkfifo /tmp/fulcrum.pipe; tee -a /logs/fulcrum.log < /tmp/fulcrum.pipe & exec Fulcrum -D /data _ENV_ > /tmp/fulcrum.pipe 2>&1'
-    user: '1000:1000'
+    user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 50002:50002/tcp
     volumes:

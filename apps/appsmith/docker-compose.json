@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "appsmith",
-      "image": "appsmith/appsmith-ce:v2.5.0",
+      "image": "appsmith/appsmith-ce:v2.5.1",
       "isMain": true,
       "internalPort": 80,
       "environment": [
