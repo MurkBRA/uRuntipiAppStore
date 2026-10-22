@@ -77,7 +77,64 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
         expect(residualDnsRegex.test(composeYmlRaw)).toBe(false);
         expect(residualDnsRegex.test(composeJsonRaw)).toBe(false);
 
-        // 4. Verify logo.jpg has genuine JPEG magic bytes (FF D8 FF)
+        // 4. No unmapped upstream container_name references in URLs or host variables
+        // If an upstream service defined a custom container_name that differs from its final Runtipi service name,
+        // it must not leak into compose as an unresolved hostname.
+        const knownUpstreamCustomContainers: Record<string, string[]> = {
+          adventurelog: ["adventurelogserver1"],
+          seafile: ["seafile-mysql"],
+          plane: ["plane-minio-1"],
+        };
+
+        const upstreamDirs = [
+          path.join(".tmp", "umbrel-apps", id),
+          path.join(".tmp", "umbrel-apps-gallery", id),
+        ];
+        const unmappedNames = new Set<string>(knownUpstreamCustomContainers[id] || []);
+        for (const uDir of upstreamDirs) {
+          const uCompose = path.join(uDir, "docker-compose.yml");
+          if (fs.existsSync(uCompose)) {
+            try {
+              const uDoc = jsyaml.load(fs.readFileSync(uCompose, "utf8")) as Record<string, any>;
+              if (uDoc?.services) {
+                for (const svc of Object.values(uDoc.services)) {
+                  if (typeof (svc as any)?.container_name === "string") {
+                    const cName = (svc as any).container_name.trim();
+                    if (!composeYml.services[cName]) {
+                      unmappedNames.add(cName);
+                    }
+                  }
+                }
+              }
+            } catch {}
+          }
+        }
+
+        for (const unmapped of unmappedNames) {
+          // Unmapped container name must not appear as URL host
+          const unmappedUrlRegex = new RegExp(`://[^:/\\s"']+@?${unmapped}(?::\\d+)?(?:/|["'\\s]|$)`);
+          expect(
+            unmappedUrlRegex.test(composeYmlRaw),
+            `Found unmapped upstream container_name "${unmapped}" in ${id}/docker-compose.yml`,
+          ).toBe(false);
+          expect(
+            unmappedUrlRegex.test(composeJsonRaw),
+            `Found unmapped upstream container_name "${unmapped}" in ${id}/docker-compose.json`,
+          ).toBe(false);
+
+          // And must not appear as a standalone host assignment (e.g. DB_HOST=unmapped)
+          const unmappedHostRegex = new RegExp(`(?:HOST|.*_(?:HOST|IP))=['"]?${unmapped}['"]?`, "i");
+          expect(
+            unmappedHostRegex.test(composeYmlRaw),
+            `Found unmapped upstream container_name "${unmapped}" in host env in ${id}/docker-compose.yml`,
+          ).toBe(false);
+          expect(
+            unmappedHostRegex.test(composeJsonRaw),
+            `Found unmapped upstream container_name "${unmapped}" in host env in ${id}/docker-compose.json`,
+          ).toBe(false);
+        }
+
+        // 5. Verify logo.jpg has genuine JPEG magic bytes (FF D8 FF)
         const logoPath = path.join(appDir, "metadata", "logo.jpg");
         const stat = fs.statSync(logoPath);
         expect(stat.size).toBeGreaterThan(100);

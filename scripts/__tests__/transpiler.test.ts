@@ -178,4 +178,69 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
     expect(descriptionMd).toContain("Default Credentials");
     expect(descriptionMd).toContain("admin@tipi.local");
   });
+
+  it("resolves custom container_name in URLs and host environment variables", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        web: {
+          image: "ghcr.io/org/frontend:1.0.0",
+          environment: {
+            PUBLIC_SERVER_URL: "http://custombackendserver1:8000",
+            BACKEND_API: "https://custombackendserver1:8000/api/v1",
+            DB_HOST: "custom-postgres-db",
+          },
+          depends_on: ["server", "db"],
+        },
+        server: {
+          image: "ghcr.io/org/backend:1.0.0",
+          container_name: "custombackendserver1",
+          environment: {
+            PGHOST: "custom-postgres-db",
+            DATABASE_URL: "postgres://user:pass@custom-postgres-db:5432/app",
+          },
+          depends_on: ["db"],
+        },
+        db: {
+          image: "postgres:16",
+          container_name: "custom-postgres-db",
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "my-travel-app",
+      appName: "My Travel App",
+      manifestPort: 8080,
+      allocatedPort: 18080,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const webEnv = res.composeYamlObj.services["my-travel-app"].environment;
+    expect(webEnv).toContain("PUBLIC_SERVER_URL=http://my-travel-app-server:8000");
+    expect(webEnv).toContain("BACKEND_API=https://my-travel-app-server:8000/api/v1");
+    expect(webEnv).toContain("DB_HOST=my-travel-app-db");
+
+    const serverEnv = res.composeYamlObj.services["my-travel-app-server"].environment;
+    expect(serverEnv).toContain("PGHOST=my-travel-app-db");
+    expect(serverEnv).toContain("DATABASE_URL=postgres://user:pass@my-travel-app-db:5432/app");
+
+    // Make sure container_name is not present on services in compose output
+    expect(res.composeYamlObj.services["my-travel-app-server"].container_name).toBeUndefined();
+    expect(res.composeYamlObj.services["my-travel-app-db"].container_name).toBeUndefined();
+
+    // Verify composeJson as well
+    const webJson = res.composeJson.services.find((s: any) => s.name === "my-travel-app");
+    expect(webJson.environment).toContainEqual({
+      key: "PUBLIC_SERVER_URL",
+      value: "http://my-travel-app-server:8000",
+    });
+    expect(webJson.environment).toContainEqual({
+      key: "DB_HOST",
+      value: "my-travel-app-db",
+    });
+  });
 });

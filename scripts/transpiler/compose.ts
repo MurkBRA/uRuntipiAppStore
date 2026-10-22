@@ -507,7 +507,7 @@ export function transpileCompose(params: {
           rawVal = `\${${entry.key}}`;
         } else if (
           // Only rewrite bare service or container name if the env variable key explicitly represents a host or IP
-          /^(?:HOST|.*_(?:HOST|IP))$/i.test(entry.key) &&
+          /^(?:HOST|PGHOST|.*_(?:HOST|IP))$/i.test(entry.key) &&
           (containerNameMap[trimmed] || (serviceRenameMap[trimmed] && serviceRenameMap[trimmed] !== trimmed))
         ) {
           rawVal = containerNameMap[trimmed] || serviceRenameMap[trimmed];
