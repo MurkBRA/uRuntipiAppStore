@@ -15,8 +15,6 @@
   "author": "Xila Cai",
   "source": "https://github.com/FuzzyGrim/Yamtrack",
   "website": "https://github.com/FuzzyGrim/Yamtrack",
-  "uid": 1000,
-  "gid": 1000,
   "form_fields": [
     {
       "type": "random",
@@ -24,16 +22,6 @@
       "min": 64,
       "encoding": "hex",
       "env_variable": "APP_SEED"
-    },
-    {
-      "type": "text",
-      "label": "Container User (UID:GID)",
-      "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
-      "required": false,
-      "default": "1000:1000",
-      "regex": "^[0-9]+(:[0-9]+)?$",
-      "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
-      "env_variable": "APP_CONTAINER_USER"
     }
   ],
   "supported_architectures": [

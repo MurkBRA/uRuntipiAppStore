@@ -37,7 +37,6 @@ services:
       add_to_main_network: true
   public-pool-web-redis:
     image: valkey/valkey:8
-    user: ${APP_CONTAINER_USER:-1000:1000}
     healthcheck:
       test: redis-cli ping
       interval: 10s

@@ -28,7 +28,6 @@ services:
       is_main: true
   woofbot-lnd-mongodb:
     image: mongo:4.4.6-bionic
-    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/data/db
       - ${APP_DATA_DIR}/data/db/diagnostic.data:/data/db/diagnostic.data

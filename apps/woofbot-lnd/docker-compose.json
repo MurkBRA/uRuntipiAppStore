@@ -83,7 +83,6 @@
       "name": "woofbot-lnd-mongodb",
       "image": "mongo:4.4.6-bionic",
       "addToMainNetwork": true,
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "volumes": [
         {

@@ -180,7 +180,6 @@
     {
       "name": "wger-db",
       "image": "postgres:17.5-alpine",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "shmSize": "256mb",
       "command": [
         "postgres",
@@ -232,7 +231,6 @@
     {
       "name": "wger-cache",
       "image": "redis:8.0.3-alpine",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/redis-data",

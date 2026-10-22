@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { transpileCompose } from "../transpiler/compose.ts";
+import { isDatabaseImage, transpileCompose } from "../transpiler/compose.ts";
 import { createFormFieldFromContract } from "../transpiler/contracts.ts";
 import { parseUmbrelExports } from "../transpiler/exports-hooks.ts";
 import { buildRuntipiConfigAndDescription, mapUmbrelCategory } from "../transpiler/manifest.ts";
@@ -133,7 +133,9 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
     expect(res.composeYamlObj.services["my-app"].environment).toContain(
       "CUSTOM_SERVER_URL=http://my-app-postgres:8000",
     );
-    expect(res.composeYamlObj.services["my-app"].volumes).toContain("${APP_DATA_DIR}/data/config.yml:/app/config.yml:ro");
+    expect(res.composeYamlObj.services["my-app"].volumes).toContain(
+      "${APP_DATA_DIR}/data/config.yml:/app/config.yml:ro",
+    );
     expect(res.formFields.map((f) => f.env_variable)).toContain("APP_PASSWORD");
     expect(res.formFields.map((f) => f.env_variable)).toContain("APP_BITCOIN_NODE_IP");
     expect(res.formFields.map((f) => f.env_variable)).toContain("APP_CONTAINER_USER");
@@ -242,5 +244,65 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
       key: "DB_HOST",
       value: "my-travel-app-db",
     });
+  });
+
+  it("isDatabaseImage correctly identifies database images and excludes application images", () => {
+    expect(isDatabaseImage("postgres:18.3-alpine")).toBe(true);
+    expect(isDatabaseImage("ghcr.io/baosystems/postgis:15-3.5")).toBe(true);
+    expect(isDatabaseImage("mariadb:11.8.2")).toBe(true);
+    expect(isDatabaseImage("mysql:8.0")).toBe(true);
+    expect(isDatabaseImage("mongo:4.4.6-bionic")).toBe(true);
+    expect(isDatabaseImage("redis:8.0.3-alpine")).toBe(true);
+    expect(isDatabaseImage("valkey/valkey:9")).toBe(true);
+
+    expect(isDatabaseImage("johly/airtrail:v3.13.0")).toBe(false);
+    expect(isDatabaseImage("node:18-alpine")).toBe(false);
+    expect(isDatabaseImage("nginx:latest")).toBe(false);
+  });
+
+  it("transpileCompose strips user from database containers while preserving it on app containers", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        app_proxy: {
+          environment: {
+            APP_HOST: "my-app_web_1",
+            APP_PORT: "3000",
+          },
+        },
+        web: {
+          image: "johly/airtrail:v3.13.0",
+          user: "1000:1000",
+        },
+        db: {
+          image: "postgres:18.3-alpine",
+          user: "1000:1000",
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "airtrail",
+      appName: "AirTrail",
+      manifestPort: 3000,
+      allocatedPort: 3256,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    // Web service keeps user parametrized as APP_CONTAINER_USER
+    expect(res.composeYamlObj.services.airtrail.user).toBe("${APP_CONTAINER_USER:-1000:1000}");
+    const webJson = res.composeJson.services.find((s: any) => s.name === "airtrail");
+    expect(webJson.user).toBe("${APP_CONTAINER_USER:-1000:1000}");
+
+    // Database service MUST NOT have user
+    expect(res.composeYamlObj.services["airtrail-db"].user).toBeUndefined();
+    const dbJson = res.composeJson.services.find((s: any) => s.name === "airtrail-db");
+    expect(dbJson.user).toBeUndefined();
+
+    // Form field for container user is present because web service uses it
+    expect(res.formFields.some((f) => f.env_variable === "APP_CONTAINER_USER")).toBe(true);
   });
 });

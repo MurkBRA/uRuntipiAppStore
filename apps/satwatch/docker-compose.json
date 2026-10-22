@@ -57,7 +57,6 @@
       "name": "satwatch-db",
       "image": "docker.io/library/postgres:17",
       "addToMainNetwork": true,
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_USER",

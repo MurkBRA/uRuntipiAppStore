@@ -31,7 +31,6 @@ services:
       is_main: true
   etherpad-postgres:
     image: postgres:15-alpine
-    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/postgres_data:/var/lib/postgresql/data/pgdata
     environment:

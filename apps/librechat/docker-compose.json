@@ -88,7 +88,6 @@
     {
       "name": "librechat-mongodb",
       "image": "mongo:8.0.10",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": "mongod --noauth",
       "volumes": [
         {

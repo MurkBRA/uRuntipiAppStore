@@ -27,7 +27,6 @@
     {
       "name": "docuseal-db",
       "image": "postgres:17.3",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_DB",

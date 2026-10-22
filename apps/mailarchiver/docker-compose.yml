@@ -12,7 +12,6 @@ services:
       is_main: true
   mailarchiver-postgres:
     image: postgres:18.3-alpine3.23
-    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/database:/var/lib/postgresql
     environment:

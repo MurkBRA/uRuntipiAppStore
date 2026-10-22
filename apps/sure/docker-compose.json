@@ -129,7 +129,6 @@
     {
       "name": "sure-db",
       "image": "postgres:18.3-alpine",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_USER",
@@ -165,7 +164,6 @@
     {
       "name": "sure-redis",
       "image": "redis:8.4.2",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/redis",

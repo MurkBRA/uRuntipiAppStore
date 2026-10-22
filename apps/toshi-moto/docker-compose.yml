@@ -27,7 +27,6 @@ services:
   toshi-moto-mongodb:
     image: mongo:8.0.10
     command: mongod --noauth
-    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/data/db
     stop_grace_period: 1m

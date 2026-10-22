@@ -63,7 +63,6 @@
     {
       "name": "akaunting-db",
       "image": "mariadb:11.8.2",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "MYSQL_DATABASE",

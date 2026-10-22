@@ -63,7 +63,6 @@
     {
       "name": "endurain-db",
       "image": "postgres:17.4",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_PASSWORD",

@@ -2,6 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import jsyaml from "js-yaml";
 import { describe, expect, test } from "vitest";
+import { isDatabaseImage } from "../../scripts/transpiler/compose.ts";
 
 const blacklist = JSON.parse(fs.readFileSync("./blacklist.json", "utf8"));
 const blacklistedUmbrelIds = new Set<string>(blacklist.blacklisted_umbrel_ids || []);
@@ -57,6 +58,7 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
         const composeYmlRaw = fs.readFileSync(path.join(appDir, "docker-compose.yml"), "utf8");
         const composeJsonRaw = fs.readFileSync(path.join(appDir, "docker-compose.json"), "utf8");
         const composeYml = jsyaml.load(composeYmlRaw) as Record<string, any>;
+        const composeJson = JSON.parse(composeJsonRaw);
 
         // 1. No app_proxy or @sha256 digest
         expect(composeYml.services.app_proxy).toBeUndefined();
@@ -86,10 +88,7 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           plane: ["plane-minio-1"],
         };
 
-        const upstreamDirs = [
-          path.join(".tmp", "umbrel-apps", id),
-          path.join(".tmp", "umbrel-apps-gallery", id),
-        ];
+        const upstreamDirs = [path.join(".tmp", "umbrel-apps", id), path.join(".tmp", "umbrel-apps-gallery", id)];
         const unmappedNames = new Set<string>(knownUpstreamCustomContainers[id] || []);
         for (const uDir of upstreamDirs) {
           const uCompose = path.join(uDir, "docker-compose.yml");
@@ -145,6 +144,31 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
         expect(buf[0]).toBe(0xff);
         expect(buf[1]).toBe(0xd8);
         expect(buf[2]).toBe(0xff);
+
+        // 6. Verify database services do NOT have user specified (avoids permission crash on first install)
+        for (const [svcName, svc] of Object.entries(composeYml.services || {})) {
+          const img = (svc as any)?.image || "";
+          if (isDatabaseImage(img)) {
+            expect(
+              (svc as any).user,
+              `Database service "${svcName}" with image "${img}" in ${id}/docker-compose.yml must not specify "user:"`,
+            ).toBeUndefined();
+          }
+        }
+        for (const svc of composeJson.services || []) {
+          if (isDatabaseImage(svc.image)) {
+            expect(
+              svc.user,
+              `Database service "${svc.name}" with image "${svc.image}" in ${id}/docker-compose.json must not specify "user"`,
+            ).toBeUndefined();
+          }
+        }
+
+        // 7. Verify no hardcoded networks: block in docker-compose.yml (Runtipi dynamically manages app isolation networks)
+        expect(
+          composeYml.networks,
+          `App ${id}/docker-compose.yml must not specify hardcoded "networks:" (Runtipi manages dynamic network isolation)`,
+        ).toBeUndefined();
       });
     }
   });

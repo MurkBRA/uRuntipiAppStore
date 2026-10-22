@@ -97,7 +97,6 @@
     {
       "name": "mailflow-postgres",
       "image": "postgres:16-alpine",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
           "key": "POSTGRES_DB",
@@ -129,7 +128,6 @@
     {
       "name": "mailflow-redis",
       "image": "redis:7-alpine",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": "redis-server --save 60 1 --loglevel warning",
       "volumes": [
         {

@@ -32,7 +32,6 @@
     {
       "name": "airtrail-postgres",
       "image": "postgres:18.3-alpine",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

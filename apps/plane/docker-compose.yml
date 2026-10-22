@@ -10,7 +10,6 @@ services:
       is_main: true
   plane-db:
     image: postgres:17.9-alpine
-    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
     environment:

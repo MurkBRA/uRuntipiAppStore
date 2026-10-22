@@ -46,7 +46,6 @@
       "name": "bluewallet-redis",
       "image": "redis:6.2.2-buster",
       "addToMainNetwork": true,
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "command": "redis-server --requirepass moneyprintergobrrr",
       "volumes": [

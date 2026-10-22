@@ -93,7 +93,6 @@ services:
       - random_page_cost=1.1
       - '-c'
       - max_connections=30
-    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/postgres-data:/var/lib/postgresql/data/
     environment:
@@ -110,7 +109,6 @@ services:
     shm_size: 256mb
   wger-cache:
     image: redis:8.0.3-alpine
-    user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/redis-data:/data
     healthcheck:

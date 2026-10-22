@@ -35,6 +35,12 @@ export const CONTAINER_USER_FORM_FIELD: FormField = {
   env_variable: "APP_CONTAINER_USER",
 };
 
+export function isDatabaseImage(image: string): boolean {
+  if (!image) return false;
+  const clean = image.toLowerCase();
+  return /(?:^|\/)(?:postgres|postgis|mariadb|mysql|mongo|mongodb|redis|valkey)(?::|$)/i.test(clean);
+}
+
 function stripImageDigest(image: string): string {
   const withoutDigest = image.split("@sha256:")[0].trim();
   const lastSlash = withoutDigest.lastIndexOf("/");
@@ -149,7 +155,8 @@ export function transpileCompose(params: {
 
   // 2. Filter active services
   const keptServiceKeys = Object.keys(rawServices).filter(
-    (key) => rawServices[key] && typeof rawServices[key] === "object" && !isIgnoredSidecarService(key, rawServices[key]),
+    (key) =>
+      rawServices[key] && typeof rawServices[key] === "object" && !isIgnoredSidecarService(key, rawServices[key]),
   );
 
   if (keptServiceKeys.length === 0) {
@@ -294,7 +301,10 @@ export function transpileCompose(params: {
 
     // 4. Replace Umbrel platform paths & variables (handling both ${VAR}, ${VAR:-default}, and $VAR)
     out = out
-      .replace(/(?:\$\{UMBREL_ROOT(?::-[^}]*)?\}|\$UMBREL_ROOT)\/data\/storage\/downloads/g, "${APP_DATA_DIR}/data/downloads")
+      .replace(
+        /(?:\$\{UMBREL_ROOT(?::-[^}]*)?\}|\$UMBREL_ROOT)\/data\/storage\/downloads/g,
+        "${APP_DATA_DIR}/data/downloads",
+      )
       .replace(/\$\{UMBREL_ROOT(?::-[^}]*)?\}|\$UMBREL_ROOT\b/g, "${APP_DATA_DIR}/data")
       .replace(/\$\{EXPORTS_APP_DATA_DIR(?::-[^}]*)?\}|\$EXPORTS_APP_DATA_DIR\b/g, "${APP_DATA_DIR}/data")
       .replace(/\$\{EXPORTS_APP_DIR(?::-[^}]*)?\}|\$EXPORTS_APP_DIR\b/g, "${APP_DATA_DIR}/data")
@@ -309,70 +319,73 @@ export function transpileCompose(params: {
       .replace(/\$\{NETWORK_IP(?::-[^}]*)?\}|\$NETWORK_IP\b/g, "${INTERNAL_IP}");
 
     // 5. Inspect any remaining ${VAR} or $VAR references
-    out = out.replace(/\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-[^}]*)?\}|\$([A-Za-z_][A-Za-z0-9_]*)/g, (full, brk, plain, offset, str) => {
-      if (offset > 0 && str[offset - 1] === "$") return full;
-      const varName = brk || plain;
-      if (!varName || RUNTIPI_BUILTIN_ENV_VARS.has(varName)) return full;
+    out = out.replace(
+      /\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-[^}]*)?\}|\$([A-Za-z_][A-Za-z0-9_]*)/g,
+      (full, brk, plain, offset, str) => {
+        if (offset > 0 && str[offset - 1] === "$") return full;
+        const varName = brk || plain;
+        if (!varName || RUNTIPI_BUILTIN_ENV_VARS.has(varName)) return full;
 
-      if (varName === "APP_PASSWORD") {
-        ensureFormField({
-          type: "random",
-          label: `${appName} password`,
-          min: 32,
-          env_variable: "APP_PASSWORD",
-        });
-        return "${APP_PASSWORD}";
-      }
-
-      if (varName === "APP_SEED") {
-        ensureFormField({
-          type: "random",
-          label: `${appName} seed`,
-          min: 64,
-          encoding: "hex",
-          env_variable: "APP_SEED",
-        });
-        return "${APP_SEED}";
-      }
-
-      const contractField = createFormFieldFromContract(varName);
-      if (contractField) {
-        if (
-          varName.startsWith("APP_BITCOIN_") ||
-          varName.startsWith("APP_LIGHTNING_") ||
-          varName.startsWith("APP_CORE_LIGHTNING_") ||
-          varName.startsWith("APP_ELECTRS_") ||
-          varName.startsWith("APP_FULCRUM_") ||
-          varName.startsWith("APP_MEMPOOL_") ||
-          varName.startsWith("APP_NEXTCLOUD_")
-        ) {
-          usesExternalContract = true;
-        }
-        ensureFormField(contractField);
-        return `\${${varName}}`;
-      }
-
-      if (!formFieldVars.has(varName)) {
-        // Check if it looks like a secret/key/password/token
-        if (/(PASSWORD|SECRET|KEY|TOKEN|SALT|HASH)/i.test(varName)) {
+        if (varName === "APP_PASSWORD") {
           ensureFormField({
             type: "random",
-            label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
+            label: `${appName} password`,
             min: 32,
-            env_variable: varName,
+            env_variable: "APP_PASSWORD",
           });
-        } else {
-          ensureFormField({
-            type: "text",
-            label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
-            required: false,
-            default: "default",
-            env_variable: varName,
-          });
+          return "${APP_PASSWORD}";
         }
-      }
-      return `\${${varName}}`;
-    });
+
+        if (varName === "APP_SEED") {
+          ensureFormField({
+            type: "random",
+            label: `${appName} seed`,
+            min: 64,
+            encoding: "hex",
+            env_variable: "APP_SEED",
+          });
+          return "${APP_SEED}";
+        }
+
+        const contractField = createFormFieldFromContract(varName);
+        if (contractField) {
+          if (
+            varName.startsWith("APP_BITCOIN_") ||
+            varName.startsWith("APP_LIGHTNING_") ||
+            varName.startsWith("APP_CORE_LIGHTNING_") ||
+            varName.startsWith("APP_ELECTRS_") ||
+            varName.startsWith("APP_FULCRUM_") ||
+            varName.startsWith("APP_MEMPOOL_") ||
+            varName.startsWith("APP_NEXTCLOUD_")
+          ) {
+            usesExternalContract = true;
+          }
+          ensureFormField(contractField);
+          return `\${${varName}}`;
+        }
+
+        if (!formFieldVars.has(varName)) {
+          // Check if it looks like a secret/key/password/token
+          if (/(PASSWORD|SECRET|KEY|TOKEN|SALT|HASH)/i.test(varName)) {
+            ensureFormField({
+              type: "random",
+              label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
+              min: 32,
+              env_variable: varName,
+            });
+          } else {
+            ensureFormField({
+              type: "text",
+              label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
+              required: false,
+              default: "default",
+              env_variable: varName,
+            });
+          }
+        }
+        return `\${${varName}}`;
+      },
+    );
 
     return out;
   }
@@ -424,8 +437,10 @@ export function transpileCompose(params: {
       svc.networkMode = "host";
     }
 
-    if (raw.user !== undefined) {
-      const userStr = String(raw.user).trim().replace(/^['"]|['"]$/g, "");
+    if (raw.user !== undefined && !isDatabaseImage(raw.image || "")) {
+      const userStr = String(raw.user)
+        .trim()
+        .replace(/^['"]|['"]$/g, "");
       if (userStr === "1000:1000") {
         svc.user = "${APP_CONTAINER_USER:-1000:1000}";
         detectedUid = 1000;
@@ -586,9 +601,7 @@ export function transpileCompose(params: {
           if (flags.includes("ro")) volObj.readOnly = true;
           if (flags.includes("z")) volObj.shared = true;
           else if (flags.includes("Z")) volObj.private = true;
-          const prop = flags.find((f) =>
-            ["rprivate", "private", "rshared", "shared", "rslave", "slave"].includes(f),
-          );
+          const prop = flags.find((f) => ["rprivate", "private", "rshared", "shared", "rslave", "slave"].includes(f));
           if (prop) {
             volObj.bind = { propagation: prop };
           }
@@ -699,7 +712,10 @@ export function transpileCompose(params: {
         svc.dependsOn = Array.from(new Set(mappedDeps));
       }
     } else if (raw.depends_on && typeof raw.depends_on === "object") {
-      const depMap: Record<string, { condition: "service_healthy" | "service_started" | "service_completed_successfully" }> = {};
+      const depMap: Record<
+        string,
+        { condition: "service_healthy" | "service_started" | "service_completed_successfully" }
+      > = {};
       for (const [depOrig, depCfg] of Object.entries(raw.depends_on)) {
         const mappedDep = serviceRenameMap[depOrig];
         if (!mappedDep || mappedDep === finalName) continue;

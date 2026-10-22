@@ -50,7 +50,6 @@
       "name": "toshi-moto-mongodb",
       "image": "mongo:8.0.10",
       "addToMainNetwork": true,
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "command": "mongod --noauth",
       "volumes": [

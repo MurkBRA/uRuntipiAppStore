@@ -78,7 +78,6 @@
       "name": "bleskomat-server-db",
       "image": "postgres:10.20-stretch",
       "addToMainNetwork": true,
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

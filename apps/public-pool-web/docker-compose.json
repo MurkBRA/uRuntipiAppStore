@@ -83,7 +83,6 @@
       "name": "public-pool-web-redis",
       "image": "valkey/valkey:8",
       "addToMainNetwork": true,
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "healthCheck": {
         "test": "redis-cli ping",
         "interval": "10s",
