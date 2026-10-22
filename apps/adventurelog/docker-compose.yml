@@ -18,6 +18,13 @@ services:
       - POSTGRES_DB=database
       - POSTGRES_USER=adventure
       - POSTGRES_PASSWORD=adventure
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    healthcheck:
+      test: pg_isready -U adventure -d database
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
   adventurelog-server:
     image: ghcr.io/seanmorley15/adventurelog-backend:v0.13.0
     ports:
@@ -38,6 +45,7 @@ services:
       - DEBUG=False
       - FRONTEND_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
     depends_on:
-      - adventurelog-db
+      adventurelog-db:
+        condition: service_healthy
 x-runtipi:
   schema_version: 2

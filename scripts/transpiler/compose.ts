@@ -389,6 +389,9 @@ export function transpileCompose(params: {
       servicesWithHealthcheck.add(serviceRenameMap[origKey]);
     }
   }
+  if (appId === "adventurelog" && keptServiceKeys.includes("db")) {
+    servicesWithHealthcheck.add("adventurelog-db");
+  }
 
   const transpiledServices: Array<Record<string, any>> = [];
   const usedHostPortsInApp = new Set<number>([allocatedPort]);
@@ -536,6 +539,12 @@ export function transpileCompose(params: {
       transformedEnv.push({ key: "PB_ADMIN_EMAIL", value: "${PB_ADMIN_EMAIL}" });
       transformedEnv.push({ key: "APP_PASSWORD", value: "${APP_PASSWORD}" });
     }
+    if (appId === "adventurelog" && origKey === "db") {
+      const hasPgData = transformedEnv.some((e) => e.key === "PGDATA");
+      if (!hasPgData) {
+        transformedEnv.push({ key: "PGDATA", value: "/var/lib/postgresql/data/pgdata" });
+      }
+    }
     if (transformedEnv.length > 0) {
       svc.environment = transformedEnv;
     }
@@ -671,6 +680,14 @@ export function transpileCompose(params: {
         if (typeof raw.healthcheck.start_interval === "string") hcObj.startInterval = raw.healthcheck.start_interval;
         svc.healthCheck = hcObj;
       }
+    } else if (appId === "adventurelog" && origKey === "db") {
+      svc.healthCheck = {
+        test: "pg_isready -U adventure -d database",
+        interval: "5s",
+        timeout: "5s",
+        retries: 10,
+        startPeriod: "10s",
+      };
     }
 
     // DependsOn
@@ -703,6 +720,11 @@ export function transpileCompose(params: {
       if (Object.keys(depMap).length > 0) {
         svc.dependsOn = depMap;
       }
+    }
+    if (appId === "adventurelog" && origKey === "server") {
+      svc.dependsOn = {
+        "adventurelog-db": { condition: "service_healthy" },
+      };
     }
 
     // Capabilities, security_opt, devices, extra_hosts, dns

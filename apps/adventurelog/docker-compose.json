@@ -39,6 +39,10 @@
         {
           "key": "POSTGRES_PASSWORD",
           "value": "adventure"
+        },
+        {
+          "key": "PGDATA",
+          "value": "/var/lib/postgresql/data/pgdata"
         }
       ],
       "volumes": [
@@ -46,7 +50,14 @@
           "hostPath": "${APP_DATA_DIR}/data/db",
           "containerPath": "/var/lib/postgresql/data/"
         }
-      ]
+      ],
+      "healthCheck": {
+        "test": "pg_isready -U adventure -d database",
+        "interval": "5s",
+        "timeout": "5s",
+        "retries": 10,
+        "startPeriod": "10s"
+      }
     },
     {
       "name": "adventurelog-server",
@@ -114,9 +125,11 @@
           "tcp": true
         }
       ],
-      "dependsOn": [
-        "adventurelog-db"
-      ]
+      "dependsOn": {
+        "adventurelog-db": {
+          "condition": "service_healthy"
+        }
+      }
     }
   ]
 }
