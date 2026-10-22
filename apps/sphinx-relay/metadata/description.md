@@ -2,7 +2,7 @@
 
 > Chat and pay over the Lightning Network
 
-Sphinx Relay turns your Lightning node into a personal communication server. Messages are end-to-end encrypted and transmitted over the Bitcoin Lightning Network. Download Sphinx on your phone from https://sphinx.chat and pair it with Sphinx Relay on Umbrel.
+Sphinx Relay turns your Lightning node into a personal communication server. Messages are end-to-end encrypted and transmitted over the Bitcoin Lightning Network. Download Sphinx on your phone from https://sphinx.chat and pair it with Sphinx Relay on Runtipi.
 
 Communication between Sphinx Relay nodes takes place entirely on the Lightning Network, so it is decentralized, untraceable, and encrypted. Messages are encrypted using client public keys on the Sphinx app.
 

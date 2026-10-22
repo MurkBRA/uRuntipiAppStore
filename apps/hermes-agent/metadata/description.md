@@ -6,7 +6,7 @@ Hermes Agent is an AI agent that gets better the more you use it by creating its
 
 Use Hermes Agent to browse the web, edit files, run shell commands, connect services like Telegram, Signal, WhatsApp, and Discord, save reusable skills, and remember important details across sessions.
 
-Hermes Agent runs inside the Umbrel app sandbox, so it can work freely inside its own environment while your other apps and data stay separate.
+Hermes Agent runs inside the Runtipi app sandbox, so it can work freely inside its own environment while your other apps and data stay separate.
 
 ## What It Does
 

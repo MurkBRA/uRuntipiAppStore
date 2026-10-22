@@ -6,7 +6,7 @@
 
 Designed with collaboration in mind, Neko allows multiple users to join and share the same session, making it ideal for activities like co-browsing, watch parties, or remote support. The interface is optimized for responsiveness, with minimal delay between input and feedback, creating an experience that feels native despite running remotely.
 
-When integrated into Umbrel, Neko offers a private and always-available browser instance that can be accessed securely from within the home network or over the internet through Umbrel's tunneling options. It fits seamlessly into the self-hosted ecosystem, providing a reliable and user-friendly way to browse the web without relying on third-party services or exposing your local device.
+When integrated into Runtipi, Neko offers a private and always-available browser instance that can be accessed securely from within the home network or over the internet through Runtipi's tunneling options. It fits seamlessly into the self-hosted ecosystem, providing a reliable and user-friendly way to browse the web without relying on third-party services or exposing your local device.
 
 Neko is especially useful in scenarios where privacy, simplicity, and ease of access are important - whether for personal use, collaborative tasks, or secure remote browsing.
 

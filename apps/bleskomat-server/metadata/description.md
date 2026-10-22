@@ -2,7 +2,7 @@
 
 > Connect a Bleskomat ATM to your Lightning node
 
-The Bleskomat ATM is the next generation Bitcoin Lightning ATM. This app will allow you to easily connect your Bleskomat ATM to the Lightning node on your Umbrel. A simple web interface is provided which you can use to manage and authorize one or more Bleskomat ATMs as well as view a list of recent payments handled by the server.
+The Bleskomat ATM is the next generation Bitcoin Lightning ATM. This app will allow you to easily connect your Bleskomat ATM to the Lightning node on your Runtipi. A simple web interface is provided which you can use to manage and authorize one or more Bleskomat ATMs as well as view a list of recent payments handled by the server.
 
 ## Default Credentials
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.

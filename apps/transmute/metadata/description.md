@@ -1,6 +1,6 @@
 # Transmute
 
-> An efficient tool for transforming files on your Umbrel
+> An efficient tool for transforming files on your Runtipi
 
 Transmute is a file conversion app for turning files into different formats through a clean and simple interface. It supports a wide range of file types, including images, videos, audio files, documents, structured data, spreadsheets, subtitles, fonts, and diagrams.
 

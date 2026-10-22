@@ -12,7 +12,7 @@ With the Advanced Settings feature, you can take control of your node and custom
 
 Powered by LND.
 
-An official app from Umbrel.
+An official app from Runtipi.
 
 ## Inter-App Connections
 

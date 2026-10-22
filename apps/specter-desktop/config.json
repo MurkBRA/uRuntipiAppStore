@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "specter-desktop",
-  "description": "Specter Desktop can be used to connect to the Bitcoin Core running on your Umbrel or an Electrum Server. It functions as a watch-only coordinator for multi-signature and single-key Bitcoin wallets. At the moment Specter Desktop is working with all major hardware wallets including:",
+  "description": "Specter Desktop can be used to connect to the Bitcoin Core running on your Runtipi or an Electrum Server. It functions as a watch-only coordinator for multi-signature and single-key Bitcoin wallets. At the moment Specter Desktop is working with all major hardware wallets including:",
   "tipi_version": 1,
   "version": "v2.1.11",
   "categories": [

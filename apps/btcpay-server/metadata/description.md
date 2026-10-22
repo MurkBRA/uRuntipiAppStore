@@ -4,7 +4,7 @@
 
 BTCPay Server is a payment processor that allows you to receive payments in Bitcoin (and altcoins) directly, with no fees, transaction cost or a middleman. It is a non-custodial invoicing system which eliminates the involvement of a third-party.
 
-Payments with BTCPay Server go directly to your wallet, which increases the privacy and security. Your private keys are never uploaded to your Umbrel. There is no address re-use, since each invoice generates a new address deriving from your xpubkey.
+Payments with BTCPay Server go directly to your wallet, which increases the privacy and security. Your private keys are never uploaded to your Runtipi. There is no address re-use, since each invoice generates a new address deriving from your xpubkey.
 
 You can not only attach an unlimited number of stores and use the Lightning Network but also become a payment processor for others. Thanks to the apps built on top of it, you can use BTCPay to receive donations, start a crowdfunding campaign or have an in-store Point of Sale.
 

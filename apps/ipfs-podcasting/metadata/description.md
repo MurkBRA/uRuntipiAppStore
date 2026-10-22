@@ -2,7 +2,7 @@
 
 > Crowd-host podcasts over IPFS
 
-Turn your Umbrel into an IPFS node for self-hosting, crowd-hosting, and archiving of your favorite podcasts to the IPFS network.
+Turn your Runtipi into an IPFS node for self-hosting, crowd-hosting, and archiving of your favorite podcasts to the IPFS network.
 
 IPFSPodcasting.net uses participating nodes to manage & track hashes of podcast episodes and generates IPFS/RSS feeds that load media from the IPFS network.
 

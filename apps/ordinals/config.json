@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "ordinals",
-  "description": "Run your own index, block explorer, and command-line wallet for Ordinals. The app automatically connects to your Bitcoin node on umbrelOS for trustless operation. Simply install the app and wait for Ordinals to index inscriptions and runes.",
+  "description": "Run your own index, block explorer, and command-line wallet for Ordinals. The app automatically connects to your Bitcoin node on Runtipi for trustless operation. Simply install the app and wait for Ordinals to index inscriptions and runes.",
   "tipi_version": 1,
   "version": "0.27.1",
   "categories": [

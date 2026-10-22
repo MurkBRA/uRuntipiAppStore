@@ -10,7 +10,7 @@ Key Features:
   - Deployment aliases for staging, production, and custom environments
   - Custom domain support with subdomain routing
   - Built-in admin dashboard for managing deployments
-  - Privacy-focused: All data stays on your Umbrel
+  - Privacy-focused: All data stays on your Runtipi
 
 
 Perfect for developers who want full control over their static site hosting without relying on external services.

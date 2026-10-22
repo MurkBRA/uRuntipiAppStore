@@ -6,7 +6,7 @@ Run your own Bitcoin Cash full node powered by Bitcoin Cash Node (BCHN). Indepen
 
 Use the included dashboard to follow sync progress, monitor connected peers, inspect network and mempool activity, manage storage, and configure Tor connectivity.
 
-This app provides the node and dashboard. Compatible apps running on your Umbrel can connect through its RPC and ZMQ interfaces for wallet connectivity and solo mining.
+This app provides the node and dashboard. Compatible apps running on your Runtipi can connect through its RPC and ZMQ interfaces for wallet connectivity and solo mining.
 
 Initial sync downloads the full Bitcoin Cash blockchain and may take some time. An SSD is strongly recommended, with NVMe offering the best performance.
 

@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "holesail-switchboard",
-  "description": "Running Umbrel behind a home router (NAT) without a public domain? Tor is too slow?",
+  "description": "Running Runtipi behind a home router (NAT) without a public domain? Tor is too slow?",
   "tipi_version": 1,
   "version": "v2.0.8",
   "categories": [

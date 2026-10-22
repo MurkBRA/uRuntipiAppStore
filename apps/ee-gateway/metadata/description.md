@@ -2,7 +2,7 @@
 
 > Self-hosted Bluetooth gateway for open BLE networks
 
-EE Gateway turns your Umbrel into a self-hosted Bluetooth gateway for open BLE networks.
+EE Gateway turns your Runtipi into a self-hosted Bluetooth gateway for open BLE networks.
 
 It scans with your device's Bluetooth radio for nearby BLE devices from supported networks and forwards their packets to the right upstream cloud, extending ground coverage from hardware you already own. Hubble Network is supported today; more partner networks will be added as they come online.
 

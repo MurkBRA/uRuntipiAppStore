@@ -1,13 +1,13 @@
 # Homey
 
-> Run Homey Self-Hosted Server on your Umbrel
+> Run Homey Self-Hosted Server on your Runtipi
 
-Homey Self-Hosted Server runs the Homey smart home engine on your own Umbrel, so your automations and device connections are handled on hardware you control instead of Homey's cloud.
+Homey Self-Hosted Server runs the Homey smart home engine on your own Runtipi, so your automations and device connections are handled on hardware you control instead of Homey's cloud.
 
-You manage your home through the familiar Homey app and web app, which pair with the server running on your Umbrel. Note that initial setup, your Homey account, and some integrations (such as cloud-connected devices or a Homey Bridge) may still rely on Homey's apps and online services.
+You manage your home through the familiar Homey app and web app, which pair with the server running on your Runtipi. Note that initial setup, your Homey account, and some integrations (such as cloud-connected devices or a Homey Bridge) may still rely on Homey's apps and online services.
 
 Features:
-  - Run the Homey automation engine locally on your Umbrel
+  - Run the Homey automation engine locally on your Runtipi
   - Build advanced automation flows and logic
   - Support for Matter, Wi-Fi, Ethernet, and cloud-connected devices
   - Connect Zigbee, Z-Wave, Bluetooth, 433MHz, and IR devices via Homey Bridge

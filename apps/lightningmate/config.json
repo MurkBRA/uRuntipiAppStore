@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "lightningmate",
-  "description": "Lightning Mate manages your Lightning node so you don't have to babysit it. It connects automatically to your Umbrel Lightning (LND) node.",
+  "description": "Lightning Mate manages your Lightning node so you don't have to babysit it. It connects automatically to your Runtipi Lightning (LND) node.",
   "tipi_version": 1,
   "version": "0.7.7",
   "categories": [

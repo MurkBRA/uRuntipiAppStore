@@ -2,11 +2,11 @@
 
 > Backup all your Nostr activity with your private relay
 
-Introducing Nostr Relay — an official app by Umbrel.
+Introducing Nostr Relay — an official app by Runtipi.
 
 Step 1. Connect your Nostr client (e.g., Damus, Amethyst) to your private relay for seamless backup of all Nostr activity. In Damus, add your Relay URL via Menu > Relays.
 
-Tip: Install Tailscale on your Umbrel and your devices for an uninterrupted connection between your clients and your relay, even when you're away from your home network. Enable Tailscale's MagicDNS and use ws://umbrel:4848 as your Relay URL.
+Tip: Install Tailscale on your Runtipi and your devices for an uninterrupted connection between your clients and your relay, even when you're away from your home network. Enable Tailscale's MagicDNS and use ws://Runtipi:4848 as your Relay URL.
 
 Step 2. Tap the globe icon on the top to back up past Nostr activity from your public relays and ensure uninterrupted future backups, even if the connection between your private relay and Nostr client is disrupted.
 

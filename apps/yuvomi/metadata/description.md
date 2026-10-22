@@ -4,7 +4,7 @@
 
 Yuvomi is a self-hosted, privacy-focused family planner that bundles everything a household needs into a single fast PWA — no cloud, no tracking, no ads.
 
-Everything runs on your Umbrel and stays on your Umbrel.
+Everything runs on your Runtipi and stays on your Runtipi.
 
 ✨ FEATURES
 
@@ -27,7 +27,7 @@ Yuvomi keeps all data in a local SQLite database (optionally encrypted with SQLC
 
 🛠️ SET-UP
 
-Open Yuvomi from your Umbrel dashboard and create the first account — that account becomes the family admin and can invite the rest of the household.
+Open Yuvomi from your Runtipi dashboard and create the first account — that account becomes the family admin and can invite the rest of the household.
 
 ## Links
 - **Upstream Version**: `2.79.0`

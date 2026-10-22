@@ -2,7 +2,7 @@
 
 > Multisig with hardware wallets made easy
 
-Specter Desktop can be used to connect to the Bitcoin Core running on your Umbrel or an Electrum Server. It functions as a watch-only coordinator for multi-signature and single-key Bitcoin wallets. At the moment Specter Desktop is working with all major hardware wallets including:
+Specter Desktop can be used to connect to the Bitcoin Core running on your Runtipi or an Electrum Server. It functions as a watch-only coordinator for multi-signature and single-key Bitcoin wallets. At the moment Specter Desktop is working with all major hardware wallets including:
 
 - SeedSigner
 - Specter DIY (optionally airgapped, using QR codes)
@@ -16,7 +16,7 @@ Specter Desktop can be used to connect to the Bitcoin Core running on your Umbre
 - Ledger
 - KeepKey
 
-Specter Desktop also supports using the Bitcoin Core on your Umbrel as a hot wallet, by importing or generating a random BIP39 mnemonic, but this feature is experimental and we do not recommend using it at this stage. We plan to add support for other hardware wallets as they come up.
+Specter Desktop also supports using the Bitcoin Core on your Runtipi as a hot wallet, by importing or generating a random BIP39 mnemonic, but this feature is experimental and we do not recommend using it at this stage. We plan to add support for other hardware wallets as they come up.
 
 ## Inter-App Connections
 

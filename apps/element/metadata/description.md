@@ -2,7 +2,7 @@
 
 > A glossy Matrix client compatible with Synapse
 
-Element is a new type of messaging app. You choose where your messages are stored, putting you in control of your data. You can connect it to the Synapse app running on your Umbrel, or to any other Matrix homeserver.
+Element is a new type of messaging app. You choose where your messages are stored, putting you in control of your data. You can connect it to the Synapse app running on your Runtipi, or to any other Matrix homeserver.
 
 
   - It gives you access to the Matrix open network, so you can talk to anyone. Element provides a new level of security, adding cross-signed device verification to default end-to-end encryption.
@@ -16,11 +16,11 @@ Element is a new type of messaging app. You choose where your messages are store
 
 🛠️ Getting Started
 
-An easy way to get started is to install the "Synapse" app on your Umbrel. Synapse is a Matrix homeserver that stores all your personal chat history and user account information.
+An easy way to get started is to install the "Synapse" app on your Runtipi. Synapse is a Matrix homeserver that stores all your personal chat history and user account information.
 
 When you register or login through Element, you will need to change the address of the homeserver you are logging into from the default matrix.org to http://<IP-DO-SERVIDOR>:8008 for local access.
 
-For seamless connection even when you are accessing Element away from home, simply install the "Tailscale" app on your Umbrel and your device you are using to access Element, and use http://umbrel:8008 as the address of your server.
+For seamless connection even when you are accessing Element away from home, simply install the "Tailscale" app on your Runtipi and your device you are using to access Element, and use http://umbrel:8008 as the address of your server.
 
 ## Links
 - **Upstream Version**: `1.12.32`

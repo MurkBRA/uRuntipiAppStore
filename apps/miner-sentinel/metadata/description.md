@@ -20,7 +20,7 @@ Interactive charts for hashrate and hardware trends over selectable time ranges.
 In-app Activity journal plus Telegram, Discord, ntfy, Gotify, or webhook notifications for offline devices, hashrate stagnation, new best difficulty, and more. Remote Controls for reboot, fans, and make-specific presets; LAN discovery to find miners on your network.
 
 **Built for Self-Sovereignty**
-Runs entirely on your own hardware. All metrics stay in your PostgreSQL database. Packaged for Umbrel with multi-architecture Docker images.
+Runs entirely on your own hardware. All metrics stay in your PostgreSQL database. Packaged for Runtipi with multi-architecture Docker images.
 
 ## Default Credentials
 - **Username / Email**: Configured via `DJANGO_SUPERUSER_EMAIL` in your Runtipi app settings (default: `admin@tipi.local`)

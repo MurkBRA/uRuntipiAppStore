@@ -15,7 +15,7 @@ Key features include:
   - Header-based authentication for reverse proxy SSO
 
 
-**Connecting to Gitea on Umbrel:** If you have the Gitea app installed on your Umbrel, use `http://gitea_server_1:8085` as the Gitea URL in the mirror settings.
+**Connecting to Gitea on Runtipi:** If you have the Gitea app installed on your Runtipi, use `http://gitea_server_1:8085` as the Gitea URL in the mirror settings.
 
 The **Gitea Access Token** should have the following permissions:
   - write:repository

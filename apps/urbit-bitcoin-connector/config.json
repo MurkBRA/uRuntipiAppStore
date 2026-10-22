@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "urbit-bitcoin-connector",
-  "description": "Urbit has a native Bitcoin wallet that you can connect to a full node via an intermediary, called a provider. Providers run a piece of backend software called %btc-provider that communicates with a full node with bitcoind and electrs, as well as a custome Node Express proxy to translate RPC calls between TCP and HTTP. This app will install the Express proxy and configure it to point at your Umbrel's Bitcoin full node. Using this, you can configure a Bitcoin provider on a ship (even one running on your Umbrel) and configure it, or other ships to point their wallets at it.",
+  "description": "Urbit has a native Bitcoin wallet that you can connect to a full node via an intermediary, called a provider. Providers run a piece of backend software called %btc-provider that communicates with a full node with bitcoind and electrs, as well as a custome Node Express proxy to translate RPC calls between TCP and HTTP. This app will install the Express proxy and configure it to point at your Runtipi's Bitcoin full node. Using this, you can configure a Bitcoin provider on a ship (even one running on your Runtipi) and configure it, or other ships to point their wallets at it.",
   "tipi_version": 1,
   "version": "latest",
   "categories": [

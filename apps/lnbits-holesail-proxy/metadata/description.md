@@ -2,7 +2,7 @@
 
 > A Holesail proxy to connect remotely to your LNbits
 
-Running Umbrel behind a home router (NAT) without a public domain?
+Running Runtipi behind a home router (NAT) without a public domain?
 TOR is too slow?
 This app will allow you (and your friends) to connect remotely to your LNbits, using a Holesail - an instant P2P tunnel to bypass any network, firewall, NAT restrictions.
 

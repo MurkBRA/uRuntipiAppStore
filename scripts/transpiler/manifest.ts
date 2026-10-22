@@ -28,7 +28,10 @@ export function mapUmbrelCategory(category: string, tagline = "", description = 
       base.push("music");
     }
   } else if (category === "networking") {
-    if (/\b(vpn|wireguard|tailscale|firewall|auth|password|security|dns|proxy)\b/.test(text) && !base.includes("security")) {
+    if (
+      /\b(vpn|wireguard|tailscale|firewall|auth|password|security|dns|proxy)\b/.test(text) &&
+      !base.includes("security")
+    ) {
       base.push("security");
     }
   }
@@ -36,11 +39,21 @@ export function mapUmbrelCategory(category: string, tagline = "", description = 
   return base;
 }
 
-export function sanitizeUmbrelDescriptionText(
-  text: string,
-  manifestPort: number,
-  allocatedPort: number,
-): string {
+export function replaceUmbrelProse(text: string): string {
+  if (!text) return text;
+  const protectedPattern = /(https?:\/\/[^\s)\]]+|```[\s\S]*?```|`[^`]+`)/g;
+  return text
+    .split(protectedPattern)
+    .map((part, index) => {
+      if (index % 2 === 1) return part;
+      return part
+        .replace(/\b(?:umbrelOS|umbrel\s*os)\b/gi, "Runtipi")
+        .replace(/\bumbrel('s)?\b/gi, (_match, suffix) => (suffix ? "Runtipi's" : "Runtipi"));
+    })
+    .join("");
+}
+
+export function sanitizeUmbrelDescriptionText(text: string, manifestPort: number, allocatedPort: number): string {
   if (!text) return text;
   let out = text;
 
@@ -54,6 +67,9 @@ export function sanitizeUmbrelDescriptionText(
 
   // Replace remaining standalone umbrel.local hostnames (not preceded by @)
   out = out.replace(/(?<!@)\bumbrel\.local\b/gi, "<IP-DO-SERVIDOR>");
+
+  // Replace umbrelOS and Umbrel in prose text with Runtipi
+  out = replaceUmbrelProse(out);
 
   return out;
 }
@@ -95,7 +111,11 @@ export function buildRuntipiConfigAndDescription(params: {
     manifestPort,
     allocatedPort,
   );
-  const firstParagraph = fullDescription.split(/\r?\n\r?\n/)[0]?.replace(/\r?\n/g, " ").trim() || tagline;
+  const firstParagraph =
+    fullDescription
+      .split(/\r?\n\r?\n/)[0]
+      ?.replace(/\r?\n/g, " ")
+      .trim() || tagline;
 
   const rawManifestVersion = String(umbrelManifest.version ?? "1.0.0").trim();
   // Ensure version matches dockerCompose.services[app.id].image tag rule in apps.test.ts
@@ -104,7 +124,9 @@ export function buildRuntipiConfigAndDescription(params: {
 
   const author = String(umbrelManifest.developer || umbrelManifest.submitter || "Community").trim();
   const website = String(umbrelManifest.website || umbrelManifest.repo || "https://umbrel.com").trim();
-  const source = String(umbrelManifest.repo || umbrelManifest.website || "https://github.com/getumbrel/umbrel-apps").trim();
+  const source = String(
+    umbrelManifest.repo || umbrelManifest.website || "https://github.com/getumbrel/umbrel-apps",
+  ).trim();
   const categories = mapUmbrelCategory(String(umbrelManifest.category || "files"), tagline, fullDescription);
 
   const config: Record<string, any> = {
@@ -132,7 +154,7 @@ export function buildRuntipiConfigAndDescription(params: {
     supported_architectures: ["arm64", "amd64"],
     created_at: createdAt,
     updated_at: updatedAt,
-    "$schema": "../app-info-schema.json",
+    $schema: "../app-info-schema.json",
     min_tipi_version: "4.7.0",
   };
 

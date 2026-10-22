@@ -8,9 +8,9 @@ The NetBird Client is the component that brings this system to life. It handles 
 
 By combining simplicity, automation, and strong cryptography, the NetBird Client enables secure networking without configuration. It provides a stable foundation for private communication and collaboration while ensuring that every connection remains fully encrypted, authenticated, and resilient.
 
-⚙️ Get your Umbrel connected with NetBird
+⚙️ Get your Runtipi connected with NetBird
 
-Open the link shown in your browser on your computer or mobile device and sign in with the same NetBird account you use for the dashboard. Approve the device when prompted. After confirmation, your Umbrel client will automatically register itself and remain connected across restarts.
+Open the link shown in your browser on your computer or mobile device and sign in with the same NetBird account you use for the dashboard. Approve the device when prompted. After confirmation, your Runtipi client will automatically register itself and remain connected across restarts.
 
 ## Links
 - **Upstream Version**: `0.81.3`

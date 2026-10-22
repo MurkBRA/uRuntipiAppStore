@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "sv2-ui",
-  "description": "Stratum V2 UI is a setup wizard and monitoring dashboard for running a Stratum V2 mining stack on Umbrel. It guides you through pool mining, solo mining, and Job Declaration flows where your Bitcoin node can provide custom block templates.",
+  "description": "Stratum V2 UI is a setup wizard and monitoring dashboard for running a Stratum V2 mining stack on Runtipi. It guides you through pool mining, solo mining, and Job Declaration flows where your Bitcoin node can provide custom block templates.",
   "tipi_version": 1,
   "version": "0.7.0",
   "categories": [

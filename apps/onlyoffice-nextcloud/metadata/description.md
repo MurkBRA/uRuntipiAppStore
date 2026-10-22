@@ -4,7 +4,7 @@
 
 An online office suite for Nextcloud that enables you to create, edit and collaborate on text documents, spreadsheets and presentations in real time.
 
-Simply install ONLYOFFICE Docs and follow the in-app instructions to connect it to Nextcloud running on your Umbrel.
+Simply install ONLYOFFICE Docs and follow the in-app instructions to connect it to Nextcloud running on your Runtipi.
 
 ## Inter-App Connections
 

@@ -2,7 +2,12 @@ import { describe, expect, it } from "vitest";
 import { isDatabaseImage, transpileCompose } from "../transpiler/compose.ts";
 import { createFormFieldFromContract } from "../transpiler/contracts.ts";
 import { parseUmbrelExports } from "../transpiler/exports-hooks.ts";
-import { buildRuntipiConfigAndDescription, mapUmbrelCategory } from "../transpiler/manifest.ts";
+import {
+  buildRuntipiConfigAndDescription,
+  mapUmbrelCategory,
+  replaceUmbrelProse,
+  sanitizeUmbrelDescriptionText,
+} from "../transpiler/manifest.ts";
 import { PortAllocator } from "../transpiler/ports.ts";
 
 describe("Transpiler Unit Tests", () => {
@@ -304,5 +309,25 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
 
     // Form field for container user is present because web service uses it
     expect(res.formFields.some((f) => f.env_variable === "APP_CONTAINER_USER")).toBe(true);
+  });
+
+  it("replaceUmbrelProse and sanitizeUmbrelDescriptionText replace umbrelOS and Umbrel with Runtipi while preserving URLs and code blocks", () => {
+    const raw = `
+⚠️ Watch out for port conflicts between your custom Docker containers and your umbrelOS apps.
+Arcane on Umbrel is designed for advanced users who want complete control over their containers.
+Be mindful of port conflicts between your containers, Umbrel's system services, and other installed apps.
+- **Username**: \`umbrel\`
+- **Website**: https://docs.bffless.app/deployment/umbrel/
+Access at umbrel.local:8080.
+`;
+    const sanitized = sanitizeUmbrelDescriptionText(raw, 8080, 18080);
+    expect(sanitized).toContain("your custom Docker containers and your Runtipi apps.");
+    expect(sanitized).toContain("Arcane on Runtipi is designed for advanced users");
+    expect(sanitized).toContain("between your containers, Runtipi's system services");
+    expect(sanitized).toContain("- **Username**: `umbrel`");
+    expect(sanitized).toContain("https://docs.bffless.app/deployment/umbrel/");
+    expect(sanitized).toContain("Access at <IP-DO-SERVIDOR>:18080");
+    expect(sanitized).not.toMatch(/\bumbrelOS\b/i);
+    expect(sanitized).not.toMatch(/\bUmbrel\b/);
   });
 });

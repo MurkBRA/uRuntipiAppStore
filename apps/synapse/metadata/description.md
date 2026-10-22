@@ -12,9 +12,9 @@ In Matrix, each user operates one or more Matrix clients, which connect to a Mat
 
 🛠️ Connecting a Client
 
-To get started, install the "Element" app on your Umbrel, or install any other Matrix client on a device of your choice. When you register or login through the client, you will need to change the address of the homeserver you are logging into from the default matrix.org to http://<IP-DO-SERVIDOR>:20060 for local access. 
+To get started, install the "Element" app on your Runtipi, or install any other Matrix client on a device of your choice. When you register or login through the client, you will need to change the address of the homeserver you are logging into from the default matrix.org to http://<IP-DO-SERVIDOR>:20060 for local access. 
 
-For seamless connection even when your client isn't connected to the same network as your Umbrel, simply install the "Tailscale" app on your Umbrel and your client device, and use http://umbrel:8008 as the address of your server.
+For seamless connection even when your client isn't connected to the same network as your Runtipi, simply install the "Tailscale" app on your Runtipi and your client device, and use http://umbrel:8008 as the address of your server.
 
 ## Links
 - **Upstream Version**: `1.163.0`

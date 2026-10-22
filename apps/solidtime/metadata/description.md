@@ -8,13 +8,13 @@
   - Track your time with a simple and intuitive interface
   - View detailed reports of your time usage
   - Export your data to CSV for further analysis
-  - Secure and private: your data is stored locally on your Umbrel
+  - Secure and private: your data is stored locally on your Runtipi
 
 ⚠️ New users can only be created via the terminal for now. Example:
 `sudo docker exec -i solidtime_scheduler_1 bash -c "echo '<password' | php artisan admin:user:create '<username>' '<email>' --ask-for-password --verify-email"`
 
 💻 To be able to use the Desktop Client, a Client ID is needed. 
-  - Use the Umbrel Files App and navigate to **Apps/Solidtime**
+  - Use the Runtipi Files App and navigate to **Apps/Solidtime**
   - A file called `desktop_client_id.txt` can be found there that contains the ID that you need to get started
 
 

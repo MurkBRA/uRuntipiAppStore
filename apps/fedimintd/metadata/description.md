@@ -12,11 +12,11 @@ You can create a Fedimint in two ways:
 
 [See here for more deployment recommendations](https://github.com/fedimint/fedimint/blob/master/docs/deploying.md)
 # Step By Step Ceremony
-1. Install & Launch this Fedimint app (fedimintd) on your Umbrel
+1. Install & Launch this Fedimint app (fedimintd) on your Runtipi
    Each participating guardian runs their own instance of fedimintd.
 
 2. Find Your Guardian Password
-   Umbrel provides a unique guardian admin password for the app. It is shown when you first open the app and can be found again through the app's settings or credentials menu.
+   Runtipi provides a unique guardian admin password for the app. It is shown when you first open the app and can be found again through the app's settings or credentials menu.
 
 3. Generate Setup Code
    After signing in, a unique setup code is generated for each guardian.
@@ -33,7 +33,7 @@ You can create a Fedimint in two ways:
 
 # Enabling Lightning Payments
 Fedimint supports Lightning payments via a Lightning Gateway. To use Lightning in your federation, there are two options:
-1. Run your own! - [Deploy a Lightning Gateway on your Umbrel](https://apps.umbrel.com/app/fedimint-gateway).
+1. Run your own! - [Deploy a Lightning Gateway on your Runtipi](https://apps.umbrel.com/app/fedimint-gateway).
 2. Use an existing Lightning Gateway. [Reach out on Discord to get setup](https://chat.fedimint.org).
 
 ## Default Credentials

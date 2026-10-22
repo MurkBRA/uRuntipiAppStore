@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "bitbalance",
-  "description": "Track your Bitcoin wallets privately from your own Umbrel.",
+  "description": "Track your Bitcoin wallets privately from your own Runtipi.",
   "tipi_version": 1,
   "version": "1.0.18",
   "categories": [

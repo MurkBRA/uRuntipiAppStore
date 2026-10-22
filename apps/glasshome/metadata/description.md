@@ -11,7 +11,7 @@ Highlights:
 - Community widgets from the GlassHome Hub, gated by a per-widget permission prompt (requires the one-time GlassHome Pro purchase)
 - All data stays on your device in a local SQLite database
 
-GlassHome requires a reachable Home Assistant instance. If Home Assistant is installed on this Umbrel, enter the Umbrel's LAN address with port 8123, for example `http://192.168.1.50:8123`. For Home Assistant running elsewhere, enter its LAN or HTTPS address. The address must also open in the browser you use to complete setup. GlassHome will then guide you through Home Assistant authorization. A demo mode with simulated entities lets you explore before connecting.
+GlassHome requires a reachable Home Assistant instance. If Home Assistant is installed on this Runtipi, enter the Runtipi's LAN address with port 8123, for example `http://192.168.1.50:8123`. For Home Assistant running elsewhere, enter its LAN or HTTPS address. The address must also open in the browser you use to complete setup. GlassHome will then guide you through Home Assistant authorization. A demo mode with simulated entities lets you explore before connecting.
 
 ## Links
 - **Upstream Version**: `1.4.5`

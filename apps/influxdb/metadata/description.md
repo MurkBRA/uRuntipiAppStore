@@ -4,7 +4,7 @@
 
 InfluxDB is an open-source, high-performance time series database packaged with Chronograf, the official web-based visualization tool. Built specifically for handling high-frequency data, InfluxDB excels at managing and analyzing large volumes of timestamped information.
 
-⚠️ Default admin credentials are provided for advanced CLI access. Chronograf is pre-configured with these credentials and requires no additional setup. To find these credentials you can right-click on the InfluxDB app icon from your umbrelOS homescreen and select "Show default credentials".
+⚠️ Default admin credentials are provided for advanced CLI access. Chronograf is pre-configured with these credentials and requires no additional setup. To find these credentials you can right-click on the InfluxDB app icon from your Runtipi homescreen and select "Show default credentials".
 
 Why use InfluxDB?
 

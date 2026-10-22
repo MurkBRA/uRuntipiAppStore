@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "ee-gateway",
-  "description": "EE Gateway turns your Umbrel into a self-hosted Bluetooth gateway for open BLE networks.",
+  "description": "EE Gateway turns your Runtipi into a self-hosted Bluetooth gateway for open BLE networks.",
   "tipi_version": 1,
   "version": "0.6.5",
   "categories": [

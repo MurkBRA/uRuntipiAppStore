@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "lnbits-holesail-proxy",
-  "description": "Running Umbrel behind a home router (NAT) without a public domain? TOR is too slow? This app will allow you (and your friends) to connect remotely to your LNbits, using a Holesail - an instant P2P tunnel to bypass any network, firewall, NAT restrictions.",
+  "description": "Running Runtipi behind a home router (NAT) without a public domain? TOR is too slow? This app will allow you (and your friends) to connect remotely to your LNbits, using a Holesail - an instant P2P tunnel to bypass any network, firewall, NAT restrictions.",
   "tipi_version": 1,
   "version": "v1.0.7",
   "categories": [

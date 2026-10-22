@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "pearcircle-seeder",
-  "description": "Run a blind seeder for your PearCircle circles on your Umbrel so their history stays in sync even when every phone is offline.",
+  "description": "Run a blind seeder for your PearCircle circles on your Runtipi so their history stays in sync even when every phone is offline.",
   "tipi_version": 1,
   "version": "1.1.4",
   "categories": [

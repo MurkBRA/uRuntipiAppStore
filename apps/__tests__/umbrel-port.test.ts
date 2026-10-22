@@ -181,6 +181,37 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
             expect((sVal as any).user, `airtrail service "${sName}" must not specify user:`).toBeUndefined();
           }
         }
+
+        // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose
+        const configJsonPath = path.join(appDir, "config.json");
+        const appConfig = JSON.parse(fs.readFileSync(configJsonPath, "utf8"));
+        const descMdPath = path.join(appDir, "metadata", "description.md");
+        const descMd = fs.existsSync(descMdPath) ? fs.readFileSync(descMdPath, "utf8") : "";
+
+        const stripProtected = (str: string) =>
+          str
+            .replace(/https?:\/\/[^\s)\]]+/g, "")
+            .replace(/```[\s\S]*?```/g, "")
+            .replace(/`[^`]+`/g, "");
+
+        const descProse = stripProtected(descMd);
+        const configDescProse = stripProtected(`${appConfig.description || ""} ${appConfig.short_desc || ""}`);
+
+        expect(descProse, `App ${id}/metadata/description.md leaks "umbrelOS" or "Umbrel" in prose`).not.toMatch(
+          /\b(?:umbrelOS|umbrel\s*os)\b/i,
+        );
+        expect(descProse, `App ${id}/metadata/description.md leaks "Umbrel" platform reference in prose`).not.toMatch(
+          /\bUmbrel\b/,
+        );
+
+        expect(
+          configDescProse,
+          `App ${id}/config.json leaks "umbrelOS" or "Umbrel" in description/short_desc`,
+        ).not.toMatch(/\b(?:umbrelOS|umbrel\s*os)\b/i);
+        expect(
+          configDescProse,
+          `App ${id}/config.json leaks "Umbrel" platform reference in description/short_desc`,
+        ).not.toMatch(/\bUmbrel\b/);
       });
     }
   });

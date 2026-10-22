@@ -11,7 +11,7 @@
   "categories": [
     "network"
   ],
-  "short_desc": "Run Urbit on your Umbrel",
+  "short_desc": "Run Urbit on your Runtipi",
   "author": "~mopfel-winrux & ~sitful-hatred",
   "source": "https://github.com/mopfel-winrux/urbit-umbrel",
   "website": "https://github.com/mopfel-winrux/urbit-umbrel",

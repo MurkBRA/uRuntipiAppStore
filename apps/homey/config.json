@@ -5,13 +5,13 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "homey",
-  "description": "Homey Self-Hosted Server runs the Homey smart home engine on your own Umbrel, so your automations and device connections are handled on hardware you control instead of Homey's cloud.",
+  "description": "Homey Self-Hosted Server runs the Homey smart home engine on your own Runtipi, so your automations and device connections are handled on hardware you control instead of Homey's cloud.",
   "tipi_version": 2,
   "version": "13.5.3",
   "categories": [
     "automation"
   ],
-  "short_desc": "Run Homey Self-Hosted Server on your Umbrel",
+  "short_desc": "Run Homey Self-Hosted Server on your Runtipi",
   "author": "Athom B.V.",
   "source": "https://homey.app",
   "website": "https://homey.app",

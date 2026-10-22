@@ -14,7 +14,7 @@ Solo mining via Ocean's solo template should also work, though so far the autopi
 
 Setup is a three-step web wizard. After setup you get a dashboard with live decisions, charts, the DRY-RUN / LIVE / PAUSED switch, and a P&L panel that reads spend from Braiins and earnings from your on-chain wallet.
 
-This app declares a Bitcoin node, an Electrum server, and Datum Gateway as dependencies, so Umbrel will prompt you to install them during setup - any of Umbrel's Bitcoin node apps and any Electrum server (Electrs, Fulcrum, or ElectrumX) works. Once all apps run on the same Umbrel, the autopilot's dashboard auto-discovers the local Datum HTTP API, Electrum server, and Bitcoin RPC across Umbrel's shared Docker network - zero copy/paste, the worker-count, hashrate, P&L earnings, and BIP110 signalling panels all populate on first boot. (Pointing at off-Umbrel instances is also supported - just override the URLs in Config after setup.)
+This app declares a Bitcoin node, an Electrum server, and Datum Gateway as dependencies, so Runtipi will prompt you to install them during setup - any of Runtipi's Bitcoin node apps and any Electrum server (Electrs, Fulcrum, or ElectrumX) works. Once all apps run on the same Runtipi, the autopilot's dashboard auto-discovers the local Datum HTTP API, Electrum server, and Bitcoin RPC across Runtipi's shared Docker network - zero copy/paste, the worker-count, hashrate, P&L earnings, and BIP110 signalling panels all populate on first boot. (Pointing at off-Runtipi instances is also supported - just override the URLs in Config after setup.)
 
 ## Inter-App Connections
 

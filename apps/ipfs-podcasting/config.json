@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "ipfs-podcasting",
-  "description": "Turn your Umbrel into an IPFS node for self-hosting, crowd-hosting, and archiving of your favorite podcasts to the IPFS network.",
+  "description": "Turn your Runtipi into an IPFS node for self-hosting, crowd-hosting, and archiving of your favorite podcasts to the IPFS network.",
   "tipi_version": 1,
   "version": "0.6",
   "categories": [

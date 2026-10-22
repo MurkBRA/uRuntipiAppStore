@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "bassin",
-  "description": "A zero-fee Bitcoin solo mining pool for Umbrel. Run your own ckPool at home.",
+  "description": "A zero-fee Bitcoin solo mining pool for Runtipi. Run your own ckPool at home.",
   "tipi_version": 1,
   "version": "v1.8.11",
   "categories": [

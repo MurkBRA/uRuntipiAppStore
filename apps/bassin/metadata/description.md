@@ -2,7 +2,7 @@
 
 > Solo Bitcoin Mining Pool (ckPool)
 
-A zero-fee Bitcoin solo mining pool for Umbrel. Run your own ckPool at home.
+A zero-fee Bitcoin solo mining pool for Runtipi. Run your own ckPool at home.
 
 No setup, no hassle.
   - Make sure your Bitcoin Node is fully synchronized and running

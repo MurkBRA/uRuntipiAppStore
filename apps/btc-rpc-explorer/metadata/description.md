@@ -2,7 +2,7 @@
 
 > Simple, database-free blockchain explorer
 
-BTC RPC Explorer is a full-featured, self-hosted explorer for the Bitcoin blockchain. With this explorer, you can explore not just the blockchain database, but also explore the functional capabilities of your Umbrel.
+BTC RPC Explorer is a full-featured, self-hosted explorer for the Bitcoin blockchain. With this explorer, you can explore not just the blockchain database, but also explore the functional capabilities of your Runtipi.
 
 It comes with a network summary dashboard, detailed view of blocks, transactions, addresses, along with analysis tools for viewing stats on miner activity, mempool summary, with fee, size, and age breakdowns. You can also search by transaction ID, block hash/height, and addresses.
 

@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "nostr-vpn",
-  "description": "Nostr VPN turns your Umbrel into a private mesh VPN node for your own devices and trusted groups. Approve signed join-request QRs, manage peers, and route traffic through trusted exit nodes without relying on a hosted VPN provider or a central control server.",
+  "description": "Nostr VPN turns your Runtipi into a private mesh VPN node for your own devices and trusted groups. Approve signed join-request QRs, manage peers, and route traffic through trusted exit nodes without relying on a hosted VPN provider or a central control server.",
   "tipi_version": 1,
   "version": "v4.1.18",
   "categories": [

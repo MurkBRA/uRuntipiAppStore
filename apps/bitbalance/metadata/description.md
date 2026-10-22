@@ -2,7 +2,7 @@
 
 > Track your Bitcoin wallets privately
 
-Track your Bitcoin wallets privately from your own Umbrel.
+Track your Bitcoin wallets privately from your own Runtipi.
 
 Monitor Bitcoin wallet balances privately using XPUB, YPUB, or ZPUB.
 
@@ -10,7 +10,7 @@ Connects to your local Electrs server for maximum privacy, without relying on th
 
 Stop checking balances on block explorers. Your wallets. Your node. Your privacy.
 
-Supports multiple wallets, automatic gap limit scanning, and real-time balance updates directly from your Umbrel node.
+Supports multiple wallets, automatic gap limit scanning, and real-time balance updates directly from your Runtipi node.
 
 ## Inter-App Connections
 

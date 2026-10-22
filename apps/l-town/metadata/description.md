@@ -21,7 +21,7 @@ Choose from 11 unique playable characters:
 
 Controls: WASD to move, Mouse to aim, Left Click to shoot, Q for ability, R for shield, E for super, Space for super jump, C to crouch, F for scoreboard.
 
-Perfect for LAN parties — just share your Umbrel URL with anyone on the same network and start playing instantly.
+Perfect for LAN parties — just share your Runtipi URL with anyone on the same network and start playing instantly.
 
 ## Links
 - **Upstream Version**: `20260621`

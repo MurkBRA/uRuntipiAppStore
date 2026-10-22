@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "sphinx-relay",
-  "description": "Sphinx Relay turns your Lightning node into a personal communication server. Messages are end-to-end encrypted and transmitted over the Bitcoin Lightning Network. Download Sphinx on your phone from https://sphinx.chat and pair it with Sphinx Relay on Umbrel.",
+  "description": "Sphinx Relay turns your Lightning node into a personal communication server. Messages are end-to-end encrypted and transmitted over the Bitcoin Lightning Network. Download Sphinx on your phone from https://sphinx.chat and pair it with Sphinx Relay on Runtipi.",
   "tipi_version": 1,
   "version": "v2.5.2",
   "categories": [

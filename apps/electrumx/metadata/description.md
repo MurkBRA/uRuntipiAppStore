@@ -6,7 +6,7 @@ Run your personal Electrum server and connect your Electrum-compatible wallet, i
 
 Powered by ElectrumX from Thomas Voegtlin.
 
-An official app from Umbrel.
+An official app from Runtipi.
 
 ## Inter-App Connections
 

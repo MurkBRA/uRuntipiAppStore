@@ -2,7 +2,7 @@
 
 > Manage multiple holesail P2P tunnels from a single dashboard
 
-Running Umbrel behind a home router (NAT) without a public domain? Tor is too slow?
+Running Runtipi behind a home router (NAT) without a public domain? Tor is too slow?
 
 Holesail Switchboard provides a web interface to manage multiple holesail servers and clients, allowing you to create instant P2P tunnels that bypass any network, firewall, or NAT restrictions.
 
@@ -14,7 +14,7 @@ Features:
 
 
 Use cases:
-  - Expose your Umbrel apps to the internet without port forwarding
+  - Expose your Runtipi apps to the internet without port forwarding
   - Share access to local services with friends and family
   - Connect to remote services securely
 

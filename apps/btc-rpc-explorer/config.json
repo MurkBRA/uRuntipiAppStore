@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "btc-rpc-explorer",
-  "description": "BTC RPC Explorer is a full-featured, self-hosted explorer for the Bitcoin blockchain. With this explorer, you can explore not just the blockchain database, but also explore the functional capabilities of your Umbrel.",
+  "description": "BTC RPC Explorer is a full-featured, self-hosted explorer for the Bitcoin blockchain. With this explorer, you can explore not just the blockchain database, but also explore the functional capabilities of your Runtipi.",
   "tipi_version": 1,
   "version": "3.5.1",
   "categories": [

@@ -5,7 +5,7 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "element",
-  "description": "Element is a new type of messaging app. You choose where your messages are stored, putting you in control of your data. You can connect it to the Synapse app running on your Umbrel, or to any other Matrix homeserver.",
+  "description": "Element is a new type of messaging app. You choose where your messages are stored, putting you in control of your data. You can connect it to the Synapse app running on your Runtipi, or to any other Matrix homeserver.",
   "tipi_version": 1,
   "version": "1.12.32",
   "categories": [

@@ -4,7 +4,7 @@
 
 Joinstr is a coordinator-less coinjoin that uses Nostr relays to find peers and collaboratively build a Bitcoin transaction, improving on-chain privacy.
 
-The app runs the Joinstr web UI against your Umbrel's Bitcoin node, which it connects to automatically.
+The app runs the Joinstr web UI against your Runtipi's Bitcoin node, which it connects to automatically.
 
 ## Inter-App Connections
 

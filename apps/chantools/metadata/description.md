@@ -6,7 +6,7 @@ chantools is a command line interface (CLI) utility designed to help Lightning N
 
 You might want to visit https://www.node-recovery.com/chantools for more information about what commands to run and how to compose those commands.
 
-Also, you don't have to run chantools on Umbrel specifically. You can download and run it on any machine, there is no direct interaction with your Lightning node required and for most commands you don't even need anything other than your seed phrase.
+Also, you don't have to run chantools on Runtipi specifically. You can download and run it on any machine, there is no direct interaction with your Lightning node required and for most commands you don't even need anything other than your seed phrase.
 
 ## Links
 - **Upstream Version**: `v1.14.1-patch.1`

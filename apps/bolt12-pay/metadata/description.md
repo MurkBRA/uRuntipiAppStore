@@ -13,7 +13,7 @@ It supports BOLT12 Offers, BIP353 and LNURL Lightning Addresses, optional BOLT11
 - Lightning Addresses and public payment pages require your own domain.
 - Cloudflare DNS automation and a Cloudflare Tunnel are optional.
 
-## 🔒 UmbrelOS 2.0
+## 🔒 Runtipi 2.0
 
 Open BOLT12 Pay at:
 
@@ -21,11 +21,11 @@ https://<IP-DO-SERVIDOR>:8367
 
 On first launch, the setup screen opens automatically.
 
-UmbrelOS 2.0 uses local HTTPS. Install Umbrel's Local HTTPS CA on every computer that opens the app. Allow camera access for the address including port 8367 if you want to use the QR scanner.
+Runtipi 2.0 uses local HTTPS. Install Runtipi's Local HTTPS CA on every computer that opens the app. Allow camera access for the address including port 8367 if you want to use the QR scanner.
 
 For a Cloudflare Tunnel, use https://<IP-DO-SERVIDOR>:8367 as the origin and copy the HTTPS settings from the full guide. Keep TLS verification enabled.
 
-[Full UmbrelOS 2.0 and Cloudflare guide](https://github.com/Alex71btc/lndk-pay/blob/main/README.md#-umbrel-setup)
+[Full Runtipi 2.0 and Cloudflare guide](https://github.com/Alex71btc/lndk-pay/blob/main/README.md#-umbrel-setup)
 
 ## 🌍 Domain and public access
 
