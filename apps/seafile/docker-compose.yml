@@ -4,9 +4,9 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/seafile-data:/shared
     environment:
-      - DB_HOST=seafile-mysql
+      - DB_HOST=seafile-db
       - DB_ROOT_PASSWD=db_dev
-      - SEAFILE_MYSQL_DB_HOST=seafile-mysql
+      - SEAFILE_MYSQL_DB_HOST=seafile-db
       - SEAFILE_MYSQL_DB_PORT=3306
       - SEAFILE_MYSQL_DB_USER=root
       - SEAFILE_MYSQL_DB_PASSWORD=db_dev
@@ -52,7 +52,7 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/seadoc-data:/shared
     environment:
-      - DB_HOST=seafile-mysql
+      - DB_HOST=seafile-db
       - DB_USER=root
       - DB_PASSWORD=db_dev
       - DB_NAME=seahub_db

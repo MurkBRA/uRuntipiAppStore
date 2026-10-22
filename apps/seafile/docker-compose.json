@@ -9,7 +9,7 @@
       "environment": [
         {
           "key": "DB_HOST",
-          "value": "seafile-mysql"
+          "value": "seafile-db"
         },
         {
           "key": "DB_ROOT_PASSWD",
@@ -17,7 +17,7 @@
         },
         {
           "key": "SEAFILE_MYSQL_DB_HOST",
-          "value": "seafile-mysql"
+          "value": "seafile-db"
         },
         {
           "key": "SEAFILE_MYSQL_DB_PORT",
@@ -145,7 +145,7 @@
       "environment": [
         {
           "key": "DB_HOST",
-          "value": "seafile-mysql"
+          "value": "seafile-db"
         },
         {
           "key": "DB_USER",

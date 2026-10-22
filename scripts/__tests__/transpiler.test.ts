@@ -73,6 +73,7 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
             PUBLIC_URL: "http://${DEVICE_DOMAIN_NAME}:8123",
             SECRET: "${APP_PASSWORD}",
             BITCOIN_HOST: "${APP_BITCOIN_NODE_IP}",
+            CUSTOM_SERVER_URL: "http://mycustombackend:8000",
           },
           volumes: ["${APP_DATA_DIR}/data/app:/data", "${APP_DATA_DIR}/config.yml:/app/config.yml:ro"],
           depends_on: {
@@ -80,6 +81,7 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
           },
         },
         postgres: {
+          container_name: "mycustombackend",
           image: "postgres:16.2@sha256:2222222222222222222222222222222222222222222222222222222222222222",
         },
         db: {
@@ -127,6 +129,9 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
     expect(res.composeYamlObj.services["my-app"].environment).toContain("DB_TYPE=postgres");
     expect(res.composeYamlObj.services["my-app"].environment).toContain(
       "PUBLIC_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}",
+    );
+    expect(res.composeYamlObj.services["my-app"].environment).toContain(
+      "CUSTOM_SERVER_URL=http://my-app-postgres:8000",
     );
     expect(res.composeYamlObj.services["my-app"].volumes).toContain("${APP_DATA_DIR}/data/config.yml:/app/config.yml:ro");
     expect(res.formFields.map((f) => f.env_variable)).toContain("APP_PASSWORD");

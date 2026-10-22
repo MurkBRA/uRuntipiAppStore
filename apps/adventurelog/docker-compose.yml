@@ -2,7 +2,7 @@ services:
   adventurelog:
     image: ghcr.io/seanmorley15/adventurelog-frontend:v0.13.0
     environment:
-      - PUBLIC_SERVER_URL=http://adventurelogserver1:8000
+      - PUBLIC_SERVER_URL=http://adventurelog-server:8000
       - ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
       - BODY_SIZE_LIMIT=Infinity
     depends_on:

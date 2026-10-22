@@ -9,7 +9,7 @@
       "environment": [
         {
           "key": "PUBLIC_SERVER_URL",
-          "value": "http://adventurelogserver1:8000"
+          "value": "http://adventurelog-server:8000"
         },
         {
           "key": "ORIGIN",

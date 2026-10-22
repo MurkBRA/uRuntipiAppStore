@@ -224,6 +224,19 @@ export function transpileCompose(params: {
     }
   }
 
+  // Map explicit Umbrel container_name directives to their renamed Runtipi service names
+  const containerNameMap: Record<string, string> = {};
+  for (const key of keptServiceKeys) {
+    const rawSvc = rawServices[key];
+    if (rawSvc && typeof rawSvc.container_name === "string" && rawSvc.container_name.trim()) {
+      const cName = rawSvc.container_name.trim();
+      const finalKey = serviceRenameMap[key];
+      if (finalKey && cName !== finalKey) {
+        containerNameMap[cName] = finalKey;
+      }
+    }
+  }
+
   // Helper to transform strings (DNS names, Umbrel vars, static exports)
   let usesExternalContract = hasDependencies;
 
@@ -259,6 +272,15 @@ export function transpileCompose(params: {
     // Also catch any removed tor service references
     out = out.replaceAll(`${appId}_tor_1`, "127.0.0.1");
     out = out.replaceAll(`${appId}_tor_server_1`, "127.0.0.1");
+
+    // Replace explicit Umbrel container_name in URLs/URIs -> renamed service
+    for (const [cName, finalKey] of Object.entries(containerNameMap)) {
+      const urlHostRegex = new RegExp(
+        `((?:https?|postgres|postgresql|mysql|redis|mongodb|grpc|wss?):\\/\\/(?:[^@\\/\\s"']+@)?)${cName}((?::\\d+)?(?:\\/|["'\\s]|$))`,
+        "g",
+      );
+      out = out.replace(urlHostRegex, `$1${finalKey}$2`);
+    }
 
     // 3. Replace Umbrel URL patterns
     out = out.replace(
@@ -484,12 +506,11 @@ export function transpileCompose(params: {
           });
           rawVal = `\${${entry.key}}`;
         } else if (
-          // Only rewrite bare service name if the env variable key explicitly represents a host or IP
+          // Only rewrite bare service or container name if the env variable key explicitly represents a host or IP
           /^(?:HOST|.*_(?:HOST|IP))$/i.test(entry.key) &&
-          serviceRenameMap[trimmed] &&
-          serviceRenameMap[trimmed] !== trimmed
+          (containerNameMap[trimmed] || (serviceRenameMap[trimmed] && serviceRenameMap[trimmed] !== trimmed))
         ) {
-          rawVal = serviceRenameMap[trimmed];
+          rawVal = containerNameMap[trimmed] || serviceRenameMap[trimmed];
         }
         const val = transformString(rawVal).trim();
         // Schema rule: string env value must have minLength: 1
