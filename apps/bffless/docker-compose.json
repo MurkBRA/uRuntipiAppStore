@@ -12,6 +12,10 @@
         {
           "key": "DEVICE_DOMAIN_NAME",
           "value": "${APP_DOMAIN}"
+        },
+        {
+          "key": "BACKEND_HOST",
+          "value": "backend"
         }
       ],
       "volumes": [
@@ -31,8 +35,8 @@
         }
       ],
       "dependsOn": [
-        "bffless-backend",
-        "bffless-frontend"
+        "backend",
+        "frontend"
       ]
     },
     {
@@ -122,7 +126,7 @@
       }
     },
     {
-      "name": "bffless-backend",
+      "name": "backend",
       "image": "ghcr.io/bffless/ce-backend:umbrel",
       "addToMainNetwork": true,
       "stopGracePeriod": "30s",
@@ -217,7 +221,7 @@
         },
         {
           "key": "BACKEND_HOST",
-          "value": "bffless-backend"
+          "value": "backend"
         },
         {
           "key": "PROXY_MODE",
@@ -261,7 +265,7 @@
       }
     },
     {
-      "name": "bffless-frontend",
+      "name": "frontend",
       "image": "ghcr.io/bffless/ce-frontend:umbrel",
       "addToMainNetwork": true,
       "stopGracePeriod": "30s",
@@ -272,7 +276,7 @@
         }
       ],
       "dependsOn": [
-        "bffless-backend"
+        "backend"
       ]
     }
   ]

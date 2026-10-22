@@ -7,9 +7,10 @@ services:
       - ${APP_DATA_DIR}/data/nginx:/etc/nginx/sites-enabled
     environment:
       - DEVICE_DOMAIN_NAME=${APP_DOMAIN}
+      - BACKEND_HOST=backend
     depends_on:
-      - bffless-backend
-      - bffless-frontend
+      - backend
+      - frontend
     stop_grace_period: 30s
     x-runtipi:
       internal_port: 5537
@@ -55,7 +56,7 @@ services:
     stop_grace_period: 30s
     x-runtipi:
       add_to_main_network: true
-  bffless-backend:
+  backend:
     image: ghcr.io/bffless/ce-backend:umbrel
     volumes:
       - ${APP_DATA_DIR}/data/uploads:/app/apps/backend/uploads
@@ -84,7 +85,7 @@ services:
       - NGINX_SITES_PATH=/etc/nginx/sites-enabled
       - NGINX_RELOAD_WAIT_MS=3000
       - NGINX_LISTEN_PORT=5537
-      - BACKEND_HOST=bffless-backend
+      - BACKEND_HOST=backend
       - PROXY_MODE=cloudflare-tunnel
       - FEATURE_WILDCARD_SSL=false
       - FEATURE_WILDCARD_SSL_BANNER=false
@@ -97,12 +98,12 @@ services:
     stop_grace_period: 30s
     x-runtipi:
       add_to_main_network: true
-  bffless-frontend:
+  frontend:
     image: ghcr.io/bffless/ce-frontend:umbrel
     volumes:
       - ${APP_DATA_DIR}/data/frontend:/app/dist
     depends_on:
-      - bffless-backend
+      - backend
     stop_grace_period: 30s
     x-runtipi:
       add_to_main_network: true

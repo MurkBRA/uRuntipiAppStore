@@ -208,10 +208,17 @@ export function transpileCompose(params: {
   }
 
   // 3. Build service rename map: mainOrigKey -> appId
+  // Upstream services that must preserve their exact name because container images or configs hardcode the hostname
+  const PRESERVED_UPSTREAM_SERVICE_NAMES: Record<string, string[]> = {
+    bffless: ["backend", "frontend"],
+  };
+
   const serviceRenameMap: Record<string, string> = {};
   for (const key of keptServiceKeys) {
     if (key === mainOrigKey) {
       serviceRenameMap[key] = appId;
+    } else if (PRESERVED_UPSTREAM_SERVICE_NAMES[appId]?.includes(key)) {
+      serviceRenameMap[key] = key;
     } else if (key === appId) {
       serviceRenameMap[key] = `${appId}-${key}-sidecar`;
     } else {
@@ -597,6 +604,12 @@ export function transpileCompose(params: {
       const hasPgData = transformedEnv.some((e) => e.key === "PGDATA");
       if (!hasPgData) {
         transformedEnv.push({ key: "PGDATA", value: "/var/lib/postgresql/data/pgdata" });
+      }
+    }
+    if (appId === "bffless" && isMain) {
+      const hasBackendHost = transformedEnv.some((e) => e.key === "BACKEND_HOST");
+      if (!hasBackendHost) {
+        transformedEnv.push({ key: "BACKEND_HOST", value: "backend" });
       }
     }
     if (transformedEnv.length > 0) {

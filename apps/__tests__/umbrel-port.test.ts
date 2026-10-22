@@ -204,6 +204,18 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(composeYmlRaw).toContain("SECRET_KEY=${APP_SECRET_KEY:-${APP_PASSWORD}}");
         }
 
+        if (id === "bffless") {
+          // bffless nginx container requires DNS hostname "backend" to resolve upstream backend:3000
+          expect(composeYml.services.backend, "bffless must retain 'backend' service name for nginx upstream").toBeDefined();
+          expect(composeYml.services["bffless-backend"], "bffless must not rename backend to bffless-backend").toBeUndefined();
+          expect(composeYml.services.bffless.depends_on).toContain("backend");
+          expect(composeJson.services.some((s: any) => s.name === "backend")).toBe(true);
+          expect(composeJson.services.some((s: any) => s.name === "bffless-backend")).toBe(false);
+          const backendSvc = composeJson.services.find((s: any) => s.name === "backend");
+          const backendHostEnv = backendSvc?.environment?.find((e: any) => e.key === "BACKEND_HOST");
+          expect(backendHostEnv?.value).toBe("backend");
+        }
+
         // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose
         const configJsonPath = path.join(appDir, "config.json");
         const appConfig = JSON.parse(fs.readFileSync(configJsonPath, "utf8"));

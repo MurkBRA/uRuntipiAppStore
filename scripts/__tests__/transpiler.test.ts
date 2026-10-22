@@ -402,4 +402,49 @@ Access at umbrel.local:8080.
     expect(secEntry.value).toBe("${APP_SECRET_KEY:-${APP_PASSWORD}}");
     expect(jwtEntry.value).toBe("${APP_JWT_SECRET:-${APP_PASSWORD}}");
   });
+
+  it("transpileCompose preserves upstream service names configured in PRESERVED_UPSTREAM_SERVICE_NAMES", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        app_proxy: {
+          environment: {
+            APP_HOST: "bffless_nginx_1",
+            APP_PORT: 5537,
+          },
+        },
+        nginx: {
+          image: "ghcr.io/bffless/ce-nginx:umbrel",
+          depends_on: ["backend", "frontend"],
+        },
+        backend: {
+          image: "ghcr.io/bffless/ce-backend:umbrel",
+          environment: {
+            BACKEND_HOST: "backend",
+          },
+        },
+        frontend: {
+          image: "ghcr.io/bffless/ce-frontend:umbrel",
+          depends_on: ["backend"],
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "bffless",
+      appName: "BFFless",
+      manifestPort: 5537,
+      allocatedPort: 5537,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    expect(res.composeYamlObj.services.backend).toBeDefined();
+    expect(res.composeYamlObj.services.frontend).toBeDefined();
+    expect(res.composeYamlObj.services["bffless-backend"]).toBeUndefined();
+    expect(res.composeYamlObj.services.bffless.depends_on).toContain("backend");
+    expect(res.composeYamlObj.services.bffless.depends_on).toContain("frontend");
+  });
 });
