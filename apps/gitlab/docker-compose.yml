@@ -10,16 +10,12 @@ services:
       - ${APP_DATA_DIR}/data/data:/var/opt/gitlab
     environment:
       - |-
-        GITLAB_OMNIBUS_CONFIG=external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}:${APP_PORT:-8929}'
+        GITLAB_OMNIBUS_CONFIG=external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}'
         gitlab_rails['initial_root_password'] = '${APP_PASSWORD}'
         gitlab_rails['gitlab_shell_ssh_port'] = 2424
-        nginx['listen_port'] = 8929
-        nginx['listen_https'] = false
+        gitlab_rails['nginx']['listen_port'] = 8929
+        gitlab_rails['nginx']['listen_https'] = false
     shm_size: 256m
-    ulimits:
-      nofile:
-        soft: 4096
-        hard: 8192
     x-runtipi:
       internal_port: 8929
       is_main: true

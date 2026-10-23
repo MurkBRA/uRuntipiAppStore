@@ -8,16 +8,10 @@
       "internalPort": 8929,
       "hostname": "gitlab",
       "shmSize": "256m",
-      "ulimits": {
-        "nofile": {
-          "soft": 4096,
-          "hard": 8192
-        }
-      },
       "environment": [
         {
           "key": "GITLAB_OMNIBUS_CONFIG",
-          "value": "external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}:${APP_PORT:-8929}'\ngitlab_rails['initial_root_password'] = '${APP_PASSWORD}'\ngitlab_rails['gitlab_shell_ssh_port'] = 2424\nnginx['listen_port'] = 8929\nnginx['listen_https'] = false"
+          "value": "external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}'\ngitlab_rails['initial_root_password'] = '${APP_PASSWORD}'\ngitlab_rails['gitlab_shell_ssh_port'] = 2424\ngitlab_rails['nginx']['listen_port'] = 8929\ngitlab_rails['nginx']['listen_https'] = false"
         }
       ],
       "volumes": [

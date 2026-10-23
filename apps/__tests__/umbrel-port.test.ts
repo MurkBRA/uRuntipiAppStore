@@ -278,11 +278,11 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(gitlabSvc.hostname).toBeDefined();
           expect(gitlabSvc.hostname).not.toMatch(/:/);
           expect(gitlabSvc.hostname).toBe("gitlab");
-          expect(gitlabSvc.ulimits?.nofile).toBeDefined();
-          expect(gitlabSvc.ulimits.nofile.soft).toBe(4096);
-          expect(gitlabSvc.ulimits.nofile.hard).toBe(8192);
-          expect(composeYmlRaw).toContain("external_url");
-          expect(composeJsonRaw).toContain("external_url");
+          expect(composeYmlRaw).toContain("external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}'");
+          expect(composeJsonRaw).toContain("external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}'");
+          expect(composeYmlRaw).not.toContain("${APP_DOMAIN}:");
+          expect(composeYmlRaw).toContain("gitlab_rails['nginx']['listen_port'] = 8929");
+          expect(composeYmlRaw).toContain("gitlab_rails['nginx']['listen_https'] = false");
           expect(composeYmlRaw).not.toContain("PUID=1000");
           expect(composeYmlRaw).not.toContain("PGID=1000");
         }
