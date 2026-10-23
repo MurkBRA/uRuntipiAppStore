@@ -31,6 +31,14 @@
     },
     {
       "type": "text",
+      "label": "Allowed Hosts",
+      "hint": "Allowed hosts. Enter * to allow all.",
+      "required": false,
+      "default": "${APP_DOMAIN},${LOCAL_DOMAIN},${APP_HOST:-${INTERNAL_IP}},${INTERNAL_IP},localhost,${APP_DOMAIN}:${APP_PORT},${LOCAL_DOMAIN}:${APP_PORT},${INTERNAL_IP}:${APP_PORT}",
+      "env_variable": "APP_TRUSTED_HOSTS"
+    },
+    {
+      "type": "text",
       "label": "Solidtime Admin Email",
       "required": false,
       "default": "admin@tipi.local",

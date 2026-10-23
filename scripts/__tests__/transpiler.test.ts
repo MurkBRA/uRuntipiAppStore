@@ -532,7 +532,7 @@ Access at umbrel.local:8080.
     expect(genericDesc).not.toContain("Generated automatically via the `APP_PASSWORD` field");
   });
 
-  it("transpileCompose normalizes host-checking environment variables to '*' and eliminates phantom local_ips field", () => {
+  it("transpileCompose maps host-checking environment variables to configurable form field with default variables", () => {
     const umbrelCompose = {
       version: "3.7",
       services: {
@@ -540,7 +540,6 @@ Access at umbrel.local:8080.
           image: "ghcr.io/cyclotruc/gitingest:v0.3.1",
           environment: {
             ALLOWED_HOSTS: "${DEVICE_DOMAIN_NAME},${DEVICE_HOSTNAME},${APP_GITINGEST_LOCAL_IPS}",
-            TRUSTED_HOSTS: "${DEVICE_DOMAIN_NAME},${DEVICE_HOSTNAME},${local_ips}",
           },
         },
       },
@@ -559,11 +558,18 @@ Access at umbrel.local:8080.
 
     expect(res.formFields.some((f) => f.env_variable === "local_ips")).toBe(false);
     expect(res.formFields.some((f) => f.env_variable === "APP_GITINGEST_LOCAL_IPS")).toBe(false);
+    const hostField = res.formFields.find((f) => f.env_variable === "APP_ALLOWED_HOSTS");
+    expect(hostField).toBeDefined();
+    expect(hostField?.hint).toBe("Allowed hosts. Enter * to allow all.");
+    expect(hostField?.default).toContain("${APP_DOMAIN}");
+    expect(hostField?.default).toContain("${LOCAL_DOMAIN}");
+    expect(hostField?.default).toContain("${INTERNAL_IP}");
+    expect(hostField?.default).toContain("${APP_PORT}");
+
     const webSvc = res.composeJson.services.find((s: any) => s.name === "gitingest");
     const allowedHosts = webSvc.environment.find((e: any) => e.key === "ALLOWED_HOSTS");
-    const trustedHosts = webSvc.environment.find((e: any) => e.key === "TRUSTED_HOSTS");
-    expect(allowedHosts.value).toBe("*");
-    expect(trustedHosts.value).toBe("*");
-    expect(res.composeYamlObj.services.gitingest.environment).toContain("ALLOWED_HOSTS=*");
+    expect(allowedHosts.value).toContain("${APP_ALLOWED_HOSTS:-");
+    expect(allowedHosts.value).toContain("${APP_DOMAIN}");
+    expect(res.composeYamlObj.services.gitingest.environment[0]).toContain("ALLOWED_HOSTS=${APP_ALLOWED_HOSTS:-");
   });
 });

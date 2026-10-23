@@ -324,8 +324,8 @@ export function transpileCompose(params: {
       .replace(/\$\{APP_HIDDEN_SERVICE(?::-[^}]*)?\}|\$APP_HIDDEN_SERVICE\b/g, "${APP_DOMAIN}")
       .replace(/\$\{APP_PROXY_PORT(?::-[^}]*)?\}|\$APP_PROXY_PORT\b/g, String(allocatedPort))
       .replace(/\$\{NETWORK_IP(?::-[^}]*)?\}|\$NETWORK_IP\b/g, "${INTERNAL_IP}")
-      .replace(/\$\{APP_[A-Za-z0-9_]+_LOCAL_IPS(?::-[^}]*)?\}|\$APP_[A-Za-z0-9_]+_LOCAL_IPS\b/g, "*")
-      .replace(/\$\{local_ips(?::-[^}]*)?\}|\$local_ips\b/g, "*");
+      .replace(/\$\{APP_[A-Za-z0-9_]+_LOCAL_IPS(?::-[^}]*)?\}|\$APP_[A-Za-z0-9_]+_LOCAL_IPS\b/g, "${INTERNAL_IP}")
+      .replace(/\$\{local_ips(?::-[^}]*)?\}|\$local_ips\b/g, "${INTERNAL_IP}");
 
     // 5. Inspect any remaining ${VAR} or $VAR references
     out = out.replace(
@@ -594,10 +594,25 @@ export function transpileCompose(params: {
             trimmed.includes("$local_ips") ||
             trimmed.includes("LOCAL_IPS") ||
             trimmed.includes("DEVICE_HOSTNAME") ||
-            trimmed.includes("*") ||
-            trimmed === "*")
+            trimmed.includes("APP_DOMAIN"))
         ) {
-          transformedEnv.push({ key: entry.key, value: "*" });
+          const defaultHosts =
+            "${APP_DOMAIN},${LOCAL_DOMAIN},${APP_HOST:-${INTERNAL_IP}},${INTERNAL_IP},localhost,${APP_DOMAIN}:${APP_PORT},${LOCAL_DOMAIN}:${APP_PORT},${INTERNAL_IP}:${APP_PORT}";
+          const formVar =
+            entry.key === "PAPERCLIP_ALLOWED_HOSTNAMES"
+              ? "APP_ALLOWED_HOSTNAMES"
+              : entry.key === "TRUSTED_HOSTS"
+                ? "APP_TRUSTED_HOSTS"
+                : "APP_ALLOWED_HOSTS";
+          ensureFormField({
+            type: "text",
+            label: "Allowed Hosts",
+            hint: "Allowed hosts. Enter * to allow all.",
+            required: false,
+            default: defaultHosts,
+            env_variable: formVar,
+          });
+          transformedEnv.push({ key: entry.key, value: `\${${formVar}:-${defaultHosts}}` });
           continue;
         } else if (
           // Only rewrite bare service or container name if the env variable key explicitly represents a host or IP

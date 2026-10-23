@@ -235,25 +235,40 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
         if (id === "gitingest") {
           const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
           expect(configJson.form_fields.some((f: any) => f.env_variable === "local_ips")).toBe(false);
-          expect(composeYmlRaw).toContain("ALLOWED_HOSTS=*");
+          const hostField = configJson.form_fields.find((f: any) => f.env_variable === "APP_ALLOWED_HOSTS");
+          expect(hostField).toBeDefined();
+          expect(hostField.hint).toBe("Allowed hosts. Enter * to allow all.");
+          expect(hostField.default).toContain("${APP_DOMAIN}");
+          expect(hostField.default).toContain("${LOCAL_DOMAIN}");
+          expect(hostField.default).toContain("${INTERNAL_IP}");
+          expect(hostField.default).toContain("${APP_PORT}");
+          expect(composeYmlRaw).toContain("ALLOWED_HOSTS=${APP_ALLOWED_HOSTS:-");
           expect(composeJsonRaw).toContain('"key": "ALLOWED_HOSTS"');
-          expect(composeJsonRaw).toContain('"value": "*"');
+          expect(composeJsonRaw).toContain("${APP_ALLOWED_HOSTS:-");
         }
 
         if (id === "paperclip") {
           const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
           expect(configJson.form_fields.some((f: any) => f.env_variable === "local_ips")).toBe(false);
-          expect(composeYmlRaw).toContain("PAPERCLIP_ALLOWED_HOSTNAMES=*");
+          const hostField = configJson.form_fields.find((f: any) => f.env_variable === "APP_ALLOWED_HOSTNAMES");
+          expect(hostField).toBeDefined();
+          expect(hostField.hint).toBe("Allowed hosts. Enter * to allow all.");
+          expect(hostField.default).toContain("${APP_DOMAIN}");
+          expect(composeYmlRaw).toContain("PAPERCLIP_ALLOWED_HOSTNAMES=${APP_ALLOWED_HOSTNAMES:-");
           expect(composeJsonRaw).toContain('"key": "PAPERCLIP_ALLOWED_HOSTNAMES"');
-          expect(composeJsonRaw).toContain('"value": "*"');
+          expect(composeJsonRaw).toContain("${APP_ALLOWED_HOSTNAMES:-");
         }
 
         if (id === "solidtime") {
           const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
           expect(configJson.form_fields.some((f: any) => f.env_variable === "local_ips")).toBe(false);
-          expect(composeYmlRaw).toContain("TRUSTED_HOSTS=*");
+          const hostField = configJson.form_fields.find((f: any) => f.env_variable === "APP_TRUSTED_HOSTS");
+          expect(hostField).toBeDefined();
+          expect(hostField.hint).toBe("Allowed hosts. Enter * to allow all.");
+          expect(hostField.default).toContain("${APP_DOMAIN}");
+          expect(composeYmlRaw).toContain("TRUSTED_HOSTS=${APP_TRUSTED_HOSTS:-");
           expect(composeJsonRaw).toContain('"key": "TRUSTED_HOSTS"');
-          expect(composeJsonRaw).toContain('"value": "*"');
+          expect(composeJsonRaw).toContain("${APP_TRUSTED_HOSTS:-");
         }
 
         // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose

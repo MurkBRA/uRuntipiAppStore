@@ -46,7 +46,7 @@
         },
         {
           "key": "TRUSTED_HOSTS",
-          "value": "*"
+          "value": "${APP_TRUSTED_HOSTS:-${APP_DOMAIN},${LOCAL_DOMAIN},${APP_HOST:-${INTERNAL_IP}},${INTERNAL_IP},localhost,${APP_DOMAIN}:${APP_PORT},${LOCAL_DOMAIN}:${APP_PORT},${INTERNAL_IP}:${APP_PORT}}"
         },
         {
           "key": "SUPER_ADMINS",
@@ -175,7 +175,7 @@
         },
         {
           "key": "TRUSTED_HOSTS",
-          "value": "*"
+          "value": "${APP_TRUSTED_HOSTS:-${APP_DOMAIN},${LOCAL_DOMAIN},${APP_HOST:-${INTERNAL_IP}},${INTERNAL_IP},localhost,${APP_DOMAIN}:${APP_PORT},${LOCAL_DOMAIN}:${APP_PORT},${INTERNAL_IP}:${APP_PORT}}"
         },
         {
           "key": "SUPER_ADMINS",
@@ -308,7 +308,7 @@
         },
         {
           "key": "TRUSTED_HOSTS",
-          "value": "*"
+          "value": "${APP_TRUSTED_HOSTS:-${APP_DOMAIN},${LOCAL_DOMAIN},${APP_HOST:-${INTERNAL_IP}},${INTERNAL_IP},localhost,${APP_DOMAIN}:${APP_PORT},${LOCAL_DOMAIN}:${APP_PORT},${INTERNAL_IP}:${APP_PORT}}"
         },
         {
           "key": "SUPER_ADMINS",

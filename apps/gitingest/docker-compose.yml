@@ -3,7 +3,7 @@ services:
     image: ghcr.io/coderamp-labs/gitingest:v0.3.1
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
-      - ALLOWED_HOSTS=*
+      - ALLOWED_HOSTS=${APP_ALLOWED_HOSTS:-${APP_DOMAIN},${LOCAL_DOMAIN},${APP_HOST:-${INTERNAL_IP}},${INTERNAL_IP},localhost,${APP_DOMAIN}:${APP_PORT},${LOCAL_DOMAIN}:${APP_PORT},${INTERNAL_IP}:${APP_PORT}}
     x-runtipi:
       internal_port: 8000
       is_main: true
