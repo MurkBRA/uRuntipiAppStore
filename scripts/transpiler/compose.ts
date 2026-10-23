@@ -461,7 +461,15 @@ export function transpileCompose(params: {
     }
 
     if (typeof raw.hostname === "string" && raw.hostname.trim()) {
-      svc.hostname = transformString(raw.hostname.trim());
+      let h = transformString(raw.hostname.trim());
+      // Container hostnames must follow RFC 1123 and cannot contain ports (e.g. ":8929")
+      if (h.includes(":")) {
+        h = h.replace(/:\d+$/, "");
+        if (h.includes(":")) {
+          h = h.split(":")[0];
+        }
+      }
+      svc.hostname = h.trim() || serviceName;
     }
 
     if (typeof raw.working_dir === "string" && raw.working_dir.trim()) {
@@ -885,6 +893,25 @@ export function transpileCompose(params: {
       }
       if (Object.keys(sysctlsObj).length > 0) {
         svc.sysctls = sysctlsObj;
+      }
+    }
+
+    // ulimits (e.g. nofile, nproc, core, memlock)
+    if (raw.ulimits && typeof raw.ulimits === "object") {
+      const ulimitsObj: Record<string, any> = {};
+      for (const [k, v] of Object.entries(raw.ulimits)) {
+        if (typeof v === "number") {
+          ulimitsObj[k] = v;
+        } else if (v && typeof v === "object") {
+          const soft = Number((v as any).soft);
+          const hard = Number((v as any).hard);
+          if (Number.isFinite(soft) && Number.isFinite(hard)) {
+            ulimitsObj[k] = { soft, hard };
+          }
+        }
+      }
+      if (Object.keys(ulimitsObj).length > 0) {
+        svc.ulimits = ulimitsObj;
       }
     }
 

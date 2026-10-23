@@ -256,6 +256,15 @@ Durante a inspeção cruzada do código-fonte do `runtipi/runtipi-appstore` (`ap
 >   2. **Eliminação de Campos Fantasma (`local_ips`)**: Referências a `local_ips` e `APP_*_LOCAL_IPS` são expurgadas, impedindo a geração acidental de campos inúteis nos formulários de instalação.
 >   3. **Proteção Anti-Regressão**: Testes em `transpiler.test.ts` e `umbrel-port.test.ts` garantem que `local_ips` nunca vaze e que os apps afetados utilizem a estrutura configurável de hosts.
 
+> [!IMPORTANT]
+> **Armadilha #16: Hostnames com Porta (:8929), external_url e Limites do GitLab Omnibus**
+> - **O Problema**: No Umbrel, o pacote do GitLab definia `hostname: '${DEVICE_DOMAIN_NAME}:8929'`. No Linux e no Docker Daemon, o UTS hostname do container obedece estritamente ao RFC 1123 (`[a-zA-Z0-9][a-zA-Z0-9_.-]*`), onde o caractere de dois pontos (`:`) é estritamente proibido. Ao tentar instalar o GitLab no Runtipi, o comando `docker compose up -d` abortava imediatamente antes de criar o container com `Error response from daemon: invalid hostname: <host>:8929`. Além disso, o autor original do Umbrel confundiu o hostname do container com o `external_url` do GitLab Omnibus e não configurou `external_url` no `GITLAB_OMNIBUS_CONFIG`, fazendo com que todo o roteamento web, links de clone HTTP e assets padrão ficassem em `http://localhost`. Também faltavam os limites de descritores de arquivo (`ulimits.nofile`), indispensáveis para a inicialização dos múltiplos serviços do Omnibus (Puma, PostgreSQL, Gitaly, Sidekiq, Nginx).
+> - **Nossa Solução**:
+>   1. **Sanitização do Hostname no Transpiler**: No `scripts/transpiler/compose.ts`, `raw.hostname` é sanitizado para remover portas (`:\d+$`) e caracteres inválidos para hostnames RFC 1123.
+>   2. **Configuração Explícita do GitLab**: Em `apps/gitlab/docker-compose.yml` e `docker-compose.json`, definimos `hostname: gitlab`, configuramos `external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}:${APP_PORT:-8929}'` no `GITLAB_OMNIBUS_CONFIG`, removemos variáveis inócuas (`PUID`/`PGID`), e incluímos `ulimits: nofile: { soft: 4096, hard: 8192 }`.
+>   3. **Suporte a `ulimits` no Transpiler**: O transpiler agora mapeia `ulimits` do Docker Compose diretamente para o esquema dinâmico do Runtipi (`ulimits.nofile`, `ulimits.nproc`).
+>   4. **Testes Anti-Regressão**: Teste unitário no `transpiler.test.ts` e validação específica no `umbrel-port.test.ts` garantindo que o `gitlab` possui hostname válido (sem `:`), contém `external_url` e `ulimits.nofile`.
+
 ---
 
 ## 4. Esquematização Completa de Todos os Testes (Pirâmide em 5 Camadas)

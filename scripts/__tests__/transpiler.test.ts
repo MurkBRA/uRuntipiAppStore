@@ -572,4 +572,55 @@ Access at umbrel.local:8080.
     expect(allowedHosts.value).toContain("${APP_DOMAIN}");
     expect(res.composeYamlObj.services.gitingest.environment[0]).toContain("ALLOWED_HOSTS=${APP_ALLOWED_HOSTS:-");
   });
+
+  it("sanitizes hostname containing ports to RFC 1123 and transpile ulimits correctly", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        web: {
+          image: "gitlab/gitlab-ce:19.5.1-ce.0",
+          hostname: "${DEVICE_DOMAIN_NAME}:8929",
+          ulimits: {
+            nofile: {
+              soft: 4096,
+              hard: 8192,
+            },
+          },
+          environment: {
+            GITLAB_OMNIBUS_CONFIG: "external_url 'http://${DEVICE_DOMAIN_NAME}:8929'",
+          },
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "gitlab",
+      appName: "GitLab",
+      manifestPort: 8929,
+      allocatedPort: 8929,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const gitlabSvc = res.composeJson.services.find((s: any) => s.name === "gitlab");
+    expect(gitlabSvc).toBeDefined();
+    expect(gitlabSvc.hostname).not.toContain(":");
+    expect(gitlabSvc.hostname).toBe("${APP_DOMAIN}");
+    expect(gitlabSvc.ulimits).toEqual({
+      nofile: {
+        soft: 4096,
+        hard: 8192,
+      },
+    });
+
+    expect(res.composeYamlObj.services.gitlab.hostname).not.toContain(":");
+    expect(res.composeYamlObj.services.gitlab.ulimits).toEqual({
+      nofile: {
+        soft: 4096,
+        hard: 8192,
+      },
+    });
+  });
 });

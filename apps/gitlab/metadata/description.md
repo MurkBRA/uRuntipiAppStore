@@ -31,6 +31,7 @@ GitLab is your all-in-one DevOps platform, empowering your team to build, deploy
 ## Default Credentials
 - **Username**: `root`
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
+- **SSH Port**: `2424` (mapped to container port `22`)
 
 ## Links
 - **Upstream Version**: `19.5.1`

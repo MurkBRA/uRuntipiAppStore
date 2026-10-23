@@ -6,20 +6,18 @@
       "image": "gitlab/gitlab-ce:19.5.1-ce.0",
       "isMain": true,
       "internalPort": 8929,
-      "hostname": "${APP_DOMAIN}:8929",
+      "hostname": "gitlab",
       "shmSize": "256m",
+      "ulimits": {
+        "nofile": {
+          "soft": 4096,
+          "hard": 8192
+        }
+      },
       "environment": [
         {
-          "key": "PUID",
-          "value": 1000
-        },
-        {
-          "key": "PGID",
-          "value": 1000
-        },
-        {
           "key": "GITLAB_OMNIBUS_CONFIG",
-          "value": "# Add any other gitlab.rb configuration here, each on its own line\ngitlab_rails['initial_root_password'] = '${APP_PASSWORD}'\ngitlab_rails['gitlab_shell_ssh_port'] = 2424\nnginx['listen_port'] = 8929\nnginx['listen_https'] = false"
+          "value": "external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}:${APP_PORT:-8929}'\ngitlab_rails['initial_root_password'] = '${APP_PASSWORD}'\ngitlab_rails['gitlab_shell_ssh_port'] = 2424\nnginx['listen_port'] = 8929\nnginx['listen_https'] = false"
         }
       ],
       "volumes": [

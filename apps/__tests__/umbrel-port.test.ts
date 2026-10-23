@@ -271,6 +271,22 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(composeJsonRaw).toContain("${APP_TRUSTED_HOSTS:-");
         }
 
+        if (id === "gitlab") {
+          const composeJson = JSON.parse(fs.readFileSync(path.join(appDir, "docker-compose.json"), "utf8"));
+          const gitlabSvc = composeJson.services.find((s: any) => s.name === "gitlab");
+          expect(gitlabSvc).toBeDefined();
+          expect(gitlabSvc.hostname).toBeDefined();
+          expect(gitlabSvc.hostname).not.toMatch(/:/);
+          expect(gitlabSvc.hostname).toBe("gitlab");
+          expect(gitlabSvc.ulimits?.nofile).toBeDefined();
+          expect(gitlabSvc.ulimits.nofile.soft).toBe(4096);
+          expect(gitlabSvc.ulimits.nofile.hard).toBe(8192);
+          expect(composeYmlRaw).toContain("external_url");
+          expect(composeJsonRaw).toContain("external_url");
+          expect(composeYmlRaw).not.toContain("PUID=1000");
+          expect(composeYmlRaw).not.toContain("PGID=1000");
+        }
+
         // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose
         const configJsonPath = path.join(appDir, "config.json");
         const appConfig = JSON.parse(fs.readFileSync(configJsonPath, "utf8"));
