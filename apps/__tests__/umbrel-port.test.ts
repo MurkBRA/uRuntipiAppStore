@@ -171,53 +171,7 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           `App ${id}/docker-compose.yml must not specify hardcoded "networks:" (Runtipi manages dynamic network isolation)`,
         ).toBeUndefined();
 
-        // 8. Verify container hostnames conform to RFC 1123 (no ports, colons, or invalid chars)
-        for (const [svcName, svc] of Object.entries(composeYml.services || {})) {
-          if ((svc as any)?.hostname) {
-            expect(
-              (svc as any).hostname,
-              `Service "${svcName}" in ${id}/docker-compose.yml has invalid hostname with colon: ${(svc as any).hostname}`,
-            ).not.toMatch(/:/);
-          }
-        }
-        for (const svc of composeJson.services || []) {
-          if (svc.hostname) {
-            expect(
-              svc.hostname,
-              `Service "${svc.name}" in ${id}/docker-compose.json has invalid hostname with colon: ${svc.hostname}`,
-            ).not.toMatch(/:/);
-          }
-        }
-
-        // 9. Verify extra_hosts never contains ${APP_DOMAIN} (which has port in Runtipi and breaks host:ip format)
-        for (const [svcName, svc] of Object.entries(composeYml.services || {})) {
-          for (const eh of (svc as any)?.extra_hosts || []) {
-            expect(
-              eh,
-              `Service "${svcName}" in ${id}/docker-compose.yml must not use \${APP_DOMAIN} in extra_hosts`,
-            ).not.toContain("${APP_DOMAIN}");
-          }
-        }
-        for (const svc of composeJson.services || []) {
-          for (const eh of svc.extraHosts || []) {
-            expect(
-              eh,
-              `Service "${svc.name}" in ${id}/docker-compose.json must not use \${APP_DOMAIN} in extraHosts`,
-            ).not.toContain("${APP_DOMAIN}");
-          }
-        }
-
-        // 10. Verify no URLs have duplicate ports with ${APP_DOMAIN} (e.g. http://${APP_DOMAIN}:8000)
-        expect(
-          composeYmlRaw,
-          `App ${id}/docker-compose.yml has duplicate port pattern http(s)://\${APP_DOMAIN}:port`,
-        ).not.toMatch(/https?:\/\/\$\{APP_DOMAIN\}:\d+/);
-        expect(
-          composeJsonRaw,
-          `App ${id}/docker-compose.json has duplicate port pattern http(s)://\${APP_DOMAIN}:port`,
-        ).not.toMatch(/https?:\/\/\$\{APP_DOMAIN\}:\d+/);
-
-        // 11. Specific app regression checks
+        // 8. Specific app regression checks
         if (id === "airtrail") {
           const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
           expect(

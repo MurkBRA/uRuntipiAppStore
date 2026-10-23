@@ -65,7 +65,7 @@
         },
         {
           "key": "SEAFILE_SERVER_HOSTNAME",
-          "value": "${APP_DOMAIN}"
+          "value": "${APP_DOMAIN}:8920"
         },
         {
           "key": "SEAFILE_SERVER_PROTOCOL",
@@ -81,7 +81,7 @@
         },
         {
           "key": "SEADOC_SERVER_URL",
-          "value": "http://${INTERNAL_IP}:8921"
+          "value": "http://${APP_DOMAIN}:8921"
         },
         {
           "key": "CACHE_PROVIDER",
@@ -107,7 +107,7 @@
         "seafile-memcached"
       ],
       "extraHosts": [
-        "${LOCAL_DOMAIN}:host-gateway"
+        "${APP_DOMAIN}:host-gateway"
       ]
     },
     {
@@ -185,7 +185,7 @@
         "seafile-db"
       ],
       "extraHosts": [
-        "${LOCAL_DOMAIN}:host-gateway"
+        "${APP_DOMAIN}:host-gateway"
       ]
     }
   ]

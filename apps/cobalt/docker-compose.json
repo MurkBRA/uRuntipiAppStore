@@ -11,7 +11,7 @@
       "environment": [
         {
           "key": "API_URL",
-          "value": "http://${INTERNAL_IP}:9013/"
+          "value": "http://${APP_DOMAIN}:9013/"
         },
         {
           "key": "API_AUTH_REQUIRED",

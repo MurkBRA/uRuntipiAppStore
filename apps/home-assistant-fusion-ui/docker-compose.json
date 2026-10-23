@@ -11,7 +11,7 @@
       "environment": [
         {
           "key": "HASS_URL",
-          "value": "http://${LOCAL_DOMAIN}:8123"
+          "value": "http://${APP_DOMAIN}:8123"
         }
       ],
       "volumes": [
@@ -21,7 +21,7 @@
         }
       ],
       "extraHosts": [
-        "${LOCAL_DOMAIN}:${APP_HAFUSION_MACHINE_IP}"
+        "${APP_DOMAIN}:${APP_HAFUSION_MACHINE_IP}"
       ]
     }
   ]

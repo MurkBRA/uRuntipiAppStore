@@ -6,7 +6,7 @@ services:
       - ${APP_DATA_DIR}/data:/app/data
     environment:
       - SITE_TITLE=DumbPad
-      - BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - BASE_URL=http://${APP_DOMAIN}:3000
     x-runtipi:
       internal_port: 3000
       is_main: true

@@ -62,7 +62,7 @@
       },
       "extraHosts": [
         "host.docker.internal:host-gateway",
-        "${LOCAL_DOMAIN}:host-gateway"
+        "${APP_DOMAIN}:host-gateway"
       ]
     },
     {

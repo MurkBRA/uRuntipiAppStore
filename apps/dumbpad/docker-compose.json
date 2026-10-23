@@ -14,7 +14,7 @@
         },
         {
           "key": "BASE_URL",
-          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+          "value": "http://${APP_DOMAIN}:3000"
         }
       ],
       "volumes": [

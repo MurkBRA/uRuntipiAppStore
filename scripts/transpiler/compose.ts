@@ -296,9 +296,13 @@ export function transpileCompose(params: {
       out = out.replace(urlHostRegex, `$1${finalKey}$2`);
     }
 
-    // 3. Replace Umbrel URL patterns (handles ${DEVICE_DOMAIN_NAME}:port, ${DEVICE_DOMAIN_NAME}:8000, or without port)
+    // 3. Replace Umbrel URL patterns
     out = out.replace(
-      /https?:\/\/\$\{?DEVICE_DOMAIN_NAME(?::-[^}]*)?\}?(?::\$\{?(?:APP_PROXY_PORT|[A-Za-z0-9_]+)\}?|:\d+)?/g,
+      /https?:\/\/\$\{?DEVICE_DOMAIN_NAME(?::-[^}]*)?\}?:\$\{?(?:APP_PROXY_PORT|[A-Za-z0-9_]+)\}?/g,
+      "${APP_PROTOCOL:-http}://${APP_DOMAIN}",
+    );
+    out = out.replace(
+      new RegExp(`https?://\\$\\{?DEVICE_DOMAIN_NAME(?::-[^}]*)?\\}?:${manifestPort}\\b`, "g"),
       "${APP_PROTOCOL:-http}://${APP_DOMAIN}",
     );
 
@@ -858,12 +862,7 @@ export function transpileCompose(params: {
       svc.devices = raw.devices.map((d: any) => transformString(String(d)));
     }
     if (Array.isArray(raw.extra_hosts) && raw.extra_hosts.length > 0) {
-      svc.extraHosts = raw.extra_hosts.map((h: any) => {
-        let transformed = transformString(String(h));
-        // extra_hosts takes "hostname:IP" - hostname must not contain a port or ${APP_DOMAIN}
-        transformed = transformed.replace(/\$\{APP_DOMAIN\}/g, "${LOCAL_DOMAIN}");
-        return transformed;
-      });
+      svc.extraHosts = raw.extra_hosts.map((h: any) => transformString(String(h)));
     }
     if (typeof raw.dns === "string" && raw.dns.trim()) {
       svc.dns = raw.dns.trim();

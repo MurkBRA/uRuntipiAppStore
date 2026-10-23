@@ -14,7 +14,7 @@
         },
         {
           "key": "APP_PUBLIC_URL",
-          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
+          "value": "http://${APP_DOMAIN}:8002"
         }
       ],
       "volumes": [
