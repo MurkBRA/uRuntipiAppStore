@@ -20,6 +20,7 @@ const FORBIDDEN_UMBREL_VARS = [
   "EXPORTS_TOR_DATA_DIR",
   "APP_HIDDEN_SERVICE",
   "NETWORK_IP",
+  "local_ips",
 ];
 
 function getPortedAppDirs(): string[] {
@@ -229,6 +230,30 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(descMd).not.toContain("Generated automatically via the `APP_PASSWORD` field");
           expect(composeYmlRaw).toContain("FRIGATE_RTSP_PASSWORD=${APP_RTSP_PASSWORD:-${APP_PASSWORD}}");
           expect(composeJsonRaw).toContain("${APP_RTSP_PASSWORD:-${APP_PASSWORD}}");
+        }
+
+        if (id === "gitingest") {
+          const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "local_ips")).toBe(false);
+          expect(composeYmlRaw).toContain("ALLOWED_HOSTS=*");
+          expect(composeJsonRaw).toContain('"key": "ALLOWED_HOSTS"');
+          expect(composeJsonRaw).toContain('"value": "*"');
+        }
+
+        if (id === "paperclip") {
+          const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "local_ips")).toBe(false);
+          expect(composeYmlRaw).toContain("PAPERCLIP_ALLOWED_HOSTNAMES=*");
+          expect(composeJsonRaw).toContain('"key": "PAPERCLIP_ALLOWED_HOSTNAMES"');
+          expect(composeJsonRaw).toContain('"value": "*"');
+        }
+
+        if (id === "solidtime") {
+          const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "local_ips")).toBe(false);
+          expect(composeYmlRaw).toContain("TRUSTED_HOSTS=*");
+          expect(composeJsonRaw).toContain('"key": "TRUSTED_HOSTS"');
+          expect(composeJsonRaw).toContain('"value": "*"');
         }
 
         // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose

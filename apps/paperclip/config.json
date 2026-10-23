@@ -29,13 +29,6 @@
       "env_variable": "APP_CONTAINER_USER"
     },
     {
-      "type": "text",
-      "label": "Paperclip local ips",
-      "required": false,
-      "default": "default",
-      "env_variable": "local_ips"
-    },
-    {
       "type": "random",
       "label": "Paperclip seed",
       "min": 64,

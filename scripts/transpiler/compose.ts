@@ -323,7 +323,9 @@ export function transpileCompose(params: {
       .replace(/(?<!@)\bumbrel\.local\b/g, "${LOCAL_DOMAIN}")
       .replace(/\$\{APP_HIDDEN_SERVICE(?::-[^}]*)?\}|\$APP_HIDDEN_SERVICE\b/g, "${APP_DOMAIN}")
       .replace(/\$\{APP_PROXY_PORT(?::-[^}]*)?\}|\$APP_PROXY_PORT\b/g, String(allocatedPort))
-      .replace(/\$\{NETWORK_IP(?::-[^}]*)?\}|\$NETWORK_IP\b/g, "${INTERNAL_IP}");
+      .replace(/\$\{NETWORK_IP(?::-[^}]*)?\}|\$NETWORK_IP\b/g, "${INTERNAL_IP}")
+      .replace(/\$\{APP_[A-Za-z0-9_]+_LOCAL_IPS(?::-[^}]*)?\}|\$APP_[A-Za-z0-9_]+_LOCAL_IPS\b/g, "*")
+      .replace(/\$\{local_ips(?::-[^}]*)?\}|\$local_ips\b/g, "*");
 
     // 5. Inspect any remaining ${VAR} or $VAR references
     out = out.replace(
@@ -583,6 +585,19 @@ export function transpileCompose(params: {
             env_variable: "APP_SECRET_KEY",
           });
           transformedEnv.push({ key: entry.key, value: "${APP_SECRET_KEY:-${APP_PASSWORD}}" });
+          continue;
+        } else if (
+          /^(?:ALLOWED_HOSTS|TRUSTED_HOSTS|.*_(?:ALLOWED_HOSTS|ALLOWED_HOSTNAMES|TRUSTED_HOSTS|TRUSTED_DOMAINS))$/i.test(
+            entry.key,
+          ) &&
+          (trimmed.includes("${local_ips}") ||
+            trimmed.includes("$local_ips") ||
+            trimmed.includes("LOCAL_IPS") ||
+            trimmed.includes("DEVICE_HOSTNAME") ||
+            trimmed.includes("*") ||
+            trimmed === "*")
+        ) {
+          transformedEnv.push({ key: entry.key, value: "*" });
           continue;
         } else if (
           // Only rewrite bare service or container name if the env variable key explicitly represents a host or IP

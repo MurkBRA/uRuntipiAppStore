@@ -248,6 +248,14 @@ Durante a inspeção cruzada do código-fonte do `runtipi/runtipi-appstore` (`ap
 >   3. **Eliminação de Senhas Fantasma**: No `manifest.ts`, nunca é emitido texto de `APP_PASSWORD` a menos que o campo `APP_PASSWORD` de fato exista em `form_fields`.
 >   4. **Verificação Global Anti-Regressão**: O teste `umbrel-port.test.ts` garante que nenhum app da loja contenha promessa de `APP_PASSWORD` na descrição sem possuir o respectivo `form_field` e uso no `docker-compose.yml`.
 
+> [!IMPORTANT]
+> **Armadilha #15: Validação Estrita de Host Header (`ALLOWED_HOSTS` / `TRUSTED_HOSTS`) e o Erro "Invalid host header"**
+> - **O Problema**: No Umbrel, aplicativos como `gitingest`, `paperclip` e `solidtime` utilizavam variáveis de ambiente como `ALLOWED_HOSTS=${DEVICE_DOMAIN_NAME},${DEVICE_HOSTNAME},${APP_GITINGEST_LOCAL_IPS}` ou `TRUSTED_HOSTS`. No Umbrel OS, a variável `APP_*_LOCAL_IPS` era gerada dinamicamente pelo daemon com a lista de IPs locais da máquina. No Runtipi, essa variável não existe, fazendo com que caísse como um campo `local_ips` ("default") no formulário. Quando o usuário tentava acessar o Web GUI via IP da LAN (ex: `http://192.168.4.19:8895`), middlewares como o `TrustedHostMiddleware` do Starlette/FastAPI (usado pelo Gitingest) ou o `TrustHosts` do Laravel (Solidtime) rejeitavam a requisição com **HTTP 400 "Invalid host header"**, impedindo o carregamento da interface web.
+> - **Nossa Solução**:
+>   1. **Normalização Wildcard (`*`) para Apps Auto-Hospedados**: Em `scripts/transpiler/compose.ts`, variáveis de verificação de cabeçalho `Host` (`ALLOWED_HOSTS`, `TRUSTED_HOSTS`, `PAPERCLIP_ALLOWED_HOSTNAMES`, etc.) que continham referências a `LOCAL_IPS` ou `DEVICE_HOSTNAME` são automaticamente convertidas para `*`. No Starlette/FastAPI, `ALLOWED_HOSTS=*` define `self.allow_any = True`, aceitando conexões de qualquer IP local, domínio, Tailscale ou proxy reverso sem erro.
+>   2. **Eliminação de Campos Fantasma (`local_ips`)**: Referências a `local_ips` e `APP_*_LOCAL_IPS` são expurgadas, impedindo a geração acidental de campos inúteis nos formulários de instalação.
+>   3. **Proteção Anti-Regressão**: Testes em `transpiler.test.ts` e `umbrel-port.test.ts` garantem que `local_ips` nunca vaze e que os apps afetados utilizem wildcard irrestrito para o cabeçalho de host.
+
 ---
 
 ## 4. Esquematização Completa de Todos os Testes (Pirâmide em 5 Camadas)

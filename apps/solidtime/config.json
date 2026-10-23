@@ -31,13 +31,6 @@
     },
     {
       "type": "text",
-      "label": "Solidtime local ips",
-      "required": false,
-      "default": "default",
-      "env_variable": "local_ips"
-    },
-    {
-      "type": "text",
       "label": "Solidtime Admin Email",
       "required": false,
       "default": "admin@tipi.local",

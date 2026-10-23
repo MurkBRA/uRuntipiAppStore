@@ -26,7 +26,7 @@
         },
         {
           "key": "PAPERCLIP_ALLOWED_HOSTNAMES",
-          "value": "${APP_DOMAIN},${APP_DOMAIN}:8860,${LOCAL_DOMAIN},${LOCAL_DOMAIN}:8860,${APP_DOMAIN},${APP_DOMAIN}:8860,${APP_DOMAIN},${local_ips},paperclip"
+          "value": "*"
         },
         {
           "key": "BETTER_AUTH_SECRET",

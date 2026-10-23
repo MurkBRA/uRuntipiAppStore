@@ -531,4 +531,39 @@ Access at umbrel.local:8080.
 
     expect(genericDesc).not.toContain("Generated automatically via the `APP_PASSWORD` field");
   });
+
+  it("transpileCompose normalizes host-checking environment variables to '*' and eliminates phantom local_ips field", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        web: {
+          image: "ghcr.io/cyclotruc/gitingest:v0.3.1",
+          environment: {
+            ALLOWED_HOSTS: "${DEVICE_DOMAIN_NAME},${DEVICE_HOSTNAME},${APP_GITINGEST_LOCAL_IPS}",
+            TRUSTED_HOSTS: "${DEVICE_DOMAIN_NAME},${DEVICE_HOSTNAME},${local_ips}",
+          },
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "gitingest",
+      appName: "Gitingest",
+      manifestPort: 8000,
+      allocatedPort: 8895,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    expect(res.formFields.some((f) => f.env_variable === "local_ips")).toBe(false);
+    expect(res.formFields.some((f) => f.env_variable === "APP_GITINGEST_LOCAL_IPS")).toBe(false);
+    const webSvc = res.composeJson.services.find((s: any) => s.name === "gitingest");
+    const allowedHosts = webSvc.environment.find((e: any) => e.key === "ALLOWED_HOSTS");
+    const trustedHosts = webSvc.environment.find((e: any) => e.key === "TRUSTED_HOSTS");
+    expect(allowedHosts.value).toBe("*");
+    expect(trustedHosts.value).toBe("*");
+    expect(res.composeYamlObj.services.gitingest.environment).toContain("ALLOWED_HOSTS=*");
+  });
 });

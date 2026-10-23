@@ -10,7 +10,7 @@
       "environment": [
         {
           "key": "ALLOWED_HOSTS",
-          "value": "${APP_DOMAIN},${LOCAL_DOMAIN},${local_ips}"
+          "value": "*"
         }
       ]
     }
