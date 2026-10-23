@@ -40,7 +40,7 @@ services:
       - DJANGO_ADMIN_USERNAME=admin
       - DJANGO_ADMIN_PASSWORD=admin
       - DJANGO_ADMIN_EMAIL=admin@example.com
-      - PUBLIC_URL=http://${APP_DOMAIN}:8016
+      - PUBLIC_URL=http://${INTERNAL_IP}:8016
       - CSRF_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN}
       - DEBUG=False
       - FRONTEND_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}

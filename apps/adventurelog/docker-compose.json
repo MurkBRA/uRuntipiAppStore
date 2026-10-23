@@ -97,7 +97,7 @@
         },
         {
           "key": "PUBLIC_URL",
-          "value": "http://${APP_DOMAIN}:8016"
+          "value": "http://${INTERNAL_IP}:8016"
         },
         {
           "key": "CSRF_TRUSTED_ORIGINS",

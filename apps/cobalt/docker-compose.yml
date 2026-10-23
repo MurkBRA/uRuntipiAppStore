@@ -5,7 +5,7 @@ services:
     ports:
       - 9013:9000/tcp
     environment:
-      - API_URL=http://${APP_DOMAIN}:9013/
+      - API_URL=http://${INTERNAL_IP}:9013/
       - API_AUTH_REQUIRED=0
       - DURATION_LIMIT=86400
     read_only: true

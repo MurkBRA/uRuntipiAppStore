@@ -10,7 +10,7 @@
       "environment": [
         {
           "key": "DOCS_ADDRESS",
-          "value": "http://${APP_DOMAIN}:5672"
+          "value": "http://${INTERNAL_IP}:5672"
         },
         {
           "key": "DOCS_INTERNAL_ADDRESS",
