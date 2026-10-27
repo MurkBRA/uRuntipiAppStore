@@ -21,9 +21,9 @@
     {
       "type": "text",
       "label": "Home Assistant URL",
-      "hint": "URL of your Home Assistant instance. Use http://host.docker.internal:8123 if running on the same host.",
+      "hint": "URL of your Home Assistant instance. Defaults to http://homeassistant-1:8123 on the Runtipi network.",
       "required": false,
-      "default": "http://host.docker.internal:8123",
+      "default": "http://homeassistant-1:8123",
       "env_variable": "HASS_URL"
     },
     {

@@ -11,7 +11,7 @@
       "environment": [
         {
           "key": "HASS_URL",
-          "value": "${HASS_URL:-http://host.docker.internal:8123}"
+          "value": "${HASS_URL:-http://homeassistant-1:8123}"
         }
       ],
       "volumes": [

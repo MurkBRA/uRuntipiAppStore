@@ -292,7 +292,7 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_HAFUSION_MACHINE_IP")).toBe(false);
           const hassUrlField = configJson.form_fields.find((f: any) => f.env_variable === "HASS_URL");
           expect(hassUrlField).toBeDefined();
-          expect(hassUrlField.default).toBe("http://host.docker.internal:8123");
+          expect(hassUrlField.default).toBe("http://homeassistant-1:8123");
           expect(composeYmlRaw).toContain("host.docker.internal:host-gateway");
           expect(composeYmlRaw).not.toContain("${APP_HAFUSION_MACHINE_IP}");
           expect(composeJsonRaw).toContain("host.docker.internal:host-gateway");

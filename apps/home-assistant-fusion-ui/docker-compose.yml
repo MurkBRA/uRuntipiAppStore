@@ -5,7 +5,7 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/fusion:/app/data
     environment:
-      - HASS_URL=${HASS_URL:-http://host.docker.internal:8123}
+      - HASS_URL=${HASS_URL:-http://homeassistant-1:8123}
     extra_hosts:
       - host.docker.internal:host-gateway
     x-runtipi:

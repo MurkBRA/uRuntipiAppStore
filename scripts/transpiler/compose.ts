@@ -669,16 +669,16 @@ export function transpileCompose(params: {
       ensureFormField({
         type: "text",
         label: "Home Assistant URL",
-        hint: "URL of your Home Assistant instance. Use http://host.docker.internal:8123 if running on the same host.",
+        hint: "URL of your Home Assistant instance. Use http://homeassistant-1:8123 if running on the same host.",
         required: false,
-        default: "http://host.docker.internal:8123",
+        default: "http://homeassistant-1:8123",
         env_variable: "HASS_URL",
       });
       const hassIdx = transformedEnv.findIndex((e) => e.key === "HASS_URL");
       if (hassIdx >= 0) {
-        transformedEnv[hassIdx].value = "${HASS_URL:-http://host.docker.internal:8123}";
+        transformedEnv[hassIdx].value = "${HASS_URL:-http://homeassistant-1:8123}";
       } else {
-        transformedEnv.push({ key: "HASS_URL", value: "${HASS_URL:-http://host.docker.internal:8123}" });
+        transformedEnv.push({ key: "HASS_URL", value: "${HASS_URL:-http://homeassistant-1:8123}" });
       }
     }
     if (transformedEnv.length > 0) {

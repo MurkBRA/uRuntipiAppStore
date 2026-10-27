@@ -700,10 +700,10 @@ export APP_SECRET=$(derive_entropy "key" | head -c32)
     ]);
 
     const hassUrlEnv = svc.environment.find((e: any) => e.key === "HASS_URL");
-    expect(hassUrlEnv.value).toBe("${HASS_URL:-http://host.docker.internal:8123}");
+    expect(hassUrlEnv.value).toBe("${HASS_URL:-http://homeassistant-1:8123}");
 
     const hassField = res.formFields.find((f: any) => f.env_variable === "HASS_URL");
     expect(hassField).toBeDefined();
-    expect(hassField.default).toBe("http://host.docker.internal:8123");
+    expect(hassField.default).toBe("http://homeassistant-1:8123");
   });
 });
