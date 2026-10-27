@@ -15,7 +15,7 @@
   "author": "Nous Research",
   "source": "https://github.com/NousResearch/hermes-agent",
   "website": "https://hermes-agent.nousresearch.com",
-  "url_suffix": "chat",
+  "url_suffix": "/chat",
   "supported_architectures": [
     "arm64",
     "amd64"

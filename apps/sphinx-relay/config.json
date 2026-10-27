@@ -15,7 +15,7 @@
   "author": "Stakwork",
   "source": "https://github.com/stakwork/sphinx-relay",
   "website": "https://sphinx.chat",
-  "url_suffix": "connect",
+  "url_suffix": "/connect",
   "form_fields": [
     {
       "type": "text",

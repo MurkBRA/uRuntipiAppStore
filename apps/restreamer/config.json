@@ -16,7 +16,7 @@
   "author": "datarhei",
   "source": "https://github.com/datarhei/restreamer",
   "website": "https://datarhei.com/",
-  "url_suffix": "ui",
+  "url_suffix": "/ui",
   "supported_architectures": [
     "arm64",
     "amd64"

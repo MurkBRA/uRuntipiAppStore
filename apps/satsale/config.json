@@ -15,7 +15,7 @@
   "author": "Nick Farrow",
   "source": "https://github.com/nickfarrow/SatSale/",
   "website": "https://satsale.org",
-  "url_suffix": "admin",
+  "url_suffix": "/admin",
   "form_fields": [
     {
       "type": "text",

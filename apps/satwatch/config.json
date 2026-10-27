@@ -15,7 +15,7 @@
   "author": "J.P. Cummins",
   "source": "https://github.com/jpcummins/sat.watch",
   "website": "https://sat.watch",
-  "url_suffix": "app",
+  "url_suffix": "/app",
   "uid": 1000,
   "gid": 1000,
   "form_fields": [

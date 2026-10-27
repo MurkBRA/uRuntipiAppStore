@@ -15,7 +15,7 @@
   "author": "PocketBase",
   "source": "https://github.com/pocketbase/pocketbase",
   "website": "https://pocketbase.io/",
-  "url_suffix": "_/",
+  "url_suffix": "/_/",
   "form_fields": [
     {
       "type": "text",

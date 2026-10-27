@@ -39,6 +39,16 @@ export function mapUmbrelCategory(category: string, tagline = "", description = 
   return base;
 }
 
+export function formatUrlSuffix(path: unknown): string | undefined {
+  if (!path) return undefined;
+  const str = String(path).trim();
+  if (!str || str === "/") return undefined;
+  if (str.startsWith("?") || str.startsWith("/")) {
+    return str;
+  }
+  return `/${str}`;
+}
+
 export function replaceUmbrelProse(text: string): string {
   if (!text) return text;
   const protectedPattern = /(https?:\/\/[^\s)\]]+|```[\s\S]*?```|`[^`]+`)/g;
@@ -91,7 +101,7 @@ export function buildRuntipiConfigAndDescription(params: {
     umbrelManifest,
     allocatedPort,
     mainImageTag,
-    formFields,
+    formFields = [],
     tipiVersion,
     createdAt,
     updatedAt,
@@ -146,8 +156,8 @@ export function buildRuntipiConfigAndDescription(params: {
     author,
     source,
     website,
-    ...(umbrelManifest.path && String(umbrelManifest.path).trim()
-      ? { url_suffix: String(umbrelManifest.path).trim().replace(/^\/+/, "") }
+    ...(umbrelManifest.path && formatUrlSuffix(umbrelManifest.path)
+      ? { url_suffix: formatUrlSuffix(umbrelManifest.path) }
       : {}),
     ...(umbrelManifest.requiresHttps === true ? { https: true } : {}),
     ...(uid !== undefined ? { uid } : {}),

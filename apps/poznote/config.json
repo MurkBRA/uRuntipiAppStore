@@ -16,7 +16,7 @@
   "author": "Timothé Poznanski",
   "source": "https://github.com/timothepoznanski/poznote",
   "website": "https://poznote.com/",
-  "url_suffix": "login.php",
+  "url_suffix": "/login.php",
   "form_fields": [
     {
       "type": "random",

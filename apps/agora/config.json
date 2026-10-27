@@ -16,7 +16,7 @@
   "author": "Casey Rodarmor & Sönke Hahn",
   "source": "https://github.com/agora-org/agora",
   "website": "https://agora-org.github.io/agora/",
-  "url_suffix": "admin/",
+  "url_suffix": "/admin/",
   "uid": 1000,
   "gid": 1000,
   "form_fields": [

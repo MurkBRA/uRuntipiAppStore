@@ -149,4 +149,13 @@ describe("Runtipi Official App Configs Suite", () => {
     const ids = appConfigs.map((app) => app.id);
     expect(new Set(ids).size).toBe(appConfigs.length);
   });
+
+  test("Any app with url_suffix should start with '/' or '?'", () => {
+    const appConfigs = getAppConfigs();
+    for (const app of appConfigs) {
+      if ((app as any).url_suffix) {
+        expect((app as any).url_suffix).toMatch(/^[/?]/);
+      }
+    }
+  });
 });

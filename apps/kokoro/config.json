@@ -15,7 +15,7 @@
   "author": "Hexgrad",
   "source": "https://github.com/remsky/Kokoro-FastAPI",
   "website": "https://huggingface.co/hexgrad/Kokoro-82M",
-  "url_suffix": "web",
+  "url_suffix": "/web",
   "uid": 1000,
   "gid": 1000,
   "form_fields": [

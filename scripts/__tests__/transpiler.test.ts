@@ -4,6 +4,7 @@ import { createFormFieldFromContract } from "../transpiler/contracts.ts";
 import { parseUmbrelExports } from "../transpiler/exports-hooks.ts";
 import {
   buildRuntipiConfigAndDescription,
+  formatUrlSuffix,
   mapUmbrelCategory,
   replaceUmbrelProse,
   sanitizeUmbrelDescriptionText,
@@ -622,5 +623,35 @@ Access at umbrel.local:8080.
         hard: 8192,
       },
     });
+  });
+
+  it("formatUrlSuffix formats path to always start with a slash or question mark", () => {
+    expect(formatUrlSuffix("/chat")).toBe("/chat");
+    expect(formatUrlSuffix("chat")).toBe("/chat");
+    expect(formatUrlSuffix("/admin/")).toBe("/admin/");
+    expect(formatUrlSuffix("admin/")).toBe("/admin/");
+    expect(formatUrlSuffix("?offline=1")).toBe("?offline=1");
+    expect(formatUrlSuffix("/")).toBeUndefined();
+    expect(formatUrlSuffix("")).toBeUndefined();
+    expect(formatUrlSuffix(undefined)).toBeUndefined();
+
+    // Verify buildRuntipiConfigAndDescription includes formatted url_suffix
+    const { config } = buildRuntipiConfigAndDescription({
+      appId: "hermes-agent",
+      umbrelManifest: {
+        name: "Hermes Agent",
+        version: "0.22.4",
+        path: "/chat",
+        category: "ai",
+      },
+      manifestPort: 18790,
+      allocatedPort: 18790,
+      mainImageTag: "0.22.4",
+      createdAt: 1000,
+      updatedAt: 2000,
+      tipiVersion: 2,
+      formFields: [],
+    });
+    expect(config.url_suffix).toBe("/chat");
   });
 });

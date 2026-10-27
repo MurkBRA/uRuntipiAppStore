@@ -15,7 +15,7 @@
   "author": "~mopfel-winrux & ~sitful-hatred",
   "source": "https://github.com/mopfel-winrux/urbit-umbrel",
   "website": "https://github.com/mopfel-winrux/urbit-umbrel",
-  "url_suffix": "launch",
+  "url_suffix": "/launch",
   "form_fields": [
     {
       "type": "random",
