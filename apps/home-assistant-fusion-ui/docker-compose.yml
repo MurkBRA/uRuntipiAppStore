@@ -9,7 +9,7 @@ services:
     extra_hosts:
       - host.docker.internal:host-gateway
     x-runtipi:
-      internal_port: 5023
+      internal_port: 5050
       add_to_main_network: true
       is_main: true
 x-runtipi:

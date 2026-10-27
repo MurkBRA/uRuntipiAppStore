@@ -150,6 +150,23 @@ export function transpileCompose(params: {
 
   let internalPort = Number.parseInt(rawAppPort, 10);
   if (!Number.isInteger(internalPort) || internalPort <= 0 || internalPort > 65535) {
+    for (const s of Object.values(rawServices)) {
+      if (s && Array.isArray((s as any).ports)) {
+        for (const p of (s as any).ports) {
+          const parts = String(p).split(":");
+          if (parts.length >= 2) {
+            const containerPort = Number.parseInt(parts[parts.length - 1], 10);
+            if (Number.isInteger(containerPort) && containerPort > 0 && containerPort <= 65535) {
+              internalPort = containerPort;
+              break;
+            }
+          }
+        }
+        if (Number.isInteger(internalPort) && internalPort > 0 && internalPort <= 65535) break;
+      }
+    }
+  }
+  if (!Number.isInteger(internalPort) || internalPort <= 0 || internalPort > 65535) {
     internalPort = manifestPort || allocatedPort || 8080;
   }
 

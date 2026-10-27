@@ -671,6 +671,7 @@ export APP_SECRET=$(derive_entropy "key" | head -c32)
       services: {
         fusion: {
           image: "ghcr.io/matt8707/ha-fusion:2024.10.1",
+          ports: ["5023:5050"],
           environment: {
             HASS_URL: "http://${DEVICE_DOMAIN_NAME}:8123",
           },
@@ -705,5 +706,6 @@ export APP_SECRET=$(derive_entropy "key" | head -c32)
     const hassField = res.formFields.find((f: any) => f.env_variable === "HASS_URL");
     expect(hassField).toBeDefined();
     expect(hassField.default).toBe("http://homeassistant-1:8123");
+    expect(svc.internalPort).toBe(5050);
   });
 });

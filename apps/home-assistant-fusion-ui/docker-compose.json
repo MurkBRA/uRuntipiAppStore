@@ -5,7 +5,7 @@
       "name": "home-assistant-fusion-ui",
       "image": "ghcr.io/matt8707/ha-fusion:2024.10.1",
       "isMain": true,
-      "internalPort": 5023,
+      "internalPort": 5050,
       "addToMainNetwork": true,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [

@@ -297,6 +297,8 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(composeYmlRaw).not.toContain("${APP_HAFUSION_MACHINE_IP}");
           expect(composeJsonRaw).toContain("host.docker.internal:host-gateway");
           expect(composeJsonRaw).not.toContain("${APP_HAFUSION_MACHINE_IP}");
+          expect(composeYml.services["home-assistant-fusion-ui"]["x-runtipi"].internal_port).toBe(5050);
+          expect(composeJson.services.find((s: any) => s.name === "home-assistant-fusion-ui").internalPort).toBe(5050);
         }
 
         // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose
