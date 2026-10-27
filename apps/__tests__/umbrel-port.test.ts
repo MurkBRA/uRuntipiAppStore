@@ -287,6 +287,18 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(composeYmlRaw).not.toContain("PGID=1000");
         }
 
+        if (id === "home-assistant-fusion-ui") {
+          const configJson = JSON.parse(fs.readFileSync(path.join(appDir, "config.json"), "utf8"));
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_HAFUSION_MACHINE_IP")).toBe(false);
+          const hassUrlField = configJson.form_fields.find((f: any) => f.env_variable === "HASS_URL");
+          expect(hassUrlField).toBeDefined();
+          expect(hassUrlField.default).toBe("http://host.docker.internal:8123");
+          expect(composeYmlRaw).toContain("host.docker.internal:host-gateway");
+          expect(composeYmlRaw).not.toContain("${APP_HAFUSION_MACHINE_IP}");
+          expect(composeJsonRaw).toContain("host.docker.internal:host-gateway");
+          expect(composeJsonRaw).not.toContain("${APP_HAFUSION_MACHINE_IP}");
+        }
+
         // 9. Verify descriptions do NOT leak umbrelOS or Umbrel platform references in prose
         const configJsonPath = path.join(appDir, "config.json");
         const appConfig = JSON.parse(fs.readFileSync(configJsonPath, "utf8"));

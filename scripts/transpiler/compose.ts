@@ -665,6 +665,22 @@ export function transpileCompose(params: {
         transformedEnv.push({ key: "BACKEND_HOST", value: "backend" });
       }
     }
+    if (appId === "home-assistant-fusion-ui" && isMain) {
+      ensureFormField({
+        type: "text",
+        label: "Home Assistant URL",
+        hint: "URL of your Home Assistant instance. Use http://host.docker.internal:8123 if running on the same host.",
+        required: false,
+        default: "http://host.docker.internal:8123",
+        env_variable: "HASS_URL",
+      });
+      const hassIdx = transformedEnv.findIndex((e) => e.key === "HASS_URL");
+      if (hassIdx >= 0) {
+        transformedEnv[hassIdx].value = "${HASS_URL:-http://host.docker.internal:8123}";
+      } else {
+        transformedEnv.push({ key: "HASS_URL", value: "${HASS_URL:-http://host.docker.internal:8123}" });
+      }
+    }
     if (transformedEnv.length > 0) {
       svc.environment = transformedEnv;
     }
@@ -862,7 +878,13 @@ export function transpileCompose(params: {
       svc.devices = raw.devices.map((d: any) => transformString(String(d)));
     }
     if (Array.isArray(raw.extra_hosts) && raw.extra_hosts.length > 0) {
-      svc.extraHosts = raw.extra_hosts.map((h: any) => transformString(String(h)));
+      svc.extraHosts = raw.extra_hosts.map((h: any) => {
+        const transformed = transformString(String(h));
+        if (transformed.includes("MACHINE_IP") || transformed.startsWith("${APP_DOMAIN}:")) {
+          return "host.docker.internal:host-gateway";
+        }
+        return transformed;
+      });
     }
     if (typeof raw.dns === "string" && raw.dns.trim()) {
       svc.dns = raw.dns.trim();

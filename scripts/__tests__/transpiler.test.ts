@@ -654,4 +654,56 @@ Access at umbrel.local:8080.
     });
     expect(config.url_suffix).toBe("/chat");
   });
+  it("parseUmbrelExports ignores IP/host shell commands and does not create random fields", () => {
+    const exportsSh = `
+export APP_HAFUSION_MACHINE_IP=$(hostname -I | awk '{print $1}')
+export APP_SECRET=$(derive_entropy "key" | head -c32)
+`;
+    const res = parseUmbrelExports(exportsSh, "HA-Fusion");
+    expect(res.formFields.some((f) => f.env_variable === "APP_HAFUSION_MACHINE_IP")).toBe(false);
+    expect(res.staticExports.APP_HAFUSION_MACHINE_IP).toBe("host.docker.internal");
+    expect(res.formFields.some((f) => f.env_variable === "APP_SECRET")).toBe(true);
+  });
+
+  it("transpileCompose normalizes extra_hosts with machine IP or APP_DOMAIN to host.docker.internal:host-gateway and configures HASS_URL", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        fusion: {
+          image: "ghcr.io/matt8707/ha-fusion:2024.10.1",
+          environment: {
+            HASS_URL: "http://${DEVICE_DOMAIN_NAME}:8123",
+          },
+          extra_hosts: ["${DEVICE_DOMAIN_NAME}:${APP_HAFUSION_MACHINE_IP}"],
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "home-assistant-fusion-ui",
+      appName: "HA-Fusion",
+      manifestPort: 5023,
+      allocatedPort: 5023,
+      umbrelCompose,
+      staticExports: {
+        APP_HAFUSION_MACHINE_IP: "host.docker.internal",
+      },
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const svc = res.composeJson.services.find((s: any) => s.name === "home-assistant-fusion-ui");
+    expect(svc).toBeDefined();
+    expect(svc.extraHosts).toEqual(["host.docker.internal:host-gateway"]);
+    expect(res.composeYamlObj.services["home-assistant-fusion-ui"].extra_hosts).toEqual([
+      "host.docker.internal:host-gateway",
+    ]);
+
+    const hassUrlEnv = svc.environment.find((e: any) => e.key === "HASS_URL");
+    expect(hassUrlEnv.value).toBe("${HASS_URL:-http://host.docker.internal:8123}");
+
+    const hassField = res.formFields.find((f: any) => f.env_variable === "HASS_URL");
+    expect(hassField).toBeDefined();
+    expect(hassField.default).toBe("http://host.docker.internal:8123");
+  });
 });

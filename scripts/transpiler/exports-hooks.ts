@@ -87,6 +87,17 @@ export function parseUmbrelExports(exportsContent: string, appName: string): Par
 
     // Ignore complex subshells that aren't simple variable interpolations
     if (unquoted.includes("$(") || unquoted.includes("`")) {
+      // If the command is detecting an IP address or network host, do NOT generate a random hex string!
+      if (
+        /hostname\s+-I|ip\s+(?:route|addr)|ifconfig/i.test(unquoted) ||
+        varName.includes("MACHINE_IP") ||
+        varName.includes("LOCAL_IP")
+      ) {
+        seenVars.add(varName);
+        staticExports[varName] = "host.docker.internal";
+        continue;
+      }
+
       seenVars.add(varName);
       formFields.push({
         type: "random",

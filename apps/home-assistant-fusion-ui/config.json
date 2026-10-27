@@ -19,10 +19,12 @@
   "gid": 1000,
   "form_fields": [
     {
-      "type": "random",
-      "label": "HA-Fusion hafusion machine ip",
-      "min": 32,
-      "env_variable": "APP_HAFUSION_MACHINE_IP"
+      "type": "text",
+      "label": "Home Assistant URL",
+      "hint": "URL of your Home Assistant instance. Use http://host.docker.internal:8123 if running on the same host.",
+      "required": false,
+      "default": "http://host.docker.internal:8123",
+      "env_variable": "HASS_URL"
     },
     {
       "type": "text",
