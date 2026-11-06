@@ -1,6 +1,6 @@
 services:
   leafwiki:
-    image: ghcr.io/perber/leafwiki:v0.14.1
+    image: ghcr.io/perber/leafwiki:v0.14.2
     volumes:
       - ${APP_DATA_DIR}/data:/app/data
     environment:

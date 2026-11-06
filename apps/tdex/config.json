@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "tdex",
   "description": "A liquidity provider holds Liquid reserves of both a BASE_ASSET-QUOTE_ASSET in his non-custodial Liquid hot-wallet, running automated market-making strategies, either with or without an oracle. Providers are incentivized to be always on and need to expose a public reachable endpoint either via clearnet or using an Onion hidden service.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.6.4-alpine",
   "categories": [
     "finance"
@@ -28,7 +28,7 @@
     "amd64"
   ],
   "created_at": 1792501510835,
-  "updated_at": 1792501570835,
+  "updated_at": 1794005949675,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

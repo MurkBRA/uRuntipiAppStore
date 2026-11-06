@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "satsbook",
   "description": "Track routing fees, import exchange transactions (Strike, River, Coinbase, Swan), and view your full Bitcoin portfolio — all on your own hardware. Satsbook connects to your LND node and provides a privacy-first dashboard with fee analytics, interactive portfolio breakdown, unified transaction ledger, and transfer tagging. Upgrade to Pro for FIFO/LIFO tax export (Form 8949), or Power to sync your BTC holdings to Monarch Money. No cloud required.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.1.0",
   "categories": [
     "finance"
@@ -51,7 +51,7 @@
     "amd64"
   ],
   "created_at": 1792501507848,
-  "updated_at": 1792501567848,
+  "updated_at": 1794005949599,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -14,7 +14,7 @@ Features:
 - **Import Flights**: Import flights from various sources including MyFlightRadar24, App in the Air and JetLog.
 
 ## Links
-- **Upstream Version**: `3.13.0`
+- **Upstream Version**: `3.14.0`
 - **Website**: https://airtrail.johan.ohly.dk
 - **Source Repository**: https://github.com/johanohly/AirTrail
 - **Support**: https://github.com/johanohly/AirTrail/issues

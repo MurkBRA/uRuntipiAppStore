@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "nostr-vpn",
-      "image": "ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.18",
+      "image": "ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.20",
       "isMain": true,
       "internalPort": 38080,
       "stopGracePeriod": "1m",
@@ -52,7 +52,7 @@
     },
     {
       "name": "nostr-vpn-daemon",
-      "image": "ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.18",
+      "image": "ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.20",
       "networkMode": "host",
       "stopGracePeriod": "1m",
       "command": [
@@ -81,6 +81,10 @@
         {
           "hostPath": "${APP_DATA_DIR}/data",
           "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/egress-state",
+          "containerPath": "/var/lib/nvpn/egress"
         }
       ],
       "capAdd": [

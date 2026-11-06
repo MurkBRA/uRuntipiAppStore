@@ -10,7 +10,7 @@ It allows you to run LLMs, generate images, audio locally with consumer grade ha
 Before running a model, make sure your device has enough free RAM to support it. Attempting to run a model that exceeds your available memory could cause your device to crash or become unresponsive. Always check the model requirements before downloading or starting it.
 
 ## Links
-- **Upstream Version**: `v4.11.0`
+- **Upstream Version**: `v4.12.1`
 - **Website**: https://localai.io/
 - **Source Repository**: https://github.com/mudler/LocalAI
 - **Support**: https://github.com/mudler/LocalAI/discussions

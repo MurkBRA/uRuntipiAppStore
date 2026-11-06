@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "networkingtoolbox",
   "description": "🌐 Networking Toolbox is a comprehensive suite of web-based utilities built to make network analysis, configuration, and troubleshooting more accessible. It brings together a wide range of technical functions that help professionals and enthusiasts understand and manage digital communication systems more efficiently. By combining analytical precision with an intuitive interface, it allows users to explore, calculate, and visualize complex network relationships in real time.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.6.0",
   "categories": [
     "development"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501502920,
-  "updated_at": 1792501562920,
+  "updated_at": 1794005949436,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "gobrrr-pool",
   "description": "Go Brrr Pool is a self-hosted solo Bitcoin mining pool powered by ckpool-solo. Connect your miners directly to your own node and keep 100% of block rewards. No third-party pool, no KYC, no fees, no middleman.",
-  "tipi_version": 1,
-  "version": "v1.2.1",
+  "tipi_version": 2,
+  "version": "1.2.3",
   "categories": [
     "finance"
   ],
@@ -58,7 +58,7 @@
     "amd64"
   ],
   "created_at": 1792501497005,
-  "updated_at": 1792501557005,
+  "updated_at": 1794005949266,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

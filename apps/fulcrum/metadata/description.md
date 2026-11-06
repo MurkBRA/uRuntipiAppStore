@@ -11,7 +11,7 @@ Powered by Fulcrum from Calin Culianu
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `2.1.4`
+- **Upstream Version**: `2.1.4-patch.1`
 - **Website**: https://fulcrumserver.org/
 - **Source Repository**: https://github.com/cculianu/Fulcrum
 - **Support**: https://github.com/cculianu/Fulcrum/issues

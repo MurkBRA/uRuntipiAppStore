@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "fedimint-gateway",
-      "image": "fedimint/gatewayd:v0.12.2",
+      "image": "fedimint/gatewayd:v0.13.0",
       "isMain": true,
       "internalPort": 8178,
       "addToMainNetwork": true,

@@ -41,7 +41,7 @@ services:
     environment:
       - <<=[object Object]
   plane-api:
-    image: makeplane/plane-backend:v1.4.2
+    image: makeplane/plane-backend:v1.4.3
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
@@ -53,7 +53,7 @@ services:
       plane-rabbitmq:
         condition: service_started
   plane-worker:
-    image: makeplane/plane-backend:v1.4.2
+    image: makeplane/plane-backend:v1.4.3
     command:
       - sh
       - '-c'
@@ -69,7 +69,7 @@ services:
       plane-rabbitmq:
         condition: service_started
   plane-beat-worker:
-    image: makeplane/plane-backend:v1.4.2
+    image: makeplane/plane-backend:v1.4.3
     command:
       - sh
       - '-c'
@@ -87,7 +87,7 @@ services:
       plane-migrator:
         condition: service_completed_successfully
   plane-migrator:
-    image: makeplane/plane-backend:v1.4.2
+    image: makeplane/plane-backend:v1.4.3
     command:
       - sh
       - '-c'
@@ -99,20 +99,20 @@ services:
       plane-db:
         condition: service_healthy
   plane-web:
-    image: makeplane/plane-frontend:v1.4.2
+    image: makeplane/plane-frontend:v1.4.3
     environment:
       - <<=[object Object]
     depends_on:
       - plane-api
   plane-live:
-    image: makeplane/plane-live:v1.4.2
+    image: makeplane/plane-live:v1.4.3
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
     depends_on:
       - plane-api
   plane-space:
-    image: makeplane/plane-space:v1.4.2
+    image: makeplane/plane-space:v1.4.3
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - <<=[object Object]
@@ -125,7 +125,7 @@ services:
       retries: 3
       start_period: 10s
   plane-admin:
-    image: makeplane/plane-admin:v1.4.2
+    image: makeplane/plane-admin:v1.4.3
     environment:
       - <<=[object Object]
     depends_on:

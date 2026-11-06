@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "yucca",
   "description": "Yucca is a simple NVR video surveillance solution for home and business. It is designed to support safe cities with thousands of cameras, subscriber services, and self-hosted home use.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.13.4",
   "categories": [
     "automation"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501513385,
-  "updated_at": 1792501573385,
+  "updated_at": 1794005949745,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

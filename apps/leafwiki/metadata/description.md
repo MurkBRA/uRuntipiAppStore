@@ -13,7 +13,7 @@ LeafWiki focuses on clarity rather than unnecessary complexity. It provides a ca
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `0.14.1`
+- **Upstream Version**: `0.14.2`
 - **Website**: https://leafwiki.com/
 - **Source Repository**: https://github.com/perber/leafwiki
 - **Support**: https://github.com/perber/leafwiki/issues

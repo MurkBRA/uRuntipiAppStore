@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "lightningmate",
   "description": "Lightning Mate manages your Lightning node so you don't have to babysit it. It connects automatically to your Runtipi Lightning (LND) node.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.7.7",
   "categories": [
     "finance"
@@ -76,7 +76,7 @@
     "amd64"
   ],
   "created_at": 1792501500297,
-  "updated_at": 1792501560297,
+  "updated_at": 1794005949372,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

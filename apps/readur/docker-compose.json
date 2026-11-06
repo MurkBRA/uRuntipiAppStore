@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "readur",
-      "image": "ghcr.io/readur/readur:3.1.0",
+      "image": "ghcr.io/readur/readur:3.1.2",
       "isMain": true,
       "internalPort": 8000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

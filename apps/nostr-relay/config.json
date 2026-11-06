@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "nostr-relay",
   "description": "Introducing Nostr Relay — an official app by Runtipi.",
-  "tipi_version": 1,
-  "version": "v1.1.0",
+  "tipi_version": 2,
+  "version": "v1.2.1",
   "categories": [
     "social"
   ],
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501503119,
-  "updated_at": 1792501563119,
+  "updated_at": 1794005949444,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

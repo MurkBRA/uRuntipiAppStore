@@ -30,7 +30,7 @@ services:
       - seafile-db
       - seafile-memcached
     extra_hosts:
-      - ${APP_DOMAIN}:host-gateway
+      - host.docker.internal:host-gateway
     x-runtipi:
       internal_port: 80
       is_main: true
@@ -61,6 +61,6 @@ services:
     depends_on:
       - seafile-db
     extra_hosts:
-      - ${APP_DOMAIN}:host-gateway
+      - host.docker.internal:host-gateway
 x-runtipi:
   schema_version: 2

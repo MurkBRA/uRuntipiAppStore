@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "zen",
   "description": "📒 Zen is a minimalist note-taking application focused on providing a simple and efficient way to capture and manage information. It allows users to create notes using Markdown, supporting a wide range of formatting options such as tables, checklists, code blocks, and text highlighting. All notes are stored locally in a lightweight SQLite database, ensuring that your data remains private and fully under your control.",
-  "tipi_version": 1,
-  "version": "1.5.0",
+  "tipi_version": 2,
+  "version": "2.0.0",
   "categories": [
     "utilities",
     "data"
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501513568,
-  "updated_at": 1792501573568,
+  "updated_at": 1794005949751,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

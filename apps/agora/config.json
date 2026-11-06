@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "agora",
   "description": "Agora is a project that allows anyone to sell files on the web for bitcoin using the Lightning Network.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.19-alpine",
   "categories": [
     "utilities",
@@ -71,7 +71,7 @@
     "amd64"
   ],
   "created_at": 1792501487865,
-  "updated_at": 1792501547865,
+  "updated_at": 1794005948986,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

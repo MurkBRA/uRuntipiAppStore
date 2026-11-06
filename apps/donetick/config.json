@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "donetick",
   "description": "Donetick is an open-source task management application designed to streamline the organization of household chores and other recurring responsibilities. It provides a flexible system for assigning tasks to multiple users, using various selection strategies such as random allocation or assignment based on the fewest completed tasks. Tasks can be scheduled with customizable recurrence patterns, making it easy to manage both daily routines and less frequent responsibilities.",
-  "tipi_version": 1,
-  "version": "0.1.83",
+  "tipi_version": 2,
+  "version": "0.1.86",
   "categories": [
     "utilities",
     "data"
@@ -42,7 +42,7 @@
     "amd64"
   ],
   "created_at": 1792501494308,
-  "updated_at": 1792501554308,
+  "updated_at": 1794005949185,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

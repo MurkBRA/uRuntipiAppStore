@@ -9,7 +9,7 @@ The app places a strong emphasis on user privacy and data ownership, offering a 
 Wanderer is especially popular among people who enjoy organizing their personal collection of trails or sharing curated outdoor experiences with a group, club, or local community. It is easy to deploy on self-hosting platforms such as YunoHost and supports collaborative features that make it useful for small teams or families planning outdoor activities together. Its clean design, strong focus on privacy, and independence from commercial platforms make it an ideal solution for anyone who values control over their outdoor data.
 
 ## Links
-- **Upstream Version**: `0.21.0`
+- **Upstream Version**: `0.21.2`
 - **Website**: https://wanderer.to/
 - **Source Repository**: https://github.com/Flomp/wanderer
 - **Support**: https://github.com/Flomp/wanderer/issues

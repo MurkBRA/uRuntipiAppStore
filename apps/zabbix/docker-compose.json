@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "zabbix",
-      "image": "zabbix/zabbix-web-nginx-pgsql:7.4.16-alpine",
+      "image": "zabbix/zabbix-web-nginx-pgsql:8.0.0-alpine",
       "isMain": true,
       "internalPort": 8080,
       "hostname": "zabbix-frontend",
@@ -36,7 +36,7 @@
     },
     {
       "name": "zabbix-zabbix-server",
-      "image": "zabbix/zabbix-server-pgsql:7.4.16-alpine",
+      "image": "zabbix/zabbix-server-pgsql:8.0.0-alpine",
       "hostname": "zabbix-server",
       "environment": [
         {
@@ -65,7 +65,7 @@
     },
     {
       "name": "zabbix-zabbix-agent",
-      "image": "zabbix/zabbix-agent2:7.4.16-alpine",
+      "image": "zabbix/zabbix-agent2:8.0.0-alpine",
       "hostname": "zabbix-agent",
       "environment": [
         {
@@ -80,7 +80,7 @@
     },
     {
       "name": "zabbix-zabbix-database",
-      "image": "postgres:13.18-alpine3.20",
+      "image": "pgautoupgrade/pgautoupgrade:17.11-alpine",
       "hostname": "zabbix-database",
       "environment": [
         {

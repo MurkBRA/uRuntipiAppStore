@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "bassin",
   "description": "A zero-fee Bitcoin solo mining pool for Runtipi. Run your own ckPool at home.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v1.8.11",
   "categories": [
     "finance"
@@ -70,7 +70,7 @@
     "amd64"
   ],
   "created_at": 1792501488971,
-  "updated_at": 1792501548971,
+  "updated_at": 1794005949034,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

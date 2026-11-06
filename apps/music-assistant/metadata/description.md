@@ -31,7 +31,7 @@ Music Assistant Server:
   - The Music Assistant Server is a free, opensource Media library manager that connects to your streaming services and a wide range of connected speakers. The server is the beating heart, the core of Music Assistant and it keeps track of your music sources. It must run on an always-on device like a Raspberry Pi, a NAS or an Intel NUC or alike. The server can access multiple music providers and stream to multiple player types.
 
 ## Links
-- **Upstream Version**: `2.10.7`
+- **Upstream Version**: `2.10.9`
 - **Website**: https://www.music-assistant.io
 - **Source Repository**: https://github.com/music-assistant/server
 - **Support**: https://www.music-assistant.io/support/

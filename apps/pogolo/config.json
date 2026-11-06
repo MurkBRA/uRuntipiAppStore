@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "pogolo",
   "description": "solo db-less bitcoin-only mining pool, meant for lan swarms, not the internet;",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "v1.x",
   "categories": [
     "finance"
@@ -70,7 +70,7 @@
     "amd64"
   ],
   "created_at": 1792501505650,
-  "updated_at": 1792665344539,
+  "updated_at": 1794005949529,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "dcrdex",
   "description": "Bison Wallet is a multi-asset, non-custodial cryptocurrency wallet with a built-in decentralized exchange.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v1.0.5",
   "categories": [
     "finance"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501493811,
-  "updated_at": 1792501553811,
+  "updated_at": 1794005949166,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

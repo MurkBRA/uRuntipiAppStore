@@ -13,7 +13,7 @@ This installation uses a single local storage directory, not a redundant storage
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `2026.10.18`
+- **Upstream Version**: `2026.10.26`
 - **Website**: https://silo.pgsty.com
 - **Source Repository**: https://github.com/pgsty/silo
 - **Support**: https://github.com/pgsty/silo/issues

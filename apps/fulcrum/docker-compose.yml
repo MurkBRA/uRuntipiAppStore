@@ -1,6 +1,6 @@
 services:
   fulcrum:
-    image: nmfretz/umbrel-fulcrum:1.0.1
+    image: ghcr.io/nmfretz/umbrel-fulcrum:1.0.2
     volumes:
       - ${APP_DATA_DIR}/data/fulcrum-logs:/fulcrum-logs
     environment:

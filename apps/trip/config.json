@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "trip",
   "description": "🗺️ TRIP is a self-hostable minimalist Map tracker and Trip planner to visualize your points of interest (POI) and organize your next adventure details.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.50.1",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501511756,
-  "updated_at": 1792501571756,
+  "updated_at": 1794005949700,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

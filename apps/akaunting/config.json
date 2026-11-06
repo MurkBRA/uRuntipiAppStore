@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "akaunting",
   "description": "📊 Akaunting is a powerful open-source accounting software that simplifies financial management for small businesses, freelancers, and entrepreneurs. It offers an all-in-one solution to manage income, expenses, invoices, and financial reports, making it easier to maintain an organized and transparent overview of your finances. With its intuitive design and flexible features, Akaunting helps you save time on administrative tasks while improving accuracy and efficiency.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "3.1.21",
   "categories": [
     "finance"
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501488079,
-  "updated_at": 1792501548079,
+  "updated_at": 1794005949000,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

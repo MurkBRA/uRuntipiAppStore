@@ -24,10 +24,10 @@ The platform is designed to bridge the gap between simplicity and advanced contr
 
 ## Default Credentials
 - **Username**: `arcane`
-- **Password**: `arcane-admin` (You will be prompted to change it on first login)
+- **Password**: `arcane-admin`
 
 ## Links
-- **Upstream Version**: `2.17.0`
+- **Upstream Version**: `2.17.3`
 - **Website**: https://getarcane.app/
 - **Source Repository**: https://github.com/getarcaneapp/arcane
 - **Support**: https://github.com/getarcaneapp/arcane/issues

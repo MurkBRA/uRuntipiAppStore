@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "lunalytics",
   "description": "🔍 Lunalytics offers a rich set of features designed to give you full visibility into the health of your services. It continuously monitors HTTP and TCP endpoints and provides detailed uptime and latency statistics with precise response time tracking.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.10.23",
   "categories": [
     "network"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501500991,
-  "updated_at": 1792501560991,
+  "updated_at": 1794005949391,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

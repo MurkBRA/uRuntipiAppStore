@@ -11,7 +11,7 @@ The app starts and manages the required Translator Proxy and optional Job Declar
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.7.0`
+- **Upstream Version**: `0.8.1`
 - **Website**: https://stratumprotocol.org/
 - **Source Repository**: https://github.com/stratum-mining/sv2-ui
 - **Support**: https://github.com/stratum-mining/sv2-ui/issues

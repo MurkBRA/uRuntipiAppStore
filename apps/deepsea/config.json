@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "deepsea",
   "description": "This open-source dashboard monitors Ocean.xyz pool miners in real time. It presents hashrate, profitability, worker status and network metrics through a retro terminal interface. The goal is to keep miners fully informed with minimal fuss.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v2.0.4",
   "categories": [
     "finance"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501493954,
-  "updated_at": 1792501553954,
+  "updated_at": 1794005949175,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

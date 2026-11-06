@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "nginx-proxy-manager",
   "description": "Expose your apps to the internet easily and securely.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.16.0",
   "categories": [
     "network",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501502986,
-  "updated_at": 1792501562986,
+  "updated_at": 1794005949439,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

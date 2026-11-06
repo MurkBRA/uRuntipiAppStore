@@ -12,7 +12,7 @@ Features:
   - User Management: An admin panel to create and manage user accounts with session tracking.
 
 ## Links
-- **Upstream Version**: `1.28.0`
+- **Upstream Version**: `1.29.2`
 - **Website**: https://jotty.page
 - **Source Repository**: https://github.com/fccview/jotty
 - **Support**: https://github.com/fccview/jotty/issues

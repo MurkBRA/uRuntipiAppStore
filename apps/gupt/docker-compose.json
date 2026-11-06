@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "gupt",
-      "image": "ghcr.io/besoeasy/gupt:5.1.0",
+      "image": "ghcr.io/besoeasy/gupt:5.1.2",
       "isMain": true,
       "internalPort": 8000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

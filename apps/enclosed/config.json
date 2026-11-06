@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "enclosed",
   "description": "Enclosed is a minimalistic web application designed for sending private and secure notes. Whether you need to share sensitive information or just want a simple way to send encrypted messages, Enclosed provides a user-friendly interface with strong security features to ensure your data remains confidential.",
-  "tipi_version": 1,
-  "version": "1.16.0-rootless",
+  "tipi_version": 2,
+  "version": "1.16.1",
   "categories": [
     "utilities",
     "data"
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501495403,
-  "updated_at": 1792501555403,
+  "updated_at": 1794005949215,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

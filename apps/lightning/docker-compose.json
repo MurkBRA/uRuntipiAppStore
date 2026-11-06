@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "lightning",
-      "image": "getumbrel/umbrel-lightning:v1.3.2",
+      "image": "getumbrel/umbrel-lightning:v1.3.3",
       "isMain": true,
       "internalPort": 3006,
       "addToMainNetwork": true,
@@ -114,7 +114,7 @@
     },
     {
       "name": "lightning-lnd",
-      "image": "lightninglabs/lnd:v0.21.4-beta",
+      "image": "lightninglabs/lnd:v0.21.6-beta",
       "addToMainNetwork": true,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "hostname": "${APP_DOMAIN}",

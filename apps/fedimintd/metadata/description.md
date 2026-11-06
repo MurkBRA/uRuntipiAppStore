@@ -44,7 +44,7 @@ Fedimint supports Lightning payments via a Lightning Gateway. To use Lightning i
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `v0.12.2`
+- **Upstream Version**: `v0.13.0`
 - **Website**: https://fedimint.org/
 - **Source Repository**: https://github.com/fedimint/fedimint
 - **Support**: https://github.com/fedimint/fedimint/issues

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "lightning-terminal",
   "description": "Lightning Terminal is the easiest way to manage inbound and outbound liquidity on the Lightning Network. Keep your channels open and the funds flowing. It provides a visual interface for interacting with your channels and balances using Loop.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "0.17.7",
   "categories": [
     "finance"
@@ -69,7 +69,7 @@
     "amd64"
   ],
   "created_at": 1792501500228,
-  "updated_at": 1792665341595,
+  "updated_at": 1794005949369,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -1,8 +1,9 @@
 services:
   nostr-relay:
-    image: getumbrel/umbrel-nostr-relay:v1.1.0
+    image: ghcr.io/getumbrel/umbrel-nostr-relay:v1.2.1
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
+      - GODEBUG=multipathtcp=0
       - RELAY_HOST=nostr-relay-relay
       - RELAY_PORT=8080
       - RELAY_PROXY_HOST=nostr-relay-relay-proxy
@@ -11,13 +12,13 @@ services:
       internal_port: 3000
       is_main: true
   nostr-relay-relay:
-    image: getumbrel/nostr-rs-relay:0.8.1
+    image: ghcr.io/getumbrel/nostr-rs-relay:0.10.0-v1.2.1
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/relay/config.toml:/app/config.toml
       - ${APP_DATA_DIR}/data/relay/db:/app/db
   nostr-relay-relay-proxy:
-    image: getumbrel/umbrel-nostr-relay-proxy:v1.1.0
+    image: ghcr.io/getumbrel/umbrel-nostr-relay-proxy:v1.2.1
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/relay-proxy:/app/data

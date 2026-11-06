@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "etherpad",
   "description": "⚙️ The admin panel for Etherpad is accessible at \"http://<IP-DO-SERVIDOR>:9002/admin/\". You can find your unique credentials by right-clicking on the Etherpad app icon on the Runtipi homescreen and selecting \"Show default credentials\".",
-  "tipi_version": 1,
-  "version": "3.3.9",
+  "tipi_version": 2,
+  "version": "3.3.15",
   "categories": [
     "utilities",
     "data"
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501495648,
-  "updated_at": 1792501555648,
+  "updated_at": 1794005949225,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

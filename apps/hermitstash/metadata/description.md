@@ -11,7 +11,7 @@ The admin panel covers users, uploads with per-user and per-stash size limits, w
 Files and database fields are sealed with post-quantum encryption at rest no matter how you reach the app. When it is served over HTTPS — a custom domain, or remote access over Tor or Tailscale — the TLS handshake also negotiates a post-quantum key exchange (X25519MLKEM768 or SecP384r1MLKEM1024), so the connection itself is quantum-resistant; over a plain local-network address the at-rest protection still applies.
 
 ## Links
-- **Upstream Version**: `1.15.9`
+- **Upstream Version**: `1.15.13`
 - **Website**: https://hermitstash.com
 - **Source Repository**: https://github.com/dotCooCoo/hermitstash
 - **Support**: https://github.com/dotCooCoo/hermitstash/issues

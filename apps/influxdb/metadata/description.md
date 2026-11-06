@@ -25,7 +25,7 @@ Chronograf is the administrative user interface and visualization engine of the 
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `1.13.1`
+- **Upstream Version**: `1.13.2`
 - **Website**: https://www.influxdata.com/
 - **Source Repository**: https://github.com/influxdata/influxdb
 - **Support**: https://support.influxdata.com/s/

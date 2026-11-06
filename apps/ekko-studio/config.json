@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "ekko-studio",
   "description": "Ekko Studio is a browser workspace for AI agents, with conversations, file tools, persistent memory, skills, and model settings. It includes both the Ekko and Hermes runtimes so you can choose an agent for each conversation.",
-  "tipi_version": 2,
-  "version": "0.7.38",
+  "tipi_version": 3,
+  "version": "0.8.17",
   "categories": [
     "ai"
   ],
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501494907,
-  "updated_at": 1792665339254,
+  "updated_at": 1794005949204,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

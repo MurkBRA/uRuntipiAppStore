@@ -1,6 +1,6 @@
 services:
   thunderhub:
-    image: apotdevin/thunderhub:0.19.0
+    image: apotdevin/thunderhub:0.19.1
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "lnbits-holesail-proxy",
   "description": "Running Runtipi behind a home router (NAT) without a public domain? TOR is too slow? This app will allow you (and your friends) to connect remotely to your LNbits, using a Holesail - an instant P2P tunnel to bypass any network, firewall, NAT restrictions.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v1.0.7",
   "categories": [
     "finance"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501500483,
-  "updated_at": 1792501560483,
+  "updated_at": 1794005949381,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

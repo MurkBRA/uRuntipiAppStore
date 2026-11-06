@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "btctracker",
   "description": "BTC Tracker is a user-friendly yet powerful application designed for managing and analyzing Bitcoin investments. It was created to offer a privacy-focused and straightforward alternative to existing tracking tools, which are often cluttered with unnecessary features, complicated to set up, or designed for managing large, diversified portfolios. Many of those tools require connections to external services and the sharing of sensitive information such as wallet addresses or transaction histories.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.8.0",
   "categories": [
     "finance"
@@ -41,7 +41,7 @@
     "amd64"
   ],
   "created_at": 1792501491749,
-  "updated_at": 1792501551749,
+  "updated_at": 1794005949126,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

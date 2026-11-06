@@ -1,6 +1,6 @@
 services:
   blinko:
-    image: blinkospace/blinko:1.8.8
+    image: blinkospace/blinko:1.8.9
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/app:/app/.blinko
@@ -14,7 +14,7 @@ services:
       blinko-db:
         condition: service_healthy
     healthcheck:
-      test: curl -f http://localhost:1111
+      test: wget --spider -q http://127.0.0.1:1111/
       interval: 30s
       timeout: 10s
       retries: 5

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "jupyterlab",
-      "image": "quay.io/jupyter/base-notebook:lab-4.6.4",
+      "image": "quay.io/jupyter/base-notebook:lab-4.6.5",
       "isMain": true,
       "internalPort": 8888,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

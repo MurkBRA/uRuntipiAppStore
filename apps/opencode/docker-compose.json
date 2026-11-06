@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "opencode",
-      "image": "ghcr.io/anomalyco/opencode:1.19.3",
+      "image": "ghcr.io/anomalyco/opencode:1.19.5",
       "isMain": true,
       "internalPort": 4096,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

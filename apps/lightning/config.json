@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "lightning",
   "description": "Run your personal Lightning Network node, and join the future of Bitcoin today.",
-  "tipi_version": 1,
-  "version": "v1.3.2",
+  "tipi_version": 2,
+  "version": "v1.3.3",
   "categories": [
     "finance"
   ],
@@ -124,7 +124,7 @@
     "amd64"
   ],
   "created_at": 1792501500084,
-  "updated_at": 1792501560084,
+  "updated_at": 1794005949365,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

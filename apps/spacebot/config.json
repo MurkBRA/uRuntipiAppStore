@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "spacebot",
   "description": "Spacebot is opinionated agent infrastructure, built for teams and usable by anyone. State belongs in structured storage, not markdown files the LLM manages. Memory lives in a typed graph in SQLite. Autonomy runs on a task state machine linked to goals, not a heartbeat.json. The LLM reasons. The system holds state.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.5.0",
   "categories": [
     "ai"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501509501,
-  "updated_at": 1792501569501,
+  "updated_at": 1794005949635,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

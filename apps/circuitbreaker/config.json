@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "circuitbreaker",
   "description": "It allows nodes to protect themselves from being flooded with HTLCs.  With circuitbreaker a maximum to the number of in-flight HTLCs can be set on a per-peer basis. Known and trusted peers for example can be assigned a higher maximum, while a new channel from a previously unseen node may be limited to only a few pending HTLCs. Furthermore it is possible to apply rate limits to the number of forwarded HTLCs.  This offers protection against DoS/spam attacks that rely on large numbers of fast-resolving HTLCs.  Rate limiting is implemented with a Token bucket.  Via the UI the minimum interval between HTLCs can be specified. Large numbers of HTLCs are also required for probing channel balances.  Reducing the information leakage through probing could be another reason to put in place a rate limit for untrusted peers.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.5.1",
   "categories": [
     "finance"
@@ -63,7 +63,7 @@
     "amd64"
   ],
   "created_at": 1792501492841,
-  "updated_at": 1792501552841,
+  "updated_at": 1794005949144,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "chainforensics",
   "description": "ChainForensics is a powerful, privacy-focused Bitcoin blockchain analysis tool that runs entirely on your own node. Analyze transactions, trace fund flows, detect CoinJoin transactions, and assess the privacy of your UTXOs - all without leaking any data to third parties.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.2.0",
   "categories": [
     "finance"
@@ -63,7 +63,7 @@
     "amd64"
   ],
   "created_at": 1792501492295,
-  "updated_at": 1792501552295,
+  "updated_at": 1794005949136,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

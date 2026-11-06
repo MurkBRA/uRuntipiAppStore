@@ -1,6 +1,6 @@
 services:
   reitti:
-    image: dedicatedcode/reitti:5.8.0
+    image: dedicatedcode/reitti:5.9.1
     volumes:
       - ${APP_DATA_DIR}/data/app:/data
     environment:
@@ -41,7 +41,7 @@ services:
       timeout: 5s
       retries: 5
   reitti-tile-cache:
-    image: dedicatedcode/reitti-tile-cache:5.8.0
+    image: dedicatedcode/reitti-tile-cache:5.9.1
     volumes:
       - ${APP_DATA_DIR}/data/title-cache:/var/cache/nginx
     healthcheck:

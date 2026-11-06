@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "public-pool-web",
   "description": "Public Pool's Web provides a sleek, user-friendly interface for managing and monitoring your Public Pool's data.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.2.0",
   "categories": [
     "finance"
@@ -15,7 +15,6 @@
   "author": "martinbarilik",
   "source": "https://github.com/martinbarilik/public-pool-web",
   "website": "https://github.com/martinbarilik/public-pool-web",
-  "url_suffix": "",
   "uid": 1000,
   "gid": 1000,
   "form_fields": [
@@ -69,7 +68,7 @@
     "amd64"
   ],
   "created_at": 1792501506039,
-  "updated_at": 1792501566039,
+  "updated_at": 1794005949542,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

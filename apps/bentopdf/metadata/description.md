@@ -11,7 +11,7 @@ BentoPDF includes a robust conversion engine that supports transforming images i
 Another highlight is the integrated OCR functionality, which scans and recognizes text from image-based PDFs, turning them into fully searchable documents. Metadata editing options let users refine document properties and improve organization. With all these capabilities combined, BentoPDF offers a comprehensive, user-friendly environment for creating, editing, and managing PDFs efficiently — all while maintaining the highest level of privacy and control.
 
 ## Links
-- **Upstream Version**: `2.8.10`
+- **Upstream Version**: `2.8.11`
 - **Website**: https://bentopdf.com/
 - **Source Repository**: https://github.com/alam00000/bentopdf
 - **Support**: https://github.com/alam00000/bentopdf/issues

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "invio",
-      "image": "ghcr.io/kittendevv/invio-frontend:v2.2.0",
+      "image": "ghcr.io/kittendevv/invio-frontend:v2.4.1",
       "isMain": true,
       "internalPort": 8000,
       "environment": [
@@ -26,10 +26,6 @@
         {
           "key": "ENABLE_HSTS",
           "value": "false"
-        },
-        {
-          "key": "ORIGIN",
-          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN}"
         }
       ],
       "dependsOn": [
@@ -38,7 +34,7 @@
     },
     {
       "name": "invio-backend",
-      "image": "ghcr.io/kittendevv/invio-backend:v2.2.0",
+      "image": "ghcr.io/kittendevv/invio-backend:v2.4.1",
       "environment": [
         {
           "key": "ADMIN_USER",

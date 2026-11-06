@@ -11,7 +11,7 @@ Features:
   - Multiple accounts
 
 ## Links
-- **Upstream Version**: `0.19.0`
+- **Upstream Version**: `0.20.0`
 - **Website**: https://github.com/C4illin/ConvertX
 - **Source Repository**: https://github.com/C4illin/ConvertX
 - **Support**: https://github.com/C4illin/ConvertX/issues

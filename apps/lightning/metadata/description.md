@@ -19,7 +19,7 @@ An official app from Runtipi.
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.21.4-beta`
+- **Upstream Version**: `0.21.6-beta`
 - **Website**: https://umbrel.com
 - **Source Repository**: https://github.com/getumbrel/umbrel-lightning
 - **Support**: https://community.getumbrel.com/c/bitcoin-and-lightning

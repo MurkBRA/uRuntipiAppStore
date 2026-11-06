@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "rotki",
   "description": "rotki is an open source portfolio tracking, analytics, accounting and tax reporting tool that protects your privacy.",
-  "tipi_version": 1,
-  "version": "1.44.1",
+  "tipi_version": 2,
+  "version": "1.44.2",
   "categories": [
     "finance"
   ],
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501506966,
-  "updated_at": 1792501566966,
+  "updated_at": 1794005949572,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

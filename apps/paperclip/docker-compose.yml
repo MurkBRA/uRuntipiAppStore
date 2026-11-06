@@ -1,6 +1,6 @@
 services:
   paperclip:
-    image: ghcr.io/paperclipai/paperclip:2026.1012.0
+    image: ghcr.io/paperclipai/paperclip:2026.1023.0
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data:/paperclip

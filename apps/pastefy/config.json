@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "pastefy",
   "description": "Pastefy is a user-friendly online platform that allows you to quickly and securely store and share text, code, or other notes. Perfect for developers, creatives, or anyone who needs to exchange ideas in real time, Pastefy offers a simple way to save and share content without the hassle of sending files back and forth.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "7.1.6",
   "categories": [
     "development"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501504962,
-  "updated_at": 1792501564962,
+  "updated_at": 1794005949495,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

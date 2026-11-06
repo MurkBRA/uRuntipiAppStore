@@ -18,7 +18,7 @@ Features:
   - API and Webhooks for integrations
 
 ## Links
-- **Upstream Version**: `3.3.3`
+- **Upstream Version**: `3.3.5`
 - **Website**: https://www.docuseal.com/
 - **Source Repository**: https://github.com/docusealco/docuseal
 - **Support**: https://github.com/docusealco/issues

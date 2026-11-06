@@ -14,7 +14,7 @@ Managing and monitoring your node has never been easier with transaction reports
 This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.19.0`
+- **Upstream Version**: `0.19.1`
 - **Website**: https://thunderhub.io/
 - **Source Repository**: https://github.com/apotdevin/thunderhub
 - **Support**: https://t.me/thunderhub

@@ -1,20 +1,19 @@
 services:
   invio:
-    image: ghcr.io/kittendevv/invio-frontend:v2.2.0
+    image: ghcr.io/kittendevv/invio-frontend:v2.4.1
     environment:
       - PORT=8000
       - BACKEND_URL=http://invio-backend:3000
       - COOKIE_SECURE=false
       - FRONTEND_SECURE_HEADERS_DISABLED=false
       - ENABLE_HSTS=false
-      - ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
     depends_on:
       - invio-backend
     x-runtipi:
       internal_port: 8000
       is_main: true
   invio-backend:
-    image: ghcr.io/kittendevv/invio-backend:v2.2.0
+    image: ghcr.io/kittendevv/invio-backend:v2.4.1
     volumes:
       - ${APP_DATA_DIR}/data:/app/data
     environment:

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "dumbpad",
   "description": "DumbPad is a minimal, modern notepad application built for speed and simplicity. It runs with zero fuss and stores notes as plain files.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.0.4",
   "categories": [
     "utilities",
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501494753,
-  "updated_at": 1792501554753,
+  "updated_at": 1794005949198,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

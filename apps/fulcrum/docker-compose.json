@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "fulcrum",
-      "image": "nmfretz/umbrel-fulcrum:1.0.1",
+      "image": "ghcr.io/nmfretz/umbrel-fulcrum:1.0.2",
       "isMain": true,
       "internalPort": 3006,
       "addToMainNetwork": true,

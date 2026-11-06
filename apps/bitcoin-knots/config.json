@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "bitcoin-knots",
   "description": "Take control of your digital sovereignty by choosing Bitcoin Knots to run your node! By using Knots, you’re supporting a version of Bitcoin that prioritizes efficiency, security, and flexibility. With Bitcoin Knots’ enhanced configuration options, you can fine-tune your node to help keep the network clean and resilient, actively reducing unnecessary load from spam or parasitic transactions.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.2.13",
   "categories": [
     "finance"
@@ -60,7 +60,7 @@
     "amd64"
   ],
   "created_at": 1792501489982,
-  "updated_at": 1792501549982,
+  "updated_at": 1794005949076,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

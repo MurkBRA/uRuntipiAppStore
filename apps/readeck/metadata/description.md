@@ -22,7 +22,7 @@ Readeck is a simple web application that lets you save the precious readable con
   With the exception of videos, not a single request is made from your browser to an external website.
 
 ## Links
-- **Upstream Version**: `0.23.4`
+- **Upstream Version**: `0.23.5`
 - **Website**: https://readeck.org
 - **Source Repository**: https://codeberg.org/readeck/readeck
 - **Support**: https://readeck.org/en/docs/faq

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "wingfit",
   "description": "🦾 Wingfit is a focused and thoughtfully designed fitness application that enables users to take full control of their workout routines and long-term training progress. At its core, the app provides a seamless way to create, customize, and log workouts, whether you're engaged in weightlifting, running, calisthenics, or any other type of physical activity. Users can define their own exercises and organize them into workout sessions that reflect their unique training style. Every detail of a workout can be recorded, including sets, repetitions, weights, distances, times, rest periods, and notes, allowing for precise and meaningful tracking.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "5.3.1",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501513043,
-  "updated_at": 1792501573043,
+  "updated_at": 1794005949735,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

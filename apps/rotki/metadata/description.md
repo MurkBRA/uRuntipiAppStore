@@ -13,7 +13,7 @@ It enables you to take ownership of your financial data!
 ⚠️ IMPORTANT ⚠️ Rotki is meant to be accessed locally. Hosting it on a publicly accessible machine should be avoided at all cost, unless you know what you're doing!
 
 ## Links
-- **Upstream Version**: `1.44.1`
+- **Upstream Version**: `1.44.2`
 - **Website**: https://rotki.com
 - **Source Repository**: https://github.com/rotki/rotki
 - **Support**: https://github.com/rotki/rotki/issues

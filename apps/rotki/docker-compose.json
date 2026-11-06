@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "rotki",
-      "image": "rotki/rotki:v1.44.1",
+      "image": "rotki/rotki:v1.44.2",
       "isMain": true,
       "internalPort": 80,
       "stopGracePeriod": "1m",

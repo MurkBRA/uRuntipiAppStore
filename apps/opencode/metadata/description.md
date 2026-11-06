@@ -9,7 +9,7 @@ Key features include support for multiple AI model providers (including Claude, 
 With its flexible architecture, you can use your preferred AI models while maintaining full control over your code and data. The agent understands your project structure, dependencies, and coding patterns to provide relevant and actionable suggestions.
 
 ## Links
-- **Upstream Version**: `1.19.3`
+- **Upstream Version**: `1.19.5`
 - **Website**: https://opencode.ai/
 - **Source Repository**: https://github.com/anomalyco/opencode
 - **Support**: https://github.com/anomalyco/opencode/issues

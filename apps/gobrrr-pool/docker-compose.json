@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "gobrrr-pool",
-      "image": "ghcr.io/gobrrrme/gobrrr-pool-webui:v1.2.1",
+      "image": "ghcr.io/gobrrrme/gobrrr-pool-webui:v1.2.3",
       "isMain": true,
       "internalPort": 21421,
       "addToMainNetwork": true,
@@ -68,7 +68,7 @@
     },
     {
       "name": "gobrrr-pool-ckpool",
-      "image": "ghcr.io/gobrrrme/gobrrr-ckpool:v1.2.1",
+      "image": "ghcr.io/gobrrrme/gobrrr-ckpool:v1.2.3",
       "addToMainNetwork": true,
       "stopGracePeriod": "1m",
       "environment": [

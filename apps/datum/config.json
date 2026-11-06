@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "datum",
   "description": "⚙️ Please read the important setup instructions at the bottom of this page.",
-  "tipi_version": 1,
-  "version": "v1.14",
+  "tipi_version": 2,
+  "version": "v0.5.1",
   "categories": [
     "finance"
   ],
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501493721,
-  "updated_at": 1792501553721,
+  "updated_at": 1794005949163,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

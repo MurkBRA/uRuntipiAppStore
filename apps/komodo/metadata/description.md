@@ -9,7 +9,7 @@ Built on a core-periphery architecture, Komodo consists of a central control uni
 Komodo exposes extensive REST and WebSocket APIs that empower teams to automate workflows, integrate with external tools, and customize infrastructure management processes programmatically. It also supports multi-user authentication with role-based access controls and OAuth integration, ensuring secure collaboration within teams. As a powerful alternative to Portainer, Komodo consolidates monitoring, deployment, and management capabilities into a single platform, helping organizations increase efficiency, reduce manual overhead, and maintain clear oversight of their distributed environments.
 
 ## Links
-- **Upstream Version**: `2.3.3`
+- **Upstream Version**: `2.3.4`
 - **Website**: https://komo.do/
 - **Source Repository**: https://github.com/moghtech/komodo
 - **Support**: https://github.com/moghtech/komodo/issues

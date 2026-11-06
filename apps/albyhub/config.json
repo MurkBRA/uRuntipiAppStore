@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "albyhub",
   "description": "Alby Hub is an open-source, self-custodial Bitcoin Lightning wallet, with the easiest-to-use Lightning Network node for everyone. Whether you're an individual, creator, or developer, Alby Hub is your centre for seamless Bitcoin payments.",
-  "tipi_version": 1,
-  "version": "1.24.3",
+  "tipi_version": 2,
+  "version": "1.24.6",
   "categories": [
     "finance"
   ],
@@ -48,7 +48,7 @@
     "amd64"
   ],
   "created_at": 1792501488182,
-  "updated_at": 1792501548182,
+  "updated_at": 1794005949005,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -19,7 +19,7 @@ Agent Zero is a personal, organic agentic framework that grows and learns with y
 ⚠️ **Warning:** Agent Zero can execute code. Run with caution.
 
 ## Links
-- **Upstream Version**: `v2.14`
+- **Upstream Version**: `v2.15`
 - **Website**: https://github.com/agent0ai/agent-zero
 - **Source Repository**: https://github.com/agent0ai/agent-zero
 - **Support**: https://github.com/agent0ai/agent-zero/issues

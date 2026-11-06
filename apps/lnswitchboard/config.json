@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "lnswitchboard",
   "description": "Host your own Lightning Addresses directly from your node. lnSwitchboard exposes only the public LNURL-pay endpoint while keeping its dashboard and admin routes local on port 22121.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.3.2",
   "categories": [
     "finance"
@@ -63,7 +63,7 @@
     "amd64"
   ],
   "created_at": 1792501500762,
-  "updated_at": 1792501560762,
+  "updated_at": 1794005949386,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

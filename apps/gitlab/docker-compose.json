@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "gitlab",
-      "image": "gitlab/gitlab-ce:19.5.1-ce.0",
+      "image": "gitlab/gitlab-ce:19.5.3-ce.0",
       "isMain": true,
       "internalPort": 8929,
       "hostname": "gitlab",
@@ -34,7 +34,13 @@
           "containerPort": 22,
           "tcp": true
         }
-      ]
+      ],
+      "ulimits": {
+        "nofile": {
+          "soft": 4096,
+          "hard": 8192
+        }
+      }
     }
   ]
 }

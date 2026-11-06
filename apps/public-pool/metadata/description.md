@@ -13,7 +13,7 @@ To start mining, just point your mining hardware to your Public Pool instance us
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `95565ee-ui5f730f4`
+- **Upstream Version**: `95565ee-ui5f730f4-patch.1`
 - **Website**: https://web.public-pool.io/#/
 - **Source Repository**: https://github.com/benjamin-wilson/public-pool
 - **Support**: https://github.com/benjamin-wilson/public-pool/issues

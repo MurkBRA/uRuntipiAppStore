@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "seafile",
   "description": "Seafile is an open source file sync&share solution designed for high reliability, performance and productivity. Sync, share and collaborate across devices and teams. Build your team's knowledge base with Seafile's built-in Wiki feature.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "14.0.9",
   "categories": [
     "books",
@@ -37,7 +37,7 @@
     "amd64"
   ],
   "created_at": 1792501508155,
-  "updated_at": 1792501568155,
+  "updated_at": 1794005949605,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

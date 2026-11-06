@@ -1,6 +1,6 @@
 services:
   gobrrr-pool:
-    image: ghcr.io/gobrrrme/gobrrr-pool-webui:v1.2.1
+    image: ghcr.io/gobrrrme/gobrrr-pool-webui:v1.2.3
     volumes:
       - ${APP_DATA_DIR}/data/ckpool-socket:/tmp/ckpool:ro
       - ${APP_DATA_DIR}/data/ckpool-logs:/var/log/ckpool:ro
@@ -23,7 +23,7 @@ services:
       add_to_main_network: true
       is_main: true
   gobrrr-pool-ckpool:
-    image: ghcr.io/gobrrrme/gobrrr-ckpool:v1.2.1
+    image: ghcr.io/gobrrrme/gobrrr-ckpool:v1.2.3
     ports:
       - 21420:3333/tcp
       - 21422:4444/tcp

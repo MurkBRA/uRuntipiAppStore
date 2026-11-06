@@ -23,7 +23,7 @@ The **Gitea Access Token** should have the following permissions:
   - write:organization (optional)
 
 ## Links
-- **Upstream Version**: `3.43.0`
+- **Upstream Version**: `3.51.2`
 - **Website**: https://github.com/raylabshq/gitea-mirror
 - **Source Repository**: https://github.com/raylabshq/gitea-mirror
 - **Support**: https://github.com/raylabshq/gitea-mirror/issues

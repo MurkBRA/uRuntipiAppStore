@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "transmute",
   "description": "Transmute is a file conversion app for turning files into different formats through a clean and simple interface. It supports a wide range of file types, including images, videos, audio files, documents, structured data, spreadsheets, subtitles, fonts, and diagrams.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.1.1",
   "categories": [
     "utilities",
@@ -30,7 +30,7 @@
     "amd64"
   ],
   "created_at": 1792501511691,
-  "updated_at": 1792501571691,
+  "updated_at": 1794005949698,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

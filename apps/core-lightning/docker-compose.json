@@ -151,7 +151,7 @@
     },
     {
       "name": "core-lightning-lightningd",
-      "image": "elementsproject/lightningd:v26.06.9",
+      "image": "elementsproject/lightningd:v26.06.10",
       "addToMainNetwork": true,
       "command": [
         "--bitcoin-rpcconnect=${APP_BITCOIN_NODE_IP}",

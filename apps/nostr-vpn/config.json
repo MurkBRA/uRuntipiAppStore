@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "nostr-vpn",
   "description": "Nostr VPN turns your Runtipi into a private mesh VPN node for your own devices and trusted groups. Approve signed join-request QRs, manage peers, and route traffic through trusted exit nodes without relying on a hosted VPN provider or a central control server.",
-  "tipi_version": 1,
-  "version": "v4.1.18",
+  "tipi_version": 2,
+  "version": "v4.1.20",
   "categories": [
     "network",
     "security"
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501503232,
-  "updated_at": 1792501563232,
+  "updated_at": 1794005949447,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

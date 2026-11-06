@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "btcpay-server",
-      "image": "btcpayserver/btcpayserver:2.4.5",
+      "image": "btcpayserver/btcpayserver:2.4.7",
       "isMain": true,
       "internalPort": 3003,
       "addToMainNetwork": true,
@@ -89,7 +89,7 @@
     },
     {
       "name": "btcpay-server-nbxplorer",
-      "image": "nicolasdorier/nbxplorer:2.6.19",
+      "image": "nicolasdorier/nbxplorer:2.6.21",
       "addToMainNetwork": true,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",

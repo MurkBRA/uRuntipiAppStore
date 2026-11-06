@@ -1,6 +1,6 @@
 services:
   airtrail:
-    image: johly/airtrail:v3.13.0
+    image: johly/airtrail:v3.14.0
     volumes:
       - ${APP_DATA_DIR}/data/uploads:/app/uploads
     environment:

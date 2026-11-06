@@ -18,7 +18,7 @@ Set custom balance alerts (equal, less than, or more than) to monitor your holdi
 This package integrates with **electrs** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `1.7.0`
+- **Upstream Version**: `1.7.1`
 - **Website**: https://github.com/schjonhaug/canary
 - **Source Repository**: https://github.com/schjonhaug/canary
 - **Support**: https://github.com/schjonhaug/canary/issues

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "ee-gateway",
   "description": "EE Gateway turns your Runtipi into a self-hosted Bluetooth gateway for open BLE networks.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.6.5",
   "categories": [
     "network"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501494848,
-  "updated_at": 1792501554848,
+  "updated_at": 1794005949200,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

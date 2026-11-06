@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "rusty-kaspad",
   "description": "Rusty Kaspad is a Rust implementation of a Kaspa full node. This node software provides essential Kaspa network services including peer-to-peer networking and RPC functionality.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.4.1",
   "categories": [
     "finance"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501507231,
-  "updated_at": 1792501567231,
+  "updated_at": 1794005949580,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

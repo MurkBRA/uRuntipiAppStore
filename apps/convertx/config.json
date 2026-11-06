@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "convertx",
   "description": "ConvertX is a self-hosted file converter. Supports over a thousand different formats.",
-  "tipi_version": 1,
-  "version": "0.19.0",
+  "tipi_version": 2,
+  "version": "0.20.0",
   "categories": [
     "utilities",
     "data"
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501493119,
-  "updated_at": 1792501553119,
+  "updated_at": 1794005949150,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

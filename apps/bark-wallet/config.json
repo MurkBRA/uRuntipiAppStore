@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "bark-wallet",
   "description": "Send and receive bitcoin across Lightning, Ark, and on-chain from a single, simple wallet. Bark Wallet is self-custodial with no channels to open or liquidity to manage. Just install the wallet and start making payments.",
-  "tipi_version": 2,
-  "version": "0.9.0",
+  "tipi_version": 3,
+  "version": "0.10.0",
   "categories": [
     "finance"
   ],
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501488876,
-  "updated_at": 1792665337009,
+  "updated_at": 1794005949029,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

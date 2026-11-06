@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "komodo",
   "description": "🦎 Komodo is an open-source platform focused on streamlining and automating the management of servers, application builds, deployments, and containerized environments. It offers a unified interface that enables users to monitor critical system metrics such as CPU load, memory consumption, and disk usage across multiple servers, providing comprehensive operational visibility. A key feature of Komodo is its ability to manage Docker containers and Docker Compose applications, delivering real-time insights into their status, logs, and uptime. This detailed container management simplifies troubleshooting and operational oversight, making it easier for teams to maintain and optimize their deployments.",
-  "tipi_version": 1,
-  "version": "2.3.3",
+  "tipi_version": 2,
+  "version": "2.3.4",
   "categories": [
     "development"
   ],
@@ -47,7 +47,7 @@
     "amd64"
   ],
   "created_at": 1792501499320,
-  "updated_at": 1792501559320,
+  "updated_at": 1794005949336,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

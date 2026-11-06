@@ -19,7 +19,7 @@ Etherpad has gained popularity in academic, business, and development environmen
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `3.3.9`
+- **Upstream Version**: `3.3.15`
 - **Website**: https://etherpad.org/
 - **Source Repository**: https://github.com/ether/etherpad
 - **Support**: https://github.com/ether/etherpad/issues

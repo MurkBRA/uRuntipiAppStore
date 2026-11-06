@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "jotty",
-      "image": "ghcr.io/fccview/jotty:1.28.0",
+      "image": "ghcr.io/fccview/jotty:1.29.2",
       "isMain": true,
       "internalPort": 3000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
@@ -11,6 +11,10 @@
         {
           "key": "NODE_ENV",
           "value": "production"
+        },
+        {
+          "key": "INTERNAL_API_URL",
+          "value": "http://localhost:3000"
         }
       ],
       "volumes": [

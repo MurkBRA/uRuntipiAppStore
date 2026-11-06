@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "morphos",
   "description": "Today we are forced to rely on third party services to convert files to other formats. This is a serious threat to our privacy, if we use such services to convert files with  highly sensitive personal data. It can be used against us, sooner or later.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.6.0",
   "categories": [
     "photography",
@@ -22,7 +22,7 @@
     "amd64"
   ],
   "created_at": 1792501502241,
-  "updated_at": 1792501562241,
+  "updated_at": 1794005949422,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

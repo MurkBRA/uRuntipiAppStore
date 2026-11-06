@@ -8,15 +8,12 @@ As part of a federation, you participate in the consensus with other guardians. 
 
 Manifold Fedimint Guardian is part of Manifold, the protocol for accelerating the deployment and decentralisation of Fedimint federations.
 
-## Default Credentials
-- **Password**: Stored on your host in `${APP_DATA_DIR}/data/admin-password` (generated during guardian provisioning).
-
 ## Inter-App Connections
 
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.1.6`
+- **Upstream Version**: `0.1.11`
 - **Website**: https://manifold.fedi.xyz/
 - **Source Repository**: https://github.com/fedibtc/manifold
 - **Support**: https://support.fedi.xyz/

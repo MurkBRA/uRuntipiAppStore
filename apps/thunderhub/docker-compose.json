@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "thunderhub",
-      "image": "apotdevin/thunderhub:0.19.0",
+      "image": "apotdevin/thunderhub:0.19.1",
       "isMain": true,
       "internalPort": 3000,
       "addToMainNetwork": true,

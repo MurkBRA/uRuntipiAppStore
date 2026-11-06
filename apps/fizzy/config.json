@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "fizzy",
   "description": "Fizzy is a fresh, modern, and delightfully simple Kanban board from 37signals (the makers of Basecamp and HEY).",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "5f45e54",
   "categories": [
     "social"
@@ -41,7 +41,7 @@
     "amd64"
   ],
   "created_at": 1792501495985,
-  "updated_at": 1792501555985,
+  "updated_at": 1794005949237,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }
