@@ -1,0 +1,160 @@
+name: Full Store Smoke Test & Container Logs
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Test mode"
+        required: true
+        default: "all-sharded"
+        type: choice
+        options:
+          - "all-sharded"
+          - "custom"
+      apps:
+        description: "Comma-separated list of apps (only if mode is 'custom', e.g. 'airtrail,vaultwarden')"
+        required: false
+        default: ""
+      wait_seconds:
+        description: "Wait seconds for container bootstrap"
+        required: false
+        default: "12"
+      prune:
+        description: "Prune docker images after each app to conserve disk space"
+        type: boolean
+        default: true
+
+jobs:
+  smoke-test-matrix:
+    name: Shard ${{ matrix.shard }}/10
+    if: inputs.mode == 'all-sharded'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Shard ${{ matrix.shard }}/10 Smoke Test
+        run: |
+          PRUNE_FLAG="${{ inputs.prune && '--prune' || '' }}"
+          node --experimental-strip-types scripts/smoke-test.ts \
+            --all \
+            --shard=${{ matrix.shard }}/10 \
+            --logs-dir=logs/shard-${{ matrix.shard }} \
+            --wait=${{ inputs.wait_seconds || 12 }} \
+            --report-json=report-shard-${{ matrix.shard }}.json \
+            --report-md=summary-shard-${{ matrix.shard }}.md \
+            $PRUNE_FLAG
+
+      - name: Upload Shard Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-logs-shard-${{ matrix.shard }}
+          path: logs/shard-${{ matrix.shard }}/
+          retention-days: 14
+
+      - name: Upload Shard Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: report-shard-${{ matrix.shard }}
+          path: report-shard-${{ matrix.shard }}.json
+          retention-days: 14
+
+      - name: Append to Job Step Summary
+        if: always()
+        run: |
+          if [ -f summary-shard-${{ matrix.shard }}.md ]; then
+            cat summary-shard-${{ matrix.shard }}.md >> $GITHUB_STEP_SUMMARY
+          fi
+
+  smoke-test-custom:
+    name: Custom Smoke Test
+    if: inputs.mode == 'custom'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Custom Smoke Test
+        run: |
+          PRUNE_FLAG="${{ inputs.prune && '--prune' || '' }}"
+          node --experimental-strip-types scripts/smoke-test.ts \
+            --apps="${{ inputs.apps }}" \
+            --logs-dir=logs/custom \
+            --wait=${{ inputs.wait_seconds || 12 }} \
+            --report-json=report-custom.json \
+            --report-md=summary-custom.md \
+            $PRUNE_FLAG
+
+      - name: Upload Custom Logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-logs-custom
+          path: logs/custom/
+          retention-days: 14
+
+      - name: Append to Job Step Summary
+        if: always()
+        run: |
+          if [ -f summary-custom.md ]; then
+            cat summary-custom.md >> $GITHUB_STEP_SUMMARY
+          fi
+
+  aggregate-logs-and-report:
+    name: Consolidate Logs & Summary
+    needs: [smoke-test-matrix, smoke-test-custom]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all log artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts-downloaded/
+
+      - name: Consolidate logs and build master report
+        run: |
+          mkdir -p consolidated-logs
+          find artifacts-downloaded/ -name "*.log" -exec cp {} consolidated-logs/ \;
+          TOTAL_LOGS=$(find consolidated-logs/ -name "*.log" | wc -l)
+          echo "Consolidated $TOTAL_LOGS container logs."
+          zip -r all-container-logs.zip consolidated-logs/
+
+          echo "## 📦 Complete Store Smoke Test & Container Logs" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Total Logs Captured**: $TOTAL_LOGS" >> $GITHUB_STEP_SUMMARY
+          echo "- All container logs are archived in the downloadable artifact: **all-container-logs**" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+      - name: Upload Unified Logs ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: all-container-logs
+          path: all-container-logs.zip
+          retention-days: 30
