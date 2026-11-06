@@ -45,26 +45,45 @@ jobs:
       - name: Run full test & schema validation suite
         run: npm test
 
-      - name: Check for changes and classify PR labels
+      - name: Check for changes and classify updates
         id: diff_check
         run: |
           rm -rf .tmp
-          if [ -z "$(git status --porcelain apps/ blacklist.json README.md)" ]; then
+          if [ -z "$(git status --porcelain apps/ blacklist.json README.md state/)" ]; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
-            NEW_APPS=$(git status --porcelain apps/ | grep '^?? apps/' | wc -l || true)
+            NEW_APPS=$(git status --porcelain 'apps/*/config.json' | grep '^?? ' | wc -l || true)
             if [ "$NEW_APPS" -gt 0 ]; then
+              echo "is_new_app=true" >> $GITHUB_OUTPUT
               echo "labels=type:new-app,needs-review" >> $GITHUB_OUTPUT
-              echo "pr_title=feat(store): sync new apps and updates from UmbrelOS App Store" >> $GITHUB_OUTPUT
+              echo "pr_title=feat(store): sync new apps from UmbrelOS App Store" >> $GITHUB_OUTPUT
             else
+              echo "is_new_app=false" >> $GITHUB_OUTPUT
               echo "labels=type:version-bump,automerge" >> $GITHUB_OUTPUT
               echo "pr_title=chore(deps): automated version bump sync from UmbrelOS App Store" >> $GITHUB_OUTPUT
             fi
           fi
 
-      - name: Create Automated Pull Request
+      - name: Docker Compose Validation & Smoke Test on updated apps (Layers 4 & 5)
         if: steps.diff_check.outputs.has_changes == 'true'
+        run: npm run test:smoke -- --changed
+
+      - name: Automatically commit and push version bumps directly to main
+        if: steps.diff_check.outputs.has_changes == 'true' && steps.diff_check.outputs.is_new_app == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add apps/ blacklist.json README.md state/
+          git commit -m "${{ steps.diff_check.outputs.pr_title }}"
+          git push origin main || {
+            echo "Direct push to main was blocked. Pushing to automation/umbrel-sync branch..."
+            git checkout -b automation/umbrel-sync
+            git push --force origin automation/umbrel-sync
+          }
+
+      - name: Create Automated Pull Request for new apps requiring review
+        if: steps.diff_check.outputs.has_changes == 'true' && steps.diff_check.outputs.is_new_app == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -74,8 +93,10 @@ jobs:
           title: ${{ steps.diff_check.outputs.pr_title }}
           body: |
             ## Automated UmbrelOS $\rightarrow$ Runtipi Store Sync
-            This PR was automatically generated and validated by the `uRuntipiAppStore` transpiler pipeline:
+            This PR introduces brand-new apps ported from UmbrelOS that require maintainer review:
             - Passed Layer 1 (Transpiler Unit Tests)
             - Passed Layer 2 (`@runtipi/common` & AJV Schema Validation)
             - Passed Layer 3 (Anti-Duplication Blacklist, Port Uniqueness, Zero-Leak & JPEG Header Tests)
+            - Passed Layer 4 (Docker Compose Syntax & Interpolation Validation)
+            - Passed Layer 5 (Docker Compose Pull & Live Smoke Tests)
           labels: ${{ steps.diff_check.outputs.labels }}

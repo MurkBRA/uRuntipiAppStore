@@ -419,9 +419,15 @@ Access at umbrel.local:8080.
     });
 
     expect(res.formFields.some((f) => f.env_variable === "APP_PASSWORD")).toBe(false);
-    expect(res.formFields.some((f) => f.env_variable === "APP_ENCRYPTION_KEY" && f.label === "SampleApp encryption key")).toBe(true);
-    expect(res.formFields.some((f) => f.env_variable === "APP_SECRET_KEY" && f.label === "SampleApp secret key")).toBe(true);
-    expect(res.formFields.some((f) => f.env_variable === "APP_JWT_SECRET" && f.label === "SampleApp JWT secret")).toBe(true);
+    expect(
+      res.formFields.some((f) => f.env_variable === "APP_ENCRYPTION_KEY" && f.label === "SampleApp encryption key"),
+    ).toBe(true);
+    expect(res.formFields.some((f) => f.env_variable === "APP_SECRET_KEY" && f.label === "SampleApp secret key")).toBe(
+      true,
+    );
+    expect(res.formFields.some((f) => f.env_variable === "APP_JWT_SECRET" && f.label === "SampleApp JWT secret")).toBe(
+      true,
+    );
 
     const appSvc = res.composeJson.services.find((s: any) => s.name === "sample");
     const encEntry = appSvc.environment.find((e: any) => e.key === "ENCRYPTION_KEY");
@@ -503,7 +509,9 @@ Access at umbrel.local:8080.
     });
 
     expect(res.formFields.some((f) => f.env_variable === "APP_PASSWORD")).toBe(false);
-    expect(res.formFields.some((f) => f.env_variable === "APP_RTSP_PASSWORD" && f.label === "Frigate RTSP password")).toBe(true);
+    expect(
+      res.formFields.some((f) => f.env_variable === "APP_RTSP_PASSWORD" && f.label === "Frigate RTSP password"),
+    ).toBe(true);
     const frigateSvc = res.composeJson.services.find((s: any) => s.name === "frigate");
     const rtspEnv = frigateSvc.environment.find((e: any) => e.key === "FRIGATE_RTSP_PASSWORD");
     expect(rtspEnv.value).toBe("${APP_RTSP_PASSWORD:-${APP_PASSWORD}}");

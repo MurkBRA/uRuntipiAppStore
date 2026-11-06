@@ -26,14 +26,6 @@ jobs:
       - name: Run Unit & App Store Tests (Layers 1, 2 & 3)
         run: npm test
 
-      - name: Validate Docker Compose syntax on changed apps (Layer 4)
+      - name: Docker Compose Validation & Smoke Test on changed apps (Layers 4 & 5)
         if: github.event_name == 'pull_request'
-        run: |
-          CHANGED_APPS=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep '^apps/[^_]*/' | cut -d/ -f2 | sort -u || true)
-          for app in $CHANGED_APPS; do
-            if [ -f "apps/$app/docker-compose.yml" ]; then
-              echo "Validating docker compose config for $app..."
-              APP_DATA_DIR="/tmp/app-data/$app" APP_DOMAIN="localhost" APP_PROTOCOL="http" LOCAL_DOMAIN="tipi.local" INTERNAL_IP="127.0.0.1" \
-                docker compose -f "apps/$app/docker-compose.yml" config -q
-            fi
-          done
+        run: npm run test:smoke -- --base=origin/${{ github.base_ref }}

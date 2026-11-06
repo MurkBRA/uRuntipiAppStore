@@ -1,5 +1,5 @@
-import crypto from "node:crypto";
 import { execFileSync } from "node:child_process";
+import crypto from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -88,11 +88,9 @@ function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string })
   if (!fs.existsSync(galleryDir)) {
     fs.mkdirSync(path.dirname(galleryDir), { recursive: true });
     console.log(`Cloning getumbrel/umbrel-apps-gallery into ${galleryDir}...`);
-    execFileSync(
-      "git",
-      ["clone", "--depth", "1", "https://github.com/getumbrel/umbrel-apps-gallery.git", galleryDir],
-      { stdio: "inherit" },
-    );
+    execFileSync("git", ["clone", "--depth", "1", "https://github.com/getumbrel/umbrel-apps-gallery.git", galleryDir], {
+      stdio: "inherit",
+    });
   }
 
   return { umbrelDir, galleryDir };
@@ -242,12 +240,7 @@ export async function runSync() {
       copyAndPrepareAppDataFiles(srcAppDir, destAppDir, appId, transpiled.serviceRenameMap);
 
       // Generate 512x512 JPEG logo
-      await generateAppLogo(
-        appId,
-        String(manifest.name || appId),
-        galleryDir,
-        path.join(destMetadataDir, "logo.jpg"),
-      );
+      await generateAppLogo(appId, String(manifest.name || appId), galleryDir, path.join(destMetadataDir, "logo.jpg"));
 
       syncState.apps[appId] = {
         tipi_version: tipiVersion,

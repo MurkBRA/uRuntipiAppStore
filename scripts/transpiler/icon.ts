@@ -6,9 +6,7 @@ function generateFallbackSvg(appName: string, appId: string): Buffer {
   const cleanName = (appName || appId).replace(/[^A-Za-z0-9 ]/g, "").trim();
   const words = cleanName.split(/\s+/).filter(Boolean);
   const initials =
-    words.length >= 2
-      ? `${words[0][0]}${words[1][0]}`.toUpperCase()
-      : (cleanName.slice(0, 2) || "AP").toUpperCase();
+    words.length >= 2 ? `${words[0][0]}${words[1][0]}`.toUpperCase() : (cleanName.slice(0, 2) || "AP").toUpperCase();
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
     <defs>

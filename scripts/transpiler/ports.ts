@@ -6,7 +6,10 @@ export class PortAllocator {
   private usedPorts = new Set<number>(SYSTEM_RESERVED_PORTS);
   private allocatedByApp = new Map<string, number>();
 
-  constructor(reservedRuntipiPorts: Array<{ port: number; runtipi_id: string }>, existingAllocations?: Record<string, number>) {
+  constructor(
+    reservedRuntipiPorts: Array<{ port: number; runtipi_id: string }>,
+    existingAllocations?: Record<string, number>,
+  ) {
     for (const entry of reservedRuntipiPorts) {
       if (Number.isInteger(entry.port) && entry.port > 0) {
         this.usedPorts.add(entry.port);

@@ -30,7 +30,9 @@ async function validateJson() {
     return;
   }
 
-  const appEntries = fs.readdirSync(appsDir, { withFileTypes: true }).filter((d) => d.isDirectory() && !d.name.startsWith("__"));
+  const appEntries = fs
+    .readdirSync(appsDir, { withFileTypes: true })
+    .filter((d) => d.isDirectory() && !d.name.startsWith("__"));
 
   let hasErrors = false;
   let validatedComposeCount = 0;
@@ -81,7 +83,9 @@ async function validateJson() {
   if (hasErrors) {
     process.exit(1);
   } else {
-    console.log(`All JSON files are valid! (${validatedConfigCount} config.json, ${validatedComposeCount} docker-compose.json)`);
+    console.log(
+      `All JSON files are valid! (${validatedConfigCount} config.json, ${validatedComposeCount} docker-compose.json)`,
+    );
   }
 }
 

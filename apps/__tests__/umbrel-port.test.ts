@@ -207,8 +207,14 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
 
         if (id === "bffless") {
           // bffless nginx container requires DNS hostname "backend" to resolve upstream backend:3000
-          expect(composeYml.services.backend, "bffless must retain 'backend' service name for nginx upstream").toBeDefined();
-          expect(composeYml.services["bffless-backend"], "bffless must not rename backend to bffless-backend").toBeUndefined();
+          expect(
+            composeYml.services.backend,
+            "bffless must retain 'backend' service name for nginx upstream",
+          ).toBeDefined();
+          expect(
+            composeYml.services["bffless-backend"],
+            "bffless must not rename backend to bffless-backend",
+          ).toBeUndefined();
           expect(composeYml.services.bffless.depends_on).toContain("backend");
           expect(composeJson.services.some((s: any) => s.name === "backend")).toBe(true);
           expect(composeJson.services.some((s: any) => s.name === "bffless-backend")).toBe(false);
