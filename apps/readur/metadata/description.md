@@ -17,7 +17,7 @@ Overall, Readur leverages intelligent OCR and efficient document processing to p
 - **Password**: `readur2024`
 
 ## Links
-- **Upstream Version**: `3.1.0`
+- **Upstream Version**: `3.1.2`
 - **Website**: https://github.com/readur/readur
 - **Source Repository**: https://github.com/readur/readur
 - **Support**: https://github.com/readur/readur/issues

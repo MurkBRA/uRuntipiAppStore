@@ -13,7 +13,7 @@ Pyload has a fully featured and well documented Application Programming Interfac
 - **Password**: `pyload`
 
 ## Links
-- **Upstream Version**: `0.5.0-patch.1`
+- **Upstream Version**: `0.5.0-0b3.dev102`
 - **Website**: https://pyload.net/
 - **Source Repository**: https://github.com/pyload/pyload/
 - **Support**: https://github.com/pyload/pyload/issues

@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "endurain",
   "description": "Endurain is a self-hosted fitness tracking service designed to give users full control over their data and hosting environment.",
-  "tipi_version": 2,
-  "version": "0.20.1",
+  "tipi_version": 3,
+  "version": "0.20.2",
   "categories": [
     "social"
   ],
@@ -36,7 +36,7 @@
     "amd64"
   ],
   "created_at": 1792501495476,
-  "updated_at": 1792665339505,
+  "updated_at": 1794005949218,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

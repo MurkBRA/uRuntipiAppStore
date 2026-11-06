@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "endurain",
-      "image": "ghcr.io/endurain-project/endurain:v0.20.1",
+      "image": "ghcr.io/endurain-project/endurain:v0.20.2",
       "isMain": true,
       "internalPort": 8080,
       "environment": [

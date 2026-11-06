@@ -21,7 +21,7 @@ Use as a standalone app OR as a framework, that you can extend via Go and JavaSc
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `0.40.5`
+- **Upstream Version**: `0.40.6`
 - **Website**: https://pocketbase.io/
 - **Source Repository**: https://github.com/pocketbase/pocketbase
 - **Support**: https://github.com/pocketbase/pocketbase/discussions

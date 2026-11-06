@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "miner-sentinel",
   "description": "MinerSentinel is a self-hosted monitoring solution for Bitcoin home miners. It unifies Bitaxe, Avalon, NMAxe, NerdNOS, and other makes into one device registry and dashboard for fleet performance, hardware health, pool stats, cost analysis, Activity alerts, and per-device Controls—with all data stored locally.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.2.0",
   "categories": [
     "finance"
@@ -42,7 +42,7 @@
     "amd64"
   ],
   "created_at": 1792501502104,
-  "updated_at": 1792501562104,
+  "updated_at": 1794005949414,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

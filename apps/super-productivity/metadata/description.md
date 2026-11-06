@@ -27,7 +27,7 @@ Key features include:
 Super Productivity is designed for those who want to boost their productivity while maintaining control over their data. It's perfect for individuals who prefer a simple yet powerful tool, and teams that need seamless task and project management without relying on complex software. Available for Windows, macOS, Linux, and as a web app, Super Productivity is a versatile tool that fits into your workflow, whether you're working solo or collaborating with others.
 
 ## Links
-- **Upstream Version**: `19.2.0`
+- **Upstream Version**: `19.3.1`
 - **Website**: https://super-productivity.com/
 - **Source Repository**: https://github.com/johannesjo/super-productivity
 - **Support**: https://github.com/johannesjo/super-productivity/issues

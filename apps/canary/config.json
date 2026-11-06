@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "canary",
   "description": "A canary in the cold mine. When your bitcoins are in cold storage, you seldom check on them.",
-  "tipi_version": 1,
-  "version": "1.7.0",
+  "tipi_version": 2,
+  "version": "1.7.1",
   "categories": [
     "finance"
   ],
@@ -75,7 +75,7 @@
     "amd64"
   ],
   "created_at": 1792501492074,
-  "updated_at": 1792501552074,
+  "updated_at": 1794005949132,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

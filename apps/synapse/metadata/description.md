@@ -17,7 +17,7 @@ To get started, install the "Element" app on your Runtipi, or install any other 
 For seamless connection even when your client isn't connected to the same network as your Runtipi, simply install the "Tailscale" app on your Runtipi and your client device, and use http://umbrel:8008 as the address of your server.
 
 ## Links
-- **Upstream Version**: `1.163.0`
+- **Upstream Version**: `1.164.2`
 - **Website**: https://element-hq.github.io/synapse/latest/
 - **Source Repository**: https://github.com/element-hq/synapse
 - **Support**: https://github.com/element-hq/synapse/issues

@@ -1,6 +1,6 @@
 services:
   jotty:
-    image: ghcr.io/fccview/jotty:1.28.0
+    image: ghcr.io/fccview/jotty:1.29.2
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/app:/app/data
@@ -8,6 +8,7 @@ services:
       - ${APP_DATA_DIR}/data/cache:/app/.next/cache
     environment:
       - NODE_ENV=production
+      - INTERNAL_API_URL=http://localhost:3000
     x-runtipi:
       internal_port: 3000
       is_main: true

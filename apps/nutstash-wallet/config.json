@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "nutstash-wallet",
   "description": "What is Cashu? \"Cashu is a free and open-source Chaumian ecash system built for Bitcoin. Cashu offers near-perfect privacy for users of custodial Bitcoin applications. Nobody needs to knows who you are, how much funds you have, and with whom you transact with.\" - cashu.space",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.1.10",
   "categories": [
     "finance"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501503434,
-  "updated_at": 1792501563434,
+  "updated_at": 1794005949454,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

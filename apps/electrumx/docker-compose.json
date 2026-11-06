@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "electrumx",
-      "image": "ghcr.io/getumbrel/umbrel-electrumx:1.0.0",
+      "image": "ghcr.io/getumbrel/umbrel-electrumx:1.0.1",
       "isMain": true,
       "internalPort": 3007,
       "addToMainNetwork": true,

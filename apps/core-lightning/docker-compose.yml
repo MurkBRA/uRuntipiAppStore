@@ -43,7 +43,7 @@ services:
       add_to_main_network: true
       is_main: true
   core-lightning-lightningd:
-    image: elementsproject/lightningd:v26.06.9
+    image: elementsproject/lightningd:v26.06.10
     command:
       - '--bitcoin-rpcconnect=${APP_BITCOIN_NODE_IP}'
       - '--bitcoin-rpcuser=${APP_BITCOIN_RPC_USER}'

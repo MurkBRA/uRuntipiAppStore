@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "mailflow",
   "description": "MailFlow is a self-hosted unified webmail client. Connect multiple IMAP/SMTP accounts such as Gmail, iCloud, Outlook, or custom mail servers and read them in one web interface.",
-  "tipi_version": 2,
-  "version": "4.0.3",
+  "tipi_version": 3,
+  "version": "4.3.0",
   "categories": [
     "network"
   ],
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501501136,
-  "updated_at": 1792665342378,
+  "updated_at": 1794005949395,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

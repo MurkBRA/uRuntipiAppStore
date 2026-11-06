@@ -1,6 +1,6 @@
 services:
   lightning:
-    image: getumbrel/umbrel-lightning:v1.3.2
+    image: getumbrel/umbrel-lightning:v1.3.3
     volumes:
       - ${APP_DATA_DIR}/data/data/lnd:/data/.lnd
       - ${APP_DATA_DIR}/data/lightning:/data
@@ -33,7 +33,7 @@ services:
       add_to_main_network: true
       is_main: true
   lightning-lnd:
-    image: lightninglabs/lnd:v0.21.4-beta
+    image: lightninglabs/lnd:v0.21.6-beta
     command: ${APP_LIGHTNING_COMMAND}
     user: ${APP_CONTAINER_USER:-1000:1000}
     hostname: ${APP_DOMAIN}

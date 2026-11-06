@@ -11,7 +11,7 @@ For authentication and user management, Donetick supports Single Sign-On (SSO) a
 With its combination of automation, smart scheduling, and collaborative task sharing, Donetick provides a powerful and user-friendly solution for managing household and group responsibilities.
 
 ## Links
-- **Upstream Version**: `0.1.83`
+- **Upstream Version**: `0.1.86`
 - **Website**: https://donetick.com/
 - **Source Repository**: https://github.com/donetick/donetick
 - **Support**: https://github.com/donetick/donetick/issues

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "thelounge",
   "description": "The Lounge is a modern, open-source, web-based IRC (Internet Relay Chat) client that offers persistent connectivity, allowing users to remain connected to IRC servers even while offline, and provides a responsive interface compatible with desktops, smartphones, and tablets.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "4.4.3",
   "categories": [
     "social"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501511141,
-  "updated_at": 1792501571141,
+  "updated_at": 1794005949683,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

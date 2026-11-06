@@ -11,7 +11,7 @@ This is not a Bitcoin full node and does not download the Bitcoin blockchain.
 Treat the pairing code like a password. Anyone who has it can pair with your node and control trades.
 
 ## Links
-- **Upstream Version**: `2.1.14.0`
+- **Upstream Version**: `2.1.15.0`
 - **Website**: https://bisq.network
 - **Source Repository**: https://github.com/bisq-network/bisq2
 - **Support**: https://github.com/bisq-network/bisq-mobile/issues

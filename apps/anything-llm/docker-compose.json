@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "anything-llm",
-      "image": "mintplexlabs/anythingllm:1.18.0",
+      "image": "mintplexlabs/anythingllm:1.19.0",
       "isMain": true,
       "internalPort": 3001,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

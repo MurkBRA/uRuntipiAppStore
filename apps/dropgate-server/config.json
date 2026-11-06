@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "dropgate-server",
   "description": "**Dropgate** is a modern, privacy-respecting file sharing system designed to be easy to self-host and easy to use.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "3.0.13",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501494523,
-  "updated_at": 1792501554523,
+  "updated_at": 1794005949193,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

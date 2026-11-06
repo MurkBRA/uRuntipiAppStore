@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "specter-desktop",
   "description": "Specter Desktop can be used to connect to the Bitcoin Core running on your Runtipi or an Electrum Server. It functions as a watch-only coordinator for multi-signature and single-key Bitcoin wallets. At the moment Specter Desktop is working with all major hardware wallets including:",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v2.1.11",
   "categories": [
     "finance"
@@ -51,7 +51,7 @@
     "amd64"
   ],
   "created_at": 1792501509650,
-  "updated_at": 1792501569650,
+  "updated_at": 1794005949639,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

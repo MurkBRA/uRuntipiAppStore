@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "airtrail",
   "description": "A web application that allows users to track their flights and view their flight history.",
-  "tipi_version": 1,
-  "version": "3.13.0",
+  "tipi_version": 2,
+  "version": "3.14.0",
   "categories": [
     "utilities",
     "data"
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501487987,
-  "updated_at": 1792501547987,
+  "updated_at": 1794005948994,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

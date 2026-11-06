@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "bisq2-node",
-      "image": "ghcr.io/bisq-network/bisq2-api:2.1.14.0",
+      "image": "ghcr.io/bisq-network/bisq2-api:2.1.15.0",
       "isMain": true,
       "internalPort": 8091,
       "stopGracePeriod": "1m",
@@ -16,7 +16,7 @@
     },
     {
       "name": "bisq2-node-web",
-      "image": "ghcr.io/bisq-network/bisq2-api-web-ui:2.1.14.0",
+      "image": "ghcr.io/bisq-network/bisq2-api-web-ui:2.1.15.0",
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data",

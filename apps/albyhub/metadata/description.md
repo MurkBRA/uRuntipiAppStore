@@ -18,7 +18,7 @@ USEFUL LINKS
   - List of apps and projects that use NWC protocol - https://github.com/getAlby/awesome-nwc
 
 ## Links
-- **Upstream Version**: `1.24.3`
+- **Upstream Version**: `1.24.6`
 - **Website**: https://albyhub.com
 - **Source Repository**: https://github.com/getAlby/hub
 - **Support**: https://support.getalby.com

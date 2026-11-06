@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "btcpay-server",
   "description": "BTCPay Server is a payment processor that allows you to receive payments in Bitcoin (and altcoins) directly, with no fees, transaction cost or a middleman. It is a non-custodial invoicing system which eliminates the involvement of a third-party.",
-  "tipi_version": 1,
-  "version": "2.4.5",
+  "tipi_version": 2,
+  "version": "2.4.7",
   "categories": [
     "finance"
   ],
@@ -113,7 +113,7 @@
     "amd64"
   ],
   "created_at": 1792501491490,
-  "updated_at": 1792501551490,
+  "updated_at": 1794005949120,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

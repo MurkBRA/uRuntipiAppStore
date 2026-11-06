@@ -13,7 +13,7 @@ Sure also comes with a built-in AI assistant that can analyze your finances, for
 Built on a foundation of radical transparency, Sure is fully open-source. You can review the code, contribute to its development, or even self-host it for complete control. Your data is protected with strong encryption and secure authentication, because your financial privacy matters.
 
 ## Links
-- **Upstream Version**: `0.7.5`
+- **Upstream Version**: `0.7.6`
 - **Website**: https://sure.am
 - **Source Repository**: https://github.com/we-promise/sure
 - **Support**: https://github.com/we-promise/sure/discussions

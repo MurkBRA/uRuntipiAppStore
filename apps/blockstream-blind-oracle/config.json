@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "blockstream-blind-oracle",
   "description": "Run a personal blind oracle to encrypt the wallet material on your  Blockstream Jade.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.0.36",
   "categories": [
     "finance"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501490707,
-  "updated_at": 1792501550707,
+  "updated_at": 1794005949103,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

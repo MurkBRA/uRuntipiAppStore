@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "gitingest",
   "description": "Gitingest is an open-source tool that converts Git repositories into structured, LLM-friendly text summaries, making it easier to analyze and process code with AI models like ChatGPT and Claude. By simply replacing \"github.com\" with \"gitingest.com\" in any repository URL, users can instantly generate an AI-optimized digest of the codebase. Additionally, a one-click button provides seamless integration with GitHub, ensuring a smooth workflow for developers.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.3.1",
   "categories": [
     "development"
@@ -42,7 +42,7 @@
     "amd64"
   ],
   "created_at": 1792501496663,
-  "updated_at": 1792501556663,
+  "updated_at": 1794005949258,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

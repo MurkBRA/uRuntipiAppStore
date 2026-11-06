@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "notediscovery",
   "description": "📄 NoteDiscovery is a lightweight and flexible knowledge tool designed to create, edit and organize notes in a clean and intuitive way. It focuses entirely on the writing and thinking process by using plain text and Markdown so that every note remains simple, readable and easy to structure. The editor provides real time previews for text, code and formulas, which makes it suitable for technical documentation, study notes or personal writing. Notes can reference each other through wikilinks, allowing you to build interconnected knowledge structures and navigate them quickly.",
-  "tipi_version": 1,
-  "version": "0.32.1",
+  "tipi_version": 2,
+  "version": "0.34.0",
   "categories": [
     "utilities",
     "data"
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501503363,
-  "updated_at": 1792501563363,
+  "updated_at": 1794005949452,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

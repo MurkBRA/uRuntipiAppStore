@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "readeck",
   "description": "Readeck is a simple web application that lets you save the precious readable content of web pages you like and want to keep forever. See it as a bookmark manager and a read later tool.",
-  "tipi_version": 1,
-  "version": "0.23.4",
+  "tipi_version": 2,
+  "version": "0.23.5",
   "categories": [
     "books",
     "utilities",
@@ -43,7 +43,7 @@
     "amd64"
   ],
   "created_at": 1792501506442,
-  "updated_at": 1792501566442,
+  "updated_at": 1794005949553,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

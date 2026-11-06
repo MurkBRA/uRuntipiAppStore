@@ -14,7 +14,7 @@ Kan is a modern, open-source alternative to Trello designed for seamless project
   - 🎨 **Templates:** Save time with reusable custom board templates
 
 ## Links
-- **Upstream Version**: `0.6.0-patch.1`
+- **Upstream Version**: `0.7.0`
 - **Website**: https://kan.bn/
 - **Source Repository**: https://github.com/kanbn/kan
 - **Support**: https://github.com/kanbn/kan/issues

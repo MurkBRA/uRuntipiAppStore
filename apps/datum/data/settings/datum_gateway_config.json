@@ -7,13 +7,13 @@
   "api": {
     "listen_port": 21000,
     "modify_conf": true,
-    "admin_password": "tipi"
+    "admin_password": "umbrel"
 
   },
   "mining": {
     "pool_address": "",
-    "coinbase_tag_primary": "DATUM on Runtipi",
-    "coinbase_tag_secondary": "DATUM on Runtipi"
+    "coinbase_tag_primary": "DATUM on Umbrel",
+    "coinbase_tag_secondary": "DATUM on Umbrel"
   },
   "stratum": {
     "listen_port": 23334

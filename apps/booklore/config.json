@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "booklore",
   "description": "📖 BookLore is a modern web application created to transform the way digital libraries are managed and experienced. It is designed for readers who want to bring order and beauty to their collection of books and comics while also making them instantly accessible. Instead of leaving files scattered across folders, BookLore gathers them into a central library that can be explored and enjoyed directly through the browser. It provides a seamless reading environment where organization, discovery, and enjoyment flow together.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.4.0",
   "categories": [
     "books",
@@ -22,7 +22,7 @@
     "amd64"
   ],
   "created_at": 1792501491271,
-  "updated_at": 1792501551271,
+  "updated_at": 1794005949114,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

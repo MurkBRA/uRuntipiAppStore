@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "octoprint",
   "description": "OctoPrint provides a snappy web interface for controlling consumer 3D printers. OctoPrint's powerful plugin system allows extending its functionality with awesome plugins from the community.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.11.8",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501503728,
-  "updated_at": 1792501563728,
+  "updated_at": 1794005949458,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

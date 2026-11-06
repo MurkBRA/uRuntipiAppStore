@@ -1,6 +1,8 @@
 services:
   snort:
-    image: voidic/snort:v0.5.3
+    image: voidic/snort:v0.5.4
+    volumes:
+      - ${APP_DATA_DIR}/data/mime-types.conf:/etc/nginx/conf.d/00-mjs.conf:ro
     x-runtipi:
       internal_port: 8080
       is_main: true

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "ln-visualizer",
   "description": "Your Lightning node is continuously receiving, storing, and transmitting graph information. LnVisualizer takes this data and transforms it into an interactive, 3D graph. Search for nodes, filter the graph, and write custom queries to help understand your position in the network.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.0.28",
   "categories": [
     "finance"
@@ -63,7 +63,7 @@
     "amd64"
   ],
   "created_at": 1792501500371,
-  "updated_at": 1792501560371,
+  "updated_at": 1794005949377,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

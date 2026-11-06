@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "helipad",
   "description": "Helipad shows boosts and boostagram messages coming in to your Lightning node from your listeners who are using Podcasting 2.0 apps.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.2.2",
   "categories": [
     "finance"
@@ -55,7 +55,7 @@
     "amd64"
   ],
   "created_at": 1792501497392,
-  "updated_at": 1792501557392,
+  "updated_at": 1794005949280,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

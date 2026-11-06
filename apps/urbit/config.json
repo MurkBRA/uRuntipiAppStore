@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "urbit",
   "description": "Urbit is a personal server for self-sovereign personal & networked computing. Nock, a functional combinator, is built into Hoon, a system programming language, used to implement Arvo, a deterministic operating system, that communicates over Ames, a decentralized, encrypted P2P network.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v4.6",
   "categories": [
     "network"
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501512029,
-  "updated_at": 1792501572029,
+  "updated_at": 1794005949707,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

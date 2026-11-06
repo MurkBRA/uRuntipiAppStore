@@ -13,7 +13,7 @@ By combining simplicity, automation, and strong cryptography, the NetBird Client
 Open the link shown in your browser on your computer or mobile device and sign in with the same NetBird account you use for the dashboard. Approve the device when prompted. After confirmation, your Runtipi client will automatically register itself and remain connected across restarts.
 
 ## Links
-- **Upstream Version**: `0.81.3`
+- **Upstream Version**: `0.82.0`
 - **Website**: https://netbird.io/
 - **Source Repository**: https://github.com/netbirdio/netbird
 - **Support**: https://github.com/netbirdio/netbird/issues

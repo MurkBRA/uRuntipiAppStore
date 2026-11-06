@@ -13,7 +13,7 @@ Core Lightning and Application powered by Blockstream.
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `26.06.9`
+- **Upstream Version**: `26.06.10`
 - **Website**: https://blockstream.com/lightning/
 - **Source Repository**: https://github.com/ElementsProject/cln-application
 - **Support**: https://community.corelightning.org/home

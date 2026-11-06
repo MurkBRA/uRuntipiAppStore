@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "wanderer",
-      "image": "flomp/wanderer-web:v0.21.0",
+      "image": "flomp/wanderer-web:v0.21.2",
       "isMain": true,
       "internalPort": 3000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
@@ -113,7 +113,7 @@
     },
     {
       "name": "wanderer-db",
-      "image": "flomp/wanderer-db:v0.21.0",
+      "image": "flomp/wanderer-db:v0.21.2",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {

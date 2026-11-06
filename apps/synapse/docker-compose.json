@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "synapse",
-      "image": "matrixdotorg/synapse:v1.163.0",
+      "image": "matrixdotorg/synapse:v1.164.2",
       "isMain": true,
       "internalPort": 8008,
       "stopGracePeriod": "1m",

@@ -15,7 +15,7 @@ The interface of HomeHub is designed with clarity and simplicity in mind. Everyt
 In essence, HomeHub turns household management into a shared, transparent, and collaborative experience. It helps people stay informed, organized, and connected with one another, transforming the routine of daily coordination into something smooth, accessible, and even enjoyable.
 
 ## Links
-- **Upstream Version**: `0.4.1`
+- **Upstream Version**: `0.6.0`
 - **Website**: https://github.com/surajverma/homehub
 - **Source Repository**: https://github.com/surajverma/homehub
 - **Support**: https://github.com/surajverma/homehub/issues

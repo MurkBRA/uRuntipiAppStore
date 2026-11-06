@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "usocial",
   "description": "The podcast client and feed reader for your personal server. With Lightning Network support.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.1.5-buster",
   "categories": [
     "social"
@@ -49,7 +49,7 @@
     "amd64"
   ],
   "created_at": 1792501512173,
-  "updated_at": 1792501572173,
+  "updated_at": 1794005949710,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

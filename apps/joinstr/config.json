@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "joinstr",
   "description": "Joinstr is a coordinator-less coinjoin that uses Nostr relays to find peers and collaboratively build a Bitcoin transaction, improving on-chain privacy.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.1.2",
   "categories": [
     "finance"
@@ -51,7 +51,7 @@
     "amd64"
   ],
   "created_at": 1792501498703,
-  "updated_at": 1792501558703,
+  "updated_at": 1794005949319,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

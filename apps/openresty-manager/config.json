@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "openresty-manager",
   "description": "Expose your apps to the internet easily and securely.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.4.6",
   "categories": [
     "network",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501504304,
-  "updated_at": 1792501564304,
+  "updated_at": 1794005949475,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

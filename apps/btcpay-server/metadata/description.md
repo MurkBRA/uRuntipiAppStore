@@ -15,7 +15,7 @@ Please note: Due to your BTCPay instance running on your local network connectin
 This package integrates with **bitcoin, lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `2.4.5`
+- **Upstream Version**: `2.4.7`
 - **Website**: https://btcpayserver.org
 - **Source Repository**: https://github.com/btcpayserver/btcpayserver
 - **Support**: https://chat.btcpayserver.org

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "airtrail",
-      "image": "johly/airtrail:v3.13.0",
+      "image": "johly/airtrail:v3.14.0",
       "isMain": true,
       "internalPort": 3000,
       "environment": [

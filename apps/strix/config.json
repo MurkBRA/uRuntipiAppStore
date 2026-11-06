@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "strix",
   "description": "Finding working streams for your cameras. Most IP cameras - especially Chinese NVRs and budget models - come with zero documentation. No RTSP URLs, no protocol specs, no way to connect them to Frigate. Strix solves this by matching your camera against a database of over 100,000 URL patterns for 67,000 models, testing them and returning only working streams.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.2.0",
   "categories": [
     "automation"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501510181,
-  "updated_at": 1792501570181,
+  "updated_at": 1794005949652,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -11,7 +11,7 @@ Foldergram supports browsing media by albums, collections, places, and library s
 The app also includes tools for organizing and maintaining a media library. Items can be moved to trash, collections can be used to group selected media, and the library view helps keep photos and videos accessible without changing the original folder based structure. Foldergram is designed to make existing media folders feel like a polished personal photo app, with a focus on simple browsing, visual discovery, and easy navigation through personal memories.
 
 ## Links
-- **Upstream Version**: `1.2.2-patch.1`
+- **Upstream Version**: `1.3.1`
 - **Website**: https://foldergram.github.io/
 - **Source Repository**: https://github.com/foldergram/foldergram
 - **Support**: https://github.com/foldergram/foldergram/issues

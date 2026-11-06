@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "krystal-bull",
   "description": "Krystal Bull allows you to become a Bitcoin oracle. An oracle allows information from the real world (financial markets, sporting events, elections, etc) to be used to create and settle Bitcoin bets.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.9.7",
   "categories": [
     "finance"
@@ -61,7 +61,7 @@
     "amd64"
   ],
   "created_at": 1792501499392,
-  "updated_at": 1792501559392,
+  "updated_at": 1794005949340,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

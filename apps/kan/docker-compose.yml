@@ -1,18 +1,19 @@
 services:
   kan:
-    image: ghcr.io/kanbn/kan:0.6.0
+    image: ghcr.io/kanbn/kan:0.7.0
     environment:
       - NEXT_PUBLIC_BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
       - BETTER_AUTH_SECRET=${APP_SEED}
       - POSTGRES_URL=postgresql://kanuser:kanpassword@kan-db:5432/kan?sslmode=disable
       - NEXT_PUBLIC_ALLOW_CREDENTIALS=true
     depends_on:
-      - kan-db
+      kan-migrate:
+        condition: service_completed_successfully
     x-runtipi:
       internal_port: 3000
       is_main: true
   kan-migrate:
-    image: ghcr.io/kanbn/kan-migrate:0.6.0
+    image: ghcr.io/kanbn/kan-migrate:0.7.0
     environment:
       - POSTGRES_URL=postgresql://kanuser:kanpassword@kan-db:5432/kan?sslmode=disable
     depends_on:

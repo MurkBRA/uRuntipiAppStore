@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "syslog-ng",
   "description": "Syslog-ng is a flexible, highly scalable syslog server that collects logs from all your network devices. It supports both BSD (RFC3164) and IETF (RFC5424) syslog formats, making it compatible with virtually any router, switch, access point, or server.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.17.1",
   "categories": [
     "network"
@@ -40,7 +40,7 @@
     "amd64"
   ],
   "created_at": 1792501510656,
-  "updated_at": 1792501570656,
+  "updated_at": 1794005949670,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

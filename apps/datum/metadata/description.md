@@ -20,7 +20,7 @@ DATUM connects automatically to the Bitcoin node selected during installation. B
 
 ⚠️ The DATUM team is aware that Safari currently cannot be used to change configuration settings within the app. Please use a different browser to change settings.
 
-In order for DATUM to be fully initialized, you need to add your Bitcoin address in the "Config" tab within the DATUM app. This is the default address that mining rewards will be sent to. Your in-app admin password can be customized in `data/settings/datum_gateway_config.json` (default: `tipi`).
+In order for DATUM to be fully initialized, you need to add your Bitcoin address in the "Config" tab within the DATUM app. This is the default address that mining rewards will be sent to. Your in-app credentials needed to change settings can be found by right-clicking on the DATUM app icon from your Runtipi homescreen and selecting "Show default credentials".
 
 ### Connecting Your Miner:
 
@@ -39,14 +39,13 @@ For more information on Datum, please visit https://github.com/OCEAN-xyz/datum_g
 
 ## Default Credentials
 - **Username**: `admin`
-- **Password**: `tipi` (Configured in `data/settings/datum_gateway_config.json`)
 
 ## Inter-App Connections
 
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `v0.4.1-beta-hotfix.2`
+- **Upstream Version**: `v0.5.1`
 - **Website**: https://ocean.xyz
 - **Source Repository**: https://github.com/OCEAN-xyz/datum_gateway
 - **Support**: https://ocean.xyz

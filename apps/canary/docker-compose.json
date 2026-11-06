@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "canary",
-      "image": "schjonhaug/canary-frontend:v1.7.0",
+      "image": "schjonhaug/canary-frontend:v1.7.1",
       "isMain": true,
       "internalPort": 3000,
       "addToMainNetwork": true,
@@ -21,7 +21,7 @@
     },
     {
       "name": "canary-backend",
-      "image": "schjonhaug/canary-backend:v1.7.0",
+      "image": "schjonhaug/canary-backend:v1.7.1",
       "addToMainNetwork": true,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",

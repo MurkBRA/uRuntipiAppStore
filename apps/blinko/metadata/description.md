@@ -12,7 +12,7 @@ The application provides a flexible way to manage notes, which can remain privat
 Built on Next.js, Blinko is optimized for speed and efficiency, offering a responsive and modern user experience. As an open-source project, it encourages collaboration and is available for free without hidden fees. It is designed for anyone looking for a powerful and customizable solution for digital organization.
 
 ## Links
-- **Upstream Version**: `1.8.8-patch.1`
+- **Upstream Version**: `1.8.9`
 - **Website**: https://blinko-demo.vercel.app/
 - **Source Repository**: https://github.com/blinko-space/blinko
 - **Support**: https://github.com/blinko-space/blinko/issues

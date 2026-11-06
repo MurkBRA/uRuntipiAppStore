@@ -11,7 +11,7 @@ Hardware acceleration can be enabled on supported devices by creating a hardware
 This package uses the ErsatzTV Legacy release stream, which upstream continues to maintain for security updates while ErsatzTV Next remains an experimental rewrite.
 
 ## Links
-- **Upstream Version**: `26.11.3`
+- **Upstream Version**: `26.11.6`
 - **Website**: https://ersatztv.org
 - **Source Repository**: https://github.com/ErsatzTV/legacy
 - **Support**: https://discuss.ersatztv.org

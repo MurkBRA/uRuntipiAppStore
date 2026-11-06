@@ -9,7 +9,7 @@ The application supports diagrams, mathematical notation and syntax highlighted 
 NoteDiscovery aims to give you a calm and distraction free environment where your notes remain fully accessible in plain text and where your knowledge grows through simple connections between documents. Its design encourages clarity, long term organization and freedom from proprietary formats, making it a reliable companion for personal knowledge management.
 
 ## Links
-- **Upstream Version**: `0.32.1`
+- **Upstream Version**: `0.34.0`
 - **Website**: https://www.notediscovery.com/
 - **Source Repository**: https://github.com/gamosoft/NoteDiscovery
 - **Support**: https://github.com/gamosoft/NoteDiscovery/issues

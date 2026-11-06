@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "remmina",
   "description": "Use other desktops remotely, from a tiny screen or large monitors.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.4.35",
   "categories": [
     "network"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501506647,
-  "updated_at": 1792501566647,
+  "updated_at": 1794005949563,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -1,6 +1,6 @@
 services:
   mailflow:
-    image: ghcr.io/maathimself/mailflow-frontend:4.0.3
+    image: ghcr.io/maathimself/mailflow-frontend:4.3.0
     depends_on:
       mailflow-backend:
         condition: service_healthy
@@ -15,7 +15,7 @@ services:
       internal_port: 80
       is_main: true
   mailflow-backend:
-    image: ghcr.io/maathimself/mailflow-backend:4.0.3
+    image: ghcr.io/maathimself/mailflow-backend:4.3.0
     environment:
       - NODE_ENV=production
       - PORT=3000

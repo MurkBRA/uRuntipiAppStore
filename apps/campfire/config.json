@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "campfire",
   "description": "Campfire is a web-based chat application for teams. Run your own private chat server with all the features you need.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "1.5.6",
   "categories": [
     "social"
@@ -62,7 +62,7 @@
     "amd64"
   ],
   "created_at": 1792501491867,
-  "updated_at": 1792665338352,
+  "updated_at": 1794005949129,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

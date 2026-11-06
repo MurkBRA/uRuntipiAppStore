@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "home-assistant-fusion-ui",
   "description": "HA-Fusion (Home Assistant Fusion UI) is an alternative frontend for the Home Assistant dashboard, inspired by the sleek and intuitive design of the iOS Home app. While it does not manage integrations, HA-Fusion aims to provide a highly customizable and visually appealing interface for users looking to enhance their Home Assistant experience.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2024.10.1",
   "categories": [
     "automation"
@@ -20,14 +20,6 @@
   "form_fields": [
     {
       "type": "text",
-      "label": "Home Assistant URL",
-      "hint": "URL of your Home Assistant instance. Defaults to http://homeassistant-1:8123 on the Runtipi network.",
-      "required": false,
-      "default": "http://homeassistant-1:8123",
-      "env_variable": "HASS_URL"
-    },
-    {
-      "type": "text",
       "label": "Container User (UID:GID)",
       "hint": "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
       "required": false,
@@ -35,6 +27,14 @@
       "regex": "^[0-9]+(:[0-9]+)?$",
       "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
       "env_variable": "APP_CONTAINER_USER"
+    },
+    {
+      "type": "text",
+      "label": "Home Assistant URL",
+      "hint": "URL of your Home Assistant instance. Use http://homeassistant-1:8123 if running on the same host.",
+      "required": false,
+      "default": "http://homeassistant-1:8123",
+      "env_variable": "HASS_URL"
     }
   ],
   "supported_architectures": [
@@ -42,7 +42,7 @@
     "amd64"
   ],
   "created_at": 1792501497827,
-  "updated_at": 1792501557827,
+  "updated_at": 1794005949291,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

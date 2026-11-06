@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "adventurelog",
-      "image": "ghcr.io/seanmorley15/adventurelog-frontend:v0.13.0",
+      "image": "ghcr.io/seanmorley15/adventurelog-frontend:v0.13.1",
       "isMain": true,
       "internalPort": 3000,
       "environment": [
@@ -61,7 +61,7 @@
     },
     {
       "name": "adventurelog-server",
-      "image": "ghcr.io/seanmorley15/adventurelog-backend:v0.13.0",
+      "image": "ghcr.io/seanmorley15/adventurelog-backend:v0.13.1",
       "environment": [
         {
           "key": "PGHOST",

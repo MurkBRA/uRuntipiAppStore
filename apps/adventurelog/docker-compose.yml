@@ -1,6 +1,6 @@
 services:
   adventurelog:
-    image: ghcr.io/seanmorley15/adventurelog-frontend:v0.13.0
+    image: ghcr.io/seanmorley15/adventurelog-frontend:v0.13.1
     environment:
       - PUBLIC_SERVER_URL=http://adventurelog-server:8000
       - ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
@@ -26,7 +26,7 @@ services:
       retries: 10
       start_period: 10s
   adventurelog-server:
-    image: ghcr.io/seanmorley15/adventurelog-backend:v0.13.0
+    image: ghcr.io/seanmorley15/adventurelog-backend:v0.13.1
     ports:
       - 8016:80/tcp
     volumes:

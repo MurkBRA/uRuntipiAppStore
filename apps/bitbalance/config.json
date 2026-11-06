@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "bitbalance",
   "description": "Track your Bitcoin wallets privately from your own Runtipi.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.0.18",
   "categories": [
     "finance"
@@ -48,7 +48,7 @@
     "amd64"
   ],
   "created_at": 1792501489459,
-  "updated_at": 1792501549459,
+  "updated_at": 1794005949061,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

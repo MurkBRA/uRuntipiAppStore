@@ -3,11 +3,15 @@
   "services": [
     {
       "name": "nostr-relay",
-      "image": "getumbrel/umbrel-nostr-relay:v1.1.0",
+      "image": "ghcr.io/getumbrel/umbrel-nostr-relay:v1.2.1",
       "isMain": true,
       "internalPort": 3000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
+        {
+          "key": "GODEBUG",
+          "value": "multipathtcp=0"
+        },
         {
           "key": "RELAY_HOST",
           "value": "nostr-relay-relay"
@@ -28,7 +32,7 @@
     },
     {
       "name": "nostr-relay-relay",
-      "image": "getumbrel/nostr-rs-relay:0.8.1",
+      "image": "ghcr.io/getumbrel/nostr-rs-relay:0.10.0-v1.2.1",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "volumes": [
         {
@@ -43,7 +47,7 @@
     },
     {
       "name": "nostr-relay-relay-proxy",
-      "image": "getumbrel/umbrel-nostr-relay-proxy:v1.1.0",
+      "image": "ghcr.io/getumbrel/umbrel-nostr-relay-proxy:v1.2.1",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {

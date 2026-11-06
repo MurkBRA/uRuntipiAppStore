@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "agent-zero",
   "description": "Agent Zero is a personal, organic agentic framework that grows and learns with you. It is fully Dockerized and includes features like Speech-to-Text and TTS.",
-  "tipi_version": 1,
-  "version": "v2.14",
+  "tipi_version": 2,
+  "version": "v2.15",
   "categories": [
     "ai"
   ],
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501487758,
-  "updated_at": 1792501547758,
+  "updated_at": 1794005948982,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

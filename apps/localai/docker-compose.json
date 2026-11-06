@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "localai",
-      "image": "localai/localai:v4.11.0",
+      "image": "localai/localai:v4.12.1",
       "isMain": true,
       "internalPort": 8080,
       "environment": [

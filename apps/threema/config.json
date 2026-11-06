@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "threema",
   "description": "📱 Threema Web is a secure and convenient way to use the Threema messaging app directly from a web browser while maintaining full end-to-end encryption. By scanning a QR code with the Threema app, users establish a direct connection between their smartphone and computer, ensuring that no messages or metadata are stored on external servers. The communication is handled via WebRTC, which enables a private and encrypted peer-to-peer connection.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.6.5",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501511286,
-  "updated_at": 1792501571286,
+  "updated_at": 1794005949687,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

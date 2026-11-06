@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "leafwiki",
   "description": "🌿 LeafWiki gives you a focused space to create, structure, and maintain a personal or shared knowledge base. It helps you turn scattered notes, instructions, ideas, and reference material into clear wiki pages that are easy to read, update, and organize. You can use it to document processes, collect important information, write guides, preserve technical notes, and build a clean library of knowledge that grows naturally over time.",
-  "tipi_version": 1,
-  "version": "0.14.1",
+  "tipi_version": 2,
+  "version": "0.14.2",
   "categories": [
     "books",
     "utilities",
@@ -37,7 +37,7 @@
     "amd64"
   ],
   "created_at": 1792501499646,
-  "updated_at": 1792501559646,
+  "updated_at": 1794005949347,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

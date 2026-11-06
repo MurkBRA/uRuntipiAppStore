@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "jotty",
   "description": "Tired of bloated, cloud-based to-do apps? Jotty is a lightweight alternative for managing your personal checklists and notes.",
-  "tipi_version": 1,
-  "version": "1.28.0",
+  "tipi_version": 2,
+  "version": "1.29.2",
   "categories": [
     "utilities",
     "data"
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501498767,
-  "updated_at": 1792501558767,
+  "updated_at": 1794005949321,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "sikka",
   "description": "Sikka Crypto is a feeless, quantum-safe cryptocurrency built for the modern internet, with a lightweight node that is simple to run and fast to sync.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.2.0",
   "categories": [
     "finance"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501508552,
-  "updated_at": 1792501568552,
+  "updated_at": 1794005949612,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

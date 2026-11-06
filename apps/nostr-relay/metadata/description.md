@@ -15,7 +15,7 @@ That's it! Your past and future Nostr activity will be now backed up to your pri
 Nostr Relay is powered by the open source nostr-rs-relay project — a Rust implementation of Nostr relay. It currently supports the entire relay protocol, including NIP-01, NIP-02, NIP-03, NIP-05, NIP-09, NIP-11, NIP-12, NIP-15, NIP-16, NIP-20, NIP-22, NIP-26, NIP-28, and NIP-33.
 
 ## Links
-- **Upstream Version**: `1.2.0`
+- **Upstream Version**: `1.2.1-patch.1`
 - **Website**: https://umbrel.com
 - **Source Repository**: https://github.com/getumbrel/umbrel-nostr-relay
 - **Support**: https://community.getumbrel.com

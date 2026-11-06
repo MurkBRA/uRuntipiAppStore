@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "kan",
   "description": "Kan is a modern, open-source alternative to Trello designed for seamless project and task management. It offers a clean, intuitive interface and a wide range of powerful features.",
-  "tipi_version": 1,
-  "version": "0.6.0",
+  "tipi_version": 2,
+  "version": "0.7.0",
   "categories": [
     "utilities",
     "data"
@@ -30,7 +30,7 @@
     "amd64"
   ],
   "created_at": 1792501498981,
-  "updated_at": 1792501558981,
+  "updated_at": 1794005949327,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "mainsail",
   "description": "🖨️ A modern and responsive user interface for Klipper. Control and monitor your printer from everywhere, from any device.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.19.0",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501501205,
-  "updated_at": 1792501561205,
+  "updated_at": 1794005949399,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -1,6 +1,6 @@
 services:
   nostr-vpn:
-    image: ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.18
+    image: ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.20
     command:
       - '--listen'
       - 0.0.0.0:38080
@@ -23,7 +23,7 @@ services:
       internal_port: 38080
       is_main: true
   nostr-vpn-daemon:
-    image: ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.18
+    image: ghcr.io/mmalmi/nostr-vpn-umbrel:v4.1.20
     command:
       - daemon
       - '--config'
@@ -32,6 +32,7 @@ services:
       - /usr/local/bin/nvpn
     volumes:
       - ${APP_DATA_DIR}/data:/data
+      - ${APP_DATA_DIR}/data/egress-state:/var/lib/nvpn/egress
     environment:
       - HOME=/data/home
       - XDG_CONFIG_HOME=/data/config

@@ -19,7 +19,7 @@ WebCheck is modular, allowing users to integrate additional plugins for extended
 In addition to public website analysis, WebCheck can be used for internal network security and infrastructure checks within organizations. The customizable features and extensibility make it an essential tool for web analysts and IT security teams.
 
 ## Links
-- **Upstream Version**: `2.3.0`
+- **Upstream Version**: `2.4.0`
 - **Website**: https://web-check.xyz/
 - **Source Repository**: https://github.com/Lissy93/web-check
 - **Support**: https://github.com/Lissy93/web-check/issues

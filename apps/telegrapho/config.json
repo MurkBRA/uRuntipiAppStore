@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "telegrapho",
   "description": "Stop pasting sensitive text into third-party apps.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.0.1",
   "categories": [
     "network"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501511014,
-  "updated_at": 1792501571014,
+  "updated_at": 1794005949680,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

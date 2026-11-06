@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "bffless",
   "description": "BFFless is a self-hosted platform for hosting static websites and build artifacts from CI/CD pipelines.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "umbrel",
   "categories": [
     "development"
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501489208,
-  "updated_at": 1792501549208,
+  "updated_at": 1794005949045,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

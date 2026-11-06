@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "squeaknode",
   "description": "Squeaknode is a peer-to-peer microblog with posts unlocked by Lightning Network payments. The app allows you to create, view, buy, and sell squeaks. A squeak is a post that can contain up to 280 characters.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.3.4",
   "categories": [
     "social"
@@ -118,7 +118,7 @@
     "amd64"
   ],
   "created_at": 1792501510000,
-  "updated_at": 1792501570000,
+  "updated_at": 1794005949644,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

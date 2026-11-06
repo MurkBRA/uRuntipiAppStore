@@ -1,6 +1,6 @@
 services:
   komodo:
-    image: ghcr.io/moghtech/komodo-core:2.3.3
+    image: ghcr.io/moghtech/komodo-core:2.3.4
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/core:/backups
@@ -54,7 +54,7 @@ services:
     depends_on:
       - komodo-postgres
   komodo-periphery:
-    image: ghcr.io/moghtech/komodo-periphery:2.3.3
+    image: ghcr.io/moghtech/komodo-periphery:2.3.4
     volumes:
       - ${APP_DATA_DIR}/data/docker:/var/run
       - /proc:/proc

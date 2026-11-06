@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "fedimintd",
-      "image": "fedimint/fedimintd:v0.12.2",
+      "image": "fedimint/fedimintd:v0.13.0",
       "isMain": true,
       "internalPort": 8175,
       "addToMainNetwork": true,
@@ -66,6 +66,12 @@
         {
           "hostPort": 8174,
           "containerPort": 8174,
+          "udp": true,
+          "tcp": false
+        },
+        {
+          "hostPort": 8184,
+          "containerPort": 8184,
           "udp": true,
           "tcp": false
         }

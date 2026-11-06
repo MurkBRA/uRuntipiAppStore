@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "bleskomat-server",
   "description": "The Bleskomat ATM is the next generation Bitcoin Lightning ATM. This app will allow you to easily connect your Bleskomat ATM to the Lightning node on your Runtipi. A simple web interface is provided which you can use to manage and authorize one or more Bleskomat ATMs as well as view a list of recent payments handled by the server.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.3.4",
   "categories": [
     "finance"
@@ -69,7 +69,7 @@
     "amd64"
   ],
   "created_at": 1792501490462,
-  "updated_at": 1792501550462,
+  "updated_at": 1794005949096,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

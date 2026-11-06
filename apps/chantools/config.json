@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "chantools",
   "description": "chantools is a command line interface (CLI) utility designed to help Lightning Network node operators rescue their funds after experiencing data loss.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.14.1-umbrel",
   "categories": [
     "finance"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501492414,
-  "updated_at": 1792501552414,
+  "updated_at": 1794005949140,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

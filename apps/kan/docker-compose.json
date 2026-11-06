@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "kan",
-      "image": "ghcr.io/kanbn/kan:0.6.0",
+      "image": "ghcr.io/kanbn/kan:0.7.0",
       "isMain": true,
       "internalPort": 3000,
       "environment": [
@@ -24,13 +24,15 @@
           "value": "true"
         }
       ],
-      "dependsOn": [
-        "kan-db"
-      ]
+      "dependsOn": {
+        "kan-migrate": {
+          "condition": "service_completed_successfully"
+        }
+      }
     },
     {
       "name": "kan-migrate",
-      "image": "ghcr.io/kanbn/kan-migrate:0.6.0",
+      "image": "ghcr.io/kanbn/kan-migrate:0.7.0",
       "environment": [
         {
           "key": "POSTGRES_URL",

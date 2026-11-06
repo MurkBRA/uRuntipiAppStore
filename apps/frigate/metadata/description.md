@@ -8,9 +8,7 @@ A complete and local NVR designed for Home Assistant with AI object detection.  
 
 - You can configure your cameras directly within the Frigate app, there is no need to manually edit the configuration files.
 
-- Sign in to Frigate with username `admin`. The initial admin password is automatically generated on first boot and printed in the container console/logs (see Default Credentials below).
-
-- The RTSP stream password (used for camera feeds / go2rtc) is configured in your Runtipi app settings via `APP_RTSP_PASSWORD`.
+- Sign in to Frigate with username `admin` and the "default app password" displayed on Frigate's page in the app store (shown after install). The same default app password is also used as your RTSP password if needed.
 
 ## Default Credentials
 - **Username**: `admin`

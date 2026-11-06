@@ -21,7 +21,7 @@ Features:
 - **Password**: `admin`
 
 ## Links
-- **Upstream Version**: `0.20.1`
+- **Upstream Version**: `0.20.2`
 - **Website**: https://docs.endurain.com/
 - **Source Repository**: https://github.com/endurain-project/endurain
 - **Support**: https://github.com/endurain-project/endurain/issues

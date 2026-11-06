@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "bitcoin-cash-node",
   "description": "Run your own Bitcoin Cash full node powered by Bitcoin Cash Node (BCHN). Independently validate every block and transaction without relying on a third party.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "8bb17f3689d837dbd370ac0d35e4a158ea12b75a",
   "categories": [
     "finance"
@@ -41,7 +41,7 @@
     "amd64"
   ],
   "created_at": 1792501489860,
-  "updated_at": 1792501549860,
+  "updated_at": 1794005949068,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

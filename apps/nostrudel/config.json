@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "nostrudel",
   "description": "noStrudel is a nostr web client that is focused on exploring the nostr network. The focus is on power users or any other users who want to learn the inner workings of nostr.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.1.0",
   "categories": [
     "social"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501503298,
-  "updated_at": 1792501563298,
+  "updated_at": 1794005949450,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

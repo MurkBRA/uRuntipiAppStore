@@ -11,7 +11,7 @@ Zen also provides features like soft-delete and archiving, which help keep your 
 Overall, Zen serves as a lightweight, fast, and privacy-focused tool for personal knowledge management, journaling, or simple note-taking, giving you full control over your data in a user-friendly environment.
 
 ## Links
-- **Upstream Version**: `1.5.0-patch.1`
+- **Upstream Version**: `2.0.0`
 - **Website**: https://www.sheshbabu.com/zen/
 - **Source Repository**: https://github.com/sheshbabu/zen
 - **Support**: https://github.com/sheshbabu/zen/issues

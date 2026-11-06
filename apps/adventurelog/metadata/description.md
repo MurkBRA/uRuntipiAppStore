@@ -7,7 +7,7 @@
 AdventureLog was created to solve a problem: the lack of a modern, open-source, user-friendly travel companion. Many existing travel apps are either too complex, too expensive, or too closed-off to be useful for the average traveler. AdventureLog aims to be the opposite: simple, beautiful, and open to everyone.
 
 ## Links
-- **Upstream Version**: `v0.13.0`
+- **Upstream Version**: `v0.13.1`
 - **Website**: https://adventurelog.app/
 - **Source Repository**: https://github.com/seanmorley15/AdventureLog
 - **Support**: https://github.com/seanmorley15/AdventureLog/issues

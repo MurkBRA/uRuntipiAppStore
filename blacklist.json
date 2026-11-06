@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-10-20T09:43:00-03:00",
+  "generated_at": "2026-11-06T22:59:09.414Z",
   "stats": {
-    "runtipi_official_total": 270,
+    "runtipi_official_total": 266,
     "umbrel_total_packages": 396,
     "umbrel_active_packages": 370,
     "umbrel_disabled_packages": 26,
@@ -1417,7 +1417,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "2fauth/2fauth:8.0.2"
+        "2fauth/2fauth:9.0.1"
       ]
     },
     {
@@ -1439,17 +1439,17 @@
     },
     {
       "id": "actual-budget",
-      "name": "Actual Budget",
+      "name": "Actual",
       "port": 8011,
       "categories": [
         "finance"
       ],
       "source": "https://github.com/actualbudget/actual",
-      "website": "",
+      "website": "https://actualbudget.org/",
       "available": true,
       "deprecated": false,
       "images": [
-        "actualbudget/actual-server:26.10.0"
+        "actualbudget/actual-server:26.11.0"
       ]
     },
     {
@@ -1460,12 +1460,12 @@
         "network",
         "security"
       ],
-      "source": "https://github.com/AdguardTeam",
-      "website": "",
+      "source": "https://github.com/AdguardTeam/AdGuardHome",
+      "website": "https://adguard-dns.io/kb/fr/adguard-home/getting-started/",
       "available": true,
       "deprecated": false,
       "images": [
-        "adguard/adguardhome:v0.107.79"
+        "adguard/adguardhome:v0.107.80"
       ]
     },
     {
@@ -1481,7 +1481,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/bakito/adguardhome-sync:v0.9.4"
+        "ghcr.io/bakito/adguardhome-sync:v0.9.6"
       ]
     },
     {
@@ -1528,7 +1528,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "archivebox/archivebox:0.9.73"
+        "archivebox/archivebox:0.9.77"
       ]
     },
     {
@@ -1544,7 +1544,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/atuinsh/atuin:18.24.1",
+        "ghcr.io/atuinsh/atuin:18.24.5",
         "postgres:14"
       ]
     },
@@ -1557,11 +1557,11 @@
         "media"
       ],
       "source": "https://github.com/advplyr/audiobookshelf",
-      "website": "",
+      "website": "https://audiobookshelf.org/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/advplyr/audiobookshelf:2.37.1"
+        "ghcr.io/advplyr/audiobookshelf:2.37.2"
       ]
     },
     {
@@ -1572,12 +1572,12 @@
         "development"
       ],
       "source": "https://github.com/goauthentik/authentik",
-      "website": "",
+      "website": "https://goauthentik.io/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/goauthentik/server:2026.8.4",
-        "ghcr.io/goauthentik/server:2026.8.4",
+        "ghcr.io/goauthentik/server:2026.8.5",
+        "ghcr.io/goauthentik/server:2026.8.5",
         "postgres:18-alpine"
       ]
     },
@@ -1593,7 +1593,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/autobrr/autobrr:v1.88.0"
+        "ghcr.io/autobrr/autobrr:v1.90.0"
       ]
     },
     {
@@ -1605,11 +1605,11 @@
         "utilities"
       ],
       "source": "https://github.com/aalmenar/baikal-docker",
-      "website": "",
+      "website": "https://sabre.io/baikal/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/aalmenar/baikal:0.12.1"
+        "ghcr.io/aalmenar/baikal:0.13.0"
       ]
     },
     {
@@ -1636,7 +1636,7 @@
         "utilities"
       ],
       "source": "https://github.com/morpheus65535/bazarr",
-      "website": "",
+      "website": "https://www.bazarr.media/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -1651,11 +1651,11 @@
         "utilities"
       ],
       "source": "https://github.com/henrygd/beszel",
-      "website": "",
+      "website": "https://beszel.dev/",
       "available": true,
       "deprecated": false,
       "images": [
-        "henrygd/beszel:0.21.0"
+        "henrygd/beszel:0.21.1"
       ]
     },
     {
@@ -1666,11 +1666,11 @@
         "utilities"
       ],
       "source": "https://github.com/henrygd/beszel",
-      "website": "",
+      "website": "https://beszel.dev/",
       "available": true,
       "deprecated": false,
       "images": [
-        "henrygd/beszel-agent:0.21.0"
+        "henrygd/beszel-agent:0.21.1"
       ]
     },
     {
@@ -1712,7 +1712,7 @@
         "media"
       ],
       "source": "https://github.com/bitmagnet-io/bitmagnet",
-      "website": "",
+      "website": "https://bitmagnet.io/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -1730,7 +1730,7 @@
         "media"
       ],
       "source": "https://github.com/popeen/Booksonic-Air",
-      "website": "",
+      "website": "https://booksonic.org/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -1765,7 +1765,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "budibase/budibase:v3.49.0"
+        "budibase/budibase:v3.50.0"
       ]
     },
     {
@@ -1776,7 +1776,7 @@
         "social"
       ],
       "source": "https://github.com/calcom/cal.com",
-      "website": "https://cal.com/",
+      "website": "https://www.cal.diy/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -1811,7 +1811,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/dgtlmoon/changedetection.io:0.60.9"
+        "ghcr.io/dgtlmoon/changedetection.io:0.60.10"
       ]
     },
     {
@@ -1842,7 +1842,7 @@
       "source": "https://github.com/deiucanta/chatpad",
       "website": "https://chatpad.ai/",
       "available": true,
-      "deprecated": false,
+      "deprecated": true,
       "images": [
         "ghcr.io/deiucanta/chatpad:latest"
       ]
@@ -1889,7 +1889,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "wisdomsky/cloudflared-web:2026.10.1"
+        "wisdomsky/cloudflared-web:2026.10.7"
       ]
     },
     {
@@ -1904,7 +1904,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/code-server:4.141.0"
+        "lscr.io/linuxserver/code-server:4.144.0"
       ]
     },
     {
@@ -1951,7 +1951,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/cross-seed/cross-seed:6.13.7"
+        "ghcr.io/cross-seed/cross-seed:6.13.9"
       ]
     },
     {
@@ -1963,7 +1963,7 @@
         "utilities"
       ],
       "source": "https://github.com/crowdsecurity/crowdsec",
-      "website": "",
+      "website": "https://docs.crowdsec.net/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -1984,7 +1984,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ctfd/ctfd:3.8.8",
+        "ctfd/ctfd:3.8.9",
         "mariadb:10.4.12",
         "redis:4"
       ]
@@ -1997,11 +1997,11 @@
         "utilities"
       ],
       "source": "https://github.com/sergi0g/cup",
-      "website": "",
+      "website": "https://cup.sergi0g.dev/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/sergi0g/cup:v3.5.1"
+        "ghcr.io/sergi0g/cup:v3.6.0"
       ]
     },
     {
@@ -2058,11 +2058,11 @@
         "utilities"
       ],
       "source": "https://github.com/lissy93/dashy",
-      "website": "",
+      "website": "https://dashy.to/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/lissy93/dashy:4.8.7"
+        "ghcr.io/lissy93/dashy:4.9.15"
       ]
     },
     {
@@ -2119,7 +2119,7 @@
         "utilities"
       ],
       "source": "https://github.com/linuxserver/docker-deluge",
-      "website": "",
+      "website": "https://www.deluge-torrent.org/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2134,7 +2134,7 @@
         "utilities"
       ],
       "source": "https://github.com/louislam/dockge",
-      "website": "",
+      "website": "https://dockge.kuma.pet/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2154,7 +2154,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "docmost/docmost:0.96.0",
+        "docmost/docmost:0.97.0",
         "postgres:16-alpine",
         "redis:7.2-alpine"
       ]
@@ -2182,11 +2182,11 @@
         "development"
       ],
       "source": "https://github.com/amir20/dozzle",
-      "website": "",
+      "website": "https://dozzle.dev/",
       "available": true,
       "deprecated": false,
       "images": [
-        "amir20/dozzle:v11.3.3"
+        "amir20/dozzle:v11.4.1"
       ]
     },
     {
@@ -2201,7 +2201,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "jgraph/drawio:32.4.1"
+        "jgraph/drawio:32.6.9"
       ]
     },
     {
@@ -2227,11 +2227,11 @@
         "data"
       ],
       "source": "https://github.com/linuxserver/docker-duplicati",
-      "website": "",
+      "website": "https://duplicati.com",
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/duplicati:2.4.0"
+        "lscr.io/linuxserver/duplicati:2.4.1"
       ]
     },
     {
@@ -2290,12 +2290,12 @@
       "categories": [
         "media"
       ],
-      "source": "https://emby.media",
+      "source": "https://github.com/MediaBrowser/Emby",
       "website": "https://emby.media",
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/emby:4.10.1"
+        "lscr.io/linuxserver/emby:4.10.2"
       ]
     },
     {
@@ -2323,7 +2323,7 @@
         "gaming"
       ],
       "source": "https://github.com/EmulatorJS/EmulatorJS",
-      "website": "",
+      "website": "https://emulatorjs.org/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2338,11 +2338,11 @@
         "automation"
       ],
       "source": "https://github.com/esphome/esphome",
-      "website": "",
+      "website": "https://esphome.io/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/esphome/esphome:2026.9.1"
+        "ghcr.io/esphome/esphome:2026.10.2"
       ]
     },
     {
@@ -2353,26 +2353,11 @@
         "utilities"
       ],
       "source": "https://github.com/excalidraw/excalidraw",
-      "website": "",
+      "website": "https://excalidraw.com/",
       "available": true,
       "deprecated": false,
       "images": [
         "excalidraw/excalidraw:latest"
-      ]
-    },
-    {
-      "id": "filebrowser",
-      "name": "File Browser",
-      "port": 8096,
-      "categories": [
-        "utilities"
-      ],
-      "source": "https://github.com/filebrowser/filebrowser",
-      "website": "https://filebrowser.org/",
-      "available": true,
-      "deprecated": true,
-      "images": [
-        "filebrowser/filebrowser:v2.63.23"
       ]
     },
     {
@@ -2398,7 +2383,7 @@
         "utilities"
       ],
       "source": "https://github.com/mickael-kerjean/filestash",
-      "website": "",
+      "website": "https://www.filestash.app/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2446,8 +2431,8 @@
         "gaming",
         "media"
       ],
-      "source": "https://github.com/ShaneIsrael/fireshare",
-      "website": "",
+      "source": "https://github.com/fireshare-app/fireshare",
+      "website": "https://fireshare.net/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2499,7 +2484,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "perdian/flightlog:v2.1.14"
+        "perdian/flightlog:v2.1.15"
       ]
     },
     {
@@ -2526,11 +2511,11 @@
         "development"
       ],
       "source": "https://codeberg.org/forgejo/forgejo/",
-      "website": "",
+      "website": "https://forgejo.org/",
       "available": true,
       "deprecated": false,
       "images": [
-        "codeberg.org/forgejo/forgejo:17.0.0",
+        "codeberg.org/forgejo/forgejo:17.0.1",
         "postgres:14"
       ]
     },
@@ -2546,7 +2531,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/freshrss:1.30.1"
+        "lscr.io/linuxserver/freshrss:1.30.4"
       ]
     },
     {
@@ -2557,7 +2542,7 @@
         "network"
       ],
       "source": "https://github.com/jbbodart/gandi-livedns",
-      "website": "",
+      "website": "http://doc.livedns.gandi.net/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2573,7 +2558,7 @@
         "media"
       ],
       "source": "https://github.com/TryGhost/Ghost",
-      "website": "",
+      "website": "https://ghost.org",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2605,11 +2590,11 @@
         "finance"
       ],
       "source": "https://github.com/ghostfolio/ghostfolio",
-      "website": "",
+      "website": "https://ghostfol.io",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghostfolio/ghostfolio:3.88.0",
+        "ghostfolio/ghostfolio:3.97.0",
         "postgres:15.4-alpine",
         "redis:7-alpine"
       ]
@@ -2622,11 +2607,11 @@
         "development"
       ],
       "source": "https://github.com/go-gitea/gitea",
-      "website": "",
+      "website": "https://docs.gitea.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "gitea/gitea:28.1.0",
+        "gitea/gitea:28.3.0",
         "postgres:14"
       ]
     },
@@ -2642,7 +2627,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "gladysassistant/gladys:v5.2.1"
+        "gladysassistant/gladys:v5.3.1"
       ]
     },
     {
@@ -2697,12 +2682,12 @@
       "categories": [
         "social"
       ],
-      "source": "https://github.com/superseriousbusiness/gotosocial",
-      "website": "",
+      "source": "https://codeberg.org/superseriousbusiness/gotosocial",
+      "website": "https://gotosocial.org/",
       "available": true,
       "deprecated": false,
       "images": [
-        "superseriousbusiness/gotosocial:0.22.2",
+        "superseriousbusiness/gotosocial:0.22.3",
         "postgres:14"
       ]
     },
@@ -2734,7 +2719,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/gramps-project/grampsweb:26.10.1"
+        "ghcr.io/gramps-project/grampsweb:26.11.0"
       ]
     },
     {
@@ -2746,11 +2731,11 @@
         "media"
       ],
       "source": "https://github.com/getgrav/grav",
-      "website": "",
+      "website": "https://getgrav.org/",
       "available": true,
       "deprecated": true,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.10"
+        "lscr.io/linuxserver/grav:2.2.24"
       ]
     },
     {
@@ -2762,11 +2747,11 @@
         "media"
       ],
       "source": "https://github.com/getgrav/grav",
-      "website": "",
+      "website": "https://getgrav.org/",
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.10"
+        "lscr.io/linuxserver/grav:2.2.24"
       ]
     },
     {
@@ -2781,7 +2766,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "gristlabs/grist:1.7.21"
+        "gristlabs/grist:1.7.22"
       ]
     },
     {
@@ -2793,7 +2778,7 @@
         "finance"
       ],
       "source": "https://github.com/grocy/grocy",
-      "website": "",
+      "website": "https://grocy.info/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2830,7 +2815,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "halohub/halo:2.27.0",
+        "halohub/halo:2.27.2",
         "postgres:15.4"
       ]
     },
@@ -2893,7 +2878,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/heimdall:2.8.3"
+        "lscr.io/linuxserver/heimdall:2.8.4"
       ]
     },
     {
@@ -2913,18 +2898,18 @@
     },
     {
       "id": "hoarder",
-      "name": "Hoarder",
+      "name": "Hoarder (karakeep)",
       "port": 8685,
       "categories": [
         "utilities",
         "ai"
       ],
       "source": "https://github.com/hoarder-app/hoarder",
-      "website": "https://hoarder.app",
+      "website": "https://karakeep.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/hoarder-app/hoarder:0.34.0",
+        "ghcr.io/hoarder-app/hoarder:0.34.1",
         "ghcr.io/karakeep-app/karakeep-chrome:release",
         "getmeili/meilisearch:v1.55"
       ]
@@ -2941,7 +2926,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/homarr-labs/homarr:v2.6.0"
+        "ghcr.io/homarr-labs/homarr:v2.10.1"
       ]
     },
     {
@@ -2952,11 +2937,11 @@
         "automation"
       ],
       "source": "https://github.com/home-assistant/core",
-      "website": "",
+      "website": "https://www.home-assistant.io/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/home-assistant/home-assistant:2026.10.2"
+        "ghcr.io/home-assistant/home-assistant:2026.10.4"
       ]
     },
     {
@@ -2971,7 +2956,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/sysadminsmedia/homebox:0.27.0"
+        "ghcr.io/sysadminsmedia/homebox:0.27.1"
       ]
     },
     {
@@ -2982,7 +2967,7 @@
         "automation"
       ],
       "source": "https://github.com/homebridge/homebridge",
-      "website": "",
+      "website": "https://homebridge.io/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -2997,11 +2982,11 @@
         "utilities"
       ],
       "source": "https://github.com/gethomepage/homepage",
-      "website": "",
+      "website": "https://gethomepage.dev/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/gethomepage/homepage:v2.6.0"
+        "ghcr.io/gethomepage/homepage:v2.7.0"
       ]
     },
     {
@@ -3032,8 +3017,8 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/immich-app/immich-server:v3.3.3",
-        "ghcr.io/immich-app/immich-machine-learning:v3.3.3",
+        "ghcr.io/immich-app/immich-server:v3.3.5",
+        "ghcr.io/immich-app/immich-machine-learning:v3.3.6",
         "redis:6.2",
         "ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0"
       ]
@@ -3062,7 +3047,7 @@
         "social"
       ],
       "source": "https://github.com/iv-org/invidious",
-      "website": "",
+      "website": "https://invidious.io/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3097,7 +3082,7 @@
         "development"
       ],
       "source": "https://github.com/CorentinTh/it-tools",
-      "website": "",
+      "website": "https://it-tools.tech/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3128,7 +3113,7 @@
         "media"
       ],
       "source": "https://github.com/jellyfin/jellyfin",
-      "website": "",
+      "website": "https://jellyfin.org/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3151,22 +3136,6 @@
       ]
     },
     {
-      "id": "jellyseerr",
-      "name": "Jellyseerr",
-      "port": 8163,
-      "categories": [
-        "media",
-        "utilities"
-      ],
-      "source": "https://github.com/Fallenbagel/jellyseerr",
-      "website": "",
-      "available": true,
-      "deprecated": true,
-      "images": [
-        "fallenbagel/jellyseerr:2.7.3"
-      ]
-    },
-    {
       "id": "joplin",
       "name": "Joplin Server",
       "port": 8099,
@@ -3178,7 +3147,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "joplin/server:3.7.2",
+        "joplin/server:3.7.3",
         "postgres:14.2"
       ]
     },
@@ -3194,7 +3163,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "kanboard/kanboard:v1.2.54"
+        "kanboard/kanboard:v1.2.57"
       ]
     },
     {
@@ -3206,7 +3175,7 @@
         "utilities"
       ],
       "source": "https://github.com/Casvt/Kapowarr",
-      "website": "",
+      "website": "https://casvt.github.io/Kapowarr/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3236,7 +3205,7 @@
         "media"
       ],
       "source": "https://github.com/Kareadita/Kavita",
-      "website": "",
+      "website": "https://www.kavitareader.com/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3287,7 +3256,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "koillection/koillection:1.8.4",
+        "koillection/koillection:1.8.5",
         "postgres:15"
       ]
     },
@@ -3300,11 +3269,11 @@
         "media"
       ],
       "source": "https://github.com/Kometa-Team/Kometa",
-      "website": "",
+      "website": "https://kometa.wiki",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/linuxserver/kometa:2.5.3"
+        "ghcr.io/linuxserver/kometa:2.5.4"
       ]
     },
     {
@@ -3319,7 +3288,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/gotson/komga:1.29.1"
+        "ghcr.io/gotson/komga:1.30.0"
       ]
     },
     {
@@ -3330,7 +3299,7 @@
         "photography"
       ],
       "source": "https://github.com/LibrePhotos/librephotos",
-      "website": "",
+      "website": "https://docs.librephotos.com/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3354,7 +3323,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/librespeed:6.3.0"
+        "lscr.io/linuxserver/librespeed:6.3.1"
       ]
     },
     {
@@ -3365,7 +3334,7 @@
         "utilities"
       ],
       "source": "https://github.com/LibreTranslate/LibreTranslate",
-      "website": "",
+      "website": "https://docs.libretranslate.com/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3385,7 +3354,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/linuxserver/lidarr:3.1.0"
+        "ghcr.io/linuxserver/lidarr:3.1.6"
       ]
     },
     {
@@ -3426,7 +3395,7 @@
         "data"
       ],
       "source": "https://github.com/linkwarden/linkwarden",
-      "website": "",
+      "website": "https://docs.linkwarden.app/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3472,7 +3441,7 @@
         "security"
       ],
       "source": "https://github.com/logto-io/logto",
-      "website": "",
+      "website": "https://logto.io/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3488,7 +3457,7 @@
         "utilities"
       ],
       "source": "https://github.com/hargata/lubelog",
-      "website": "",
+      "website": "https://lubelogger.com/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3505,11 +3474,11 @@
         "utilities"
       ],
       "source": "https://github.com/Maintainerr/Maintainerr",
-      "website": "",
+      "website": "https://maintainerr.info/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/maintainerr/maintainerr:3.30.2"
+        "ghcr.io/maintainerr/maintainerr:3.31.0"
       ]
     },
     {
@@ -3524,7 +3493,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/mastodon:4.7.3",
+        "lscr.io/linuxserver/mastodon:4.7.5",
         "postgres:14-alpine",
         "redis:7-alpine"
       ]
@@ -3537,7 +3506,7 @@
         "social"
       ],
       "source": "https://gitlab.com/famedly/conduit",
-      "website": "https://matrix.org/docs/projects/server/conduit",
+      "website": "https://docs.conduit.rs/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3582,11 +3551,11 @@
       "port": 8220,
       "categories": [],
       "source": "https://github.com/hay-kot/mealie",
-      "website": "",
+      "website": "https://docs.mealie.io/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/mealie-recipes/mealie:v3.29.0"
+        "ghcr.io/mealie-recipes/mealie:v3.30.0"
       ]
     },
     {
@@ -3601,7 +3570,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "neosmemo/memos:0.31.0"
+        "neosmemo/memos:26.11.0"
       ]
     },
     {
@@ -3612,12 +3581,12 @@
         "finance"
       ],
       "source": "https://github.com/mempool/mempool",
-      "website": "",
+      "website": "https://mempool.space/",
       "available": true,
       "deprecated": false,
       "images": [
-        "mempool/frontend:v3.3.1",
-        "mempool/backend:v3.3.1",
+        "mempool/frontend:v3.3.2",
+        "mempool/backend:v3.3.2",
         "mariadb:10.5.21"
       ]
     },
@@ -3630,11 +3599,11 @@
         "utilities"
       ],
       "source": "https://github.com/metabase/metabase",
-      "website": "",
+      "website": "https://metabase.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "metabase/metabase:v0.64.2"
+        "metabase/metabase:v0.65.3"
       ]
     },
     {
@@ -3660,11 +3629,11 @@
         "utilities"
       ],
       "source": "https://github.com/Casvt/MIND",
-      "website": "",
+      "website": "https://casvt.github.io/MIND/",
       "available": true,
       "deprecated": false,
       "images": [
-        "mrcas/mind:v1.4.1"
+        "mrcas/mind:v1.5.2"
       ]
     },
     {
@@ -3675,7 +3644,7 @@
         "gaming"
       ],
       "source": "https://github.com/itzg/docker-minecraft-server",
-      "website": "",
+      "website": "https://docker-minecraft-server.readthedocs.io/en/latest/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3705,7 +3674,7 @@
         "social"
       ],
       "source": "https://github.com/inovector/mixpost",
-      "website": "",
+      "website": "https://mixpost.app/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3723,7 +3692,7 @@
         "utilities"
       ],
       "source": "https://github.com/inovector/mixpost",
-      "website": "",
+      "website": "https://mixpost.app/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3803,7 +3772,7 @@
         "social"
       ],
       "source": "https://github.com/monicahq/monica",
-      "website": "",
+      "website": "https://monicahq.com/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3819,7 +3788,7 @@
         "media"
       ],
       "source": "https://github.com/remvze/moodist",
-      "website": "",
+      "website": "https://moodist.mvze.net/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3838,8 +3807,8 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "leepeuker/movary:0.80.0",
-        "leepeuker/movary:0.80.0",
+        "leepeuker/movary:0.83.0",
+        "leepeuker/movary:0.83.0",
         "mysql:8.0"
       ]
     },
@@ -3851,11 +3820,11 @@
         "utilities"
       ],
       "source": "https://github.com/emqx/MQTTX/",
-      "website": "",
+      "website": "https://mqttx.app/",
       "available": true,
       "deprecated": false,
       "images": [
-        "emqx/mqttx-web:v1.13.1"
+        "emqx/mqttx-web:v1.13.3"
       ]
     },
     {
@@ -3867,7 +3836,7 @@
         "media"
       ],
       "source": "https://github.com/IrosTheBeggar/mStream",
-      "website": "",
+      "website": "https://mstream.io/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3901,7 +3870,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "n8nio/n8n:2.44.4",
+        "n8nio/n8n:2.47.2",
         "postgres:18",
         "bash:5.3.20"
       ]
@@ -3915,7 +3884,7 @@
         "music"
       ],
       "source": "https://github.com/navidrome/navidrome/",
-      "website": "",
+      "website": "https://www.navidrome.org/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -3949,7 +3918,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "netdata/netdata:v2.12.1"
+        "netdata/netdata:v2.12.2"
       ]
     },
     {
@@ -3960,7 +3929,7 @@
         "data"
       ],
       "source": "https://github.com/nextcloud/server",
-      "website": "",
+      "website": "https://nextcloud.com",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4013,7 +3982,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "nginx:1.31.7"
+        "nginx:1.31.8"
       ]
     },
     {
@@ -4026,7 +3995,7 @@
       "source": "https://github.com/zedeus/nitter",
       "website": "",
       "available": true,
-      "deprecated": false,
+      "deprecated": true,
       "images": [
         "zedeus/nitter:latest",
         "redis:alpine"
@@ -4040,11 +4009,11 @@
         "utilities"
       ],
       "source": "https://github.com/nocodb/nocodb",
-      "website": "",
+      "website": "https://nocodb.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "nocodb/nocodb:2026.09.1",
+        "nocodb/nocodb:2026.10.1",
         "postgres:16",
         "redis:alpine"
       ]
@@ -4057,11 +4026,11 @@
         "automation"
       ],
       "source": "https://github.com/node-red/node-red",
-      "website": "",
+      "website": "https://nodered.org/",
       "available": true,
       "deprecated": false,
       "images": [
-        "nodered/node-red:5.0.8"
+        "nodered/node-red:5.0.9"
       ]
     },
     {
@@ -4093,7 +4062,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "binwiederhier/ntfy:v2.31.1"
+        "binwiederhier/ntfy:v2.37.2"
       ]
     },
     {
@@ -4120,7 +4089,7 @@
         "finance"
       ],
       "source": "https://github.com/Drakkar-Software/OctoBot",
-      "website": "",
+      "website": "https://www.octobot.cloud",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4136,7 +4105,7 @@
         "finance"
       ],
       "source": "https://github.com/odoo/odoo",
-      "website": "",
+      "website": "https://www.odoo.com/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4152,7 +4121,7 @@
         "utilities"
       ],
       "source": "https://github.com/OliveTin/OliveTin",
-      "website": "",
+      "website": "https://www.olivetin.app/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4171,7 +4140,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.6"
+        "ollama/ollama:0.40.14"
       ]
     },
     {
@@ -4186,7 +4155,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.6"
+        "ollama/ollama:0.40.14"
       ]
     },
     {
@@ -4201,7 +4170,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.6"
+        "ollama/ollama:0.40.14"
       ]
     },
     {
@@ -4212,11 +4181,11 @@
         "development"
       ],
       "source": "https://code.onedev.io/onedev/server",
-      "website": "",
+      "website": "https://code.onedev.io/",
       "available": true,
       "deprecated": false,
       "images": [
-        "1dev/server:16.9.4",
+        "1dev/server:17.1.2",
         "postgres:14"
       ]
     },
@@ -4232,7 +4201,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/open-webui/open-webui:v0.12.3"
+        "ghcr.io/open-webui/open-webui:v0.13.0"
       ]
     },
     {
@@ -4244,7 +4213,7 @@
         "books"
       ],
       "source": "https://github.com/evan-buss/openbooks",
-      "website": "",
+      "website": "https://evan-buss.github.io/openbooks/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4278,27 +4247,11 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "outlinewiki/outline:1.11.0",
+        "outlinewiki/outline:1.12.0",
         "postgres:16-alpine",
         "redis:7-alpine",
         "ghcr.io/sergi0g/oidc-provider:v0.2.0",
         "nginx:alpine"
-      ]
-    },
-    {
-      "id": "overseerr",
-      "name": "Overseerr",
-      "port": 8116,
-      "categories": [
-        "media",
-        "utilities"
-      ],
-      "source": "https://github.com/sct/overseerr",
-      "website": "",
-      "available": true,
-      "deprecated": true,
-      "images": [
-        "ghcr.io/linuxserver/overseerr:1.35.0"
       ]
     },
     {
@@ -4328,7 +4281,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "owncloud/server:11.0.1",
+        "owncloud/server:11.1.0",
         "mariadb:10.6",
         "redis:6"
       ]
@@ -4358,14 +4311,14 @@
         "utilities"
       ],
       "source": "https://github.com/paperless-ngx/paperless-ngx",
-      "website": "",
+      "website": "http://docs.paperless-ngx.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/paperless-ngx/paperless-ngx:3.3.2",
+        "ghcr.io/paperless-ngx/paperless-ngx:3.4.2",
         "redis:7",
         "postgres:17",
-        "gotenberg/gotenberg:8.38",
+        "gotenberg/gotenberg:8.39",
         "apache/tika:latest"
       ]
     },
@@ -4412,7 +4365,7 @@
         "photography"
       ],
       "source": "https://github.com/photoprism/photoprism",
-      "website": "",
+      "website": "https://www.photoprism.app/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4429,11 +4382,11 @@
         "security"
       ],
       "source": "https://github.com/pi-hole/pi-hole",
-      "website": "",
+      "website": "https://pi-hole.net/",
       "available": true,
       "deprecated": false,
       "images": [
-        "pihole/pihole:2026.10.0"
+        "pihole/pihole:2026.10.1"
       ]
     },
     {
@@ -4453,18 +4406,18 @@
     },
     {
       "id": "pingvin-share",
-      "name": "Pingvin Share",
+      "name": "Pingvin Share X",
       "port": 8654,
       "categories": [
         "data",
         "utilities"
       ],
-      "source": "https://github.com/stonith404/pingvin-share",
-      "website": "https://pingvin-share.dev.eliasschneider.com",
+      "source": "https://github.com/smp46/pingvin-share-x",
+      "website": "https://smp46.github.io/pingvin-share-x/introduction",
       "available": true,
       "deprecated": false,
       "images": [
-        "stonith404/pingvin-share:v1.13.0"
+        "ghcr.io/smp46/pingvin-share-x:v2.1.0"
       ]
     },
     {
@@ -4506,13 +4459,13 @@
         "utilities"
       ],
       "source": "https://github.com/plausible/community-edition",
-      "website": "",
+      "website": "https://plausible.io/blog/community-edition",
       "available": true,
       "deprecated": false,
       "images": [
         "ghcr.io/plausible/community-edition:v2.1.5",
         "postgres:16-alpine",
-        "clickhouse/clickhouse-server:26.9.22.3"
+        "clickhouse/clickhouse-server:26.10.3.7"
       ]
     },
     {
@@ -4527,7 +4480,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/plex:1.43.4"
+        "lscr.io/linuxserver/plex:1.43.5"
       ]
     },
     {
@@ -4538,7 +4491,7 @@
         "media"
       ],
       "source": "https://github.com/SamTV12345/PodFetch",
-      "website": "",
+      "website": "https://podfetch-docs.samtv.fyi/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4557,7 +4510,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "portainer/portainer-ce:2.45.2"
+        "portainer/portainer-ce:2.45.3"
       ]
     },
     {
@@ -4583,11 +4536,11 @@
         "utilities"
       ],
       "source": "https://github.com/PrivateBin/PrivateBin",
-      "website": "",
+      "website": "https://privatebin.info/",
       "available": true,
       "deprecated": false,
       "images": [
-        "privatebin/nginx-fpm-alpine:2.0.6"
+        "privatebin/nginx-fpm-alpine:2.1.0"
       ]
     },
     {
@@ -4599,11 +4552,11 @@
         "utilities"
       ],
       "source": "https://github.com/Prowlarr/Prowlarr/",
-      "website": "",
+      "website": "https://prowlarr.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/linuxserver/prowlarr:2.6.5"
+        "ghcr.io/linuxserver/prowlarr:2.7.0"
       ]
     },
     {
@@ -4614,11 +4567,11 @@
         "utilities"
       ],
       "source": "https://github.com/qbittorrent/qBittorrent",
-      "website": "",
+      "website": "https://www.qbittorrent.org/",
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/qbittorrent:5.2.4"
+        "lscr.io/linuxserver/qbittorrent:5.3.0"
       ]
     },
     {
@@ -4645,7 +4598,7 @@
         "utilities"
       ],
       "source": "https://github.com/Radarr/Radarr",
-      "website": "",
+      "website": "https://radarr.video/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4664,7 +4617,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lukevella/rallly:4.15.5",
+        "lukevella/rallly:4.16.4",
         "postgres:14"
       ]
     },
@@ -4697,7 +4650,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/recyclarr/recyclarr:8.8.0"
+        "ghcr.io/recyclarr/recyclarr:8.8.1"
       ]
     },
     {
@@ -4728,7 +4681,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/rommapp/romm:5.4.0",
+        "ghcr.io/rommapp/romm:5.4.1",
         "lscr.io/linuxserver/mariadb:11.4.5"
       ]
     },
@@ -4745,7 +4698,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "codeberg.org/danb/rss:v2.2.3"
+        "codeberg.org/danb/rss:v2.2.4"
       ]
     },
     {
@@ -4775,7 +4728,7 @@
         "utilities"
       ],
       "source": "https://github.com/sabnzbd/sabnzbd",
-      "website": "",
+      "website": "https://sabnzbd.org/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4790,7 +4743,7 @@
         "security"
       ],
       "source": "https://github.com/koush/scrypted",
-      "website": "",
+      "website": "https://www.scrypted.app/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4805,7 +4758,7 @@
         "social"
       ],
       "source": "https://github.com/searxng/searxng",
-      "website": "",
+      "website": "https://docs.searxng.org/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4836,11 +4789,11 @@
         "utilities"
       ],
       "source": "https://github.com/seerr-team/seerr",
-      "website": "",
+      "website": "https://docs.seerr.dev/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/seerr-team/seerr:v3.5.0"
+        "ghcr.io/seerr-team/seerr:v3.5.1"
       ]
     },
     {
@@ -4885,7 +4838,7 @@
       "source": "https://github.com/serge-chat/serge",
       "website": "",
       "available": true,
-      "deprecated": false,
+      "deprecated": true,
       "images": [
         "ghcr.io/serge-chat/serge:0.9.0"
       ]
@@ -4918,7 +4871,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/shlinkio/shlink:5.1.7",
+        "ghcr.io/shlinkio/shlink:5.1.8",
         "postgres:17.2-alpine"
       ]
     },
@@ -4945,7 +4898,7 @@
         "social"
       ],
       "source": "https://github.com/simplex-chat/simplexmq",
-      "website": "",
+      "website": "https://simplex.chat/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -4964,7 +4917,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "b3log/siyuan:v3.8.8"
+        "b3log/siyuan:v3.8.9"
       ]
     },
     {
@@ -4979,7 +4932,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "slskd/slskd:0.26.1"
+        "slskd/slskd:0.26.2"
       ]
     },
     {
@@ -5006,7 +4959,7 @@
         "utilities"
       ],
       "source": "https://github.com/Sonarr/Sonarr",
-      "website": "",
+      "website": "https://sonarr.tv/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -5036,11 +4989,11 @@
         "utilities"
       ],
       "source": "https://github.com/alexjustesen/speedtest-tracker",
-      "website": "",
+      "website": "https://docs.speedtest-tracker.dev/",
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/speedtest-tracker:1.15.0",
+        "lscr.io/linuxserver/speedtest-tracker:1.15.1",
         "postgres:15"
       ]
     },
@@ -5057,7 +5010,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/donkie/spoolman:0.27.0"
+        "ghcr.io/donkie/spoolman:0.27.1"
       ]
     },
     {
@@ -5100,12 +5053,12 @@
         "data",
         "utilities"
       ],
-      "source": "https://github.com/Frooodle/Stirling-PDF/",
-      "website": "",
+      "source": "https://github.com/Stirling-Tools/Stirling-PDF",
+      "website": "https://stirling.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "stirlingtools/stirling-pdf:3.2.0"
+        "stirlingtools/stirling-pdf:3.2.2"
       ]
     },
     {
@@ -5121,7 +5074,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/suwayomi/tachidesk:v2.4.2422"
+        "ghcr.io/suwayomi/tachidesk:v2.4.2476"
       ]
     },
     {
@@ -5137,7 +5090,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "syncthing/syncthing:2.1.6"
+        "syncthing/syncthing:2.1.7"
       ]
     },
     {
@@ -5153,7 +5106,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "tailscale/tailscale:v1.104.1"
+        "tailscale/tailscale:v1.104.4"
       ]
     },
     {
@@ -5164,11 +5117,11 @@
         "data"
       ],
       "source": "https://github.com/TandoorRecipes/recipes",
-      "website": "https://tandoor.dev/",
+      "website": "https://docs.tandoor.dev/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/tandoorrecipes/recipes:2.6.15",
+        "ghcr.io/tandoorrecipes/recipes:2.7.2",
         "postgres:15-alpine"
       ]
     },
@@ -5196,7 +5149,7 @@
         "utilities"
       ],
       "source": "https://github.com/Tautulli/Tautulli",
-      "website": "",
+      "website": "https://tautulli.com/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -5259,11 +5212,11 @@
         "utilities"
       ],
       "source": "https://github.com/transmission/transmission",
-      "website": "",
+      "website": "https://transmissionbt.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/transmission:4.1.3"
+        "lscr.io/linuxserver/transmission:4.1.4"
       ]
     },
     {
@@ -5275,7 +5228,7 @@
         "security"
       ],
       "source": "https://github.com/haugene/docker-transmission-openvpn",
-      "website": "",
+      "website": "https://haugene.github.io/docker-transmission-openvpn/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -5290,11 +5243,11 @@
         "utilities"
       ],
       "source": "https://github.com/TriliumNext/Trilium",
-      "website": "",
+      "website": "https://triliumnotes.org/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/triliumnext/trilium:v0.106.0"
+        "ghcr.io/triliumnext/trilium:v0.106.1"
       ]
     },
     {
@@ -5305,13 +5258,13 @@
         "media"
       ],
       "source": "https://github.com/tubearchivist/tubearchivist",
-      "website": "",
+      "website": "https://www.tubearchivist.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "bbilly1/tubearchivist:v0.5.12",
+        "bbilly1/tubearchivist:v0.6.0",
         "redislabs/rejson:latest",
-        "elasticsearch:8.18.0"
+        "elasticsearch:8.19.0"
       ]
     },
     {
@@ -5326,7 +5279,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/umami-software/umami:3.4.0",
+        "ghcr.io/umami-software/umami:3.4.1",
         "postgres:15-alpine"
       ]
     },
@@ -5355,7 +5308,7 @@
         "utilities"
       ],
       "source": "https://github.com/louislam/uptime-kuma",
-      "website": "",
+      "website": "https://uptime.kuma.pet/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -5374,7 +5327,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "vaultwarden/server:1.37.4"
+        "vaultwarden/server:1.37.5"
       ]
     },
     {
@@ -5385,7 +5338,7 @@
         "media"
       ],
       "source": "https://github.com/ViewTube/viewtube",
-      "website": "",
+      "website": "https://viewtube.wiki/",
       "available": true,
       "deprecated": false,
       "images": [
@@ -5401,12 +5354,12 @@
       "categories": [
         "utilities"
       ],
-      "source": "https://kolaente.dev/vikunja",
+      "source": "https://github.com/go-vikunja/vikunja",
       "website": "https://vikunja.io",
       "available": true,
       "deprecated": false,
       "images": [
-        "vikunja/vikunja:2.7.0",
+        "vikunja/vikunja:2.7.1",
         "postgres:14"
       ]
     },
@@ -5418,11 +5371,11 @@
         "finance"
       ],
       "source": "https://github.com/ellite/Wallos",
-      "website": "",
+      "website": "https://wallosapp.com/",
       "available": true,
       "deprecated": false,
       "images": [
-        "bellamy/wallos:5.10.0"
+        "bellamy/wallos:5.10.4"
       ]
     },
     {
@@ -5449,11 +5402,11 @@
         "development"
       ],
       "source": "https://github.com/wekan/wekan",
-      "website": "",
+      "website": "https://wekan.fi/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/wekan/wekan:v12.52",
+        "ghcr.io/wekan/wekan:v12.94",
         "mongo:6"
       ]
     },
@@ -5465,11 +5418,11 @@
         "network"
       ],
       "source": "https://github.com/wg-easy/wg-easy",
-      "website": "",
+      "website": "https://wg-easy.github.io/wg-easy/latest/",
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/wg-easy/wg-easy:15.4.0"
+        "ghcr.io/wg-easy/wg-easy:15.5.0"
       ]
     },
     {
@@ -5485,7 +5438,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/hotio/whisparr:nightly-2.0.0.548"
+        "ghcr.io/hotio/whisparr:latest"
       ]
     },
     {
@@ -5504,21 +5457,6 @@
       ]
     },
     {
-      "id": "whoogle",
-      "name": "Whoogle Search",
-      "port": 8255,
-      "categories": [
-        "social"
-      ],
-      "source": "https://github.com/benbusby/whoogle-search",
-      "website": "",
-      "available": true,
-      "deprecated": true,
-      "images": [
-        "benbusby/whoogle-search:1.2.4"
-      ]
-    },
-    {
       "id": "wikijs",
       "name": "WikiJS",
       "port": 8148,
@@ -5530,7 +5468,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/requarks/wiki:2.5.316",
+        "ghcr.io/requarks/wiki:2.5.317",
         "postgres:11-alpine"
       ]
     },
@@ -5576,7 +5514,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "wordpress:7.1.3",
+        "wordpress:7.1.4",
         "mariadb:11.1.3"
       ]
     },
@@ -5642,7 +5580,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "koenkk/zigbee2mqtt:2.14.2"
+        "koenkk/zigbee2mqtt:2.14.3"
       ]
     },
     {
@@ -5657,7 +5595,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/diced/zipline:4.8.0",
+        "ghcr.io/diced/zipline:4.8.2",
         "postgres:18"
       ]
     }
@@ -5940,10 +5878,6 @@
       "runtipi_id": "invidious"
     },
     {
-      "port": 8096,
-      "runtipi_id": "filebrowser"
-    },
-    {
       "port": 8097,
       "runtipi_id": "jackett"
     },
@@ -6010,10 +5944,6 @@
     {
       "port": 8115,
       "runtipi_id": "firefly-iii"
-    },
-    {
-      "port": 8116,
-      "runtipi_id": "overseerr"
     },
     {
       "port": 8117,
@@ -6178,10 +6108,6 @@
     {
       "port": 8162,
       "runtipi_id": "mstream"
-    },
-    {
-      "port": 8163,
-      "runtipi_id": "jellyseerr"
     },
     {
       "port": 8164,
@@ -6374,10 +6300,6 @@
     {
       "port": 8250,
       "runtipi_id": "metube"
-    },
-    {
-      "port": 8255,
-      "runtipi_id": "whoogle"
     },
     {
       "port": 8256,

@@ -1,6 +1,6 @@
 services:
   electrumx:
-    image: ghcr.io/getumbrel/umbrel-electrumx:1.0.0
+    image: ghcr.io/getumbrel/umbrel-electrumx:1.0.1
     environment:
       - ELECTRUM_HIDDEN_SERVICE=${APP_ELECTRUMX_RPC_HIDDEN_SERVICE}
       - ELECTRUM_LOCAL_SERVICE=${APP_DOMAIN}

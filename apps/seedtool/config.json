@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "seedtool",
   "description": "🔏 Bitcoin Seed Tool is an educational tool for exploring how Bitcoin seed phrases are created, validated and used. It helps users experiment with entropy, BIP39 mnemonics, checksums, passphrases and other seed-related wallet concepts. The app is designed for learning, testing and understanding Bitcoin wallet generation in a clear and interactive way.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "2.3.0",
   "categories": [
     "finance"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501508215,
-  "updated_at": 1792501568215,
+  "updated_at": 1794005949609,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

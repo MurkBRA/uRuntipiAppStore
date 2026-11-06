@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "valorgrid",
   "description": "ValorGrid is a local-first portfolio tracker for recording, importing and analysing investment movements with SQLite persistence, local backups and a browser UI. Portfolio data stays on your Runtipi server; market price lookups are sent only to the configured market data provider for the requested symbol.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "3.36.3",
   "categories": [
     "finance"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501512235,
-  "updated_at": 1792501572235,
+  "updated_at": 1794005949713,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -3,9 +3,16 @@
   "services": [
     {
       "name": "snort",
-      "image": "voidic/snort:v0.5.3",
+      "image": "voidic/snort:v0.5.4",
       "isMain": true,
-      "internalPort": 8080
+      "internalPort": 8080,
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/mime-types.conf",
+          "containerPath": "/etc/nginx/conf.d/00-mjs.conf",
+          "readOnly": true
+        }
+      ]
     }
   ]
 }

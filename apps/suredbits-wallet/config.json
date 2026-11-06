@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "suredbits-wallet",
   "description": "The Suredbits Wallet is your one stop shop for building Discreet Log Contracts. With our wallet you can create prop bets like Trump vs Biden in the 2020 US Presidential election or complicated financial derivatives such as contracts for difference that can be used to hedge risk or engage in speculation.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.9.7",
   "categories": [
     "finance"
@@ -104,7 +104,7 @@
     "amd64"
   ],
   "created_at": 1792501510380,
-  "updated_at": 1792501570380,
+  "updated_at": 1794005949658,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

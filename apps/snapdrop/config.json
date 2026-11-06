@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "snapdrop",
   "description": "Snapdrop - local file sharing in your browser. Inspired by Apple's Airdrop.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "version-b8b78cc2",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501509130,
-  "updated_at": 1792501569130,
+  "updated_at": 1794005949623,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

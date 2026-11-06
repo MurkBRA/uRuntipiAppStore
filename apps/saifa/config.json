@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "saifa",
   "description": "Saifa is designed to enhance the interoperability and efficiency of applications interacting with the Lightning Network Daemon (LND).",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v1.3.2",
   "categories": [
     "finance"
@@ -57,7 +57,7 @@
     "amd64"
   ],
   "created_at": 1792501507302,
-  "updated_at": 1792501567302,
+  "updated_at": 1794005949583,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

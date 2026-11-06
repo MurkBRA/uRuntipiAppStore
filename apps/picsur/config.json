@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "picsur",
   "description": "🖼️ Picsur is a lightweight, self-hosted image hosting platform designed for simplicity and control. It allows users to upload, store, and share images directly from their own server, without relying on third-party services. Inspired by the functionality of platforms like Imgur and Pastebin, Picsur focuses on offering a clean and efficient experience for users who need a straightforward way to manage images online.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.5.6",
   "categories": [
     "photography",
@@ -42,7 +42,7 @@
     "amd64"
   ],
   "created_at": 1792501505315,
-  "updated_at": 1792501565315,
+  "updated_at": 1794005949507,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "localai",
   "description": "LocalAI is the free, Open Source OpenAI alternative. LocalAI act as a drop-in replacement REST API that's compatible with OpenAI API specifications for local inferencing.",
-  "tipi_version": 1,
-  "version": "v4.11.0",
+  "tipi_version": 2,
+  "version": "v4.12.1",
   "categories": [
     "ai"
   ],
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501500868,
-  "updated_at": 1792501560868,
+  "updated_at": 1794005949388,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

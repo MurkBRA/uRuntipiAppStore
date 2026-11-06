@@ -107,7 +107,7 @@
         "seafile-memcached"
       ],
       "extraHosts": [
-        "${APP_DOMAIN}:host-gateway"
+        "host.docker.internal:host-gateway"
       ]
     },
     {
@@ -185,7 +185,7 @@
         "seafile-db"
       ],
       "extraHosts": [
-        "${APP_DOMAIN}:host-gateway"
+        "host.docker.internal:host-gateway"
       ]
     }
   ]

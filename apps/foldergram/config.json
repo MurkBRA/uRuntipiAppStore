@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "foldergram",
   "description": "Foldergram turns a collection of photos and videos into a clean, modern media gallery. It scans folders, organizes the discovered media, and presents everything in a visual interface designed for browsing, rediscovering, and managing personal image and video collections.",
-  "tipi_version": 1,
-  "version": "1.2.2",
+  "tipi_version": 2,
+  "version": "1.3.1",
   "categories": [
     "books",
     "utilities",
@@ -22,7 +22,7 @@
     "amd64"
   ],
   "created_at": 1792501496158,
-  "updated_at": 1792501556158,
+  "updated_at": 1794005949240,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

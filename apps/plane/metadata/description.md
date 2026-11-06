@@ -16,7 +16,7 @@ Meet Plane, an open-source project management tool to track issues, run sprints 
 The Plane admin panel can be reached at `<IP-DO-SERVIDOR>:8762/god-mode`
 
 ## Links
-- **Upstream Version**: `1.4.2`
+- **Upstream Version**: `1.4.3`
 - **Website**: http://plane.so/
 - **Source Repository**: https://github.com/makeplane/plane
 - **Support**: https://github.com/makeplane/plane/issues

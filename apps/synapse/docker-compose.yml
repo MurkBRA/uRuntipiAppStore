@@ -1,6 +1,6 @@
 services:
   synapse:
-    image: matrixdotorg/synapse:v1.163.0
+    image: matrixdotorg/synapse:v1.164.2
     command: |-
       -c './start.py generate && ./start.py migrate_config && echo -e "
       enable_registration_without_verification: true" >> /data/homeserver.yaml && exec ./start.py'

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "twenty",
   "description": "Twenty is the leading open-source CRM, built by a community of hundreds of contributors to meet the unique needs of your business. Designed for flexibility, it helps businesses of all sizes efficiently manage customer relationships and streamline workflows.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "2.50.1",
   "categories": [
     "utilities",
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501511931,
-  "updated_at": 1792665347272,
+  "updated_at": 1794005949703,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

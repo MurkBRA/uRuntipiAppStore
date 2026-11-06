@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "habitica",
   "description": "Habitica is a productivity app that blends task management with elements of role-playing games to create an engaging and motivating experience. By turning everyday tasks and goals into quests, users are encouraged to complete them in exchange for rewards like experience points, gold, and in-game items. Habitica allows users to set up various types of tasks, such as daily habits, to-do lists, and long-term goals. As users complete tasks, they level up their avatars, unlock new features, and earn rewards, which can include customization options for their characters or even virtual pets.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "5.50.6",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501497214,
-  "updated_at": 1792501557214,
+  "updated_at": 1794005949273,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

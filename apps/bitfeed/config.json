@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "bitfeed",
   "description": "A self-hosted version of Bitfeed - the open source mempool visualizer & block explorer available at https://bitfeed.live.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v2.3.4",
   "categories": [
     "finance"
@@ -84,7 +84,7 @@
     "amd64"
   ],
   "created_at": 1792501490300,
-  "updated_at": 1792501550300,
+  "updated_at": 1794005949088,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

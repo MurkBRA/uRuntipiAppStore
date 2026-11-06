@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "woofbot",
   "description": "WoofBot is a chat bot that runs on your personal Bitcoin node and sends telegram notifications for configured events: payments from/to specified addresses, transactions being confirmed, new-blocks and more. This version of WoofBot requires only Bitcoin Core to be installed, and does not integrate with any lightning api.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.9.8",
   "categories": [
     "finance"
@@ -70,7 +70,7 @@
     "amd64"
   ],
   "created_at": 1792501513162,
-  "updated_at": 1792501573162,
+  "updated_at": 1794005949738,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

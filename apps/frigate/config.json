@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "frigate",
   "description": "A complete and local NVR designed for Home Assistant with AI object detection.  Uses OpenCV and Tensorflow to perform realtime object detection locally for IP cameras.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.18.2",
   "categories": [
     "automation"
@@ -19,7 +19,7 @@
     {
       "type": "random",
       "label": "Frigate RTSP password",
-      "hint": "Password used for RTSP camera stream authentication (FRIGATE_RTSP_PASSWORD). Web UI admin password is generated in the container console/logs on first startup.",
+      "hint": "Password used for RTSP camera stream authentication. Web UI admin password is generated in container console/logs.",
       "min": 32,
       "env_variable": "APP_RTSP_PASSWORD"
     }
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501496394,
-  "updated_at": 1792501556394,
+  "updated_at": 1794005949248,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

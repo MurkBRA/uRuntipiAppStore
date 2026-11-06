@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "fedimint-gateway",
   "description": "The Fedimint Lightning Gateway is an ecash wallet that connects Fedimint users to the broader Lightning Network. Operators can earn fees by providing outbound and inbound Lightning liquidity via their existing LND node. # Key Characteristics  - Trust Model: Just like a Lightning node, a Lightning Gateway is not a custodian of the payments it is routing. Lightning Gateways should trust the federations they provide liquidity services to, but users do not need to trust the Lightning Gateway.",
-  "tipi_version": 1,
-  "version": "v0.12.2",
+  "tipi_version": 2,
+  "version": "v0.13.0",
   "categories": [
     "finance"
   ],
@@ -94,7 +94,7 @@
     "amd64"
   ],
   "created_at": 1792501495732,
-  "updated_at": 1792501555732,
+  "updated_at": 1794005949229,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

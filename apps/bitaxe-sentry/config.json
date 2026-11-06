@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "bitaxe-sentry",
   "description": "Bitaxe Sentry is a monitoring and management solution for Bitaxe ASIC miners. Track the performance, temperature, and status of your miners from a single dashboard. Get alerts when your miners hit a new best difficulty, or when temperature or voltage thresholds are exceeded.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.8.0",
   "categories": [
     "finance"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501489379,
-  "updated_at": 1792501549379,
+  "updated_at": 1794005949058,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

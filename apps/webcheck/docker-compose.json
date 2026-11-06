@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "webcheck",
-      "image": "ghcr.io/lissy93/web-check:2.3.0",
+      "image": "ghcr.io/lissy93/web-check:2.4.0",
       "isMain": true,
       "internalPort": 3000,
       "volumes": [

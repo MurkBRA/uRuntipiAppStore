@@ -28,7 +28,7 @@ If you also use Lightning Terminal, keep it stopped while using Fedimint Gateway
 This package integrates with **bitcoin, lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `v0.12.2`
+- **Upstream Version**: `v0.13.0`
 - **Website**: https://fedimint.org/
 - **Source Repository**: https://github.com/fedimint/fedimint
 - **Support**: https://github.com/fedimint/fedimint/issues

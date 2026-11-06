@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "woofbot-lnd",
   "description": "WoofBot is a chat bot that runs on your personal Bitcoin node and sends telegram notifications for configured events: payments from/to specified addresses, transactions being confirmed, new-blocks and more. This version of WoofBot integrates with LND lightning api. WoofBot is NOT affiliated with Lightning Labs, the creators of LND. WoofBot only communicates with LND's api.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v0.9.8",
   "categories": [
     "finance"
@@ -99,7 +99,7 @@
     "amd64"
   ],
   "created_at": 1792501513236,
-  "updated_at": 1792501573236,
+  "updated_at": 1794005949740,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

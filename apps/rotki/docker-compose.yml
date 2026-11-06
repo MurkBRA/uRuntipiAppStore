@@ -1,6 +1,6 @@
 services:
   rotki:
-    image: rotki/rotki:v1.44.1
+    image: rotki/rotki:v1.44.2
     volumes:
       - ${APP_DATA_DIR}/data/data:/data
       - ${APP_DATA_DIR}/data/logs:/logs

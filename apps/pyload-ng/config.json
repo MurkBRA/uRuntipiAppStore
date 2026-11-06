@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "pyload-ng",
   "description": "Pyload is a powerful, open-source download manager designed to simplify your file downloads. All common video-sites, one-click-hosters, container formats and well known web standards are supported to allow you to download your files.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.5.0",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501506348,
-  "updated_at": 1792501566348,
+  "updated_at": 1794005949547,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

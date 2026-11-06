@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "pocketbase",
-      "image": "ghcr.io/muchobien/pocketbase:0.40.5",
+      "image": "ghcr.io/muchobien/pocketbase:0.40.6",
       "isMain": true,
       "internalPort": 8090,
       "stopGracePeriod": "1m",

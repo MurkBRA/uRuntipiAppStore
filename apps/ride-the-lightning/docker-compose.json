@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "ride-the-lightning",
-      "image": "shahanafarooqui/rtl:v0.15.15",
+      "image": "shahanafarooqui/rtl:v0.15.16",
       "isMain": true,
       "internalPort": 3001,
       "addToMainNetwork": true,

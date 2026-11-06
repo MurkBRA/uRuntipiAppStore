@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "komodo",
-      "image": "ghcr.io/moghtech/komodo-core:2.3.3",
+      "image": "ghcr.io/moghtech/komodo-core:2.3.4",
       "isMain": true,
       "internalPort": 9120,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
@@ -119,7 +119,7 @@
     },
     {
       "name": "komodo-periphery",
-      "image": "ghcr.io/moghtech/komodo-periphery:2.3.3",
+      "image": "ghcr.io/moghtech/komodo-periphery:2.3.4",
       "environment": [
         {
           "key": "COMPOSE_KOMODO_IMAGE_TAG",

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "shopstr",
   "description": "🛒 Shopstr is an open-source decentralized marketplace built on the Nostr protocol, designed to enable global peer-to-peer trade without relying on centralized platforms or intermediaries. It allows users to buy and sell goods and services using Bitcoin, including support for Lightning payments, while maintaining full control over their data and transactions. By embracing the principles of digital sovereignty and permissionless access, Shopstr offers a censorship-resistant alternative to traditional e-commerce platforms.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "0.7.5",
   "categories": [
     "finance"
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501508384,
-  "updated_at": 1792501568384,
+  "updated_at": 1794005949611,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

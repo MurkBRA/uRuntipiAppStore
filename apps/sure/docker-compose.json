@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "sure",
-      "image": "ghcr.io/we-promise/sure:0.7.5",
+      "image": "ghcr.io/we-promise/sure:0.7.6",
       "isMain": true,
       "internalPort": 3000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
@@ -27,6 +27,10 @@
         {
           "key": "SELF_HOSTED",
           "value": "true"
+        },
+        {
+          "key": "POSTHOG_FEEDBACK_ENABLED",
+          "value": "false"
         },
         {
           "key": "RAILS_FORCE_SSL",
@@ -66,7 +70,7 @@
     },
     {
       "name": "sure-worker",
-      "image": "ghcr.io/we-promise/sure:0.7.5",
+      "image": "ghcr.io/we-promise/sure:0.7.6",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": "bundle exec sidekiq",
       "environment": [
@@ -89,6 +93,10 @@
         {
           "key": "SELF_HOSTED",
           "value": "true"
+        },
+        {
+          "key": "POSTHOG_FEEDBACK_ENABLED",
+          "value": "false"
         },
         {
           "key": "RAILS_FORCE_SSL",

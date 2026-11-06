@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "zoraxy",
   "description": "Expose your apps to the internet easily and securely.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "v3.3.4",
   "categories": [
     "network",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501513730,
-  "updated_at": 1792501573730,
+  "updated_at": 1794005949755,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

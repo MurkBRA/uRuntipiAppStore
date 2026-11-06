@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "libreoffice",
   "description": "LibreOffice is a free and powerful office suite, and a successor to OpenOffice.org (commonly known as OpenOffice). Its clean interface and feature-rich tools help you unleash your creativity and enhance your productivity.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "7.6.7",
   "categories": [
     "utilities",
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501499950,
-  "updated_at": 1792501559950,
+  "updated_at": 1794005949360,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

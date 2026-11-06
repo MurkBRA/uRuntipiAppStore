@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "datum",
-      "image": "ghcr.io/retropex/datum:v1.14",
+      "image": "ghcr.io/retropex/datum-gateway:v0.5.1",
       "isMain": true,
       "internalPort": 21000,
       "addToMainNetwork": true,
@@ -26,7 +26,13 @@
           "containerPort": 23334,
           "tcp": true
         }
-      ]
+      ],
+      "ulimits": {
+        "nofile": {
+          "soft": 65535,
+          "hard": 65535
+        }
+      }
     }
   ]
 }

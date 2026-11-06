@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "murmur",
   "description": "Murmur is a calm, beautiful home for your Hermes agents. Open it on your phone or computer and just talk. Murmur comes with Hermes built in, so there's nothing else to install.",
-  "tipi_version": 2,
-  "version": "0.7.0",
+  "tipi_version": 3,
+  "version": "0.11.1",
   "categories": [
     "ai"
   ],
@@ -48,7 +48,7 @@
     "amd64"
   ],
   "created_at": 1792501502335,
-  "updated_at": 1792665342961,
+  "updated_at": 1794005949425,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

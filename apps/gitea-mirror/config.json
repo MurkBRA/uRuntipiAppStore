@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "gitea-mirror",
   "description": "Gitea Mirror automatically mirrors your GitHub repositories to a self-hosted Gitea instance. It supports mirroring public and private repositories, organizations, starred repos, issues, wikis, and pull requests.",
-  "tipi_version": 2,
-  "version": "3.43.0",
+  "tipi_version": 3,
+  "version": "3.51.2",
   "categories": [
     "development"
   ],
@@ -41,7 +41,7 @@
     "amd64"
   ],
   "created_at": 1792501496571,
-  "updated_at": 1792665340083,
+  "updated_at": 1794005949256,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

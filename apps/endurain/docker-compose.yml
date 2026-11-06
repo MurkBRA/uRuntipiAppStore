@@ -1,6 +1,6 @@
 services:
   endurain:
-    image: ghcr.io/endurain-project/endurain:v0.20.1
+    image: ghcr.io/endurain-project/endurain:v0.20.2
     volumes:
       - ${APP_DATA_DIR}/data/app:/app/backend/data
       - ${APP_DATA_DIR}/data/logs:/app/backend/logs

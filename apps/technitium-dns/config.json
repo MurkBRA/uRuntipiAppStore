@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "technitium-dns",
   "description": "Technitium DNS Server is an open source authoritative, as well as recursive, DNS server that can be used for self hosting a DNS server for privacy & security. It works out-of-the-box with no or minimal configuration.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "15.6.2",
   "categories": [
     "network",
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501510948,
-  "updated_at": 1792501570948,
+  "updated_at": 1794005949678,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

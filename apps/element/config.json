@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "element",
   "description": "Element is a new type of messaging app. You choose where your messages are stored, putting you in control of your data. You can connect it to the Synapse app running on your Runtipi, or to any other Matrix homeserver.",
-  "tipi_version": 1,
+  "tipi_version": 2,
   "version": "1.12.32",
   "categories": [
     "social"
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501495235,
-  "updated_at": 1792501555235,
+  "updated_at": 1794005949210,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

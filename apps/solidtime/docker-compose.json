@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "solidtime",
-      "image": "solidtime/solidtime:0.22.0",
+      "image": "solidtime/solidtime:0.22.1",
       "isMain": true,
       "internalPort": 8000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
@@ -138,7 +138,7 @@
     },
     {
       "name": "solidtime-scheduler",
-      "image": "solidtime/solidtime:0.22.0",
+      "image": "solidtime/solidtime:0.22.1",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
@@ -267,7 +267,7 @@
     },
     {
       "name": "solidtime-queue",
-      "image": "solidtime/solidtime:0.22.0",
+      "image": "solidtime/solidtime:0.22.1",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {

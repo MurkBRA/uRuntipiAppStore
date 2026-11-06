@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "fedimintd",
   "description": "Fedimint is a federated Chaumian E-Cash Mint to custody and transact bitcoin in a community. It allows groups of trusted individuals, called guardians, to jointly operate a multi-signature e-cash mint. # Setting Up a Federation You can create a Fedimint in two ways:",
-  "tipi_version": 1,
-  "version": "v0.12.2",
+  "tipi_version": 2,
+  "version": "v0.13.0",
   "categories": [
     "finance"
   ],
@@ -65,7 +65,7 @@
     "amd64"
   ],
   "created_at": 1792501495860,
-  "updated_at": 1792501555860,
+  "updated_at": 1794005949232,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }
