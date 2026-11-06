@@ -223,6 +223,9 @@ export function buildRuntipiConfigAndDescription(params: {
           "- **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.",
         );
       }
+      if (umbrelManifest.id === "gitlab") {
+        credLines.push("- **SSH Port**: `2424` (mapped to container port `22`)");
+      }
     }
     mdSections.push(credLines.join("\n"));
   }

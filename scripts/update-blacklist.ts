@@ -86,6 +86,13 @@ export function updateBlacklist(): void {
     blocked: updatedBlacklistedIds,
   });
 
+  // Clean up cloned runtipi repository to avoid keeping foreign tests and temporary files
+  try {
+    fs.rmSync(targetDir, { recursive: true, force: true });
+  } catch {
+    // ignore
+  }
+
   if (prevComparable === nextComparable) {
     console.log(`blacklist.json is already up to date (${runtipiOfficialApps.length} official Runtipi apps).`);
     return;
