@@ -463,7 +463,7 @@ export function transpileCompose(params: {
       svc.networkMode = "host";
     }
 
-    if (raw.user !== undefined && !isDatabaseImage(raw.image || "")) {
+    if (raw.user !== undefined && !isDatabaseImage(raw.image || "") && appId !== "airtrail") {
       const userStr = String(raw.user)
         .trim()
         .replace(/^['"]|['"]$/g, "");
@@ -487,6 +487,9 @@ export function transpileCompose(params: {
         }
       }
       svc.hostname = h.trim() || serviceName;
+    }
+    if (appId === "gitlab") {
+      svc.hostname = "gitlab";
     }
 
     if (typeof raw.working_dir === "string" && raw.working_dir.trim()) {
@@ -540,7 +543,7 @@ export function transpileCompose(params: {
 
     // Environment (including merging any env_file if present in Umbrel package)
     const envEntries = parseEnvToMap(raw.environment);
-    const transformedEnv: Array<{ key: string; value: string | number | boolean }> = [];
+    let transformedEnv: Array<{ key: string; value: string | number | boolean }> = [];
     for (const entry of envEntries) {
       if (typeof entry.value === "number" || typeof entry.value === "boolean") {
         transformedEnv.push(entry);
@@ -696,6 +699,22 @@ export function transpileCompose(params: {
         transformedEnv[hassIdx].value = "${HASS_URL:-http://homeassistant-1:8123}";
       } else {
         transformedEnv.push({ key: "HASS_URL", value: "${HASS_URL:-http://homeassistant-1:8123}" });
+      }
+    }
+    if (appId === "gitlab" && isMain) {
+      transformedEnv = transformedEnv.filter((e) => e.key !== "PUID" && e.key !== "PGID");
+      const omnibusIdx = transformedEnv.findIndex((e) => e.key === "GITLAB_OMNIBUS_CONFIG");
+      const omnibusConfig = [
+        "external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}'",
+        "gitlab_rails['initial_root_password'] = '${APP_PASSWORD}'",
+        "gitlab_rails['gitlab_shell_ssh_port'] = 2424",
+        "gitlab_rails['nginx']['listen_port'] = 8929",
+        "gitlab_rails['nginx']['listen_https'] = false",
+      ].join("\n");
+      if (omnibusIdx >= 0) {
+        transformedEnv[omnibusIdx].value = omnibusConfig;
+      } else {
+        transformedEnv.push({ key: "GITLAB_OMNIBUS_CONFIG", value: omnibusConfig });
       }
     }
     if (transformedEnv.length > 0) {

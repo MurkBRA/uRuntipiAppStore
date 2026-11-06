@@ -277,11 +277,47 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
           },
         },
         web: {
-          image: "johly/airtrail:v3.13.0",
+          image: "custom/web-app:v1.0.0",
           user: "1000:1000",
         },
         db: {
           image: "postgres:18.3-alpine",
+          user: "1000:1000",
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "sample-user-app",
+      appName: "Sample User App",
+      manifestPort: 3000,
+      allocatedPort: 3256,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    // Web service keeps user parametrized as APP_CONTAINER_USER
+    expect(res.composeYamlObj.services["sample-user-app"].user).toBe("${APP_CONTAINER_USER:-1000:1000}");
+    const webJson = res.composeJson.services.find((s: any) => s.name === "sample-user-app");
+    expect(webJson.user).toBe("${APP_CONTAINER_USER:-1000:1000}");
+
+    // Database service MUST NOT have user
+    expect(res.composeYamlObj.services["sample-user-app-db"].user).toBeUndefined();
+    const dbJson = res.composeJson.services.find((s: any) => s.name === "sample-user-app-db");
+    expect(dbJson.user).toBeUndefined();
+
+    // Form field for container user is present because web service uses it
+    expect(res.formFields.some((f) => f.env_variable === "APP_CONTAINER_USER")).toBe(true);
+  });
+
+  it("transpileCompose completely strips user and container user form field for airtrail", () => {
+    const umbrelCompose = {
+      version: "3.7",
+      services: {
+        web: {
+          image: "johly/airtrail:v3.13.0",
           user: "1000:1000",
         },
       },
@@ -298,18 +334,11 @@ export DATA_SUBDIR="\${EXPORTS_APP_DATA_DIR}/storage"
       hasDependencies: false,
     });
 
-    // Web service keeps user parametrized as APP_CONTAINER_USER
-    expect(res.composeYamlObj.services.airtrail.user).toBe("${APP_CONTAINER_USER:-1000:1000}");
-    const webJson = res.composeJson.services.find((s: any) => s.name === "airtrail");
-    expect(webJson.user).toBe("${APP_CONTAINER_USER:-1000:1000}");
-
-    // Database service MUST NOT have user
-    expect(res.composeYamlObj.services["airtrail-db"].user).toBeUndefined();
-    const dbJson = res.composeJson.services.find((s: any) => s.name === "airtrail-db");
-    expect(dbJson.user).toBeUndefined();
-
-    // Form field for container user is present because web service uses it
-    expect(res.formFields.some((f) => f.env_variable === "APP_CONTAINER_USER")).toBe(true);
+    expect(res.composeYamlObj.services.airtrail.user).toBeUndefined();
+    expect(res.composeJson.services[0].user).toBeUndefined();
+    expect(res.formFields.some((f) => f.env_variable === "APP_CONTAINER_USER")).toBe(false);
+    expect(res.uid).toBeUndefined();
+    expect(res.gid).toBeUndefined();
   });
 
   it("replaceUmbrelProse and sanitizeUmbrelDescriptionText replace umbrelOS and Umbrel with Runtipi while preserving URLs and code blocks", () => {
@@ -608,7 +637,7 @@ Access at umbrel.local:8080.
     const gitlabSvc = res.composeJson.services.find((s: any) => s.name === "gitlab");
     expect(gitlabSvc).toBeDefined();
     expect(gitlabSvc.hostname).not.toContain(":");
-    expect(gitlabSvc.hostname).toBe("${APP_DOMAIN}");
+    expect(gitlabSvc.hostname).toBe("gitlab");
     expect(gitlabSvc.ulimits).toEqual({
       nofile: {
         soft: 4096,
@@ -616,13 +645,16 @@ Access at umbrel.local:8080.
       },
     });
 
-    expect(res.composeYamlObj.services.gitlab.hostname).not.toContain(":");
+    expect(res.composeYamlObj.services.gitlab.hostname).toBe("gitlab");
     expect(res.composeYamlObj.services.gitlab.ulimits).toEqual({
       nofile: {
         soft: 4096,
         hard: 8192,
       },
     });
+    expect(res.composeYamlObj.services.gitlab.environment).toContain(
+      "GITLAB_OMNIBUS_CONFIG=external_url '${APP_PROTOCOL:-http}://${APP_DOMAIN}'\ngitlab_rails['initial_root_password'] = '${APP_PASSWORD}'\ngitlab_rails['gitlab_shell_ssh_port'] = 2424\ngitlab_rails['nginx']['listen_port'] = 8929\ngitlab_rails['nginx']['listen_https'] = false",
+    );
   });
 
   it("formatUrlSuffix formats path to always start with a slash or question mark", () => {
