@@ -253,10 +253,10 @@ function buildAppEnv(appId: string): Record<string, string> {
       } else if (field.default !== undefined && field.default !== null) {
         env[key] = String(field.default);
       } else if (field.type === "random") {
-        const min = typeof field.min === "number" ? field.min : 64;
+        const targetLen = typeof field.min === "number" ? field.min : 64;
         env[key] = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
-          .repeat(Math.ceil(min / 64))
-          .slice(0, Math.max(min, 64));
+          .repeat(Math.ceil(targetLen / 64))
+          .slice(0, targetLen);
       } else if (field.type === "number") {
         env[key] = "1000";
       } else if (field.type === "boolean") {
@@ -483,6 +483,18 @@ export function runSmokeTests(): void {
       if (upRes.status !== 0) {
         log(`❌ docker compose up failed for app "${appId}":`);
         log(upRes.stderr || upRes.stdout || "");
+        try {
+          const logsRes = spawnSync("docker", ["compose", "-f", composePath, "logs", "--tail=50"], {
+            env,
+            encoding: "utf8",
+          });
+          if (logsRes.stdout || logsRes.stderr) {
+            log("\n--- Container logs at failure ---");
+            log(logsRes.stdout || logsRes.stderr || "");
+          }
+        } catch {
+          // ignore
+        }
         testSuccess = false;
         failureDetail = (upRes.stderr || "").slice(0, 200);
         results.push({
