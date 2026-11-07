@@ -620,16 +620,25 @@ export async function runSmokeTests() {
     let portWarning = false;
 
     try {
+      const rawCompose = fs.existsSync(composePath) ? fs.readFileSync(composePath, "utf8") : "";
+      const count = (rawCompose.match(/^\s{2}[a-zA-Z0-9_-]+:/gm) || []).length;
+      const hasCondition =
+        rawCompose.includes("condition: service_healthy") ||
+        rawCompose.includes("condition: service_completed_successfully");
+      // Heavy multi-container or migration-dependent stacks require more headroom during cold boot
+      const upTimeoutMs = count > 4 || hasCondition ? 300000 : 120000;
+
       const upRes = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "up", "-d"], {
         env,
         encoding: "utf8",
-        timeout: 90000, // 90s max per up command
+        timeout: upTimeoutMs,
       });
       if (upRes.status !== 0) {
         log(`❌ docker compose up failed for app "${appId}":`);
-        log(upRes.stderr || upRes.stdout || "");
+        const errOutput = upRes.stderr || upRes.stdout || upRes.error?.message || "";
+        log(errOutput);
         testSuccess = false;
-        failureDetail = (upRes.stderr || "").slice(0, 200);
+        failureDetail = errOutput.slice(0, 200);
         results.push({
           appId,
           status: "START_FAILED",
