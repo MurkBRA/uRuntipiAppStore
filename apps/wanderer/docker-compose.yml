@@ -23,7 +23,7 @@ services:
       wanderer-search:
         condition: service_healthy
       wanderer-db:
-        condition: service_healthy
+        condition: service_started
     x-runtipi:
       internal_port: 3000
       is_main: true
@@ -55,11 +55,5 @@ services:
     depends_on:
       wanderer-search:
         condition: service_healthy
-    healthcheck:
-      test: curl --fail http://localhost:8090/api/health || /curl --fail http://localhost:8090/api/health || wget -qO- http://localhost:8090/api/health || exit 1
-      interval: 15s
-      timeout: 10s
-      retries: 10
-      start_period: 20s
 x-runtipi:
   schema_version: 2

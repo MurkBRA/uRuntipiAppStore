@@ -76,7 +76,7 @@
           "condition": "service_healthy"
         },
         "wanderer-db": {
-          "condition": "service_healthy"
+          "condition": "service_started"
         }
       }
     },
@@ -146,13 +146,6 @@
           "containerPath": "/data/plugins"
         }
       ],
-      "healthCheck": {
-        "test": "curl --fail http://localhost:8090/api/health || /curl --fail http://localhost:8090/api/health || wget -qO- http://localhost:8090/api/health || exit 1",
-        "interval": "15s",
-        "timeout": "10s",
-        "retries": 10,
-        "startPeriod": "20s"
-      },
       "dependsOn": {
         "wanderer-search": {
           "condition": "service_healthy"
