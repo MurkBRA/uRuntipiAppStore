@@ -11,6 +11,7 @@ tls:
 
 cameras:
   name_of_your_camera: # <------ Name the camera
+    enabled: False # <---- Set to True once you configure a valid RTSP camera stream
     ffmpeg:
       inputs:
         - path: rtsp://10.0.10.10:554/rtsp # <----- The stream you want to use for detection

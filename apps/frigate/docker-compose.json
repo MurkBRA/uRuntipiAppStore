@@ -6,7 +6,7 @@
       "image": "ghcr.io/blakeblackshear/frigate:0.18.2",
       "isMain": true,
       "internalPort": 8971,
-      "shmSize": "128mb",
+      "shmSize": "256mb",
       "privileged": true,
       "environment": [
         {

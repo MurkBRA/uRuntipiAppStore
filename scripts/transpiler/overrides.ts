@@ -135,4 +135,11 @@ export const APP_OVERRIDES: Record<string, AppOverride> = {
       });
     },
   },
+  frigate: {
+    modifyService: (serviceName, service) => {
+      if (serviceName === "frigate") {
+        service.shmSize = "256mb";
+      }
+    },
+  },
 };

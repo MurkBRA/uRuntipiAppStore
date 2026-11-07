@@ -259,6 +259,12 @@ export function copyAndPrepareAppDataFiles(
           'findAuthRecordByEmail("_superusers", $os.getenv("PB_ADMIN_EMAIL") || "admin@tipi.local")',
         );
     }
+    if (appId === "frigate") {
+      out = out.replace(
+        /name_of_your_camera:\s*(?:#[^\n]*)?\n\s*ffmpeg:/,
+        "name_of_your_camera: # <------ Name the camera\n    enabled: False # <---- Set to True once you configure a valid RTSP camera stream\n    ffmpeg:",
+      );
+    }
     return out;
   }
 
