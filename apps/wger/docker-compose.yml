@@ -127,15 +127,17 @@ services:
       - SECRET_KEY=${APP_SEED}
       - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
       - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger
+      - DJANGO_DB_HOST=wger-db
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DB_DATABASE=wger
+      - DJANGO_DB_USER=wger
+      - DJANGO_DB_PASSWORD=wger
+      - CELERY_BROKER=redis://wger-cache:6379/2
+      - CELERY_BACKEND=redis://wger-cache:6379/2
+      - DJANGO_CACHE_LOCATION=redis://wger-cache:6379/1
     depends_on:
       wger-web:
         condition: service_healthy
-    healthcheck:
-      test: celery -A wger inspect ping
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 30s
   wger-celery_beat:
     image: wger/server:2.7
     command: /start-beat
@@ -146,8 +148,16 @@ services:
       - SECRET_KEY=${APP_SEED}
       - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
       - PS_STORAGE_PG_URI=postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger
+      - DJANGO_DB_HOST=wger-db
+      - DJANGO_DB_PORT=5432
+      - DJANGO_DB_DATABASE=wger
+      - DJANGO_DB_USER=wger
+      - DJANGO_DB_PASSWORD=wger
+      - CELERY_BROKER=redis://wger-cache:6379/2
+      - CELERY_BACKEND=redis://wger-cache:6379/2
+      - DJANGO_CACHE_LOCATION=redis://wger-cache:6379/1
     depends_on:
       wger-celery_worker:
-        condition: service_healthy
+        condition: service_started
 x-runtipi:
   schema_version: 2

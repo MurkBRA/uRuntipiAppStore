@@ -15,8 +15,8 @@ export const APP_OVERRIDES: Record<string, AppOverride> = {
   wanderer: {
     modifyService: (serviceName, service) => {
       // wanderer-db uses flomp/wanderer-db which lacks curl (/curl: not found)
-      if (serviceName === "wanderer-db" && service.healthCheck) {
-        service.healthCheck = undefined;
+      if (serviceName === "wanderer-db") {
+        Reflect.deleteProperty(service, "healthCheck");
       }
       // wanderer web depends on wanderer-db
       if (serviceName === "wanderer" && service.dependsOn?.["wanderer-db"]) {
@@ -71,6 +71,23 @@ export const APP_OVERRIDES: Record<string, AppOverride> = {
             vol.containerPath = "/beat";
           }
         }
+      }
+      if (serviceName === "wger-celery_worker" || serviceName === "wger-celery_beat") {
+        service.environment = [
+          ...(service.environment || []),
+          { key: "DJANGO_DB_HOST", value: "wger-db" },
+          { key: "DJANGO_DB_PORT", value: "5432" },
+          { key: "DJANGO_DB_DATABASE", value: "wger" },
+          { key: "DJANGO_DB_USER", value: "wger" },
+          { key: "DJANGO_DB_PASSWORD", value: "wger" },
+          { key: "CELERY_BROKER", value: "redis://wger-cache:6379/2" },
+          { key: "CELERY_BACKEND", value: "redis://wger-cache:6379/2" },
+          { key: "DJANGO_CACHE_LOCATION", value: "redis://wger-cache:6379/1" },
+        ];
+        Reflect.deleteProperty(service, "healthCheck");
+      }
+      if (serviceName === "wger-celery_beat" && service.dependsOn?.["wger-celery_worker"]) {
+        service.dependsOn["wger-celery_worker"] = { condition: "service_started" };
       }
     },
     modifyFormFields: (fields) => {

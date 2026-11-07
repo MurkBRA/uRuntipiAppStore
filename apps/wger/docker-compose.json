@@ -262,6 +262,38 @@
         {
           "key": "PS_STORAGE_PG_URI",
           "value": "postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger"
+        },
+        {
+          "key": "DJANGO_DB_HOST",
+          "value": "wger-db"
+        },
+        {
+          "key": "DJANGO_DB_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "DJANGO_DB_DATABASE",
+          "value": "wger"
+        },
+        {
+          "key": "DJANGO_DB_USER",
+          "value": "wger"
+        },
+        {
+          "key": "DJANGO_DB_PASSWORD",
+          "value": "wger"
+        },
+        {
+          "key": "CELERY_BROKER",
+          "value": "redis://wger-cache:6379/2"
+        },
+        {
+          "key": "CELERY_BACKEND",
+          "value": "redis://wger-cache:6379/2"
+        },
+        {
+          "key": "DJANGO_CACHE_LOCATION",
+          "value": "redis://wger-cache:6379/1"
         }
       ],
       "volumes": [
@@ -270,13 +302,6 @@
           "containerPath": "/home/wger/media"
         }
       ],
-      "healthCheck": {
-        "test": "celery -A wger inspect ping",
-        "interval": "10s",
-        "timeout": "5s",
-        "retries": 5,
-        "startPeriod": "30s"
-      },
       "dependsOn": {
         "wger-web": {
           "condition": "service_healthy"
@@ -300,6 +325,38 @@
         {
           "key": "PS_STORAGE_PG_URI",
           "value": "postgres://powersync_storage:${APP_SEED}@wger-db:5432/wger"
+        },
+        {
+          "key": "DJANGO_DB_HOST",
+          "value": "wger-db"
+        },
+        {
+          "key": "DJANGO_DB_PORT",
+          "value": "5432"
+        },
+        {
+          "key": "DJANGO_DB_DATABASE",
+          "value": "wger"
+        },
+        {
+          "key": "DJANGO_DB_USER",
+          "value": "wger"
+        },
+        {
+          "key": "DJANGO_DB_PASSWORD",
+          "value": "wger"
+        },
+        {
+          "key": "CELERY_BROKER",
+          "value": "redis://wger-cache:6379/2"
+        },
+        {
+          "key": "CELERY_BACKEND",
+          "value": "redis://wger-cache:6379/2"
+        },
+        {
+          "key": "DJANGO_CACHE_LOCATION",
+          "value": "redis://wger-cache:6379/1"
         }
       ],
       "volumes": [
@@ -310,7 +367,7 @@
       ],
       "dependsOn": {
         "wger-celery_worker": {
-          "condition": "service_healthy"
+          "condition": "service_started"
         }
       }
     }
