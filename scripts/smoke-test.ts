@@ -31,6 +31,7 @@ const SKIP_CONTAINER_STARTUP = new Set([
   "immich",
   "immich-machine-learning", // Heavy ML models
   "nextcloud", // Multi-container complex bootstrap
+  "wger", // Multi-container complex bootstrap (PowerSync + Celery + Django migrations)
 ]);
 
 export interface AppTestResult {
@@ -245,16 +246,23 @@ function buildAppEnv(appId: string): Record<string, string> {
     for (const field of config.form_fields) {
       if (!field?.env_variable) continue;
       const key = field.env_variable;
-      if (field.default !== undefined && field.default !== null) {
+      if (key.includes("DIR") || key.includes("PATH")) {
+        const mockDir = path.join(appDataDir, "mock", key.toLowerCase());
+        fs.mkdirSync(mockDir, { recursive: true });
+        env[key] = mockDir;
+      } else if (field.default !== undefined && field.default !== null) {
         env[key] = String(field.default);
       } else if (field.type === "random") {
-        env[key] = "0123456789abcdef0123456789abcdef";
+        const min = typeof field.min === "number" ? field.min : 64;
+        env[key] = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+          .repeat(Math.ceil(min / 64))
+          .slice(0, Math.max(min, 64));
       } else if (field.type === "number") {
         env[key] = "1000";
       } else if (field.type === "boolean") {
         env[key] = "true";
       } else {
-        env[key] = "0123456789abcdef0123456789abcdef";
+        env[key] = "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef";
       }
     }
   }
@@ -267,7 +275,10 @@ function buildAppEnv(appId: string): Record<string, string> {
     for (const match of volMatches) {
       const relPath = match[1];
       const fullPath = path.join(appDataDir, relPath);
-      const isFile = relPath.includes(".") && !relPath.endsWith("/");
+      const isFile =
+        /\.(conf|cfg|ya?ml|json|toml|sh|txt|key|crt|pem|env|ini|sql|xml|properties|passwd|htpasswd|pub|cert)$/i.test(
+          path.basename(relPath),
+        ) && !relPath.endsWith("/");
       const dirToCreate = isFile ? path.dirname(fullPath) : fullPath;
       try {
         fs.mkdirSync(dirToCreate, { recursive: true });
