@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-11-07T01:54:23.924Z",
+  "generated_at": "2026-11-07T12:33:14.863Z",
   "stats": {
     "runtipi_official_total": 266,
     "umbrel_total_packages": 396,
@@ -3193,7 +3193,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/immich-app/immich-server:v3.3.5",
+        "ghcr.io/immich-app/immich-server:v3.3.6",
         "ghcr.io/immich-app/immich-machine-learning:v3.3.6",
         "redis:6.2",
         "ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0"
@@ -4593,7 +4593,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/smp46/pingvin-share-x:v2.1.0"
+        "ghcr.io/smp46/pingvin-share-x:v2.1.1"
       ]
     },
     {
