@@ -56,7 +56,7 @@ services:
       wanderer-search:
         condition: service_healthy
     healthcheck:
-      test: /curl --fail http://localhost:8090/health
+      test: curl --fail http://localhost:8090/api/health || /curl --fail http://localhost:8090/api/health || wget -qO- http://localhost:8090/api/health || exit 1
       interval: 15s
       timeout: 10s
       retries: 10
