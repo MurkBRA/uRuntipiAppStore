@@ -1,5 +1,5 @@
 {
-  "last_synced_at": "2026-11-06T22:59:19.756Z",
+  "last_synced_at": "2026-11-07T00:25:56.195Z",
   "apps": {
     "adventurelog": {
       "tipi_version": 2,
@@ -737,14 +737,6 @@
       "updated_at": 1794005949314,
       "upstream_hash": "2aff4088ac60b0d63789cebc91a4b79cd01cd7254570c5d595b67522318ee8fe"
     },
-    "joinstr": {
-      "tipi_version": 2,
-      "version": "0.1.2",
-      "port": 5500,
-      "created_at": 1792501498703,
-      "updated_at": 1794005949319,
-      "upstream_hash": "e36140e17ea86d85d353207a7ad10c2716d6569b916c5d67b7f044a18554e725"
-    },
     "jotty": {
       "tipi_version": 2,
       "version": "1.29.2",
@@ -809,14 +801,6 @@
       "updated_at": 1794005949340,
       "upstream_hash": "467aeeb09920bd597913d5f3cb0c4e2a6a25ff0831f83d2527ee40927dd80592"
     },
-    "l-town": {
-      "tipi_version": 2,
-      "version": "20260621",
-      "port": 30300,
-      "created_at": 1792501499488,
-      "updated_at": 1794005949343,
-      "upstream_hash": "ceb7ba35bb6f71592502a70987998cda75aa85753452d4eb538a52ceddbf8bab"
-    },
     "langflow": {
       "tipi_version": 3,
       "version": "1.13.1",
@@ -832,14 +816,6 @@
       "created_at": 1792501499646,
       "updated_at": 1794005949347,
       "upstream_hash": "44c51f4b0711875c65028b98fe9972f02cfce263d4c8d2f4e56479aeec1bd868"
-    },
-    "libre-relay": {
-      "tipi_version": 2,
-      "version": "libre-relay-v28.0-2",
-      "port": 2108,
-      "created_at": 1792501499767,
-      "updated_at": 1794005949349,
-      "upstream_hash": "b2d1a7ec51351c6181e8e6e31aa9c0ab5cca8ce920eb3ff3c55ff3c7cdb971df"
     },
     "librechat": {
       "tipi_version": 2,
@@ -968,14 +944,6 @@
       "created_at": 1792501501284,
       "updated_at": 1794005949400,
       "upstream_hash": "76768bab1a7007799a589f1f1c0efdeb0b4de155e8cf49f2b126a0a680fb8c5d"
-    },
-    "mattermost": {
-      "tipi_version": 2,
-      "version": "12.0.1",
-      "port": 8765,
-      "created_at": 1792501501469,
-      "updated_at": 1794005949403,
-      "upstream_hash": "b6643dd38dcf82b57931c1719486d51faeef3316d50f12fb24c31bab6aea2874"
     },
     "maybe": {
       "tipi_version": 2,
@@ -1169,14 +1137,6 @@
       "updated_at": 1794005949467,
       "upstream_hash": "e6158a4d867286851a7d175348df50a718a8a4104df9e443d4d1b1fb6b06f666"
     },
-    "openhands": {
-      "tipi_version": 2,
-      "version": "1.10.0",
-      "port": 3993,
-      "created_at": 1792501504084,
-      "updated_at": 1794005949469,
-      "upstream_hash": "e170b1aeddbb9b4a2c7ff241e811948257ddc7df0ad5b74998b0a4bd45b29217"
-    },
     "openreader": {
       "tipi_version": 3,
       "version": "1.30.5-alpine",
@@ -1296,14 +1256,6 @@
       "created_at": 1792501505315,
       "updated_at": 1794005949507,
       "upstream_hash": "a2a8486602b82e4da5c9c9281784b74675581784fbfa9e86fef311403844a888"
-    },
-    "plane": {
-      "tipi_version": 2,
-      "version": "alpine3.23",
-      "port": 8762,
-      "created_at": 1792501505443,
-      "updated_at": 1794005949510,
-      "upstream_hash": "223cbe8560bc04a754edf3155601060a3d7d9b917cca1dfc5d0137d11b6e4fb5"
     },
     "pocketbase": {
       "tipi_version": 2,
@@ -1449,14 +1401,6 @@
       "updated_at": 1794005949583,
       "upstream_hash": "91990245cc3d39bcf1cf6bce0167603667c1228f3ccee724062f8875bc4065a6"
     },
-    "samourai-server": {
-      "tipi_version": 2,
-      "version": "1.21-alpine",
-      "port": 3021,
-      "created_at": 1792501507572,
-      "updated_at": 1794005949587,
-      "upstream_hash": "643a669a09327df6d121e4300149742f3d461b73affe905ef9cb3775c549275e"
-    },
     "satoshi-dashboard": {
       "tipi_version": 2,
       "version": "v1.1.0",
@@ -1521,14 +1465,6 @@
       "updated_at": 1794005949611,
       "upstream_hash": "d33934ab7addb31819de3e42d7c83ecc6df8e26c2b5608ceec68ee0b08f41f82"
     },
-    "sikka": {
-      "tipi_version": 2,
-      "version": "0.2.0",
-      "port": 64552,
-      "created_at": 1792501508552,
-      "updated_at": 1794005949612,
-      "upstream_hash": "3f8aa6899cb5a8695a98a04fccd29037d951a391f7564323b298b4324ece9851"
-    },
     "silo": {
       "tipi_version": 2,
       "version": "RELEASE.2026-10-26T00-00-00Z",
@@ -1536,14 +1472,6 @@
       "created_at": 1792501508756,
       "updated_at": 1794005949614,
       "upstream_hash": "cdaaccd19824495ad3e0400d87144acb04098ecb10a68ea0ff7c8e0c165cd07b"
-    },
-    "simple-torrent": {
-      "tipi_version": 2,
-      "version": "1.3.9",
-      "port": 18611,
-      "created_at": 1792501508867,
-      "updated_at": 1794005949616,
-      "upstream_hash": "010acb6b4f8b2f3ed56a8d8a2f3aa8459db173ac18a7bf491f44a22ec9504244"
     },
     "skybro": {
       "tipi_version": 2,
@@ -1753,14 +1681,6 @@
       "updated_at": 1794005949681,
       "upstream_hash": "3fc43a10d080b9c760e8406adc50b5d5e089a4eb3fef9b238ee72c3e93568252"
     },
-    "thelounge": {
-      "tipi_version": 2,
-      "version": "4.4.3",
-      "port": 9003,
-      "created_at": 1792501511141,
-      "updated_at": 1794005949683,
-      "upstream_hash": "c5e60871f5d0cd49de4a6679ba7d0794efd72ea334d6392d718b2ad9abf19cba"
-    },
     "thinkdashboard": {
       "tipi_version": 2,
       "version": "v0.7.6",
@@ -1873,14 +1793,6 @@
       "updated_at": 1794005949715,
       "upstream_hash": "ce248853f8727b7b6d96325549bcdad5e7355360256b8cc9b29336821ed2ad7b"
     },
-    "wanderer": {
-      "tipi_version": 2,
-      "version": "0.21.2",
-      "port": 3111,
-      "created_at": 1792501512424,
-      "updated_at": 1794005949717,
-      "upstream_hash": "d1375140a81f23b14f13a7a65c24c832712857719c98fc5924f0c8cca06c2387"
-    },
     "wavelog": {
       "tipi_version": 2,
       "version": "3.2.4",
@@ -1992,6 +1904,46 @@
       "created_at": 1792501513730,
       "updated_at": 1794005949755,
       "upstream_hash": "bbe5f6a083d338641fad775d6b3df0a8c2052dc9c4faac588fc0262462d3b31b"
+    },
+    "plane": {
+      "tipi_version": 1,
+      "version": "alpine3.23",
+      "port": 8762,
+      "created_at": 1794010927640,
+      "updated_at": 1794010987640,
+      "upstream_hash": "223cbe8560bc04a754edf3155601060a3d7d9b917cca1dfc5d0137d11b6e4fb5"
+    },
+    "openhands": {
+      "tipi_version": 1,
+      "version": "1.10.0",
+      "port": 3993,
+      "created_at": 1794010928655,
+      "updated_at": 1794010988655,
+      "upstream_hash": "e170b1aeddbb9b4a2c7ff241e811948257ddc7df0ad5b74998b0a4bd45b29217"
+    },
+    "mattermost": {
+      "tipi_version": 1,
+      "version": "12.0.1",
+      "port": 8765,
+      "created_at": 1794010929634,
+      "updated_at": 1794010989634,
+      "upstream_hash": "b6643dd38dcf82b57931c1719486d51faeef3316d50f12fb24c31bab6aea2874"
+    },
+    "samourai-server": {
+      "tipi_version": 1,
+      "version": "1.21-alpine",
+      "port": 3021,
+      "created_at": 1794011085130,
+      "updated_at": 1794011145130,
+      "upstream_hash": "643a669a09327df6d121e4300149742f3d461b73affe905ef9cb3775c549275e"
+    },
+    "wanderer": {
+      "tipi_version": 1,
+      "version": "0.21.2",
+      "port": 3111,
+      "created_at": 1794011086166,
+      "updated_at": 1794011146166,
+      "upstream_hash": "d1375140a81f23b14f13a7a65c24c832712857719c98fc5924f0c8cca06c2387"
     }
   }
 }

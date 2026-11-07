@@ -61,7 +61,6 @@
         }
       },
       "extraHosts": [
-        "host.docker.internal:host-gateway",
         "host.docker.internal:host-gateway"
       ]
     },

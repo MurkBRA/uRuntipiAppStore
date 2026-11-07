@@ -75,7 +75,6 @@
       "name": "samourai-server-db",
       "image": "louneskmt/dojo-db:1.5.0-low-mem",
       "addToMainNetwork": true,
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "5m",
       "environment": [
         {

@@ -22,8 +22,116 @@
       "image": "postgres:17.9-alpine",
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "volumes": [
@@ -55,8 +163,116 @@
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "volumes": [
@@ -73,8 +289,116 @@
       "command": "server /export --console-address \":8763\"",
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "volumes": [
@@ -97,8 +421,116 @@
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "dependsOn": {
@@ -124,8 +556,116 @@
       ],
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "dependsOn": {
@@ -151,8 +691,116 @@
       ],
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "dependsOn": {
@@ -181,8 +829,116 @@
       ],
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "dependsOn": {
@@ -196,8 +952,116 @@
       "image": "makeplane/plane-frontend:v1.4.3",
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "dependsOn": [
@@ -210,8 +1074,116 @@
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "dependsOn": [
@@ -224,8 +1196,116 @@
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "healthCheck": {
@@ -244,8 +1324,116 @@
       "image": "makeplane/plane-admin:v1.4.3",
       "environment": [
         {
-          "key": "<<",
-          "value": "[object Object]"
+          "key": "NGINX_PORT",
+          "value": 8762
+        },
+        {
+          "key": "LISTEN_HTTP_PORT",
+          "value": 8762
+        },
+        {
+          "key": "BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "GUNICORN_WORKERS",
+          "value": 2
+        },
+        {
+          "key": "POSTGRES_DB",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_USER",
+          "value": "plane"
+        },
+        {
+          "key": "POSTGRES_PASSWORD",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "DATABASE_URL",
+          "value": "postgresql://plane:umbrelplane@plane-db:5432/plane"
+        },
+        {
+          "key": "REDIS_URL",
+          "value": "redis://plane-redis:6379/0"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_USER",
+          "value": "plane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_PASS",
+          "value": "umbrelplane"
+        },
+        {
+          "key": "RABBITMQ_DEFAULT_VHOST",
+          "value": "plane"
+        },
+        {
+          "key": "CELERY_BROKER_URL",
+          "value": "amqp://plane:umbrelplane@plane-rabbitmq:5672/plane"
+        },
+        {
+          "key": "USE_MINIO",
+          "value": 1
+        },
+        {
+          "key": "AWS_ACCESS_KEY_ID",
+          "value": "umbrel"
+        },
+        {
+          "key": "AWS_SECRET_ACCESS_KEY",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "AWS_S3_ENDPOINT_URL",
+          "value": "http://plane-minio:9000"
+        },
+        {
+          "key": "AWS_S3_BUCKET_NAME",
+          "value": "uploads"
+        },
+        {
+          "key": "FILE_SIZE_LIMIT",
+          "value": 52428800
+        },
+        {
+          "key": "MINIO_ENDPOINT_SSL",
+          "value": 0
+        },
+        {
+          "key": "MINIO_ROOT_USER",
+          "value": "umbrel"
+        },
+        {
+          "key": "MINIO_ROOT_PASSWORD",
+          "value": "${APP_PASSWORD}"
+        },
+        {
+          "key": "SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "LIVE_SERVER_SECRET_KEY",
+          "value": "${APP_SEED}"
+        },
+        {
+          "key": "USE_X_FORWARDED_HOST",
+          "value": 1
+        },
+        {
+          "key": "SECURE_SSL_REDIRECT",
+          "value": 0
+        },
+        {
+          "key": "SESSION_COOKIE_SECURE",
+          "value": 0
+        },
+        {
+          "key": "CSRF_COOKIE_SECURE",
+          "value": 0
         }
       ],
       "dependsOn": [

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "samourai-server",
   "description": "⚠️ Whirlpool functionality no longer works due to the shutdown of Samourai's Whirlpool coordinator. Dojo functionality is unaffected.",
-  "tipi_version": 2,
+  "tipi_version": 1,
   "version": "1.21-alpine",
   "categories": [
     "finance"
@@ -152,8 +152,8 @@
     "arm64",
     "amd64"
   ],
-  "created_at": 1792501507572,
-  "updated_at": 1794005949587,
+  "created_at": 1794011085130,
+  "updated_at": 1794011145130,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

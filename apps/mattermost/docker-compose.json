@@ -75,7 +75,6 @@
     {
       "name": "mattermost-db",
       "image": "alexlack/mattermost-db:v11.11.1",
-      "user": "${APP_CONTAINER_USER:-1000:1000}",
       "stopGracePeriod": "1m",
       "environment": [
         {

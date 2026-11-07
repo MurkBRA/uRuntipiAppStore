@@ -13,7 +13,34 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/db:/var/lib/postgresql/data
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     healthcheck:
       test: pg_isready -U $$POSTGRES_USER -d $$POSTGRES_DB
       interval: 10s
@@ -29,7 +56,34 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/rabbitmq:/var/lib/rabbitmq
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
   plane-minio:
     image: alpine/minio:RELEASE.2025-10-15T17-29-55Z
     command: server /export --console-address ":8763"
@@ -39,12 +93,66 @@ services:
     volumes:
       - ${APP_DATA_DIR}/data/uploads:/export
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
   plane-api:
     image: makeplane/plane-backend:v1.4.3
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     depends_on:
       plane-db:
         condition: service_healthy
@@ -60,7 +168,34 @@ services:
       - celery -A plane worker --loglevel=info
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     depends_on:
       plane-api:
         condition: service_started
@@ -76,7 +211,34 @@ services:
       - celery -A plane beat --loglevel=info
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     depends_on:
       plane-api:
         condition: service_started
@@ -94,28 +256,136 @@ services:
       - python manage.py wait_for_db && python manage.py migrate
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     depends_on:
       plane-db:
         condition: service_healthy
   plane-web:
     image: makeplane/plane-frontend:v1.4.3
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     depends_on:
       - plane-api
   plane-live:
     image: makeplane/plane-live:v1.4.3
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     depends_on:
       - plane-api
   plane-space:
     image: makeplane/plane-space:v1.4.3
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     depends_on:
       - plane-api
     healthcheck:
@@ -127,7 +397,34 @@ services:
   plane-admin:
     image: makeplane/plane-admin:v1.4.3
     environment:
-      - <<=[object Object]
+      - NGINX_PORT=8762
+      - LISTEN_HTTP_PORT=8762
+      - BUCKET_NAME=uploads
+      - GUNICORN_WORKERS=2
+      - POSTGRES_DB=plane
+      - POSTGRES_USER=plane
+      - POSTGRES_PASSWORD=umbrelplane
+      - DATABASE_URL=postgresql://plane:umbrelplane@plane-db:5432/plane
+      - REDIS_URL=redis://plane-redis:6379/0
+      - RABBITMQ_DEFAULT_USER=plane
+      - RABBITMQ_DEFAULT_PASS=umbrelplane
+      - RABBITMQ_DEFAULT_VHOST=plane
+      - CELERY_BROKER_URL=amqp://plane:umbrelplane@plane-rabbitmq:5672/plane
+      - USE_MINIO=1
+      - AWS_ACCESS_KEY_ID=umbrel
+      - AWS_SECRET_ACCESS_KEY=${APP_PASSWORD}
+      - AWS_S3_ENDPOINT_URL=http://plane-minio:9000
+      - AWS_S3_BUCKET_NAME=uploads
+      - FILE_SIZE_LIMIT=52428800
+      - MINIO_ENDPOINT_SSL=0
+      - MINIO_ROOT_USER=umbrel
+      - MINIO_ROOT_PASSWORD=${APP_PASSWORD}
+      - SECRET_KEY=${APP_SEED}
+      - LIVE_SERVER_SECRET_KEY=${APP_SEED}
+      - USE_X_FORWARDED_HOST=1
+      - SECURE_SSL_REDIRECT=0
+      - SESSION_COOKIE_SECURE=0
+      - CSRF_COOKIE_SECURE=0
     depends_on:
       - plane-api
 x-runtipi:

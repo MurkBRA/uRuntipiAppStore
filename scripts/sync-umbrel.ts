@@ -193,7 +193,7 @@ export async function runSync() {
       );
 
       const composeRaw = fs.readFileSync(path.join(srcAppDir, "docker-compose.yml"), "utf8");
-      const umbrelCompose = YAML.parse(composeRaw) as Record<string, any>;
+      const umbrelCompose = YAML.parse(composeRaw, { merge: true }) as Record<string, any>;
 
       const hasDeps = Array.isArray(manifest.dependencies) && manifest.dependencies.length > 0;
       const transpiled = transpileCompose({

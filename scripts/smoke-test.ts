@@ -17,6 +17,10 @@ const SKIP_CONTAINER_STARTUP = new Set([
   "lightning",
   "core-lightning",
   "lnd", // Blockchain sync
+  "dcrpulse", // Decred blockchain daemon full node
+  "peerswap", // Lightning/Elements node dependency
+  "bitcoin-regtest-dashboard", // Blockchain mining setup
+  "syslog-ng", // Kernel syslog streaming
   "tailscale",
   "wireguard",
   "openvpn",
@@ -58,7 +62,7 @@ function parseCliArgs(argv: string[]) {
   let reportJson = "";
   let reportMd = "";
   let prune = false;
-  let waitSec = 12;
+  let waitSec = 20;
   let forceAll = false;
 
   for (let i = 2; i < argv.length; i++) {
@@ -90,7 +94,7 @@ function parseCliArgs(argv: string[]) {
     } else if (arg.startsWith("--report-md=")) {
       reportMd = arg.slice("--report-md=".length).trim();
     } else if (arg.startsWith("--wait=")) {
-      waitSec = Number.parseInt(arg.slice("--wait=".length), 10) || 12;
+      waitSec = Number.parseInt(arg.slice("--wait=".length), 10) || 20;
     } else if (arg === "--prune") {
       prune = true;
     } else if (arg === "--force-all") {
@@ -176,12 +180,40 @@ function applySharding(apps: string[], shardStr: string): string[] {
   return apps.slice(start, end);
 }
 
+function makeScriptsExecutable(dir: string): void {
+  if (!fs.existsSync(dir)) return;
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  for (const entry of entries) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      makeScriptsExecutable(full);
+    } else if (entry.isFile()) {
+      try {
+        fs.chmodSync(full, 0o755);
+      } catch {
+        // ignore
+      }
+    }
+  }
+}
+
 function buildAppEnv(appId: string): Record<string, string> {
   const configPath = path.join(ROOT_DIR, "apps", appId, "config.json");
   const config = fs.existsSync(configPath) ? JSON.parse(fs.readFileSync(configPath, "utf8")) : {};
 
   const appDataDir = `/tmp/runtipi-smoke-data/${appId}`;
   fs.mkdirSync(appDataDir, { recursive: true });
+
+  // Copy real app data directory from repository so scripts, templates and configs exist
+  const repoDataDir = path.join(ROOT_DIR, "apps", appId, "data");
+  if (fs.existsSync(repoDataDir)) {
+    try {
+      fs.cpSync(repoDataDir, path.join(appDataDir, "data"), { recursive: true });
+    } catch {
+      // ignore
+    }
+  }
+  makeScriptsExecutable(appDataDir);
 
   const env: Record<string, string> = {
     ...process.env,
@@ -191,14 +223,17 @@ function buildAppEnv(appId: string): Record<string, string> {
     LOCAL_DOMAIN: "tipi.local",
     INTERNAL_IP: "127.0.0.1",
     APP_PORT: String(config.port || 8080),
-    APP_PASSWORD: "smoketestpassword123456789012345",
-    APP_SEED: "smoketestseed123456789012345",
+    APP_PASSWORD: "smoketestpassword1234567890123456",
+    APP_SEED: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+    APP_JWT_SECRET: "smoketestjwtsecret1234567890123456",
+    APP_ENCRYPTION_KEY: "0123456789abcdef0123456789abcdef",
+    APP_WANDERER_ENCRYPTION_KEY: "0123456789abcdef0123456789abcdef",
     TZ: "UTC",
     ADMIN_EMAIL: "admin@example.com",
     APP_ADMIN_EMAIL: "admin@example.com",
     TOR_PROXY_IP: "127.0.0.1",
     TOR_PROXY_PORT: "9050",
-    TOR_PASSWORD: "smoketesttorpassword",
+    TOR_PASSWORD: "smoketesttorpassword123456789012",
     GATEWAY_IP: "172.17.0.1",
     PGDATA: "/var/lib/postgresql/data",
     POSTGRES_DB: "tipi_db",
@@ -213,13 +248,13 @@ function buildAppEnv(appId: string): Record<string, string> {
       if (field.default !== undefined && field.default !== null) {
         env[key] = String(field.default);
       } else if (field.type === "random") {
-        env[key] = "smoketestrandomsecret1234567890";
+        env[key] = "0123456789abcdef0123456789abcdef";
       } else if (field.type === "number") {
         env[key] = "1000";
       } else if (field.type === "boolean") {
         env[key] = "true";
       } else {
-        env[key] = "test-value";
+        env[key] = "0123456789abcdef0123456789abcdef";
       }
     }
   }
@@ -232,13 +267,13 @@ function buildAppEnv(appId: string): Record<string, string> {
     for (const match of volMatches) {
       const relPath = match[1];
       const fullPath = path.join(appDataDir, relPath);
-      const dirToCreate = relPath.includes(".") && !relPath.endsWith("/") ? path.dirname(fullPath) : fullPath;
+      const isFile = relPath.includes(".") && !relPath.endsWith("/");
+      const dirToCreate = isFile ? path.dirname(fullPath) : fullPath;
       try {
         fs.mkdirSync(dirToCreate, { recursive: true });
-        if (relPath.includes(".") && !relPath.endsWith("/")) {
-          if (!fs.existsSync(fullPath)) {
-            fs.writeFileSync(fullPath, "");
-          }
+        if (isFile && !fs.existsSync(fullPath)) {
+          fs.writeFileSync(fullPath, "");
+          fs.chmodSync(fullPath, 0o755);
         }
       } catch {
         // ignore
@@ -251,7 +286,11 @@ function buildAppEnv(appId: string): Record<string, string> {
       const varName = match[1];
       if (!env[varName]) {
         if (varName.includes("PASS") || varName.includes("KEY") || varName.includes("SECRET")) {
-          env[varName] = "smoketestsecret123456789012345";
+          env[varName] = "0123456789abcdef0123456789abcdef";
+        } else if (varName.includes("DIR") || varName.includes("PATH")) {
+          const mockDir = path.join(appDataDir, "mock", varName.toLowerCase());
+          fs.mkdirSync(mockDir, { recursive: true });
+          env[varName] = mockDir;
         } else if (varName.includes("PORT")) {
           env[varName] = "9999";
         } else if (varName.includes("IP") || varName.includes("HOST")) {
@@ -420,7 +459,7 @@ export function runSmokeTests(): void {
     log("  ✓ Images successfully pulled from registry.");
 
     // 3. Up in background and monitor
-    log(`[3/3] Starting container(s) and verifying health (waiting ${waitSec}s)...`);
+    log(`[3/3] Starting container(s) and verifying health (max wait ${waitSec}s)...`);
     upCount++;
     let testSuccess = true;
     let failureDetail = "";
@@ -445,18 +484,45 @@ export function runSmokeTests(): void {
         continue;
       }
 
-      // Wait for container initialization
-      execFileSync("sleep", [String(waitSec)]);
+      // Polling loop to wait for services to become running or healthy
+      const pollStart = Date.now();
+      let lastLines: string[] = [];
+      let allReady = false;
 
-      // Check status of all services
-      const psOut = execFileSync(
-        "docker",
-        ["compose", "-f", composePath, "ps", "--format", "{{.Service}}|{{.State}}|{{.ExitCode}}"],
-        { env, encoding: "utf8" },
-      );
+      while ((Date.now() - pollStart) / 1000 < waitSec) {
+        execFileSync("sleep", ["2"]);
+        const psOut = execFileSync(
+          "docker",
+          ["compose", "-f", composePath, "ps", "--format", "{{.Service}}|{{.State}}|{{.ExitCode}}"],
+          { env, encoding: "utf8" },
+        );
+        lastLines = psOut.trim().split("\n").filter(Boolean);
 
-      const lines = psOut.trim().split("\n").filter(Boolean);
-      for (const line of lines) {
+        let hasCrash = false;
+        let allRunning = lastLines.length > 0;
+
+        for (const line of lastLines) {
+          const [, state, exitCode] = line.split("|");
+          if (state === "restarting" || (state === "exited" && exitCode !== "0")) {
+            hasCrash = true;
+            break;
+          }
+          if (state !== "running" && !(state === "exited" && exitCode === "0")) {
+            allRunning = false;
+          }
+        }
+
+        if (hasCrash) {
+          break;
+        }
+
+        if (allRunning && (Date.now() - pollStart) / 1000 >= 8) {
+          allReady = true;
+          break;
+        }
+      }
+
+      for (const line of lastLines) {
         const [svcName, state, exitCode] = line.split("|");
         log(`    - Service "${svcName}": status=${state}, exit=${exitCode}`);
         if (state === "restarting" || (state === "exited" && exitCode !== "0")) {
@@ -488,7 +554,7 @@ export function runSmokeTests(): void {
           appId,
           status: "SUCCESS",
           durationSeconds: (Date.now() - startTime) / 1000,
-          details: lines.join(", "),
+          details: lastLines.join(", "),
           logFile: logFilePath,
         });
       }

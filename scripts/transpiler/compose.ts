@@ -38,7 +38,10 @@ export const CONTAINER_USER_FORM_FIELD: FormField = {
 export function isDatabaseImage(image: string): boolean {
   if (!image) return false;
   const clean = image.toLowerCase();
-  return /(?:^|\/)(?:postgres|postgis|mariadb|mysql|mongo|mongodb|redis|valkey)(?::|$)/i.test(clean);
+  return (
+    /(?:^|\/)(?:postgres|postgis|mariadb|mysql|mongo|mongodb|redis|valkey)(?::|$)/i.test(clean) ||
+    /-(?:db|database)(?::|$)/i.test(clean)
+  );
 }
 
 function stripImageDigest(image: string): string {
@@ -88,7 +91,21 @@ function parseEnvToMap(envInput: any): Array<{ key: string; value: string | numb
   } else if (envInput && typeof envInput === "object") {
     for (const [k, v] of Object.entries(envInput)) {
       const key = k.trim();
-      if (!key || v === undefined || v === null || seen.has(key)) continue;
+      if (!key || v === undefined || v === null) continue;
+      if (key === "<<" && typeof v === "object") {
+        for (const [subK, subV] of Object.entries(v as Record<string, any>)) {
+          const subKey = subK.trim();
+          if (!subKey || subV === undefined || subV === null || seen.has(subKey)) continue;
+          seen.add(subKey);
+          if (typeof subV === "number" || typeof subV === "boolean") {
+            result.push({ key: subKey, value: subV });
+          } else {
+            result.push({ key: subKey, value: String(subV) });
+          }
+        }
+        continue;
+      }
+      if (seen.has(key)) continue;
       seen.add(key);
       if (typeof v === "number" || typeof v === "boolean") {
         result.push({ key, value: v });
@@ -914,13 +931,16 @@ export function transpileCompose(params: {
       svc.devices = raw.devices.map((d: any) => transformString(String(d)));
     }
     if (Array.isArray(raw.extra_hosts) && raw.extra_hosts.length > 0) {
-      svc.extraHosts = raw.extra_hosts.map((h: any) => {
+      const hostSet = new Set<string>();
+      for (const h of raw.extra_hosts) {
         const transformed = transformString(String(h));
         if (transformed.includes("MACHINE_IP") || transformed.startsWith("${APP_DOMAIN}:")) {
-          return "host.docker.internal:host-gateway";
+          hostSet.add("host.docker.internal:host-gateway");
+        } else {
+          hostSet.add(transformed);
         }
-        return transformed;
-      });
+      }
+      svc.extraHosts = Array.from(hostSet);
     }
     if (typeof raw.dns === "string" && raw.dns.trim()) {
       svc.dns = raw.dns.trim();
