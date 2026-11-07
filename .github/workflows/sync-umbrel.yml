@@ -14,6 +14,8 @@ on:
 permissions:
   contents: write
   pull-requests: write
+  issues: write
+  packages: read
 
 jobs:
   sync-store:
@@ -21,6 +23,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js 22
         uses: actions/setup-node@v4
@@ -43,16 +47,48 @@ jobs:
           fi
 
       - name: Run full test & schema validation suite
-        run: npm test
+        run: |
+          npm run lint
+          npm test
 
-      - name: Check for changes and classify updates
-        id: diff_check
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check for initial changes
+        id: pre_diff
         run: |
           rm -rf .tmp
           if [ -z "$(git status --porcelain apps/ blacklist.json README.md state/)" ]; then
             echo "has_changes=false" >> $GITHUB_OUTPUT
           else
             echo "has_changes=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Docker Compose Validation & Smoke Test on updated apps
+        if: steps.pre_diff.outputs.has_changes == 'true'
+        id: smoke_run
+        continue-on-error: true
+        run: |
+          mkdir -p state/smoke-logs
+          npm run test:smoke -- --changed --json-failures=state/failures.json --report-md=state/smoke-report.md --logs-dir=state/smoke-logs
+
+      - name: Isolate and Quarantine Any Defective Apps
+        if: steps.pre_diff.outputs.has_changes == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx tsx scripts/quarantine-failures.ts state/failures.json
+
+      - name: Check healthy changes after quarantine
+        id: post_diff
+        run: |
+          if [ -z "$(git status --porcelain apps/ blacklist.json README.md state/)" ]; then
+            echo "has_healthy_changes=false" >> $GITHUB_OUTPUT
+          else
+            echo "has_healthy_changes=true" >> $GITHUB_OUTPUT
             NEW_APPS=$(git status --porcelain 'apps/*/config.json' | grep '^?? ' | wc -l || true)
             if [ "$NEW_APPS" -gt 0 ]; then
               echo "is_new_app=true" >> $GITHUB_OUTPUT
@@ -65,17 +101,13 @@ jobs:
             fi
           fi
 
-      - name: Docker Compose Validation & Smoke Test on updated apps (Layers 4 & 5)
-        if: steps.diff_check.outputs.has_changes == 'true'
-        run: npm run test:smoke -- --changed
-
       - name: Automatically commit and push version bumps directly to main
-        if: steps.diff_check.outputs.has_changes == 'true' && steps.diff_check.outputs.is_new_app == 'false'
+        if: steps.post_diff.outputs.has_healthy_changes == 'true' && steps.post_diff.outputs.is_new_app == 'false'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add apps/ blacklist.json README.md state/
-          git commit -m "${{ steps.diff_check.outputs.pr_title }}"
+          git commit -m "${{ steps.post_diff.outputs.pr_title }}"
           git push origin main || {
             echo "Direct push to main was blocked. Pushing to automation/umbrel-sync branch..."
             git checkout -b automation/umbrel-sync
@@ -83,20 +115,20 @@ jobs:
           }
 
       - name: Create Automated Pull Request for new apps requiring review
-        if: steps.diff_check.outputs.has_changes == 'true' && steps.diff_check.outputs.is_new_app == 'true'
+        if: steps.post_diff.outputs.has_healthy_changes == 'true' && steps.post_diff.outputs.is_new_app == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: ${{ steps.diff_check.outputs.pr_title }}
+          commit-message: ${{ steps.post_diff.outputs.pr_title }}
           branch: automation/umbrel-sync
           delete-branch: true
-          title: ${{ steps.diff_check.outputs.pr_title }}
+          title: ${{ steps.post_diff.outputs.pr_title }}
           body: |
             ## Automated UmbrelOS $\rightarrow$ Runtipi Store Sync
-            This PR introduces brand-new apps ported from UmbrelOS that require maintainer review:
+            This PR introduces brand-new apps ported from UmbrelOS that passed all validation layers:
             - Passed Layer 1 (Transpiler Unit Tests)
             - Passed Layer 2 (`@runtipi/common` & AJV Schema Validation)
             - Passed Layer 3 (Anti-Duplication Blacklist, Port Uniqueness, Zero-Leak & JPEG Header Tests)
             - Passed Layer 4 (Docker Compose Syntax & Interpolation Validation)
-            - Passed Layer 5 (Docker Compose Pull & Live Smoke Tests)
-          labels: ${{ steps.diff_check.outputs.labels }}
+            - Passed Layer 5 (Docker Compose Pull, Port & Live Smoke Tests)
+          labels: ${{ steps.post_diff.outputs.labels }}

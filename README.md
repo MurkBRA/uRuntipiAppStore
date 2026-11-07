@@ -1,16 +1,16 @@
 # uRuntipiAppStore — UmbrelOS App Store Port for Runtipi
 
-Automated, tested port of **249** non-duplicate apps from [`getumbrel/umbrel-apps`](https://github.com/getumbrel/umbrel-apps) to the [Runtipi](https://runtipi.io) App Store format (`schema_version: 2` YAML + Dynamic Compose JSON v2).
+Automated, tested port of **243** non-duplicate apps from [`getumbrel/umbrel-apps`](https://github.com/getumbrel/umbrel-apps) to the [Runtipi](https://runtipi.io) App Store format (`schema_version: 2` YAML + Dynamic Compose JSON v2).
 
 - **Architecture & Engineering Plan**: [`PLANO_PORT_UMBREL_RUNTIPI.md`](./PLANO_PORT_UMBREL_RUNTIPI.md)
 - **Official Runtipi & Disabled Apps Blacklist**: [`blacklist.json`](./blacklist.json)
 
 ## Summary Statistics
 
-- **Ported Active Apps**: **249**
-- **Blacklisted Duplicates / Disabled Apps**: **147**
+- **Ported Active Apps**: **243**
+- **Blacklisted Duplicates / Disabled Apps**: **153**
 
-## Ported Apps Catalog (249 Apps)
+## Ported Apps Catalog (243 Apps)
 
 | # | App ID | Name | Version | Port | Categories |
 | :---: | :--- | :--- | :---: | :---: | :--- |
@@ -106,160 +106,154 @@ Automated, tested port of **249** non-duplicate apps from [`getumbrel/umbrel-app
 | 90 | `invio` | **Invio** | `2.4.1` | `26954` | `finance` |
 | 91 | `ipfs-podcasting` | **IPFS Podcasting** | `0.6` | `23718` | `utilities, data` |
 | 92 | `jam` | **Jam** | `v0.4.1-clientserver-v0.9.11` | `5002` | `finance` |
-| 93 | `joinstr` | **Joinstr** | `0.1.2` | `5500` | `finance` |
-| 94 | `jotty` | **Jotty** | `1.29.2` | `8345` | `utilities, data` |
-| 95 | `jupyterlab` | **JupyterLab** | `lab-4.6.5` | `8899` | `development` |
-| 96 | `just-download` | **Just. Download.** | `v1.0.9` | `3684` | `media` |
-| 97 | `kan` | **kan** | `0.7.0` | `8373` | `utilities, data` |
-| 98 | `kitchenowl` | **KitchenOwl** | `v0.7.10` | `8474` | `utilities, data` |
-| 99 | `kokoro` | **Kokoro** | `0.9.2` | `8877` | `ai` |
-| 100 | `komodo` | **Komodo** | `2.3.4` | `9120` | `development` |
-| 101 | `krystal-bull` | **Krystal Bull** | `1.9.7` | `21774` | `finance` |
-| 102 | `l-town` | **L-Town** | `20260621` | `30300` | `social` |
-| 103 | `langflow` | **Langflow** | `1.13.1` | `8862` | `ai` |
-| 104 | `leafwiki` | **LeafWiki** | `0.14.2` | `8066` | `books, utilities, data` |
-| 105 | `libre-relay` | **Libre Relay** | `libre-relay-v28.0-2` | `2108` | `finance` |
-| 106 | `librechat` | **LibreChat** | `0.8.7` | `7050` | `ai` |
-| 107 | `libreoffice` | **LibreOffice** | `7.6.7` | `5001` | `utilities, data` |
-| 108 | `lightning` | **Lightning Node** | `v1.3.3` | `2101` | `finance` |
-| 109 | `lightning-terminal` | **Lightning Terminal** | `0.17.7` | `3004` | `finance` |
-| 110 | `lightningmate` | **Lightning Mate** | `0.7.7` | `3742` | `finance` |
-| 111 | `ln-visualizer` | **LnVisualizer** | `0.0.28` | `5646` | `finance` |
-| 112 | `lnbits` | **LNbits** | `1.6.2` | `3007` | `finance` |
-| 113 | `lnbits-holesail-proxy` | **LNbits Holesail Proxy** | `v1.0.7` | `3107` | `finance` |
-| 114 | `lndg` | **LNDg** | `v1.11.1` | `8889` | `finance` |
-| 115 | `lnswitchboard` | **lnSwitchboard** | `0.3.2` | `22121` | `finance` |
-| 116 | `localai` | **LocalAI** | `v4.12.1` | `8793` | `ai` |
-| 117 | `lunalytics` | **Lunalytics** | `0.10.23` | `8183` | `network` |
-| 118 | `mailarchiver` | **Mail Archiver** | `2610.1` | `5006` | `utilities, data` |
-| 119 | `mailflow` | **MailFlow** | `4.3.0` | `3395` | `network` |
-| 120 | `mainsail` | **Mainsail** | `2.19.0` | `8070` | `utilities, data` |
-| 121 | `manifold-fedimint-guardian` | **Manifold Fedimint Guardian** | `cd0f1689df79fc00c9153c9bd9f014113f38c489` | `8483` | `finance` |
-| 122 | `mattermost` | **Mattermost** | `12.0.1` | `8765` | `social` |
-| 123 | `maybe` | **Maybe** | `0.6.0` | `3063` | `finance` |
-| 124 | `mazanoke` | **Mazanoke** | `1.1.7` | `3474` | `photography, utilities, data` |
-| 125 | `meshchatx` | **MeshChatX** | `4.10.7` | `8985` | `social` |
-| 126 | `miner-sentinel` | **MinerSentinel** | `1.2.0` | `3082` | `finance` |
-| 127 | `monetr` | **Monetr** | `1.21.1` | `8379` | `finance` |
-| 128 | `morphos` | **Morphos server** | `0.6.0` | `3778` | `photography, utilities, data` |
-| 129 | `murmur` | **Murmur** | `0.11.1` | `18793` | `ai` |
-| 130 | `music-assistant` | **Music Assistant** | `2.10.9` | `8896` | `media, music` |
-| 131 | `myspeed` | **MySpeed** | `1.0.9` | `5216` | `network` |
-| 132 | `neko` | **Neko** | `3.2.0` | `3880` | `network` |
-| 133 | `netbird` | **NetBird** | `1.27` | `8479` | `network, security` |
-| 134 | `networkingtoolbox` | **Networking Toolbox** | `1.6.0` | `3686` | `development` |
-| 135 | `nginx-proxy-manager` | **Nginx Proxy Manager** | `2.16.0` | `4498` | `network, security` |
-| 136 | `nostr-relay` | **Nostr Relay** | `v1.2.1` | `4848` | `social` |
-| 137 | `nostr-vpn` | **Nostr VPN** | `v4.1.20` | `38180` | `network, security` |
-| 138 | `nostrudel` | **noStrudel** | `1.1.0` | `3149` | `social` |
-| 139 | `notediscovery` | **NoteDiscovery** | `0.34.0` | `8736` | `utilities, data` |
-| 140 | `nutstash-wallet` | **Nutstash Wallet** | `0.1.10` | `4173` | `finance` |
-| 141 | `obsidian` | **Obsidian** | `1.8.10` | `3435` | `utilities, data` |
-| 142 | `octoprint` | **OctoPrint** | `1.11.8` | `5003` | `utilities, data` |
-| 143 | `omnitools` | **OmniTools** | `0.7.0` | `22424` | `photography, utilities, data` |
-| 144 | `onlyoffice-nextcloud` | **ONLYOFFICE Docs** | `1.0.4` | `3014` | `utilities, data` |
-| 145 | `opencode` | **OpenCode** | `1.19.5` | `4096` | `ai` |
-| 146 | `opengist` | **Opengist** | `1.15.3` | `6157` | `development` |
-| 147 | `openhands` | **OpenHands** | `1.10.0` | `3993` | `ai` |
-| 148 | `openreader` | **OpenReader** | `1.30.5-alpine` | `3391` | `ai` |
-| 149 | `openresty-manager` | **OpenResty Manager** | `2.4.6` | `34567` | `network, security` |
-| 150 | `openthread-border-router` | **OpenThread Border Router** | `0.4.0` | `7586` | `automation` |
-| 151 | `ordinals` | **Ordinals** | `0.27.1` | `4000` | `finance` |
-| 152 | `originless` | **Originless** | `0.1.0` | `3232` | `utilities, data` |
-| 153 | `paperclip` | **Paperclip** | `2026.1023.0` | `8860` | `ai` |
-| 154 | `papra` | **Papra** | `26.6.2-rootless` | `23892` | `utilities, data` |
-| 155 | `passky-client` | **Passky Client** | `8.1.1` | `5052` | `utilities, data` |
-| 156 | `passky-server` | **Passky Server** | `9.0.0` | `5050` | `utilities, data` |
-| 157 | `pastefy` | **Pastefy** | `7.1.6` | `9900` | `development` |
-| 158 | `pearcircle-seeder` | **PearCircle Seeder** | `1.1.4` | `8731` | `network` |
-| 159 | `peerswap` | **PeerSwap** | `7.0.2` | `1984` | `finance` |
-| 160 | `perplexica` | **Vane** | `v1.12.2` | `3444` | `ai` |
-| 161 | `picoclaw` | **PicoClaw** | `v0.3.1-launcher` | `18800` | `ai` |
-| 162 | `picsur` | **Picsur** | `0.5.6` | `8286` | `photography, utilities, data` |
-| 163 | `plane` | **Plane** | `alpine3.23` | `8762` | `utilities, data` |
-| 164 | `pocketbase` | **PocketBase** | `0.40.6` | `5400` | `development` |
-| 165 | `pogolo` | **pogolo** | `v1.x` | `5663` | `finance` |
-| 166 | `poznote` | **Poznote** | `6.141.1` | `8389` | `utilities, data` |
-| 167 | `public-pool` | **Public Pool** | `1.25.3` | `2019` | `finance` |
-| 168 | `public-pool-web` | **Public Pool's Web** | `0.2.0` | `2021` | `finance` |
-| 169 | `pyload-ng` | **pyload-ng** | `0.5.0` | `26317` | `utilities, data` |
-| 170 | `readeck` | **Readeck** | `0.23.5` | `20887` | `books, utilities, data` |
-| 171 | `readur` | **Readur** | `3.1.2` | `19289` | `photography, utilities, data` |
-| 172 | `reitti` | **Reitti** | `5.9.1` | `20684` | `photography, utilities, data` |
-| 173 | `remmina` | **Remmina** | `1.4.35` | `8764` | `network` |
-| 174 | `restreamer` | **Restreamer** | `2.12.0` | `20264` | `utilities, data` |
-| 175 | `ride-the-lightning` | **Ride The Lightning** | `v0.15.16` | `3001` | `finance` |
-| 176 | `robosats` | **RoboSats** | `v0.8.7-alpha` | `12596` | `finance` |
-| 177 | `rotki` | **rotki** | `1.44.2` | `23617` | `finance` |
-| 178 | `route96` | **Route96** | `0.7.0` | `25904` | `social` |
-| 179 | `rustdesk-server` | **RustDesk Server** | `1.27` | `21080` | `network, security` |
-| 180 | `rusty-kaspad` | **Rusty Kaspad** | `v0.4.1` | `4321` | `finance` |
-| 181 | `saifa` | **Saifa** | `v1.3.2` | `9989` | `finance` |
-| 182 | `samourai-server` | **Samourai Server** | `1.21-alpine` | `3021` | `finance` |
-| 183 | `satoshi-dashboard` | **Satoshi Dashboard** | `v1.1.0` | `8410` | `finance` |
-| 184 | `satsale` | **SatSale** | `0.1.13` | `22702` | `finance` |
-| 185 | `satsbook` | **Satsbook** | `2.1.0` | `3017` | `finance` |
-| 186 | `satwatch` | **sat.watch** | `1.1.8` | `3883` | `finance` |
-| 187 | `scanservjs` | **scanservjs** | `v3.3.0` | `2903` | `utilities, data` |
-| 188 | `seafile` | **Seafile** | `14.0.9` | `8920` | `books, utilities, data` |
-| 189 | `seedtool` | **Bitcoin Seed Tool** | `2.3.0` | `8147` | `finance` |
-| 190 | `shopstr` | **Shopstr** | `0.7.5` | `30402` | `finance` |
-| 191 | `sikka` | **Sikka** | `0.2.0` | `64552` | `finance` |
-| 192 | `silo` | **Silo** | `RELEASE.2026-10-26T00-00-00Z` | `9130` | `utilities, data` |
-| 193 | `simple-torrent` | **SimpleTorrent** | `1.3.9` | `18611` | `network` |
-| 194 | `skybro` | **SkyBro** | `1.6.2` | `7437` | `network` |
-| 195 | `slink` | **Slink** | `1.14.5` | `8811` | `photography, utilities, data` |
-| 196 | `snapdrop` | **Snapdrop** | `version-b8b78cc2` | `22763` | `utilities, data` |
-| 197 | `snort` | **Snort** | `v0.5.4` | `52027` | `social` |
-| 198 | `snowflake` | **Tor Snowflake Proxy** | `v1.6.0` | `3800` | `network, security` |
-| 199 | `solidtime` | **Solidtime** | `0.22.1` | `8770` | `utilities, data` |
-| 200 | `spacebot` | **Spacebot** | `v0.5.0` | `19898` | `ai` |
-| 201 | `sparkkiosk` | **Sparkkiosk** | `v1.0.0` | `21214` | `finance` |
-| 202 | `specter-desktop` | **Specter Desktop** | `v2.1.11` | `25441` | `finance` |
-| 203 | `sphinx-relay` | **Sphinx Relay** | `v2.5.2` | `3300` | `social` |
-| 204 | `sqlitebrowser` | **SQLite Browser** | `3.13.1` | `8887` | `development` |
-| 205 | `squeaknode` | **Squeaknode** | `v0.3.4` | `12994` | `social` |
-| 206 | `squeakroad` | **Squeak Road** | `v0.1.14` | `18200` | `finance` |
-| 207 | `stash` | **Stash** | `1.0.1` | `5173` | `ai` |
-| 208 | `strix` | **Strix** | `2.2.0` | `24438` | `automation` |
-| 209 | `super-productivity` | **Super Productivity** | `19.3.1` | `8020` | `utilities, data` |
-| 210 | `sure` | **Sure** | `0.7.6` | `3064` | `finance` |
-| 211 | `suredbits-wallet` | **Suredbits Wallet** | `1.9.7` | `3020` | `finance` |
-| 212 | `sv2-ui` | **Stratum V2 UI** | `0.8.1` | `8077` | `finance` |
-| 213 | `swingmusic` | **Swing Music** | `v3.0.0` | `1970` | `media, music` |
-| 214 | `synapse` | **Synapse** | `1.164.2` | `20060` | `social` |
-| 215 | `syslog-ng` | **Syslog-ng** | `0.17.1` | `5142` | `network` |
-| 216 | `tdex` | **TDEX Provider** | `2.6.4-alpine` | `9094` | `finance` |
-| 217 | `technitium-dns` | **Technitium DNS Server** | `15.6.2` | `5380` | `network, security` |
-| 218 | `telegrapho` | **Telegrapho** | `1.0.1` | `3712` | `network` |
-| 219 | `termix` | **Termix** | `2.9.2` | `6444` | `development` |
-| 220 | `thelounge` | **The Lounge** | `4.4.3` | `9003` | `social` |
-| 221 | `thinkdashboard` | **ThinkDashboard** | `v0.7.6` | `8229` | `utilities, data` |
-| 222 | `threema` | **Threema Web** | `2.6.5` | `8855` | `utilities, data` |
-| 223 | `thunderhub` | **ThunderHub** | `0.19.1` | `24188` | `finance` |
-| 224 | `torbrowser` | **Tor Browser** | `15.0.17` | `5832` | `network` |
-| 225 | `torq` | **Torq** | `2.2.9` | `7028` | `finance` |
-| 226 | `toshi-moto` | **Toshi Moto** | `1.37.3` | `8021` | `finance` |
-| 227 | `transmute` | **Transmute** | `2.1.1` | `3313` | `utilities, data` |
-| 228 | `trip` | **Trip** | `1.50.1` | `8980` | `utilities, data` |
-| 229 | `twenty` | **Twenty** | `2.50.1` | `2020` | `utilities, data` |
-| 230 | `urbit` | **Urbit** | `v4.6` | `21955` | `network` |
-| 231 | `urbit-bitcoin-connector` | **Urbit Bitcoin Connector** | `latest` | `9090` | `finance` |
-| 232 | `usocial` | **usocial** | `v0.1.5-buster` | `8448` | `social` |
-| 233 | `valorgrid` | **ValorGrid** | `3.36.3` | `1325` | `finance` |
-| 234 | `vert` | **VERT** | `257bcb3` | `3884` | `utilities, data` |
-| 235 | `wanderer` | **Wanderer** | `0.21.2` | `3111` | `utilities, data` |
-| 236 | `wavelog` | **Wavelog** | `3.2.4` | `22784` | `social` |
-| 237 | `wealthfolio` | **Wealthfolio** | `3.12.0` | `19334` | `finance` |
-| 238 | `webcheck` | **WebCheck** | `2.4.0` | `3093` | `network, security` |
-| 239 | `wger` | **wger** | `alpine3.22` | `8450` | `utilities, data` |
-| 240 | `wingfit` | **Wingfit** | `5.3.1` | `8950` | `utilities, data` |
-| 241 | `woofbot` | **WoofBot (without Lightning)** | `0.9.8` | `22182` | `finance` |
-| 242 | `woofbot-lnd` | **WoofBot (LND)** | `v0.9.8` | `21412` | `finance` |
-| 243 | `yamtrack` | **Yamtrack** | `0.26.3` | `8742` | `media` |
-| 244 | `yucca` | **Yucca** | `0.13.4` | `9910` | `automation` |
-| 245 | `yuvomi` | **Yuvomi** | `2.85.0` | `26765` | `utilities, data` |
-| 246 | `zabbix` | **Zabbix** | `8.0.0` | `10052` | `network, security` |
-| 247 | `zen` | **Zen** | `2.0.0` | `8894` | `utilities, data` |
-| 248 | `zeronote` | **ZeroNote** | `1.0.12` | `18817` | `utilities, data` |
-| 249 | `zoraxy` | **Zoraxy** | `v3.3.4` | `8400` | `network, security` |
+| 93 | `jotty` | **Jotty** | `1.29.2` | `8345` | `utilities, data` |
+| 94 | `jupyterlab` | **JupyterLab** | `lab-4.6.5` | `8899` | `development` |
+| 95 | `just-download` | **Just. Download.** | `v1.0.9` | `3684` | `media` |
+| 96 | `kan` | **kan** | `0.7.0` | `8373` | `utilities, data` |
+| 97 | `kitchenowl` | **KitchenOwl** | `v0.7.10` | `8474` | `utilities, data` |
+| 98 | `kokoro` | **Kokoro** | `0.9.2` | `8877` | `ai` |
+| 99 | `komodo` | **Komodo** | `2.3.4` | `9120` | `development` |
+| 100 | `krystal-bull` | **Krystal Bull** | `1.9.7` | `21774` | `finance` |
+| 101 | `langflow` | **Langflow** | `1.13.1` | `8862` | `ai` |
+| 102 | `leafwiki` | **LeafWiki** | `0.14.2` | `8066` | `books, utilities, data` |
+| 103 | `librechat` | **LibreChat** | `0.8.7` | `7050` | `ai` |
+| 104 | `libreoffice` | **LibreOffice** | `7.6.7` | `5001` | `utilities, data` |
+| 105 | `lightning` | **Lightning Node** | `v1.3.3` | `2101` | `finance` |
+| 106 | `lightning-terminal` | **Lightning Terminal** | `0.17.7` | `3004` | `finance` |
+| 107 | `lightningmate` | **Lightning Mate** | `0.7.7` | `3742` | `finance` |
+| 108 | `ln-visualizer` | **LnVisualizer** | `0.0.28` | `5646` | `finance` |
+| 109 | `lnbits` | **LNbits** | `1.6.2` | `3007` | `finance` |
+| 110 | `lnbits-holesail-proxy` | **LNbits Holesail Proxy** | `v1.0.7` | `3107` | `finance` |
+| 111 | `lndg` | **LNDg** | `v1.11.1` | `8889` | `finance` |
+| 112 | `lnswitchboard` | **lnSwitchboard** | `0.3.2` | `22121` | `finance` |
+| 113 | `localai` | **LocalAI** | `v4.12.1` | `8793` | `ai` |
+| 114 | `lunalytics` | **Lunalytics** | `0.10.23` | `8183` | `network` |
+| 115 | `mailarchiver` | **Mail Archiver** | `2610.1` | `5006` | `utilities, data` |
+| 116 | `mailflow` | **MailFlow** | `4.3.0` | `3395` | `network` |
+| 117 | `mainsail` | **Mainsail** | `2.19.0` | `8070` | `utilities, data` |
+| 118 | `manifold-fedimint-guardian` | **Manifold Fedimint Guardian** | `cd0f1689df79fc00c9153c9bd9f014113f38c489` | `8483` | `finance` |
+| 119 | `mattermost` | **Mattermost** | `12.0.1` | `8765` | `social` |
+| 120 | `maybe` | **Maybe** | `0.6.0` | `3063` | `finance` |
+| 121 | `mazanoke` | **Mazanoke** | `1.1.7` | `3474` | `photography, utilities, data` |
+| 122 | `meshchatx` | **MeshChatX** | `4.10.7` | `8985` | `social` |
+| 123 | `miner-sentinel` | **MinerSentinel** | `1.2.0` | `3082` | `finance` |
+| 124 | `monetr` | **Monetr** | `1.21.1` | `8379` | `finance` |
+| 125 | `morphos` | **Morphos server** | `0.6.0` | `3778` | `photography, utilities, data` |
+| 126 | `murmur` | **Murmur** | `0.11.1` | `18793` | `ai` |
+| 127 | `music-assistant` | **Music Assistant** | `2.10.9` | `8896` | `media, music` |
+| 128 | `myspeed` | **MySpeed** | `1.0.9` | `5216` | `network` |
+| 129 | `neko` | **Neko** | `3.2.0` | `3880` | `network` |
+| 130 | `netbird` | **NetBird** | `1.27` | `8479` | `network, security` |
+| 131 | `networkingtoolbox` | **Networking Toolbox** | `1.6.0` | `3686` | `development` |
+| 132 | `nginx-proxy-manager` | **Nginx Proxy Manager** | `2.16.0` | `4498` | `network, security` |
+| 133 | `nostr-relay` | **Nostr Relay** | `v1.2.1` | `4848` | `social` |
+| 134 | `nostr-vpn` | **Nostr VPN** | `v4.1.20` | `38180` | `network, security` |
+| 135 | `nostrudel` | **noStrudel** | `1.1.0` | `3149` | `social` |
+| 136 | `notediscovery` | **NoteDiscovery** | `0.34.0` | `8736` | `utilities, data` |
+| 137 | `nutstash-wallet` | **Nutstash Wallet** | `0.1.10` | `4173` | `finance` |
+| 138 | `obsidian` | **Obsidian** | `1.8.10` | `3435` | `utilities, data` |
+| 139 | `octoprint` | **OctoPrint** | `1.11.8` | `5003` | `utilities, data` |
+| 140 | `omnitools` | **OmniTools** | `0.7.0` | `22424` | `photography, utilities, data` |
+| 141 | `onlyoffice-nextcloud` | **ONLYOFFICE Docs** | `1.0.4` | `3014` | `utilities, data` |
+| 142 | `opencode` | **OpenCode** | `1.19.5` | `4096` | `ai` |
+| 143 | `opengist` | **Opengist** | `1.15.3` | `6157` | `development` |
+| 144 | `openhands` | **OpenHands** | `1.10.0` | `3993` | `ai` |
+| 145 | `openreader` | **OpenReader** | `1.30.5-alpine` | `3391` | `ai` |
+| 146 | `openresty-manager` | **OpenResty Manager** | `2.4.6` | `34567` | `network, security` |
+| 147 | `openthread-border-router` | **OpenThread Border Router** | `0.4.0` | `7586` | `automation` |
+| 148 | `ordinals` | **Ordinals** | `0.27.1` | `4000` | `finance` |
+| 149 | `originless` | **Originless** | `0.1.0` | `3232` | `utilities, data` |
+| 150 | `paperclip` | **Paperclip** | `2026.1023.0` | `8860` | `ai` |
+| 151 | `papra` | **Papra** | `26.6.2-rootless` | `23892` | `utilities, data` |
+| 152 | `passky-client` | **Passky Client** | `8.1.1` | `5052` | `utilities, data` |
+| 153 | `passky-server` | **Passky Server** | `9.0.0` | `5050` | `utilities, data` |
+| 154 | `pastefy` | **Pastefy** | `7.1.6` | `9900` | `development` |
+| 155 | `pearcircle-seeder` | **PearCircle Seeder** | `1.1.4` | `8731` | `network` |
+| 156 | `peerswap` | **PeerSwap** | `7.0.2` | `1984` | `finance` |
+| 157 | `perplexica` | **Vane** | `v1.12.2` | `3444` | `ai` |
+| 158 | `picoclaw` | **PicoClaw** | `v0.3.1-launcher` | `18800` | `ai` |
+| 159 | `picsur` | **Picsur** | `0.5.6` | `8286` | `photography, utilities, data` |
+| 160 | `plane` | **Plane** | `alpine3.23` | `8762` | `utilities, data` |
+| 161 | `pocketbase` | **PocketBase** | `0.40.6` | `5400` | `development` |
+| 162 | `pogolo` | **pogolo** | `v1.x` | `5663` | `finance` |
+| 163 | `poznote` | **Poznote** | `6.141.1` | `8389` | `utilities, data` |
+| 164 | `public-pool` | **Public Pool** | `1.25.3` | `2019` | `finance` |
+| 165 | `public-pool-web` | **Public Pool's Web** | `0.2.0` | `2021` | `finance` |
+| 166 | `pyload-ng` | **pyload-ng** | `0.5.0` | `26317` | `utilities, data` |
+| 167 | `readeck` | **Readeck** | `0.23.5` | `20887` | `books, utilities, data` |
+| 168 | `readur` | **Readur** | `3.1.2` | `19289` | `photography, utilities, data` |
+| 169 | `reitti` | **Reitti** | `5.9.1` | `20684` | `photography, utilities, data` |
+| 170 | `remmina` | **Remmina** | `1.4.35` | `8764` | `network` |
+| 171 | `restreamer` | **Restreamer** | `2.12.0` | `20264` | `utilities, data` |
+| 172 | `ride-the-lightning` | **Ride The Lightning** | `v0.15.16` | `3001` | `finance` |
+| 173 | `robosats` | **RoboSats** | `v0.8.7-alpha` | `12596` | `finance` |
+| 174 | `rotki` | **rotki** | `1.44.2` | `23617` | `finance` |
+| 175 | `route96` | **Route96** | `0.7.0` | `25904` | `social` |
+| 176 | `rustdesk-server` | **RustDesk Server** | `1.27` | `21080` | `network, security` |
+| 177 | `rusty-kaspad` | **Rusty Kaspad** | `v0.4.1` | `4321` | `finance` |
+| 178 | `saifa` | **Saifa** | `v1.3.2` | `9989` | `finance` |
+| 179 | `samourai-server` | **Samourai Server** | `1.21-alpine` | `3021` | `finance` |
+| 180 | `satoshi-dashboard` | **Satoshi Dashboard** | `v1.1.0` | `8410` | `finance` |
+| 181 | `satsale` | **SatSale** | `0.1.13` | `22702` | `finance` |
+| 182 | `satsbook` | **Satsbook** | `2.1.0` | `3017` | `finance` |
+| 183 | `satwatch` | **sat.watch** | `1.1.8` | `3883` | `finance` |
+| 184 | `scanservjs` | **scanservjs** | `v3.3.0` | `2903` | `utilities, data` |
+| 185 | `seafile` | **Seafile** | `14.0.9` | `8920` | `books, utilities, data` |
+| 186 | `seedtool` | **Bitcoin Seed Tool** | `2.3.0` | `8147` | `finance` |
+| 187 | `shopstr` | **Shopstr** | `0.7.5` | `30402` | `finance` |
+| 188 | `silo` | **Silo** | `RELEASE.2026-10-26T00-00-00Z` | `9130` | `utilities, data` |
+| 189 | `skybro` | **SkyBro** | `1.6.2` | `7437` | `network` |
+| 190 | `slink` | **Slink** | `1.14.5` | `8811` | `photography, utilities, data` |
+| 191 | `snapdrop` | **Snapdrop** | `version-b8b78cc2` | `22763` | `utilities, data` |
+| 192 | `snort` | **Snort** | `v0.5.4` | `52027` | `social` |
+| 193 | `snowflake` | **Tor Snowflake Proxy** | `v1.6.0` | `3800` | `network, security` |
+| 194 | `solidtime` | **Solidtime** | `0.22.1` | `8770` | `utilities, data` |
+| 195 | `spacebot` | **Spacebot** | `v0.5.0` | `19898` | `ai` |
+| 196 | `sparkkiosk` | **Sparkkiosk** | `v1.0.0` | `21214` | `finance` |
+| 197 | `specter-desktop` | **Specter Desktop** | `v2.1.11` | `25441` | `finance` |
+| 198 | `sphinx-relay` | **Sphinx Relay** | `v2.5.2` | `3300` | `social` |
+| 199 | `sqlitebrowser` | **SQLite Browser** | `3.13.1` | `8887` | `development` |
+| 200 | `squeaknode` | **Squeaknode** | `v0.3.4` | `12994` | `social` |
+| 201 | `squeakroad` | **Squeak Road** | `v0.1.14` | `18200` | `finance` |
+| 202 | `stash` | **Stash** | `1.0.1` | `5173` | `ai` |
+| 203 | `strix` | **Strix** | `2.2.0` | `24438` | `automation` |
+| 204 | `super-productivity` | **Super Productivity** | `19.3.1` | `8020` | `utilities, data` |
+| 205 | `sure` | **Sure** | `0.7.6` | `3064` | `finance` |
+| 206 | `suredbits-wallet` | **Suredbits Wallet** | `1.9.7` | `3020` | `finance` |
+| 207 | `sv2-ui` | **Stratum V2 UI** | `0.8.1` | `8077` | `finance` |
+| 208 | `swingmusic` | **Swing Music** | `v3.0.0` | `1970` | `media, music` |
+| 209 | `synapse` | **Synapse** | `1.164.2` | `20060` | `social` |
+| 210 | `syslog-ng` | **Syslog-ng** | `0.17.1` | `5142` | `network` |
+| 211 | `tdex` | **TDEX Provider** | `2.6.4-alpine` | `9094` | `finance` |
+| 212 | `technitium-dns` | **Technitium DNS Server** | `15.6.2` | `5380` | `network, security` |
+| 213 | `telegrapho` | **Telegrapho** | `1.0.1` | `3712` | `network` |
+| 214 | `termix` | **Termix** | `2.9.2` | `6444` | `development` |
+| 215 | `thinkdashboard` | **ThinkDashboard** | `v0.7.6` | `8229` | `utilities, data` |
+| 216 | `threema` | **Threema Web** | `2.6.5` | `8855` | `utilities, data` |
+| 217 | `thunderhub` | **ThunderHub** | `0.19.1` | `24188` | `finance` |
+| 218 | `torbrowser` | **Tor Browser** | `15.0.17` | `5832` | `network` |
+| 219 | `torq` | **Torq** | `2.2.9` | `7028` | `finance` |
+| 220 | `toshi-moto` | **Toshi Moto** | `1.37.3` | `8021` | `finance` |
+| 221 | `transmute` | **Transmute** | `2.1.1` | `3313` | `utilities, data` |
+| 222 | `trip` | **Trip** | `1.50.1` | `8980` | `utilities, data` |
+| 223 | `twenty` | **Twenty** | `2.50.1` | `2020` | `utilities, data` |
+| 224 | `urbit` | **Urbit** | `v4.6` | `21955` | `network` |
+| 225 | `urbit-bitcoin-connector` | **Urbit Bitcoin Connector** | `latest` | `9090` | `finance` |
+| 226 | `usocial` | **usocial** | `v0.1.5-buster` | `8448` | `social` |
+| 227 | `valorgrid` | **ValorGrid** | `3.36.3` | `1325` | `finance` |
+| 228 | `vert` | **VERT** | `257bcb3` | `3884` | `utilities, data` |
+| 229 | `wanderer` | **Wanderer** | `0.21.2` | `3111` | `utilities, data` |
+| 230 | `wavelog` | **Wavelog** | `3.2.4` | `22784` | `social` |
+| 231 | `wealthfolio` | **Wealthfolio** | `3.12.0` | `19334` | `finance` |
+| 232 | `webcheck` | **WebCheck** | `2.4.0` | `3093` | `network, security` |
+| 233 | `wger` | **wger** | `alpine3.22` | `8450` | `utilities, data` |
+| 234 | `wingfit` | **Wingfit** | `5.3.1` | `8950` | `utilities, data` |
+| 235 | `woofbot` | **WoofBot (without Lightning)** | `0.9.8` | `22182` | `finance` |
+| 236 | `woofbot-lnd` | **WoofBot (LND)** | `v0.9.8` | `21412` | `finance` |
+| 237 | `yamtrack` | **Yamtrack** | `0.26.3` | `8742` | `media` |
+| 238 | `yucca` | **Yucca** | `0.13.4` | `9910` | `automation` |
+| 239 | `yuvomi` | **Yuvomi** | `2.85.0` | `26765` | `utilities, data` |
+| 240 | `zabbix` | **Zabbix** | `8.0.0` | `10052` | `network, security` |
+| 241 | `zen` | **Zen** | `2.0.0` | `8894` | `utilities, data` |
+| 242 | `zeronote` | **ZeroNote** | `1.0.12` | `18817` | `utilities, data` |
+| 243 | `zoraxy` | **Zoraxy** | `v3.3.4` | `8400` | `network, security` |

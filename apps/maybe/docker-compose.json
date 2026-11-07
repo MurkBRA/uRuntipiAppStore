@@ -18,7 +18,7 @@
         },
         {
           "key": "DATABASE_URL",
-          "value": "postgresql://maybe:maybe@maybe%5Fdb%5F1:5432/maybe"
+          "value": "postgresql://maybe:maybe@maybe-db:5432/maybe"
         },
         {
           "key": "RAILS_FORCE_SSL",
@@ -83,7 +83,7 @@
         },
         {
           "key": "DATABASE_URL",
-          "value": "postgresql://maybe:maybe@maybe%5Fdb%5F1:5432/maybe"
+          "value": "postgresql://maybe:maybe@maybe-db:5432/maybe"
         },
         {
           "key": "RAILS_FORCE_SSL",

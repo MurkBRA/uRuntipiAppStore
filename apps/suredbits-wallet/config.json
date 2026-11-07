@@ -19,9 +19,10 @@
   "gid": 1000,
   "form_fields": [
     {
-      "type": "random",
+      "type": "text",
       "label": "Suredbits Wallet p2p hidden service",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_SUREDBITS_WALLET_P2P_HIDDEN_SERVICE"
     },
     {

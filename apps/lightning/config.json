@@ -25,15 +25,17 @@
       "env_variable": "APP_LIGHTNING_COMMAND"
     },
     {
-      "type": "random",
+      "type": "text",
       "label": "Lightning Node lightning rest hidden service",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_LIGHTNING_REST_HIDDEN_SERVICE"
     },
     {
-      "type": "random",
+      "type": "text",
       "label": "Lightning Node lightning grpc hidden service",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_LIGHTNING_GRPC_HIDDEN_SERVICE"
     },
     {
@@ -91,7 +93,7 @@
       "type": "text",
       "label": "Lightning Node lnd initialize with tor only",
       "required": false,
-      "default": "default",
+      "default": "unset",
       "env_variable": "LND_INITIALIZE_WITH_TOR_ONLY"
     },
     {

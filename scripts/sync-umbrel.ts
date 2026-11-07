@@ -83,6 +83,13 @@ function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string })
     execFileSync("git", ["clone", "--depth", "1", "https://github.com/getumbrel/umbrel-apps.git", umbrelDir], {
       stdio: "inherit",
     });
+  } else {
+    try {
+      console.log(`Pulling latest changes in ${umbrelDir}...`);
+      execFileSync("git", ["pull", "--ff-only"], { cwd: umbrelDir, stdio: "inherit" });
+    } catch (err) {
+      console.warn(`Warning: failed to git pull in ${umbrelDir}:`, (err as Error).message);
+    }
   }
 
   if (!fs.existsSync(galleryDir)) {
@@ -91,6 +98,13 @@ function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string })
     execFileSync("git", ["clone", "--depth", "1", "https://github.com/getumbrel/umbrel-apps-gallery.git", galleryDir], {
       stdio: "inherit",
     });
+  } else {
+    try {
+      console.log(`Pulling latest changes in ${galleryDir}...`);
+      execFileSync("git", ["pull", "--ff-only"], { cwd: galleryDir, stdio: "inherit" });
+    } catch (err) {
+      console.warn(`Warning: failed to git pull in ${galleryDir}:`, (err as Error).message);
+    }
   }
 
   return { umbrelDir, galleryDir };
@@ -145,6 +159,41 @@ export async function runSync() {
   let skippedBlacklistCount = 0;
 
   const portedSummary: Array<{ id: string; name: string; version: string; port: number; categories: string[] }> = [];
+
+  // In full sync mode, discover all valid upstream app IDs to detect and remove zombie apps
+  if (!cli.only) {
+    const upstreamAppIds = new Set<string>();
+    for (const dirName of candidateDirs) {
+      const srcAppDir = path.join(umbrelDir, dirName);
+      try {
+        const manifestRaw = fs.readFileSync(path.join(srcAppDir, "umbrel-app.yml"), "utf8");
+        const manifest = YAML.parse(manifestRaw) as Record<string, any>;
+        const id = String(manifest?.id || dirName).trim();
+        if (manifest?.disabled !== true && !blacklistedIds.has(id) && !officialRuntipiIds.has(id)) {
+          upstreamAppIds.add(id);
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    const localAppDirs = fs
+      .readdirSync(appsOutputDir, { withFileTypes: true })
+      .filter(
+        (d) =>
+          d.isDirectory() && !d.name.startsWith("__") && fs.existsSync(path.join(appsOutputDir, d.name, "config.json")),
+      )
+      .map((d) => d.name);
+
+    for (const localId of localAppDirs) {
+      if (!upstreamAppIds.has(localId)) {
+        console.log(`Removing zombie app '${localId}' deleted from upstream...`);
+        fs.rmSync(path.join(appsOutputDir, localId), { recursive: true, force: true });
+        delete syncState.apps[localId];
+        updatedCount++;
+      }
+    }
+  }
 
   for (const dirName of candidateDirs) {
     const srcAppDir = path.join(umbrelDir, dirName);
@@ -236,7 +285,11 @@ export async function runSync() {
       fs.writeFileSync(path.join(destAppDir, "docker-compose.yml"), ymlDump, "utf8");
       fs.writeFileSync(path.join(destMetadataDir, "description.md"), descriptionMd, "utf8");
 
-      // Copy seed data files and render templates
+      // Clean stale data files before copying seed data and rendering templates
+      const destDataDir = path.join(destAppDir, "data");
+      if (fs.existsSync(destDataDir)) {
+        fs.rmSync(destDataDir, { recursive: true, force: true });
+      }
       copyAndPrepareAppDataFiles(srcAppDir, destAppDir, appId, transpiled.serviceRenameMap);
 
       // Generate 512x512 JPEG logo

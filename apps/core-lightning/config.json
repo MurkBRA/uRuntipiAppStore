@@ -17,9 +17,10 @@
   "website": "https://blockstream.com/lightning/",
   "form_fields": [
     {
-      "type": "random",
+      "type": "text",
       "label": "Core Lightning hidden service",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_CORE_LIGHTNING_HIDDEN_SERVICE"
     },
     {

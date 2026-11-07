@@ -38,13 +38,6 @@
     },
     {
       "type": "text",
-      "label": "Ride The Lightning (Core Lightning) block explorer url",
-      "required": false,
-      "default": "default",
-      "env_variable": "BLOCK_EXPLORER_URL"
-    },
-    {
-      "type": "text",
       "label": "Core Lightning Data Directory",
       "required": false,
       "default": "/data/core-lightning",

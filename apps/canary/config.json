@@ -46,14 +46,14 @@
       "type": "text",
       "label": "Canary Wallet app canary mempool port",
       "required": false,
-      "default": "default",
+      "default": "",
       "env_variable": "APP_CANARY_MEMPOOL_PORT"
     },
     {
       "type": "text",
       "label": "Canary Wallet app canary umbrel ntfy url",
       "required": false,
-      "default": "default",
+      "default": "",
       "env_variable": "APP_CANARY_UMBREL_NTFY_URL"
     },
     {

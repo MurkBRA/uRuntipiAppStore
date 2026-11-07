@@ -19,9 +19,10 @@
   "gid": 1000,
   "form_fields": [
     {
-      "type": "random",
+      "type": "text",
       "label": "Fulcrum rpc hidden service",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_FULCRUM_RPC_HIDDEN_SERVICE"
     },
     {

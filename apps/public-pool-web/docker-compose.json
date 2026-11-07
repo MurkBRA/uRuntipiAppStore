@@ -15,7 +15,7 @@
         },
         {
           "key": "DATABASE_URL",
-          "value": "postgres://${APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME}:${APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD}@${APP_PUBLIC_POOL_WEB_POSTGRES_HOST}:${APP_PUBLIC_POOL_WEB_POSTGRES_PORT}/${APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME}"
+          "value": "postgres://public_pool_web:SlyRoundaboutWay@public-pool-web-db:5432/public_pool_web_production"
         },
         {
           "key": "REDIS_URL",
@@ -107,7 +107,7 @@
         },
         {
           "key": "DATABASE_URL",
-          "value": "postgres://${APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME}:${APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD}@${APP_PUBLIC_POOL_WEB_POSTGRES_HOST}:${APP_PUBLIC_POOL_WEB_POSTGRES_PORT}/${APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME}"
+          "value": "postgres://public_pool_web:SlyRoundaboutWay@public-pool-web-db:5432/public_pool_web_production"
         },
         {
           "key": "PUBLIC_POOL_HOST",

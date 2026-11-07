@@ -15,15 +15,6 @@
   "author": "Agent Zero AI",
   "source": "https://github.com/agent0ai/agent-zero",
   "website": "https://github.com/agent0ai/agent-zero",
-  "form_fields": [
-    {
-      "type": "text",
-      "label": "Agent Zero ips with port",
-      "required": false,
-      "default": "default",
-      "env_variable": "ips_with_port"
-    }
-  ],
   "supported_architectures": [
     "arm64",
     "amd64"

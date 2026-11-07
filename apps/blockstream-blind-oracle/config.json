@@ -17,15 +17,17 @@
   "website": "https://blockstream.com",
   "form_fields": [
     {
-      "type": "random",
+      "type": "text",
       "label": "Blockstream Blind Oracle pinserver hidden service",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_PINSERVER_HIDDEN_SERVICE"
     },
     {
-      "type": "random",
+      "type": "text",
       "label": "Blockstream Blind Oracle tailscale url",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_TAILSCALE_URL"
     }
   ],

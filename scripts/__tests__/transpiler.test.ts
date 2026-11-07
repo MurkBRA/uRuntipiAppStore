@@ -748,4 +748,156 @@ export APP_SECRET=$(derive_entropy "key" | head -c32)
     expect(hassField.default).toBe("http://homeassistant-1:8123");
     expect(svc.internalPort).toBe(5050);
   });
+
+  it("extracts :-fallback properly and assigns it as formField default instead of 'default'", () => {
+    const umbrelCompose = {
+      services: {
+        app_proxy: {
+          environment: { APP_HOST: "my-app_web_1", APP_PORT: 8080 },
+        },
+        web: {
+          image: "example/app:1.0",
+          environment: {
+            BACKEND_TYPE: "${APP_BACKEND_TYPE:-LDK}",
+            OPTIONAL_PORT: "${APP_CUSTOM_PORT:-8080}",
+            EMPTY_FALLBACK: "${APP_OPTIONAL_FLAG:-}",
+          },
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "my-app",
+      appName: "My App",
+      manifestPort: 8080,
+      allocatedPort: 8080,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const backendField = res.formFields.find((f) => f.env_variable === "APP_BACKEND_TYPE");
+    expect(backendField).toBeDefined();
+    expect(backendField?.default).toBe("LDK");
+
+    const portField = res.formFields.find((f) => f.env_variable === "APP_CUSTOM_PORT");
+    expect(portField).toBeDefined();
+    expect(portField?.default).toBe("8080");
+
+    const emptyField = res.formFields.find((f) => f.env_variable === "APP_OPTIONAL_FLAG");
+    expect(emptyField).toBeDefined();
+    expect(emptyField?.default).toBe("");
+  });
+
+  it("sanitizes broken /curl healthchecks and downgrades depends_on condition to service_started", () => {
+    const umbrelCompose = {
+      services: {
+        app_proxy: {
+          environment: { APP_HOST: "wanderer_web_1", APP_PORT: 3000 },
+        },
+        web: {
+          image: "example/web:1.0",
+          depends_on: {
+            db: { condition: "service_healthy" },
+          },
+        },
+        db: {
+          image: "example/db:1.0",
+          healthcheck: {
+            test: ["CMD", "/curl", "--fail", "http://localhost:8090/health"],
+            interval: "15s",
+          },
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "wanderer",
+      appName: "Wanderer",
+      manifestPort: 3000,
+      allocatedPort: 3000,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const dbSvc = res.composeJson.services.find((s) => s.name === "wanderer-db");
+    expect(dbSvc?.healthCheck).toBeUndefined();
+
+    const webSvc = res.composeJson.services.find((s) => s.name === "wanderer");
+    expect(webSvc?.dependsOn).toEqual({
+      "wanderer-db": { condition: "service_started" },
+    });
+  });
+
+  it("resolves multi-pass chained staticExports and URL-encoded hostnames", () => {
+    const umbrelCompose = {
+      services: {
+        app_proxy: {
+          environment: { APP_HOST: "pool_web_1", APP_PORT: 3000 },
+        },
+        web: {
+          image: "example/pool-web:1.0",
+          environment: {
+            DATABASE_URL: "${APP_DATABASE_URL}",
+          },
+        },
+        db: {
+          image: "postgres:16",
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "pool",
+      appName: "Pool",
+      manifestPort: 3000,
+      allocatedPort: 3000,
+      umbrelCompose,
+      staticExports: {
+        APP_DB_USER: "myuser",
+        APP_DB_PASS: "mypassword",
+        APP_DB_HOST: "pool%5Fdb%5F1",
+        APP_DATABASE_URL: "postgres://${APP_DB_USER}:${APP_DB_PASS}@${APP_DB_HOST}:5432/mydb",
+      },
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const webSvc = res.composeJson.services.find((s) => s.name === "pool");
+    const dbUrl = webSvc?.environment.find((e: any) => e.key === "DATABASE_URL");
+    expect(dbUrl?.value).toBe("postgres://myuser:mypassword@pool-db:5432/mydb");
+    expect(res.formFields.some((f) => f.env_variable === "APP_DB_USER")).toBe(false);
+  });
+
+  it("parseUmbrelExports assigns semantic types to subshell variables based on naming convention", () => {
+    const exportsSh = `
+export ELEMENTS_DATA_DIR="$(readlink -f /path)/elements/data"
+export APP_TAILSCALE_URL="http://$(hostname 2>/dev/null)"
+export APP_SVC_PORT="$(echo 8080)"
+export APP_ADMIN_USER="$(whoami)"
+export APP_SECRET_KEY="$(openssl rand -hex 16)"
+`;
+    const res = parseUmbrelExports(exportsSh, "TestApp");
+    const dirField = res.formFields.find((f) => f.env_variable === "ELEMENTS_DATA_DIR");
+    expect(dirField?.type).toBe("text");
+    expect(dirField?.default).toBe("/data/elements");
+
+    const urlField = res.formFields.find((f) => f.env_variable === "APP_TAILSCALE_URL");
+    expect(urlField?.type).toBe("text");
+    expect(urlField?.default).toBe("");
+
+    const portField = res.formFields.find((f) => f.env_variable === "APP_SVC_PORT");
+    expect(portField?.type).toBe("text");
+    expect(portField?.default).toBe("8080");
+
+    const userField = res.formFields.find((f) => f.env_variable === "APP_ADMIN_USER");
+    expect(userField?.type).toBe("text");
+    expect(userField?.default).toBe("admin");
+
+    const secretField = res.formFields.find((f) => f.env_variable === "APP_SECRET_KEY");
+    expect(secretField?.type).toBe("random");
+  });
 });

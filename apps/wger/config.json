@@ -35,13 +35,6 @@
       "min": 64,
       "encoding": "hex",
       "env_variable": "APP_SEED"
-    },
-    {
-      "type": "text",
-      "label": "wger ips with port",
-      "required": false,
-      "default": "default",
-      "env_variable": "ips_with_port"
     }
   ],
   "supported_architectures": [

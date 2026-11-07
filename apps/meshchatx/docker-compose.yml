@@ -12,6 +12,10 @@ services:
       timeout: 5s
       retries: 3
       start_period: 90s
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
     x-runtipi:
       internal_port: 8000
       is_main: true

@@ -21,8 +21,10 @@ const RUNTIPI_BUILTIN_ENV_VARS = new Set([
   "ROOT_FOLDER_HOST",
   "DNS_IP",
   "TZ",
-  " TIPI_VERSION",
+  "TIPI_VERSION",
 ]);
+
+import { APP_OVERRIDES } from "./overrides.ts";
 
 export const CONTAINER_USER_FORM_FIELD: FormField = {
   type: "text",
@@ -93,14 +95,19 @@ function parseEnvToMap(envInput: any): Array<{ key: string; value: string | numb
       const key = k.trim();
       if (!key || v === undefined || v === null) continue;
       if (key === "<<" && typeof v === "object") {
-        for (const [subK, subV] of Object.entries(v as Record<string, any>)) {
-          const subKey = subK.trim();
-          if (!subKey || subV === undefined || subV === null || seen.has(subKey)) continue;
-          seen.add(subKey);
-          if (typeof subV === "number" || typeof subV === "boolean") {
-            result.push({ key: subKey, value: subV });
-          } else {
-            result.push({ key: subKey, value: String(subV) });
+        const objects = Array.isArray(v) ? v : [v];
+        for (const obj of objects) {
+          if (obj && typeof obj === "object") {
+            for (const [subK, subV] of Object.entries(obj as Record<string, any>)) {
+              const subKey = subK.trim();
+              if (!subKey || subV === undefined || subV === null || seen.has(subKey)) continue;
+              seen.add(subKey);
+              if (typeof subV === "number" || typeof subV === "boolean") {
+                result.push({ key: subKey, value: subV });
+              } else {
+                result.push({ key: subKey, value: String(subV) });
+              }
+            }
           }
         }
         continue;
@@ -272,6 +279,35 @@ export function transpileCompose(params: {
     }
   }
 
+  // Iteratively resolve static export variables referencing each other (e.g. DATABASE_URL referencing USERNAME, HOST, etc.)
+  let staticChanged = true;
+  let staticIters = 0;
+  while (staticChanged && staticIters < 10) {
+    staticChanged = false;
+    staticIters++;
+    for (const [k, v] of Object.entries(resolvedStaticExports)) {
+      if (typeof v === "string" && (v.includes("$") || v.includes("%5F") || v.includes("%5f"))) {
+        let newVal = v.replaceAll("%5F", "_").replaceAll("%5f", "_");
+        // Also map any Umbrel container name references in staticExports
+        for (const [origKey, finalKey] of Object.entries(serviceRenameMap)) {
+          newVal = newVal.replaceAll(`${appId}_${origKey}_1`, finalKey);
+        }
+        newVal = newVal.replace(/\$\{([A-Za-z0-9_]+)\}|\$([A-Za-z0-9_]+)/g, (full, brk, plain) => {
+          const varName = brk || plain;
+          if (resolvedStaticExports[varName] !== undefined && resolvedStaticExports[varName] !== full) {
+            staticChanged = true;
+            return resolvedStaticExports[varName];
+          }
+          return full;
+        });
+        if (newVal !== v) {
+          resolvedStaticExports[k] = newVal;
+          staticChanged = true;
+        }
+      }
+    }
+  }
+
   // Map explicit Umbrel container_name directives to their renamed Runtipi service names
   const containerNameMap: Record<string, string> = {};
   for (const key of keptServiceKeys) {
@@ -291,16 +327,27 @@ export function transpileCompose(params: {
   function transformString(input: string): string {
     let out = input;
 
-    // 1. Replace staticExports variables first
-    out = out.replace(/\$\{([A-Za-z0-9_]+)\}|\$([A-Za-z0-9_]+)/g, (full, brk, plain, offset, str) => {
-      // Do not touch escaped $$VAR
-      if (offset > 0 && str[offset - 1] === "$") return full;
-      const varName = brk || plain;
-      if (resolvedStaticExports[varName] !== undefined) {
-        return resolvedStaticExports[varName];
-      }
-      return full;
-    });
+    // 0. Unescape %5F URL-encoded underscores in hostnames
+    if (out.includes("%5F") || out.includes("%5f")) {
+      out = out.replaceAll("%5F", "_").replaceAll("%5f", "_");
+    }
+
+    // 1. Replace staticExports variables first (multi-pass for nested variables)
+    let prevOut = "";
+    let passes = 0;
+    while (prevOut !== out && passes < 5) {
+      prevOut = out;
+      passes++;
+      out = out.replace(/\$\{([A-Za-z0-9_]+)\}|\$([A-Za-z0-9_]+)/g, (full, brk, plain, offset, str) => {
+        // Do not touch escaped $$VAR
+        if (offset > 0 && str[offset - 1] === "$") return full;
+        const varName = brk || plain;
+        if (resolvedStaticExports[varName] !== undefined) {
+          return resolvedStaticExports[varName];
+        }
+        return full;
+      });
+    }
 
     // 2. Replace Umbrel container DNS names & internal service hosts -> renamed service
     for (const [origKey, finalKey] of Object.entries(serviceRenameMap)) {
@@ -357,14 +404,20 @@ export function transpileCompose(params: {
       .replace(/(?<!@)\bumbrel\.local\b/g, "${LOCAL_DOMAIN}")
       .replace(/\$\{APP_HIDDEN_SERVICE(?::-[^}]*)?\}|\$APP_HIDDEN_SERVICE\b/g, "${APP_DOMAIN}")
       .replace(/\$\{APP_PROXY_PORT(?::-[^}]*)?\}|\$APP_PROXY_PORT\b/g, String(allocatedPort))
+      .replace(
+        /\$\{APP_[A-Za-z0-9_]+_LOCAL_URLS(?::-[^}]*)?\}|\$APP_[A-Za-z0-9_]+_LOCAL_URLS\b/g,
+        "http://${INTERNAL_IP}:${APP_PORT}",
+      )
+      .replace(/\$\{ips_with_port(?::-[^}]*)?\}|\$ips_with_port\b/g, "http://${INTERNAL_IP}:${APP_PORT}")
+      .replace(/\$\{local_urls(?::-[^}]*)?\}|\$local_urls\b/g, "http://${INTERNAL_IP}:${APP_PORT}")
       .replace(/\$\{NETWORK_IP(?::-[^}]*)?\}|\$NETWORK_IP\b/g, "${INTERNAL_IP}")
       .replace(/\$\{APP_[A-Za-z0-9_]+_LOCAL_IPS(?::-[^}]*)?\}|\$APP_[A-Za-z0-9_]+_LOCAL_IPS\b/g, "${INTERNAL_IP}")
       .replace(/\$\{local_ips(?::-[^}]*)?\}|\$local_ips\b/g, "${INTERNAL_IP}");
 
     // 5. Inspect any remaining ${VAR} or $VAR references
     out = out.replace(
-      /\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-[^}]*)?\}|\$([A-Za-z_][A-Za-z0-9_]*)/g,
-      (full, brk, plain, offset, str) => {
+      /\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^}]*))?\}|\$([A-Za-z_][A-Za-z0-9_]*)/g,
+      (full, brk, fallback, plain, offset, str) => {
         if (offset > 0 && str[offset - 1] === "$") return full;
         const varName = brk || plain;
         if (!varName || RUNTIPI_BUILTIN_ENV_VARS.has(varName)) return full;
@@ -408,8 +461,18 @@ export function transpileCompose(params: {
         }
 
         if (!formFieldVars.has(varName)) {
-          // Check if it looks like a secret/key/password/token
-          if (/(PASSWORD|SECRET|KEY|TOKEN|SALT|HASH)/i.test(varName)) {
+          // If fallback was explicitly declared in compose: ${VAR:-value}
+          const cleanFallback = fallback !== undefined ? transformString(fallback.trim()) : undefined;
+
+          if (cleanFallback !== undefined) {
+            ensureFormField({
+              type: "text",
+              label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
+              required: false,
+              default: cleanFallback,
+              env_variable: varName,
+            });
+          } else if (/(PASSWORD|SECRET|KEY|TOKEN|SALT|HASH)/i.test(varName)) {
             ensureFormField({
               type: "random",
               label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
@@ -442,7 +505,10 @@ export function transpileCompose(params: {
   for (const origKey of keptServiceKeys) {
     const hc = rawServices[origKey]?.healthcheck;
     if (hc && typeof hc === "object" && !hc.disable && hc.test) {
-      servicesWithHealthcheck.add(serviceRenameMap[origKey]);
+      const testStr = Array.isArray(hc.test) ? hc.test.join(" ") : String(hc.test);
+      if (!testStr.includes("/curl") && !(appId === "wanderer" && origKey === "db")) {
+        servicesWithHealthcheck.add(serviceRenameMap[origKey]);
+      }
     }
   }
   if (appId === "adventurelog" && keptServiceKeys.includes("db")) {
@@ -503,7 +569,7 @@ export function transpileCompose(params: {
           h = h.split(":")[0];
         }
       }
-      svc.hostname = h.trim() || serviceName;
+      svc.hostname = h.trim() || finalName;
     }
     if (appId === "gitlab") {
       svc.hostname = "gitlab";
@@ -859,13 +925,15 @@ export function transpileCompose(params: {
       }
 
       if (testStr) {
-        const hcObj: Record<string, any> = { test: testStr };
-        if (typeof raw.healthcheck.interval === "string") hcObj.interval = raw.healthcheck.interval;
-        if (typeof raw.healthcheck.timeout === "string") hcObj.timeout = raw.healthcheck.timeout;
-        if (typeof raw.healthcheck.retries === "number") hcObj.retries = raw.healthcheck.retries;
-        if (typeof raw.healthcheck.start_period === "string") hcObj.startPeriod = raw.healthcheck.start_period;
-        if (typeof raw.healthcheck.start_interval === "string") hcObj.startInterval = raw.healthcheck.start_interval;
-        svc.healthCheck = hcObj;
+        if (!testStr.includes("/curl") && !(appId === "wanderer" && origKey === "db")) {
+          const hcObj: Record<string, any> = { test: testStr };
+          if (typeof raw.healthcheck.interval === "string") hcObj.interval = raw.healthcheck.interval;
+          if (typeof raw.healthcheck.timeout === "string") hcObj.timeout = raw.healthcheck.timeout;
+          if (typeof raw.healthcheck.retries === "number") hcObj.retries = raw.healthcheck.retries;
+          if (typeof raw.healthcheck.start_period === "string") hcObj.startPeriod = raw.healthcheck.start_period;
+          if (typeof raw.healthcheck.start_interval === "string") hcObj.startInterval = raw.healthcheck.start_interval;
+          svc.healthCheck = hcObj;
+        }
       }
     } else if (appId === "adventurelog" && origKey === "db") {
       svc.healthCheck = {
@@ -993,6 +1061,11 @@ export function transpileCompose(params: {
       }
     }
 
+    const appOverride = APP_OVERRIDES[appId];
+    if (appOverride?.modifyService) {
+      appOverride.modifyService(finalName, svc, origKey);
+    }
+
     transpiledServices.push(svc);
   }
 
@@ -1017,10 +1090,20 @@ export function transpileCompose(params: {
     schema_version: 2,
   };
 
+  const appOverride = APP_OVERRIDES[appId];
+  if (appOverride?.postProcessCompose) {
+    appOverride.postProcessCompose(composeYamlObj);
+  }
+
+  let finalFormFields = formFields;
+  if (appOverride?.modifyFormFields) {
+    finalFormFields = appOverride.modifyFormFields(finalFormFields);
+  }
+
   return {
     composeJson,
     composeYamlObj,
-    formFields,
+    formFields: finalFormFields,
     mainImageTag,
     serviceRenameMap,
     uid: detectedUid,

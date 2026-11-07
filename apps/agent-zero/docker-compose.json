@@ -9,7 +9,7 @@
       "environment": [
         {
           "key": "ALLOWED_ORIGINS",
-          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:3015,${ips_with_port}"
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:3015,http://${INTERNAL_IP}:${APP_PORT}"
         }
       ],
       "volumes": [

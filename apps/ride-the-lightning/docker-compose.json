@@ -37,7 +37,7 @@
         },
         {
           "key": "BLOCK_EXPLORER_URL",
-          "value": "${BLOCK_EXPLORER_URL}"
+          "value": "https://mempool.space"
         },
         {
           "key": "LN_SERVER_URL",

@@ -17,9 +17,10 @@
   "website": "https://dev.tdex.network",
   "form_fields": [
     {
-      "type": "random",
+      "type": "text",
       "label": "TDEX Provider tdex daemon hidden service",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_TDEX_DAEMON_HIDDEN_SERVICE"
     }
   ],

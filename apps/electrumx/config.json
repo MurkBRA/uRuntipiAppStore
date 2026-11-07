@@ -17,9 +17,10 @@
   "website": "https://umbrel.com/",
   "form_fields": [
     {
-      "type": "random",
+      "type": "text",
       "label": "ElectrumX rpc hidden service",
-      "min": 32,
+      "required": false,
+      "default": "",
       "env_variable": "APP_ELECTRUMX_RPC_HIDDEN_SERVICE"
     },
     {

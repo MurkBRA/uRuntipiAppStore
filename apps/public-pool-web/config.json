@@ -27,40 +27,6 @@
       "regex": "^[0-9]+(:[0-9]+)?$",
       "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
       "env_variable": "APP_CONTAINER_USER"
-    },
-    {
-      "type": "text",
-      "label": "Public Pool's Web app public pool web postgres username",
-      "required": false,
-      "default": "default",
-      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_USERNAME"
-    },
-    {
-      "type": "random",
-      "label": "Public Pool's Web app public pool web postgres password",
-      "min": 32,
-      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_PASSWORD"
-    },
-    {
-      "type": "text",
-      "label": "Public Pool's Web app public pool web postgres host",
-      "required": false,
-      "default": "default",
-      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_HOST"
-    },
-    {
-      "type": "text",
-      "label": "Public Pool's Web app public pool web postgres port",
-      "required": false,
-      "default": "default",
-      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_PORT"
-    },
-    {
-      "type": "text",
-      "label": "Public Pool's Web app public pool web postgres dbname",
-      "required": false,
-      "default": "default",
-      "env_variable": "APP_PUBLIC_POOL_WEB_POSTGRES_DBNAME"
     }
   ],
   "supported_architectures": [

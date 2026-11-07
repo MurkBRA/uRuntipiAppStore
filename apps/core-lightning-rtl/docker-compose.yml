@@ -14,7 +14,7 @@ services:
       - RTL_CONFIG_PATH=/data
       - DB_DIRECTORY_PATH=/data
       - RTL_COOKIE_PATH=/data/.cookie
-      - BLOCK_EXPLORER_URL=${BLOCK_EXPLORER_URL}
+      - BLOCK_EXPLORER_URL=https://mempool.space
     x-runtipi:
       internal_port: 3000
       add_to_main_network: true

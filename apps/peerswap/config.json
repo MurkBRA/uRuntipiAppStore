@@ -20,7 +20,7 @@
   "form_fields": [
     {
       "type": "text",
-      "label": "Elements Core Data Directory",
+      "label": "PeerSwap elements data dir",
       "required": false,
       "default": "/data/elements",
       "env_variable": "ELEMENTS_DATA_DIR"

@@ -349,6 +349,31 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
             `App ${id} promises generated APP_PASSWORD in description.md but does not use APP_PASSWORD in docker-compose.yml`,
           ).toBe(true);
         }
+
+        // 11. No form field in config.json has "default": "default" (unhandled variable fallback)
+        if (Array.isArray(appConfig.form_fields)) {
+          for (const field of appConfig.form_fields) {
+            expect(
+              field.default,
+              `App ${id} has unhandled form field ${field.env_variable} with default: "default"`,
+            ).not.toBe("default");
+          }
+        }
+
+        // 12. No broken /curl healthcheck binaries in docker-compose.yml
+        expect(composeYmlRaw, `App ${id} docker-compose.yml contains broken /curl healthcheck binary`).not.toMatch(
+          /\b\/curl\b/,
+        );
+
+        // 13. Volume container paths must never contain ${APP_DATA_DIR}
+        for (const svc of composeJson.services || []) {
+          for (const vol of svc.volumes || []) {
+            expect(
+              vol.containerPath,
+              `App ${id} service ${svc.name} has host variable in containerPath: ${vol.containerPath}`,
+            ).not.toContain("${APP_DATA_DIR}");
+          }
+        }
       });
     }
   });

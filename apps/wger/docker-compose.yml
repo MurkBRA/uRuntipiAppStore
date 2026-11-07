@@ -25,7 +25,7 @@ services:
       - ${APP_DATA_DIR}/data/media:/home/wger/media
     environment:
       - SECRET_KEY=${APP_SEED}
-      - CSRF_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:8450,${ips_with_port}
+      - CSRF_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:8450,http://${INTERNAL_IP}:${APP_PORT}
       - SITE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
       - MEDIA_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}/media/
       - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger
@@ -141,7 +141,7 @@ services:
     command: /start-beat
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
-      - ${APP_DATA_DIR}/data/celery-beat:${APP_DATA_DIR}/beat/
+      - ${APP_DATA_DIR}/data/celery-beat:/beat
     environment:
       - SECRET_KEY=${APP_SEED}
       - PS_DATABASE_URI=postgres://wger:wger@wger-db:5432/wger

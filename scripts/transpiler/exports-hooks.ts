@@ -33,6 +33,7 @@ function humanizeVarName(envVar: string, appName: string): string {
 export function parseUmbrelExports(exportsContent: string, appName: string): ParsedExportsResult {
   const formFields: FormField[] = [];
   const staticExports: Record<string, string> = {};
+  const localAssignments: Record<string, string> = {};
   const seenVars = new Set<string>();
 
   if (!exportsContent.trim()) {
@@ -40,6 +41,27 @@ export function parseUmbrelExports(exportsContent: string, appName: string): Par
   }
 
   const lines = exportsContent.split(/\r?\n/);
+
+  // First pass: collect local shell variable assignments (e.g. BLOCK_EXPLORER_URL="https://mempool.space")
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
+    if (!line || line.startsWith("#")) continue;
+
+    const assignMatch = line.match(/^(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)=(.*)$/);
+    if (!assignMatch) continue;
+
+    const [, k, rawV] = assignMatch;
+    let v = rawV.trim();
+    if ((v.startsWith('"') && v.endsWith('"')) || (v.startsWith("'") && v.endsWith("'"))) {
+      v = v.slice(1, -1);
+    }
+    // Do not overwrite base value with self-referencing mutations like BLOCK_EXPLORER_URL="${BLOCK_EXPLORER_URL}/..."
+    if (localAssignments[k] && (v.includes(`\${${k}}`) || v.includes(`$${k}`))) {
+      continue;
+    }
+    localAssignments[k] = v;
+  }
+
   for (const rawLine of lines) {
     const line = rawLine.trim();
     if (!line || line.startsWith("#")) continue;
@@ -85,7 +107,28 @@ export function parseUmbrelExports(exportsContent: string, appName: string): Par
       unquoted = unquoted.slice(1, -1);
     }
 
-    // Ignore complex subshells that aren't simple variable interpolations
+    // Resolve any references to earlier localAssignments
+    unquoted = unquoted.replace(/\$\{([A-Za-z0-9_]+)\}|\$([A-Za-z0-9_]+)/g, (full, brk, plain) => {
+      const ref = brk || plain;
+      if (localAssignments[ref] !== undefined && !localAssignments[ref].includes("$(")) {
+        return localAssignments[ref];
+      }
+      return full;
+    });
+
+    // Special Umbrel network and URL patterns
+    if (varName.endsWith("_LOCAL_URLS") || varName === "APP_WGER_LOCAL_URLS") {
+      seenVars.add(varName);
+      staticExports[varName] = "http://${INTERNAL_IP}:${APP_PORT}";
+      continue;
+    }
+    if (varName.endsWith("_LOCAL_IPS")) {
+      seenVars.add(varName);
+      staticExports[varName] = "${INTERNAL_IP}";
+      continue;
+    }
+
+    // Handle complex subshells that aren't simple variable interpolations
     if (unquoted.includes("$(") || unquoted.includes("`")) {
       // If the command is detecting an IP address or network host, do NOT generate a random hex string!
       if (
@@ -95,6 +138,59 @@ export function parseUmbrelExports(exportsContent: string, appName: string): Par
       ) {
         seenVars.add(varName);
         staticExports[varName] = "host.docker.internal";
+        continue;
+      }
+
+      // Directory or file path variables (e.g. ELEMENTS_DATA_DIR)
+      if (/(?:DIR|PATH|FOLDER)$/i.test(varName)) {
+        seenVars.add(varName);
+        const defaultPath = varName === "ELEMENTS_DATA_DIR" ? "/data/elements" : "/data";
+        formFields.push({
+          type: "text",
+          label: humanizeVarName(varName, appName),
+          required: false,
+          default: defaultPath,
+          env_variable: varName,
+        });
+        continue;
+      }
+
+      // URLs, hostnames, domains, services (e.g. APP_TAILSCALE_URL)
+      if (/(?:URL|URI|SERVICE|HOST|HOSTNAME|DOMAIN)$/i.test(varName)) {
+        seenVars.add(varName);
+        formFields.push({
+          type: "text",
+          label: humanizeVarName(varName, appName),
+          required: false,
+          default: "",
+          env_variable: varName,
+        });
+        continue;
+      }
+
+      // Port numbers
+      if (/(?:PORT)$/i.test(varName)) {
+        seenVars.add(varName);
+        formFields.push({
+          type: "text",
+          label: humanizeVarName(varName, appName),
+          required: false,
+          default: "8080",
+          env_variable: varName,
+        });
+        continue;
+      }
+
+      // Users or emails
+      if (/(?:USER|USERNAME|EMAIL)$/i.test(varName)) {
+        seenVars.add(varName);
+        formFields.push({
+          type: "text",
+          label: humanizeVarName(varName, appName),
+          required: false,
+          default: "admin",
+          env_variable: varName,
+        });
         continue;
       }
 

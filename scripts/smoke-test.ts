@@ -1,5 +1,6 @@
-import { execFileSync, spawnSync } from "node:child_process";
+import { type ChildProcess, execFileSync, spawn, spawnSync } from "node:child_process";
 import fs from "node:fs";
+import net from "node:net";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -31,7 +32,6 @@ const SKIP_CONTAINER_STARTUP = new Set([
   "immich",
   "immich-machine-learning", // Heavy ML models
   "nextcloud", // Multi-container complex bootstrap
-  "wger", // Multi-container complex bootstrap (PowerSync + Celery + Django migrations)
 ]);
 
 export interface AppTestResult {
@@ -40,6 +40,7 @@ export interface AppTestResult {
   durationSeconds: number;
   details?: string;
   logFile?: string;
+  portWarning?: boolean;
 }
 
 function isDockerAvailable(): boolean {
@@ -52,6 +53,23 @@ function isDockerAvailable(): boolean {
   }
 }
 
+function getAvailableDiskSpaceGb(): number {
+  try {
+    const out = execFileSync("df", ["-k", "/"], { encoding: "utf8" });
+    const lines = out.trim().split("\n");
+    if (lines.length >= 2) {
+      const parts = lines[1].split(/\s+/);
+      const availKb = Number.parseInt(parts[3], 10);
+      if (Number.isFinite(availKb)) {
+        return availKb / (1024 * 1024);
+      }
+    }
+  } catch {
+    // ignore
+  }
+  return 50;
+}
+
 function parseCliArgs(argv: string[]) {
   let baseRef = "";
   let appArg = "";
@@ -62,6 +80,7 @@ function parseCliArgs(argv: string[]) {
   let logsDir = "";
   let reportJson = "";
   let reportMd = "";
+  let jsonFailures = "";
   let prune = false;
   let waitSec = 20;
   let forceAll = false;
@@ -94,6 +113,8 @@ function parseCliArgs(argv: string[]) {
       reportJson = arg.slice("--report-json=".length).trim();
     } else if (arg.startsWith("--report-md=")) {
       reportMd = arg.slice("--report-md=".length).trim();
+    } else if (arg.startsWith("--json-failures=")) {
+      jsonFailures = arg.slice("--json-failures=".length).trim();
     } else if (arg.startsWith("--wait=")) {
       waitSec = Number.parseInt(arg.slice("--wait=".length), 10) || 20;
     } else if (arg === "--prune") {
@@ -113,6 +134,7 @@ function parseCliArgs(argv: string[]) {
     logsDir,
     reportJson,
     reportMd,
+    jsonFailures,
     prune,
     waitSec,
     forceAll,
@@ -166,6 +188,19 @@ function getChangedApps(baseRef?: string): string[] {
   return Array.from(apps).sort();
 }
 
+function getAppWeight(appId: string): number {
+  const composePath = path.join(ROOT_DIR, "apps", appId, "docker-compose.yml");
+  if (!fs.existsSync(composePath)) return 1;
+  try {
+    const raw = fs.readFileSync(composePath, "utf8");
+    const count = (raw.match(/^\s{2}[a-zA-Z0-9_-]+:/gm) || []).length;
+    const hasDb = /postgres|mysql|mariadb|mongo|redis/i.test(raw);
+    return Math.max(1, count * 2 + (hasDb ? 2 : 0) + 1);
+  } catch {
+    return 1;
+  }
+}
+
 function applySharding(apps: string[], shardStr: string): string[] {
   const match = shardStr.match(/^(\d+)\/(\d+)$/);
   if (!match) return apps;
@@ -173,12 +208,28 @@ function applySharding(apps: string[], shardStr: string): string[] {
   const totalShards = Number.parseInt(match[2], 10);
   if (shardIndex < 1 || shardIndex > totalShards) return apps;
 
-  const totalApps = apps.length;
-  const chunkSize = Math.ceil(totalApps / totalShards);
-  const start = (shardIndex - 1) * chunkSize;
-  const end = Math.min(start + chunkSize, totalApps);
+  // Weight-based Greedy Bin-Packing
+  const weighted = apps.map((app) => ({ app, weight: getAppWeight(app) }));
+  weighted.sort((a, b) => b.weight - a.weight || a.app.localeCompare(b.app));
 
-  return apps.slice(start, end);
+  const bins: Array<{ totalWeight: number; apps: string[] }> = Array.from({ length: totalShards }, () => ({
+    totalWeight: 0,
+    apps: [],
+  }));
+
+  for (const item of weighted) {
+    let minBin = bins[0];
+    for (let i = 1; i < bins.length; i++) {
+      if (bins[i].totalWeight < minBin.totalWeight) {
+        minBin = bins[i];
+      }
+    }
+    minBin.apps.push(item.app);
+    minBin.totalWeight += item.weight;
+  }
+
+  const selected = bins[shardIndex - 1]?.apps || [];
+  return selected.sort((a, b) => a.localeCompare(b));
 }
 
 function makeScriptsExecutable(dir: string): void {
@@ -241,7 +292,7 @@ function buildAppEnv(appId: string): Record<string, string> {
     POSTGRES_USER: "tipi_user",
   };
 
-  // Populate any custom form fields declared in config.json
+  // Populate custom form fields declared in config.json
   if (Array.isArray(config.form_fields)) {
     for (const field of config.form_fields) {
       if (!field?.env_variable) continue;
@@ -291,7 +342,7 @@ function buildAppEnv(appId: string): Record<string, string> {
       }
     }
 
-    // Auto-fill any unresolved ${APP_...} or ${VAR} found in docker-compose.yml
+    // Auto-fill unresolved ${APP_...} or ${VAR} found in docker-compose.yml
     const envMatches = content.matchAll(/\$\{([A-Z0-9_]+)(?::-[^}]*)?\}/g);
     for (const match of envMatches) {
       const varName = match[1];
@@ -303,13 +354,11 @@ function buildAppEnv(appId: string): Record<string, string> {
           fs.mkdirSync(mockDir, { recursive: true });
           env[varName] = mockDir;
         } else if (varName.includes("PORT")) {
-          env[varName] = "9999";
-        } else if (varName.includes("IP") || varName.includes("HOST")) {
+          env[varName] = "8080";
+        } else if (varName.includes("HOST") || varName.includes("DOMAIN") || varName.includes("IP")) {
           env[varName] = "127.0.0.1";
-        } else if (varName.includes("URL") || varName.includes("SERVICE")) {
-          env[varName] = "http://localhost:8080";
         } else {
-          env[varName] = "mock_value";
+          env[varName] = "default";
         }
       }
     }
@@ -318,62 +367,135 @@ function buildAppEnv(appId: string): Record<string, string> {
   return env;
 }
 
-export function runSmokeTests(): void {
-  const { baseRef, appArg, changed, all, shard, maxUp, logsDir, reportJson, reportMd, prune, waitSec, forceAll } =
-    parseCliArgs(process.argv);
+function pullImagesWithRetry(
+  composePath: string,
+  env: Record<string, string>,
+  log: (m: string) => void,
+): { success: boolean; error?: string } {
+  const maxAttempts = 3;
+  let lastErr = "";
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    log(`  - Pull attempt ${attempt}/${maxAttempts}...`);
+    const res = spawnSync("docker", ["compose", "-f", composePath, "pull"], {
+      env,
+      encoding: "utf8",
+      timeout: 180000,
+    });
+    if (res.status === 0) {
+      return { success: true };
+    }
+    lastErr = res.stderr || res.stdout || "Unknown error";
+    if (attempt < maxAttempts) {
+      const delaySec = attempt === 1 ? 2 : 5;
+      log(`    ⚠️ Pull failed (attempt ${attempt}). Retrying in ${delaySec}s... Details: ${lastErr.slice(0, 100)}`);
+      execFileSync("sleep", [String(delaySec)]);
+    }
+  }
+  return { success: false, error: lastErr };
+}
 
-  if (logsDir) {
-    fs.mkdirSync(logsDir, { recursive: true });
+function probePort(containerIp: string, port: number, timeoutMs = 2000): Promise<boolean> {
+  return new Promise((resolve) => {
+    const socket = new net.Socket();
+    let resolved = false;
+
+    socket.setTimeout(timeoutMs);
+    socket.once("connect", () => {
+      if (!resolved) {
+        resolved = true;
+        socket.destroy();
+        resolve(true);
+      }
+    });
+    socket.once("timeout", () => {
+      if (!resolved) {
+        resolved = true;
+        socket.destroy();
+        resolve(false);
+      }
+    });
+    socket.once("error", () => {
+      if (!resolved) {
+        resolved = true;
+        socket.destroy();
+        resolve(false);
+      }
+    });
+
+    try {
+      socket.connect(port, containerIp);
+    } catch {
+      resolve(false);
+    }
+  });
+}
+
+export async function runSmokeTests() {
+  const cli = parseCliArgs(process.argv);
+
+  if (!isDockerAvailable()) {
+    console.error("❌ Docker and Docker Compose must be installed and running.");
+    process.exit(1);
   }
 
   let targetApps: string[] = [];
-  if (appArg) {
-    targetApps = appArg
+
+  if (cli.appArg) {
+    const requested = cli.appArg
       .split(",")
       .map((a) => a.trim())
       .filter(Boolean);
-  } else if (all) {
+    for (const app of requested) {
+      if (fs.existsSync(path.join(ROOT_DIR, "apps", app, "docker-compose.yml"))) {
+        targetApps.push(app);
+      } else {
+        console.warn(`Warning: app "${app}" not found under apps/`);
+      }
+    }
+  } else if (cli.changed) {
+    targetApps = getChangedApps(cli.baseRef || undefined);
+    if (targetApps.length === 0) {
+      console.log("ℹ️ No app changes detected via git diff. Nothing to smoke test.");
+      process.exit(0);
+    }
+    console.log(`Found ${targetApps.length} changed app(s): ${targetApps.join(", ")}`);
+  } else if (cli.all) {
     targetApps = getAllApps();
-  } else if (baseRef || changed) {
-    targetApps = getChangedApps(baseRef || "origin/main");
+  } else {
+    targetApps = getChangedApps(cli.baseRef || undefined);
+    if (targetApps.length === 0) {
+      console.log("No changed apps detected. Use --all to test the entire store.");
+      process.exit(0);
+    }
   }
 
-  if (shard) {
-    const beforeCount = targetApps.length;
-    targetApps = applySharding(targetApps, shard);
-    console.log(`Sharding applied (${shard}): testing ${targetApps.length} of ${beforeCount} apps.`);
+  if (cli.shard) {
+    const totalBefore = targetApps.length;
+    targetApps = applySharding(targetApps, cli.shard);
+    console.log(
+      `⚖️ Shard ${cli.shard} (weighted): selected ${targetApps.length} of ${totalBefore} app(s): ${targetApps.join(", ")}`,
+    );
   }
 
   if (targetApps.length === 0) {
-    console.log("No apps selected for Docker Smoke Test. All clear!");
-    return;
+    console.log("No apps to test in current selection.");
+    process.exit(0);
   }
 
-  console.log(`Target apps (${targetApps.length}): ${targetApps.join(", ")}`);
+  console.log(`\n🚀 Starting Docker Smoke Tests for ${targetApps.length} app(s)...`);
 
   const results: AppTestResult[] = [];
-
-  if (!isDockerAvailable()) {
-    console.warn("⚠️ Docker / Docker Compose is not available in this environment.");
-    console.warn("Skipping container live-execution smoke test (syntax validated in unit test suite).");
-    for (const appId of targetApps) {
-      results.push({
-        appId,
-        status: "SUCCESS",
-        durationSeconds: 0,
-        details: "Skipped live container (no docker CLI in local environment)",
-      });
-    }
-    writeReports(results, reportJson, reportMd);
-    return;
-  }
-
   let upCount = 0;
+
+  let prefetchProcess: ChildProcess | null = null;
+  let prefetchedAppId: string | null = null;
 
   for (let idx = 0; idx < targetApps.length; idx++) {
     const appId = targetApps[idx];
     const composePath = path.join(ROOT_DIR, "apps", appId, "docker-compose.yml");
-    const logFilePath = logsDir ? path.join(logsDir, `${appId}.log`) : undefined;
+    const configPath = path.join(ROOT_DIR, "apps", appId, "config.json");
+    const projectName = `smoke-${appId}`;
+    const logFilePath = cli.logsDir ? path.join(cli.logsDir, `${appId}.log`) : undefined;
     const logLines: string[] = [];
     const startTime = Date.now();
 
@@ -402,7 +524,7 @@ export function runSmokeTests(): void {
 
     // 1. Validate syntax and variables with docker compose config
     log("[1/3] Validating Docker Compose configuration...");
-    const configRes = spawnSync("docker", ["compose", "-f", composePath, "config"], {
+    const configRes = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "config"], {
       env,
       encoding: "utf8",
     });
@@ -422,7 +544,7 @@ export function runSmokeTests(): void {
     log("  ✓ Syntax and variable interpolation valid.");
 
     // Check skip list
-    if (!forceAll && SKIP_CONTAINER_STARTUP.has(appId)) {
+    if (!cli.forceAll && SKIP_CONTAINER_STARTUP.has(appId)) {
       log(`  ℹ App "${appId}" is in resource-heavy/hardware bypass list. Skipping live container startup.`);
       results.push({
         appId,
@@ -435,8 +557,8 @@ export function runSmokeTests(): void {
       continue;
     }
 
-    if (upCount >= maxUp) {
-      log(`  ℹ Reached maximum live container limit (${maxUp}). Syntax validated.`);
+    if (upCount >= cli.maxUp) {
+      log(`  ℹ Reached maximum live container limit (${cli.maxUp}). Syntax validated.`);
       results.push({
         appId,
         status: "SUCCESS",
@@ -448,20 +570,22 @@ export function runSmokeTests(): void {
       continue;
     }
 
-    // 2. Pull images
-    log("[2/3] Pulling images...");
-    const pullRes = spawnSync("docker", ["compose", "-f", composePath, "pull"], {
-      env,
-      encoding: "utf8",
-    });
-    if (pullRes.status !== 0) {
+    // 2. Pull images with retry
+    log("[2/3] Pulling images (with backoff & prefetch check)...");
+    if (prefetchedAppId === appId && prefetchProcess) {
+      log(`  ℹ Prefetch background worker active for ${appId}. Awaiting completion...`);
+      spawnSync("sleep", ["1"]);
+    }
+
+    const pullRes = pullImagesWithRetry(composePath, env, log);
+    if (!pullRes.success) {
       log(`❌ docker compose pull failed for app "${appId}":`);
-      log(pullRes.stderr || pullRes.stdout || "");
+      log(pullRes.error || "");
       results.push({
         appId,
         status: "PULL_FAILED",
         durationSeconds: (Date.now() - startTime) / 1000,
-        details: (pullRes.stderr || "").slice(0, 200),
+        details: (pullRes.error || "").slice(0, 200),
         logFile: logFilePath,
       });
       saveLog(logFilePath, logLines);
@@ -469,32 +593,41 @@ export function runSmokeTests(): void {
     }
     log("  ✓ Images successfully pulled from registry.");
 
+    // Start background prefetch for next app (N+1 pipeline)
+    if (idx + 1 < targetApps.length) {
+      const nextAppId = targetApps[idx + 1];
+      const nextCompose = path.join(ROOT_DIR, "apps", nextAppId, "docker-compose.yml");
+      if (fs.existsSync(nextCompose) && (!SKIP_CONTAINER_STARTUP.has(nextAppId) || cli.forceAll)) {
+        const nextEnv = buildAppEnv(nextAppId);
+        prefetchedAppId = nextAppId;
+        try {
+          if (prefetchProcess) prefetchProcess.kill();
+        } catch {
+          // ignore
+        }
+        prefetchProcess = spawn("docker", ["compose", "-f", nextCompose, "pull", "--quiet"], {
+          env: nextEnv,
+          stdio: "ignore",
+        });
+      }
+    }
+
     // 3. Up in background and monitor
-    log(`[3/3] Starting container(s) and verifying health (max wait ${waitSec}s)...`);
+    log(`[3/3] Starting container(s) and verifying health (max wait ${cli.waitSec}s)...`);
     upCount++;
     let testSuccess = true;
     let failureDetail = "";
+    let portWarning = false;
 
     try {
-      const upRes = spawnSync("docker", ["compose", "-f", composePath, "up", "-d"], {
+      const upRes = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "up", "-d"], {
         env,
         encoding: "utf8",
+        timeout: 90000, // 90s max per up command
       });
       if (upRes.status !== 0) {
         log(`❌ docker compose up failed for app "${appId}":`);
         log(upRes.stderr || upRes.stdout || "");
-        try {
-          const logsRes = spawnSync("docker", ["compose", "-f", composePath, "logs", "--tail=50"], {
-            env,
-            encoding: "utf8",
-          });
-          if (logsRes.stdout || logsRes.stderr) {
-            log("\n--- Container logs at failure ---");
-            log(logsRes.stdout || logsRes.stderr || "");
-          }
-        } catch {
-          // ignore
-        }
         testSuccess = false;
         failureDetail = (upRes.stderr || "").slice(0, 200);
         results.push({
@@ -507,16 +640,15 @@ export function runSmokeTests(): void {
         continue;
       }
 
-      // Polling loop to wait for services to become running or healthy
+      // Polling loop
       const pollStart = Date.now();
       let lastLines: string[] = [];
-      let allReady = false;
 
-      while ((Date.now() - pollStart) / 1000 < waitSec) {
+      while ((Date.now() - pollStart) / 1000 < cli.waitSec) {
         execFileSync("sleep", ["2"]);
         const psOut = execFileSync(
           "docker",
-          ["compose", "-f", composePath, "ps", "--format", "{{.Service}}|{{.State}}|{{.ExitCode}}"],
+          ["compose", "-p", projectName, "-f", composePath, "ps", "--format", "{{.Service}}|{{.State}}|{{.ExitCode}}"],
           { env, encoding: "utf8" },
         );
         lastLines = psOut.trim().split("\n").filter(Boolean);
@@ -535,14 +667,8 @@ export function runSmokeTests(): void {
           }
         }
 
-        if (hasCrash) {
-          break;
-        }
-
-        if (allRunning && (Date.now() - pollStart) / 1000 >= 8) {
-          allReady = true;
-          break;
-        }
+        if (hasCrash) break;
+        if (allRunning && (Date.now() - pollStart) / 1000 >= 8) break;
       }
 
       for (const line of lastLines) {
@@ -555,12 +681,59 @@ export function runSmokeTests(): void {
         }
       }
 
+      // Inspect container restart count and probe port if container is running
+      if (testSuccess) {
+        const psIds = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "ps", "-q"], {
+          env,
+          encoding: "utf8",
+        });
+        const containerIds = (psIds.stdout || "").trim().split("\n").filter(Boolean);
+
+        for (const cid of containerIds) {
+          try {
+            const rawInspect = execFileSync("docker", ["inspect", cid], { encoding: "utf8" });
+            const parsed = JSON.parse(rawInspect)[0];
+            const restartCount = parsed?.RestartCount || 0;
+            if (restartCount > 0) {
+              testSuccess = false;
+              failureDetail = `Container ${parsed.Name} restarted ${restartCount} time(s) (restart loop detected)`;
+              log(`\n❌ Container ${parsed.Name} entered restart loop!`);
+              break;
+            }
+
+            // Probe internal_port on main container
+            if (testSuccess && fs.existsSync(configPath)) {
+              const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
+              const portToProbe = cfg.port;
+              const networks = parsed?.NetworkSettings?.Networks || {};
+              const firstNet = Object.values(networks)[0] as any;
+              const ipAddress = firstNet?.IPAddress;
+
+              if (ipAddress && portToProbe) {
+                const portResponded = await probePort(ipAddress, portToProbe, 2000);
+                if (portResponded) {
+                  log(`    ✓ Internal port ${portToProbe} actively listening on container bridge IP ${ipAddress}.`);
+                } else {
+                  portWarning = true;
+                  log(
+                    `    ⚠️ PORT_WARNING: Container healthy, but port ${portToProbe} did not respond during smoke test window (cold boot / internal TLS / background queue).`,
+                  );
+                }
+              }
+            }
+          } catch {
+            // ignore
+          }
+        }
+      }
+
       // Fetch container logs
       log(`\n--- Container Logs (${appId}) ---`);
-      const logsOut = execFileSync("docker", ["compose", "-f", composePath, "logs", "--tail", "200"], {
-        env,
-        encoding: "utf8",
-      });
+      const logsOut = execFileSync(
+        "docker",
+        ["compose", "-p", projectName, "-f", composePath, "logs", "--tail", "200"],
+        { env, encoding: "utf8" },
+      );
       log(logsOut || "(no output in container logs)");
 
       if (!testSuccess) {
@@ -570,6 +743,7 @@ export function runSmokeTests(): void {
           durationSeconds: (Date.now() - startTime) / 1000,
           details: failureDetail,
           logFile: logFilePath,
+          portWarning,
         });
       } else {
         log("  ✓ Container(s) verified running without crashloops.");
@@ -579,6 +753,7 @@ export function runSmokeTests(): void {
           durationSeconds: (Date.now() - startTime) / 1000,
           details: lastLines.join(", "),
           logFile: logFilePath,
+          portWarning,
         });
       }
     } catch (err) {
@@ -591,18 +766,24 @@ export function runSmokeTests(): void {
         logFile: logFilePath,
       });
     } finally {
-      log("  Cleaning up container(s)...");
-      spawnSync("docker", ["compose", "-f", composePath, "down", "-v", "--remove-orphans"], {
-        env,
-        stdio: "ignore",
-      });
-
-      if (prune) {
-        log("  Pruning images to maintain free disk space...");
-        spawnSync("docker", ["compose", "-f", composePath, "down", "--rmi", "all"], {
+      log("  Cleaning up container(s) (instant teardown -t 0)...");
+      spawnSync(
+        "docker",
+        ["compose", "-p", projectName, "-f", composePath, "down", "-v", "--remove-orphans", "-t", "0"],
+        {
           env,
           stdio: "ignore",
-        });
+        },
+      );
+
+      // Selective disk management: prune only if free disk falls below 10 GB
+      if (cli.prune || getAvailableDiskSpaceGb() < 10) {
+        log("  Free disk space < 10GB. Pruning old unused images...");
+        try {
+          execFileSync("docker", ["image", "prune", "-a", "-f", "--filter", "until=2h"], { stdio: "ignore" });
+        } catch {
+          // ignore
+        }
       }
 
       const appDataDir = `/tmp/runtipi-smoke-data/${appId}`;
@@ -616,7 +797,7 @@ export function runSmokeTests(): void {
     }
   }
 
-  writeReports(results, reportJson, reportMd);
+  writeReports(results, cli.reportJson, cli.reportMd, cli.jsonFailures);
 
   const failedCount = results.filter(
     (r) =>
@@ -625,6 +806,7 @@ export function runSmokeTests(): void {
       r.status === "PULL_FAILED" ||
       r.status === "CONFIG_FAILED",
   ).length;
+
   if (failedCount > 0) {
     console.error(`\n❌ Smoke tests failed for ${failedCount} app(s).`);
     process.exit(1);
@@ -643,13 +825,42 @@ function saveLog(logFilePath: string | undefined, lines: string[]): void {
   }
 }
 
-function writeReports(results: AppTestResult[], reportJson?: string, reportMd?: string): void {
+function writeReports(
+  results: AppTestResult[],
+  reportJson?: string,
+  reportMd?: string,
+  jsonFailuresPath?: string,
+): void {
   if (reportJson) {
     try {
       fs.mkdirSync(path.dirname(reportJson), { recursive: true });
       fs.writeFileSync(reportJson, JSON.stringify(results, null, 2), "utf8");
     } catch (err) {
       console.warn(`Could not write JSON report to ${reportJson}:`, (err as Error).message);
+    }
+  }
+
+  if (jsonFailuresPath) {
+    try {
+      fs.mkdirSync(path.dirname(jsonFailuresPath), { recursive: true });
+      const failedApps = results
+        .filter(
+          (r) =>
+            r.status === "CRASHED" ||
+            r.status === "START_FAILED" ||
+            r.status === "PULL_FAILED" ||
+            r.status === "CONFIG_FAILED",
+        )
+        .map((r) => ({
+          appId: r.appId,
+          status: r.status,
+          duration: r.durationSeconds,
+          details: r.details,
+          logFile: r.logFile,
+        }));
+      fs.writeFileSync(jsonFailuresPath, JSON.stringify(failedApps, null, 2), "utf8");
+    } catch (err) {
+      console.warn(`Could not write JSON failures to ${jsonFailuresPath}:`, (err as Error).message);
     }
   }
 
@@ -674,7 +885,8 @@ function writeReports(results: AppTestResult[], reportJson?: string, reportMd?: 
         if (res.status === "SKIPPED_HARDWARE") icon = "ℹ️";
         else if (res.status !== "SUCCESS") icon = "❌";
 
-        md += `| \`${res.appId}\` | ${icon} ${res.status} | ${res.durationSeconds.toFixed(1)}s | ${res.details || "-"} |\n`;
+        const warnNote = res.portWarning ? " *(PORT_WARNING)*" : "";
+        md += `| \`${res.appId}\` | ${icon} ${res.status} | ${res.durationSeconds.toFixed(1)}s | ${(res.details || "-") + warnNote} |\n`;
       }
 
       fs.writeFileSync(reportMd, md, "utf8");

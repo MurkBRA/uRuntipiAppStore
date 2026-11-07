@@ -46,7 +46,7 @@
         },
         {
           "key": "CSRF_TRUSTED_ORIGINS",
-          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:8450,${ips_with_port}"
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:8450,http://${INTERNAL_IP}:${APP_PORT}"
         },
         {
           "key": "SITE_URL",
@@ -305,7 +305,7 @@
       "volumes": [
         {
           "hostPath": "${APP_DATA_DIR}/data/celery-beat",
-          "containerPath": "${APP_DATA_DIR}/beat/"
+          "containerPath": "/beat"
         }
       ],
       "dependsOn": {

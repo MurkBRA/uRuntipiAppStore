@@ -37,13 +37,6 @@
     },
     {
       "type": "text",
-      "label": "Ride The Lightning block explorer url",
-      "required": false,
-      "default": "default",
-      "env_variable": "BLOCK_EXPLORER_URL"
-    },
-    {
-      "type": "text",
       "label": "Lightning (LND) Node Host / IP",
       "required": false,
       "default": "lightning",

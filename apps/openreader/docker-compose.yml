@@ -24,7 +24,7 @@ services:
       - API_MODEL_NAME=kokoro
       - BASE_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
       - AUTH_SECRET=${APP_SEED}
-      - AUTH_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:3391,http://*.ts.net:3391,https://*.ts.net:3391,${ips_with_port}
+      - AUTH_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:3391,http://*.ts.net:3391,https://*.ts.net:3391,http://${INTERNAL_IP}:${APP_PORT}
       - USE_ANONYMOUS_AUTH_SESSIONS=true
       - TTS_PLAYBACK_TOKEN_SECRET=${APP_OPENREADER_PLAYBACK_SECRET}
       - COMPUTE_WORKER_HOST=0.0.0.0
