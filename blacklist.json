@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-11-07T12:33:14.863Z",
+  "generated_at": "2026-11-08T12:51:00.618Z",
   "stats": {
     "runtipi_official_total": 266,
     "umbrel_total_packages": 396,
@@ -1987,7 +1987,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/dgtlmoon/changedetection.io:0.60.10"
+        "ghcr.io/dgtlmoon/changedetection.io:0.70.2"
       ]
     },
     {
@@ -2080,7 +2080,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/code-server:4.144.0"
+        "lscr.io/linuxserver/code-server:4.145.2"
       ]
     },
     {
@@ -2377,7 +2377,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "jgraph/drawio:32.6.9"
+        "jgraph/drawio:32.6.10"
       ]
     },
     {
@@ -2770,7 +2770,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghostfolio/ghostfolio:3.97.0",
+        "ghostfolio/ghostfolio:3.98.0",
         "postgres:15.4-alpine",
         "redis:7-alpine"
       ]
@@ -2803,7 +2803,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "gladysassistant/gladys:v5.3.1"
+        "gladysassistant/gladys:v5.3.2"
       ]
     },
     {
@@ -2911,7 +2911,7 @@
       "available": true,
       "deprecated": true,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.24"
+        "lscr.io/linuxserver/grav:2.2.27"
       ]
     },
     {
@@ -2927,7 +2927,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.24"
+        "lscr.io/linuxserver/grav:2.2.27"
       ]
     },
     {
@@ -3102,7 +3102,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/homarr-labs/homarr:v2.10.1"
+        "ghcr.io/homarr-labs/homarr:v2.12.0"
       ]
     },
     {
@@ -3117,7 +3117,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/home-assistant/home-assistant:2026.10.4"
+        "ghcr.io/home-assistant/home-assistant:2026.11.0"
       ]
     },
     {
@@ -3323,7 +3323,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "joplin/server:3.7.3",
+        "joplin/server:3.7.4",
         "postgres:14.2"
       ]
     },
@@ -3621,7 +3621,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "svhd/logto:1.45.0",
+        "svhd/logto:1.46.0",
         "postgres:14"
       ]
     },
@@ -3654,7 +3654,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/maintainerr/maintainerr:3.31.0"
+        "ghcr.io/maintainerr/maintainerr:3.32.0"
       ]
     },
     {
@@ -4094,7 +4094,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "netdata/netdata:v2.12.2"
+        "netdata/netdata:v2.12.3"
       ]
     },
     {
@@ -4494,7 +4494,7 @@
         "ghcr.io/paperless-ngx/paperless-ngx:3.4.2",
         "redis:7",
         "postgres:17",
-        "gotenberg/gotenberg:8.39",
+        "gotenberg/gotenberg:8.40",
         "apache/tika:latest"
       ]
     },
@@ -4716,7 +4716,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "privatebin/nginx-fpm-alpine:2.1.0"
+        "privatebin/nginx-fpm-alpine:2.1.1"
       ]
     },
     {
@@ -5234,7 +5234,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "stirlingtools/stirling-pdf:3.2.2"
+        "stirlingtools/stirling-pdf:3.3.0"
       ]
     },
     {
@@ -5535,7 +5535,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "vikunja/vikunja:2.7.1",
+        "vikunja/vikunja:2.8.0",
         "postgres:14"
       ]
     },
@@ -5582,7 +5582,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/wekan/wekan:v12.94",
+        "ghcr.io/wekan/wekan:v12.99",
         "mongo:6"
       ]
     },
