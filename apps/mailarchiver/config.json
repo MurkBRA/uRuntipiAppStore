@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "mailarchiver",
   "description": "Mail Archiver delivers automated archiving of incoming and outgoing emails from multiple accounts. All email content and attachments are synchronized based on a schedule. The responsive UI is optimized for mobile and desktop use, is multilingual and responsive with dark mode. OpenID Connect (OIDC) can be configured for integration of external authentication services.",
-  "tipi_version": 2,
-  "version": "2610.1",
+  "tipi_version": 3,
+  "version": "2611.2",
   "categories": [
     "utilities",
     "data"
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501501069,
-  "updated_at": 1794005949393,
+  "updated_at": 1794237735432,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

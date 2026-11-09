@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "mattermost",
-      "image": "alexlack/mattermost-app:v12.0.1",
+      "image": "alexlack/mattermost-app:v12.0.2",
       "isMain": true,
       "internalPort": 8000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

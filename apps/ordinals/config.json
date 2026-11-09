@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "ordinals",
   "description": "Run your own index, block explorer, and command-line wallet for Ordinals. The app automatically connects to your Bitcoin node on Runtipi for trustless operation. Simply install the app and wait for Ordinals to index inscriptions and runes.",
-  "tipi_version": 2,
-  "version": "0.27.1",
+  "tipi_version": 3,
+  "version": "0.29.1",
   "categories": [
     "finance"
   ],
@@ -66,7 +66,7 @@
     "amd64"
   ],
   "created_at": 1792501504448,
-  "updated_at": 1794005949480,
+  "updated_at": 1794237735476,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

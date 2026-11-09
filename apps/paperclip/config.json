@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "paperclip",
   "description": "Paperclip is a self-hosted control center for running AI agents like a team. Create a company, set a goal, hire agents with roles and reporting lines, then review their plans, approve important decisions, and track their work from one dashboard. Use Paperclip to manage projects, tasks, budgets, routines, and activity history across different agent runtimes. It gives you an org chart, ticket system, cost controls, approvals, and audit logs so you can see what each agent did and why. Paperclip does not include an AI model by itself. To run agents, connect your own provider keys and tools, such as OpenAI, Anthropic/Claude, Codex, Cursor, Gemini, Hermes, OpenClaw, OpenCode, or other supported adapters. Provider usage may incur costs, so set budgets before letting agents run unattended. To use your Codex/ChatGPT or Claude Code subscription, you can use the OAuth login via Runtipi > Settings > Advanced > Terminal > App > Paperclip. To use API keys instead, configure your model providers by creating secrets like `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` with the appropriate API keys and assigning them to the agent or project.",
-  "tipi_version": 2,
-  "version": "2026.1023.0",
+  "tipi_version": 3,
+  "version": "2026.1106.0",
   "categories": [
     "ai"
   ],
@@ -15,6 +15,7 @@
   "author": "Paperclip Labs, Inc.",
   "source": "https://github.com/paperclipai/paperclip",
   "website": "https://paperclip.ing/",
+  "https": true,
   "uid": 1000,
   "gid": 1000,
   "form_fields": [
@@ -49,7 +50,7 @@
     "amd64"
   ],
   "created_at": 1792501504660,
-  "updated_at": 1794005949487,
+  "updated_at": 1794237735484,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

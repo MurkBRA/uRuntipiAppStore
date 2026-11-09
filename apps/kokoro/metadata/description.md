@@ -11,7 +11,7 @@ Its lightweight architecture ensures that Kokoro can be deployed even on less po
 ⚙️ The API is available at "<IP-DO-SERVIDOR>:8877", and the API documentation can be found at "<IP-DO-SERVIDOR>:8877/docs".
 
 ## Links
-- **Upstream Version**: `0.9.2`
+- **Upstream Version**: `0.10.0`
 - **Website**: https://huggingface.co/hexgrad/Kokoro-82M
 - **Source Repository**: https://github.com/remsky/Kokoro-FastAPI
 - **Support**: https://github.com/remsky/Kokoro-FastAPI/issues

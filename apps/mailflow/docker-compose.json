@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "mailflow",
-      "image": "ghcr.io/maathimself/mailflow-frontend:4.3.0",
+      "image": "ghcr.io/maathimself/mailflow-frontend:4.3.1",
       "isMain": true,
       "internalPort": 80,
       "stopGracePeriod": "1m",
@@ -22,7 +22,7 @@
     },
     {
       "name": "mailflow-backend",
-      "image": "ghcr.io/maathimself/mailflow-backend:4.3.0",
+      "image": "ghcr.io/maathimself/mailflow-backend:4.3.1",
       "stopGracePeriod": "1m",
       "environment": [
         {

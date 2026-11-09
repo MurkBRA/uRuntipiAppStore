@@ -11,7 +11,7 @@
 Note: Mattermost can be used locally within your network. However, if you want others outside your local network to access your server, you'll need to make it accessible on the public internet. If you have a domain name, you can set this up using the Cloudflare Tunnel or Nginx Proxy Manager apps in the Runtipi Apps Store.
 
 ## Links
-- **Upstream Version**: `12.0.1`
+- **Upstream Version**: `12.0.2`
 - **Website**: https://mattermost.com
 - **Source Repository**: https://github.com/mattermost/mattermost
 - **Support**: https://forum.mattermost.com/

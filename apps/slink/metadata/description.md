@@ -11,7 +11,7 @@ Beyond simple image hosting, Slink includes a powerful management system for use
 Slink is built around the idea of ownership and transparency. It avoids unnecessary complexity, focusing instead on reliability, performance, and user experience. Whether used to share creative work, manage internal visual assets, or store personal collections, Slink offers a clean and responsible way to host and share images with complete peace of mind.
 
 ## Links
-- **Upstream Version**: `1.14.5`
+- **Upstream Version**: `1.14.6`
 - **Website**: https://docs.slinkapp.io/
 - **Source Repository**: https://github.com/andrii-kryvoviaz/slink
 - **Support**: https://github.com/andrii-kryvoviaz/slink/issues

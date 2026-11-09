@@ -1,6 +1,6 @@
 services:
   ekko-studio:
-    image: ekkoye8888/hermes-web-ui:v0.8.17
+    image: ekkoye8888/hermes-web-ui:v0.8.19
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/home:/home/agent

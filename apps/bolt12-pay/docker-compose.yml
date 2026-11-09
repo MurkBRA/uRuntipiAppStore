@@ -1,6 +1,6 @@
 services:
   bolt12-pay:
-    image: alex71btc/bolt12-pay:0.3.20
+    image: alex71btc/bolt12-pay:0.3.23
     volumes:
       - ${APP_DATA_DIR}/data:/data
       - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro

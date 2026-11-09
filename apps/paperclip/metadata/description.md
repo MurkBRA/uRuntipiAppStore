@@ -8,7 +8,7 @@ Paperclip does not include an AI model by itself. To run agents, connect your ow
 To use your Codex/ChatGPT or Claude Code subscription, you can use the OAuth login via Runtipi > Settings > Advanced > Terminal > App > Paperclip. To use API keys instead, configure your model providers by creating secrets like `OPENAI_API_KEY` or `ANTHROPIC_API_KEY` with the appropriate API keys and assigning them to the agent or project.
 
 ## Links
-- **Upstream Version**: `2026.1023.0`
+- **Upstream Version**: `2026.1106.0`
 - **Website**: https://paperclip.ing/
 - **Source Repository**: https://github.com/paperclipai/paperclip
 - **Support**: https://github.com/paperclipai/paperclip/issues

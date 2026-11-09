@@ -22,7 +22,7 @@ RTL is a full function, device agnostic, web user interface to help manage light
 This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.15.16-beta`
+- **Upstream Version**: `0.15.17-beta`
 - **Website**: https://github.com/Ride-The-Lightning/RTL
 - **Source Repository**: https://github.com/Ride-The-Lightning/RTL
 - **Support**: https://github.com/Ride-The-Lightning/RTL/issues/new

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "bolt12-pay",
-      "image": "alex71btc/bolt12-pay:0.3.20",
+      "image": "alex71btc/bolt12-pay:0.3.23",
       "isMain": true,
       "internalPort": 8081,
       "addToMainNetwork": true,

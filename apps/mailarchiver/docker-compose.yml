@@ -1,6 +1,6 @@
 services:
   mailarchiver:
-    image: ghcr.io/s1t5/mailarchiver:2610.1
+    image: ghcr.io/s1t5/mailarchiver:2611.2
     volumes:
       - ${APP_DATA_DIR}/data/data-protection-keys:/app/DataProtection-Keys
       - ${APP_DATA_DIR}/data/appsettings.json:/app/appsettings.json

@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "ersatztv-legacy",
   "description": "ErsatzTV Legacy transforms your personal media library into custom live TV channels with IPTV, XMLTV guide data, channel scheduling, and browser playback.",
-  "tipi_version": 2,
-  "version": "26.11.6",
+  "tipi_version": 3,
+  "version": "26.12.0",
   "categories": [
     "media"
   ],
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501495546,
-  "updated_at": 1794005949222,
+  "updated_at": 1794237735351,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

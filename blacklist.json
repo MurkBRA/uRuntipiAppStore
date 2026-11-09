@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-11-08T12:51:00.618Z",
+  "generated_at": "2026-11-09T15:22:16.377Z",
   "stats": {
-    "runtipi_official_total": 266,
+    "runtipi_official_total": 267,
     "umbrel_total_packages": 396,
     "umbrel_active_packages": 370,
     "umbrel_disabled_packages": 26,
@@ -362,6 +362,7 @@
     "whisparr",
     "whoami",
     "whoogle-search",
+    "wiki-js",
     "wikijs",
     "windows",
     "wireguard",
@@ -2238,7 +2239,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/lissy93/dashy:4.9.15"
+        "ghcr.io/lissy93/dashy:4.9.17"
       ]
     },
     {
@@ -2362,7 +2363,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "amir20/dozzle:v11.4.1"
+        "amir20/dozzle:v11.4.2"
       ]
     },
     {
@@ -2770,7 +2771,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghostfolio/ghostfolio:3.98.0",
+        "ghostfolio/ghostfolio:3.99.0",
         "postgres:15.4-alpine",
         "redis:7-alpine"
       ]
@@ -2818,7 +2819,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "glanceapp/glance:v0.8.7"
+        "glanceapp/glance:v0.8.8"
       ]
     },
     {
@@ -2895,7 +2896,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/gramps-project/grampsweb:26.11.0"
+        "ghcr.io/gramps-project/grampsweb:26.11.2"
       ]
     },
     {
@@ -2911,7 +2912,7 @@
       "available": true,
       "deprecated": true,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.27"
+        "lscr.io/linuxserver/grav:2.2.28"
       ]
     },
     {
@@ -2927,7 +2928,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.27"
+        "lscr.io/linuxserver/grav:2.2.28"
       ]
     },
     {
@@ -4316,7 +4317,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.14"
+        "ollama/ollama:0.40.15"
       ]
     },
     {
@@ -4331,7 +4332,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.14"
+        "ollama/ollama:0.40.15"
       ]
     },
     {
@@ -4346,7 +4347,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.14"
+        "ollama/ollama:0.40.15"
       ]
     },
     {
@@ -5250,7 +5251,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/suwayomi/tachidesk:v2.4.2476"
+        "ghcr.io/suwayomi/tachidesk:v2.4.2490"
       ]
     },
     {
@@ -5440,7 +5441,7 @@
       "images": [
         "bbilly1/tubearchivist:v0.6.0",
         "redislabs/rejson:latest",
-        "elasticsearch:8.19.0"
+        "elasticsearch:9.5.5"
       ]
     },
     {
@@ -5551,7 +5552,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "bellamy/wallos:5.10.4"
+        "bellamy/wallos:5.11.1"
       ]
     },
     {
@@ -5582,7 +5583,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/wekan/wekan:v12.99",
+        "ghcr.io/wekan/wekan:v13.01",
         "mongo:6"
       ]
     },
@@ -5633,9 +5634,9 @@
       ]
     },
     {
-      "id": "wikijs",
-      "name": "WikiJS",
-      "port": 8148,
+      "id": "wiki-js",
+      "name": "Wiki.js",
+      "port": 18148,
       "categories": [
         "media"
       ],
@@ -5643,6 +5644,22 @@
       "website": "https://js.wiki/",
       "available": true,
       "deprecated": false,
+      "images": [
+        "ghcr.io/requarks/wiki:3.0.2",
+        "postgres:18-alpine"
+      ]
+    },
+    {
+      "id": "wikijs",
+      "name": "WikiJS (old)",
+      "port": 8148,
+      "categories": [
+        "media"
+      ],
+      "source": "https://github.com/requarks/wiki",
+      "website": "https://js.wiki/",
+      "available": true,
+      "deprecated": true,
       "images": [
         "ghcr.io/requarks/wiki:2.5.317",
         "postgres:11-alpine"
@@ -5771,7 +5788,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/diced/zipline:4.8.2",
+        "ghcr.io/diced/zipline:4.8.3",
         "postgres:18"
       ]
     }
@@ -6796,6 +6813,10 @@
     {
       "port": 18083,
       "runtipi_id": "emqx"
+    },
+    {
+      "port": 18148,
+      "runtipi_id": "wiki-js"
     },
     {
       "port": 18161,

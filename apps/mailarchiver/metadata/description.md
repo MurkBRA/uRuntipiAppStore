@@ -42,7 +42,7 @@ Provided credentials need to be changed on first login. Users, accounts etc. may
 - **Password**: `secure123!`
 
 ## Links
-- **Upstream Version**: `2610.1`
+- **Upstream Version**: `2611.2`
 - **Website**: https://mail-archiver.org
 - **Source Repository**: https://github.com/s1t5/mail-archiver
 - **Support**: https://github.com/s1t5/mail-archiver/issues

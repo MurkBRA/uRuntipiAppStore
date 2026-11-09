@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "sv2-ui",
-      "image": "stratumv2/sv2-ui:v0.8.1",
+      "image": "stratumv2/sv2-ui:v0.8.2",
       "isMain": true,
       "internalPort": 8080,
       "addToMainNetwork": true,

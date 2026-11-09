@@ -1,6 +1,6 @@
 services:
   ordinals:
-    image: nmfretz/ord:0.27.1
+    image: nmfretz/ord:0.29.1
     command: ord server --http
     volumes:
       - ${APP_DATA_DIR}/data/ord:/var/lib/ord

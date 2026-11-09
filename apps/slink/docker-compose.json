@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "slink",
-      "image": "anirdev/slink:v1.14.5",
+      "image": "anirdev/slink:v1.14.6",
       "isMain": true,
       "internalPort": 3000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

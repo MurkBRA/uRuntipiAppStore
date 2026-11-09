@@ -1,6 +1,6 @@
 services:
   super-productivity:
-    image: johannesjo/super-productivity:v19.3.1
+    image: johannesjo/super-productivity:v20.0.0
     x-runtipi:
       internal_port: 80
       is_main: true

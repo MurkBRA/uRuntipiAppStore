@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "ordinals",
-      "image": "nmfretz/ord:0.27.1",
+      "image": "nmfretz/ord:0.29.1",
       "isMain": true,
       "internalPort": 80,
       "addToMainNetwork": true,

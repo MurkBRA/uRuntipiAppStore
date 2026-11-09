@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "wavelog",
   "description": "⚠️ See below for important set-up instructions.",
-  "tipi_version": 2,
-  "version": "3.2.4",
+  "tipi_version": 3,
+  "version": "3.2.5",
   "categories": [
     "social"
   ],
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1792501512533,
-  "updated_at": 1794005949721,
+  "updated_at": 1794237735577,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -18,7 +18,7 @@
 This ensures that the app will connect to the correct database and function properly.
 
 ## Links
-- **Upstream Version**: `3.2.4-patch.1`
+- **Upstream Version**: `3.2.5`
 - **Website**: https://www.wavelog.org
 - **Source Repository**: https://github.com/wavelog/wavelog
 - **Support**: https://github.com/wavelog/wavelog/issues

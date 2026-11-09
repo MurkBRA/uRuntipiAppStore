@@ -1,6 +1,6 @@
 services:
   sv2-ui:
-    image: stratumv2/sv2-ui:v0.8.1
+    image: stratumv2/sv2-ui:v0.8.2
     volumes:
       - ${APP_DATA_DIR}/data/docker:/var/run
       - ${APP_DATA_DIR}/data/config:/app/data/config

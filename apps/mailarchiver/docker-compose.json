@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "mailarchiver",
-      "image": "ghcr.io/s1t5/mailarchiver:2610.1",
+      "image": "ghcr.io/s1t5/mailarchiver:2611.2",
       "isMain": true,
       "internalPort": 5000,
       "volumes": [

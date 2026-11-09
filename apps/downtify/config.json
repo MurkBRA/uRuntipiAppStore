@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "downtify",
   "description": "Downtify allows you to download music by copy-pasting the Spotify link for a song, album, etc. The songs are downloaded from YouTube, along with album art, lyrics, and other metadata about the songs. As soon as your downloads are complete you will be notified!",
-  "tipi_version": 3,
-  "version": "3.9.0",
+  "tipi_version": 4,
+  "version": "3.10.0",
   "categories": [
     "media",
     "music"
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501494467,
-  "updated_at": 1794005949191,
+  "updated_at": 1794237735337,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

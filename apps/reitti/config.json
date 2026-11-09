@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "reitti",
   "description": "🗺️ Reitti is an application designed to monitor and record your movements in a comprehensive and automated way. It continuously tracks your location throughout the day and identifies the places you visit, creating a detailed log of your daily activities. By analyzing your movements, it can detect the mode of transportation you use, whether you are walking, cycling, or driving, and provides insights into how you travel between different locations.",
-  "tipi_version": 3,
-  "version": "5.9.1",
+  "tipi_version": 4,
+  "version": "5.10.0",
   "categories": [
     "photography",
     "utilities",
@@ -22,7 +22,7 @@
     "amd64"
   ],
   "created_at": 1792501506577,
-  "updated_at": 1794005949560,
+  "updated_at": 1794237735513,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

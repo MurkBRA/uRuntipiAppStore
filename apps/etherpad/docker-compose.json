@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "etherpad",
-      "image": "etherpad/etherpad:3.3.15",
+      "image": "etherpad/etherpad:3.3.16",
       "isMain": true,
       "internalPort": 9001,
       "user": "5001:0",

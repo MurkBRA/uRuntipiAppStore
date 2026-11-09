@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "core-lightning-rtl",
-      "image": "shahanafarooqui/rtl:v0.15.16",
+      "image": "shahanafarooqui/rtl:v0.15.17",
       "isMain": true,
       "internalPort": 3000,
       "addToMainNetwork": true,
