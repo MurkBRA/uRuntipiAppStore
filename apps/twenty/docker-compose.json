@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "twenty",
-      "image": "twentycrm/twenty:v2.50.1",
+      "image": "twentycrm/twenty:v2.57.1",
       "isMain": true,
       "internalPort": 3000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
@@ -61,7 +61,7 @@
     },
     {
       "name": "twenty-worker",
-      "image": "twentycrm/twenty:v2.50.1",
+      "image": "twentycrm/twenty:v2.57.1",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": [
         "yarn",

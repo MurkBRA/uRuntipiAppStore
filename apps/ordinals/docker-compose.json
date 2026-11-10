@@ -41,6 +41,10 @@
         {
           "key": "ORD_INDEX_RUNES",
           "value": "true"
+        },
+        {
+          "key": "ORD_COMMIT_INTERVAL",
+          "value": "100"
         }
       ],
       "volumes": [

@@ -1,6 +1,6 @@
 services:
   monetr:
-    image: ghcr.io/monetr/monetr:1.21.1
+    image: ghcr.io/monetr/monetr:1.22.0
     command:
       - serve
       - '--migrate'

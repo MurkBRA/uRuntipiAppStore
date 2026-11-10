@@ -9,7 +9,7 @@ Monetr provides tools to categorise transactions, track spending patterns and ma
 Through its design, monetr aims to make personal financial planning more predictable and less stressful by giving users a structured and transparent view of their finances.
 
 ## Links
-- **Upstream Version**: `1.21.1`
+- **Upstream Version**: `1.22.0`
 - **Website**: https://monetr.app/
 - **Source Repository**: https://github.com/monetr/monetr
 - **Support**: https://github.com/monetr/monetr/issues

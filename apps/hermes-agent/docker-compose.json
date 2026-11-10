@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "hermes-agent",
-      "image": "ghcr.io/getumbrel/hermes-agent-umbrel:v0.22.5-4",
+      "image": "ghcr.io/getumbrel/hermes-agent-umbrel:v0.23.0-2",
       "isMain": true,
       "internalPort": 18789,
       "stopGracePeriod": "1m",

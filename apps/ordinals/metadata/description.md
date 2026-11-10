@@ -8,11 +8,13 @@ Use the block explorer to view Ordinal inscriptions. Search blocks, transactions
 
 Advanced users can use the command line to create wallets, create and manage inscriptions, and more.
 
+You can adjust how often Ordinals saves progress while catching up with the Bitcoin blockchain. On Runtipi 2.0 or later, open Ordinals' Settings → Advanced → Environment variables and look for ORD_COMMIT_INTERVAL. We recommend leaving it at 100 blocks for most setups. Lower values save more often and can reduce memory use; higher values may improve speed but can use more memory. Applying a change restarts Ordinals and keeps your existing index.
+
 Optional indexes (Runtipi 2.0 or later): Open Ordinals' app settings, then Advanced → Environment variables. Address lookups, individual satoshi tracking and local inscription transaction storage are off by default. Select true for the features you want, or App default (off) to turn them off for your next index. Inscriptions and runes stay on.
 
 Rebuilding the Ordinals index (Runtipi 2.0 or later)
 
-Changing these options requires rebuilding the index, even if indexing has not finished. Rebuilding starts from scratch and may take several days. Saving a setting and restarting alone will keep the existing index.
+Changing the optional indexes requires rebuilding the index, even if indexing has not finished. Rebuilding starts from scratch and may take several days. Saving a setting and restarting alone will keep the existing index.
 
 1. Right-click Ordinals on your home screen and choose Settings → Advanced → Environment variables. Choose your options, click Apply and restart, and wait for the restart to finish.
 
@@ -31,7 +33,7 @@ Disclaimer: The Ordinals app does not control, filter, or moderate the content h
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.29.1`
+- **Upstream Version**: `0.29.1-patch.1`
 - **Website**: https://ordinals.com/
 - **Source Repository**: https://github.com/casey/ord
 - **Support**: https://discord.gg/ordinals

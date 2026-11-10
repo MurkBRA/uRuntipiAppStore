@@ -17,7 +17,7 @@ Key features include:
 Gupt is fully client-side with no backend — it connects directly to public or private Nostr relays. Your keys, your messages, your privacy.
 
 ## Links
-- **Upstream Version**: `5.1.2`
+- **Upstream Version**: `5.2.1`
 - **Website**: https://github.com/besoeasy/gupt
 - **Source Repository**: https://github.com/besoeasy/gupt
 - **Support**: https://github.com/besoeasy/gupt/issues

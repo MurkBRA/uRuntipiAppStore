@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "silo",
   "description": "Silo is a community-maintained, open-source object storage server with an S3-compatible API and a full web console. Organize files in buckets, upload and download objects, and manage access keys and policies from your browser.",
-  "tipi_version": 2,
-  "version": "RELEASE.2026-10-26T00-00-00Z",
+  "tipi_version": 3,
+  "version": "RELEASE.2026-11-09T00-00-00Z",
   "categories": [
     "utilities",
     "data"
@@ -41,7 +41,7 @@
     "amd64"
   ],
   "created_at": 1792501508756,
-  "updated_at": 1794005949614,
+  "updated_at": 1794320761556,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }
