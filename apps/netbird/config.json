@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "netbird",
   "description": "NetBird is a secure networking platform that creates private, peer-to-peer connections between devices using encrypted communication channels. It builds a trusted network layer that allows seamless and direct communication without exposing data to intermediaries. Every connection is protected with modern encryption standards and managed automatically through a zero trust security model that authenticates identities rather than networks.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "1.27",
   "categories": [
     "network",
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501502864,
-  "updated_at": 1794005949434,
+  "updated_at": 1794404410802,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

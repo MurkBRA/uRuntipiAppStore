@@ -34,7 +34,7 @@ GitLab is your all-in-one DevOps platform, empowering your team to build, deploy
 - **SSH Port**: `2424` (mapped to container port `22`)
 
 ## Links
-- **Upstream Version**: `19.5.3`
+- **Upstream Version**: `19.5.4`
 - **Website**: https://about.gitlab.com
 - **Source Repository**: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/master/docker
 - **Support**: https://gitlab.com/gitlab-org/omnibus-gitlab/-/issues

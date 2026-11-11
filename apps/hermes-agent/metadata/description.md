@@ -19,7 +19,7 @@ Hermes Agent runs inside the Runtipi app sandbox, so it can work freely inside i
   - **Manage it from the dashboard** - Configure settings, review activity, and monitor the agent from your browser.
 
 ## Links
-- **Upstream Version**: `0.23.0`
+- **Upstream Version**: `0.23.1`
 - **Website**: https://hermes-agent.nousresearch.com
 - **Source Repository**: https://github.com/NousResearch/hermes-agent
 - **Support**: https://github.com/NousResearch/hermes-agent/issues

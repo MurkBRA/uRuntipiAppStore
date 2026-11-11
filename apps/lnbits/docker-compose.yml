@@ -1,6 +1,6 @@
 services:
   lnbits:
-    image: lnbits/lnbits:v1.6.2
+    image: lnbits/lnbits:v1.7.0
     volumes:
       - ${APP_DATA_DIR}/data:/data
       - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro

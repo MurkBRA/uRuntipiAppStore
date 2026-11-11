@@ -16,7 +16,7 @@
     },
     {
       "name": "netbird-app",
-      "image": "ghcr.io/netbirdio/netbird:0.82.0-rootless",
+      "image": "ghcr.io/netbirdio/netbird:0.82.1-rootless",
       "networkMode": "host",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "volumes": [
@@ -29,6 +29,29 @@
         "NET_ADMIN",
         "SYS_ADMIN",
         "SYS_RESOURCE"
+      ]
+    },
+    {
+      "name": "netbird-status",
+      "image": "ghcr.io/netbirdio/netbird:0.82.1-rootless",
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
+      "command": [
+        "trap 'exit 0' TERM INT\nwhile true; do\n  if netbird status --json 2>/dev/null | grep -q '\"daemonStatus\": *\"Connected\"' \\\n    && ! grep -q '\"status\":\"connected\"' /www/status.json 2>/dev/null; then\n    echo '{\"status\":\"connected\",\"message\":\"Connected to NetBird\"}' > /www/status.json.tmp\n    mv -f /www/status.json.tmp /www/status.json\n  fi\n  sleep 5 & wait $$!\ndone\n"
+      ],
+      "entrypoint": [
+        "/bin/bash",
+        "-c"
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/app_data",
+          "containerPath": "/var/lib/netbird",
+          "readOnly": true
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/www",
+          "containerPath": "/www"
+        }
       ]
     }
   ]

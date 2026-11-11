@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-11-10T14:26:01.396Z",
+  "generated_at": "2026-11-11T13:40:08.251Z",
   "stats": {
     "runtipi_official_total": 267,
     "umbrel_total_packages": 396,
@@ -1609,7 +1609,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "activepieces/activepieces:0.92.3",
+        "activepieces/activepieces:0.93.0",
         "postgres:14",
         "redis:7"
       ]
@@ -1942,7 +1942,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "budibase/budibase:v3.50.0"
+        "budibase/budibase:v3.51.0"
       ]
     },
     {
@@ -2488,8 +2488,8 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "emqx/emqx:6.3.2",
-        "emqx/emqx:6.3.2"
+        "emqx/emqx:6.3.3",
+        "emqx/emqx:6.3.3"
       ]
     },
     {
@@ -2912,7 +2912,7 @@
       "available": true,
       "deprecated": true,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.28"
+        "lscr.io/linuxserver/grav:2.2.29"
       ]
     },
     {
@@ -2928,7 +2928,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.28"
+        "lscr.io/linuxserver/grav:2.2.29"
       ]
     },
     {
@@ -3178,7 +3178,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "b4bz/homer:v26.08.3"
+        "b4bz/homer:v26.11.2"
       ]
     },
     {
@@ -3194,8 +3194,8 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/immich-app/immich-server:v3.3.6",
-        "ghcr.io/immich-app/immich-machine-learning:v3.3.6",
+        "ghcr.io/immich-app/immich-server:v3.4.0",
+        "ghcr.io/immich-app/immich-machine-learning:v3.4.0",
         "redis:6.2",
         "ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0"
       ]
@@ -3576,7 +3576,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/linkwarden/linkwarden:v2.16.3",
+        "ghcr.io/linkwarden/linkwarden:v2.17.0",
         "postgres:16-alpine"
       ]
     },
@@ -3687,7 +3687,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "matrixconduit/matrix-conduit:v0.10.15"
+        "matrixconduit/matrix-conduit:v0.10.16"
       ]
     },
     {
@@ -3780,7 +3780,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "metabase/metabase:v0.65.3"
+        "metabase/metabase:v0.65.4"
       ]
     },
     {
@@ -4047,7 +4047,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "n8nio/n8n:2.47.2",
+        "n8nio/n8n:2.48.1",
         "postgres:18",
         "bash:5.3.20"
       ]
@@ -4317,7 +4317,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.15"
+        "ollama/ollama:0.40.16"
       ]
     },
     {
@@ -4332,7 +4332,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.15"
+        "ollama/ollama:0.40.16"
       ]
     },
     {
@@ -4347,7 +4347,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.15"
+        "ollama/ollama:0.40.16"
       ]
     },
     {
@@ -4362,7 +4362,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "1dev/server:17.1.2",
+        "1dev/server:17.2.0",
         "postgres:14"
       ]
     },
@@ -4378,7 +4378,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/open-webui/open-webui:v0.13.0"
+        "ghcr.io/open-webui/open-webui:v0.13.3"
       ]
     },
     {
@@ -4985,7 +4985,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "semaphoreui/semaphore:v2.19.17",
+        "semaphoreui/semaphore:v2.20.23",
         "postgres:14"
       ]
     },
@@ -5330,7 +5330,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/tautulli:2.18.2"
+        "lscr.io/linuxserver/tautulli:2.19.1"
       ]
     },
     {
@@ -5424,7 +5424,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/triliumnext/trilium:v0.106.1"
+        "ghcr.io/triliumnext/trilium:v0.107.0"
       ]
     },
     {
@@ -5583,7 +5583,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/wekan/wekan:v13.01",
+        "ghcr.io/wekan/wekan:v13.06",
         "mongo:6"
       ]
     },
@@ -5645,7 +5645,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/requarks/wiki:3.0.2",
+        "ghcr.io/requarks/wiki:3.3.1",
         "postgres:18-alpine"
       ]
     },
@@ -5661,7 +5661,7 @@
       "available": true,
       "deprecated": true,
       "images": [
-        "ghcr.io/requarks/wiki:2.5.317",
+        "ghcr.io/requarks/wiki:3.3.1",
         "postgres:11-alpine"
       ]
     },

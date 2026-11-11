@@ -11,7 +11,7 @@ LNbits is packaged with tools to help manage funds, such as a table of transacti
 This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `1.6.2`
+- **Upstream Version**: `1.7.0`
 - **Website**: https://github.com/lnbits/lnbits-legend
 - **Source Repository**: https://github.com/lnbits/lnbits-legend
 - **Support**: https://t.me/lnbits

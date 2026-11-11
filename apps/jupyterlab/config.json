@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "jupyterlab",
   "description": "JupyterLab is a next-generation web-based user interface for Project Jupyter.",
-  "tipi_version": 2,
-  "version": "lab-4.6.5",
+  "tipi_version": 3,
+  "version": "lab-4.6.6",
   "categories": [
     "development"
   ],
@@ -40,7 +40,7 @@
     "amd64"
   ],
   "created_at": 1792501498815,
-  "updated_at": 1794005949323,
+  "updated_at": 1794404410760,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

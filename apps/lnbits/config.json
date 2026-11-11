@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "lnbits",
   "description": "LNbits is a simple multi-user and account system for Lightning Network that can be used for creating separate Lightning wallets for friends and family members. You can also create multiple accounts for yourself to mitigate the risk of exposing applications to your full balance via unique API keys for each wallet.",
-  "tipi_version": 2,
-  "version": "1.6.2",
+  "tipi_version": 3,
+  "version": "1.7.0",
   "categories": [
     "finance"
   ],
@@ -51,7 +51,7 @@
     "amd64"
   ],
   "created_at": 1792501500430,
-  "updated_at": 1794005949379,
+  "updated_at": 1794404410780,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

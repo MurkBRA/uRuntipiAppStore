@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "calibre-web-automated",
+      "image": "crocodilestick/calibre-web-automated:v4.0.8",
+      "isMain": true,
+      "internalPort": 8083,
+      "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "PUID",
+          "value": "1000"
+        },
+        {
+          "key": "PGID",
+          "value": "1000"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/config"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/book-ingest",
+          "containerPath": "/cwa-book-ingest"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/calibre-library",
+          "containerPath": "/calibre-library"
+        }
+      ]
+    }
+  ]
+}

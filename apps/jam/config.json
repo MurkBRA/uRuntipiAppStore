@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "jam",
   "description": "⚠️ Compatibility Notice: Jam is not yet compatible with Bitcoin Core v30 or any Bitcoin node version/implementation that has fully removed legacy bdb wallet support. If you are running the Bitcoin Node app alongside Jam, you can still use Jam by pinning the Bitcoin Core version to v29.2 in your Bitcoin Node app. See instructions in the following GitHub comment: https://github.com/joinmarket-webui/jam/issues/983#issuecomment-3437241631",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "v0.4.1-clientserver-v0.9.11",
   "categories": [
     "finance"
@@ -65,7 +65,7 @@
     "amd64"
   ],
   "created_at": 1792501498620,
-  "updated_at": 1794005949314,
+  "updated_at": 1794404410754,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

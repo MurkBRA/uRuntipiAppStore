@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "lnbits",
-      "image": "lnbits/lnbits:v1.6.2",
+      "image": "lnbits/lnbits:v1.7.0",
       "isMain": true,
       "internalPort": 3007,
       "addToMainNetwork": true,

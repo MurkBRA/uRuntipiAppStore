@@ -39,9 +39,11 @@
           "containerPath": "/var/run"
         }
       ],
-      "dependsOn": [
-        "arcane-docker"
-      ]
+      "dependsOn": {
+        "arcane-docker": {
+          "condition": "service_healthy"
+        }
+      }
     },
     {
       "name": "arcane-docker",
@@ -66,7 +68,14 @@
           "hostPath": "${APP_DATA_DIR}/data/docker",
           "containerPath": "/data"
         }
-      ]
+      ],
+      "healthCheck": {
+        "test": "docker --host unix:///data/docker.sock version",
+        "interval": "5s",
+        "timeout": "10s",
+        "retries": 6,
+        "startPeriod": "5m"
+      }
     }
   ]
 }

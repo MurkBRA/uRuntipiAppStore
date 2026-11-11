@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "homehub",
-      "image": "ghcr.io/surajverma/homehub:0.6.0",
+      "image": "ghcr.io/surajverma/homehub:0.7.0",
       "isMain": true,
       "internalPort": 5000,
       "environment": [

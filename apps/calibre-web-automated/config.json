@@ -1,0 +1,28 @@
+{
+  "name": "Calibre-Web Automated",
+  "available": true,
+  "port": 24060,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "calibre-web-automated",
+  "description": "Calibre-Web Automated combines Calibre-Web with automated e-book ingest, conversion, metadata management, and library tools.",
+  "tipi_version": 1,
+  "version": "v4.0.8",
+  "categories": [
+    "books",
+    "utilities",
+    "data"
+  ],
+  "short_desc": "An automated, all-in-one e-book library",
+  "author": "Crocodile Sticks",
+  "source": "https://github.com/crocodilestick/Calibre-Web-Automated",
+  "website": "https://github.com/crocodilestick/Calibre-Web-Automated",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1794404350652,
+  "updated_at": 1794404410652,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

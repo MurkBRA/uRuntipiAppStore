@@ -34,7 +34,7 @@ Add Murmur to your phone's home screen and it feels like a native app. There's a
 Call your agents to talk out loud, with voices on your Runtipi, on your ChatGPT plan, or from OpenAI or ElevenLabs. Calls need a secure connection, so Murmur reopens itself over https when you start. Reading replies aloud works everywhere.
 
 ## Links
-- **Upstream Version**: `0.12.0`
+- **Upstream Version**: `0.13.0`
 - **Website**: https://umbrel.com
 - **Source Repository**: https://github.com/getumbrel/murmur
 - **Support**: https://github.com/getumbrel/murmur/issues

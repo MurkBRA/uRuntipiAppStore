@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "homehub",
   "description": "HomeHub 🏡 is a thoughtfully designed web application that serves as a digital command center for families and shared households. Its main purpose is to simplify daily coordination and communication by combining essential household tools into one cohesive, easy-to-use platform. Instead of juggling multiple apps or handwritten lists, HomeHub offers an all-in-one environment where everything from chores and groceries to notes and shared expenses can be organized effortlessly.",
-  "tipi_version": 2,
-  "version": "0.6.0",
+  "tipi_version": 3,
+  "version": "0.7.0",
   "categories": [
     "books",
     "utilities",
@@ -31,7 +31,7 @@
     "amd64"
   ],
   "created_at": 1792501497942,
-  "updated_at": 1794005949295,
+  "updated_at": 1794404410744,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }
