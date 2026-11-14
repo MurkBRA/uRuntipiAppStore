@@ -1139,9 +1139,13 @@ export AFTER_IF="top_level_keyword if then fi"
       expect(torrcOut).toContain("SocksPolicy accept 192.168.0.0/16");
       expect(torrcOut).toContain("HiddenServicePort 5223 myapp:5223");
 
-      // Executable permission bit preserved
-      const destEntryStat = fs.statSync(path.join(destDir, "data", "entrypoint.sh"));
-      expect(destEntryStat.mode & 0o111).toBeGreaterThan(0);
+      // Executable permission bit preserved (NTFS on win32 does not track POSIX +x bits)
+      const destEntryPath = path.join(destDir, "data", "entrypoint.sh");
+      expect(fs.existsSync(destEntryPath)).toBe(true);
+      if (process.platform !== "win32") {
+        const destEntryStat = fs.statSync(destEntryPath);
+        expect(destEntryStat.mode & 0o111).toBeGreaterThan(0);
+      }
     } finally {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }
@@ -1266,8 +1270,23 @@ export AFTER_IF="top_level_keyword if then fi"
       expect(normalizeConfigForDiff({ ...baseCfg, tipi_version: 5, created_at: 1, updated_at: 2 })).toEqual(baseCfg);
       expect(areRenderedAppsSemanticallyEqual(appA, appB)).toBe(true);
 
-      // Flipping executable bit should break semantic equality
-      fs.chmodSync(path.join(appB, "data", "run.sh"), 0o644);
+      // Flipping executable bit should break semantic equality on POSIX filesystems
+      if (process.platform !== "win32") {
+        fs.chmodSync(path.join(appB, "data", "run.sh"), 0o644);
+        expect(areRenderedAppsSemanticallyEqual(appA, appB)).toBe(false);
+        fs.chmodSync(path.join(appB, "data", "run.sh"), 0o755);
+      }
+
+      // Data and compose diffs should break semantic equality on all platforms
+      fs.writeFileSync(path.join(appB, "data", "run.sh"), "#!/bin/sh\necho changed\n");
+      expect(areRenderedAppsSemanticallyEqual(appA, appB)).toBe(false);
+      fs.writeFileSync(path.join(appB, "data", "run.sh"), "#!/bin/sh\n");
+      if (process.platform !== "win32") {
+        fs.chmodSync(path.join(appB, "data", "run.sh"), 0o755);
+      }
+      expect(areRenderedAppsSemanticallyEqual(appA, appB)).toBe(true);
+
+      fs.writeFileSync(path.join(appB, "docker-compose.yml"), "services:\n  demo: {}\n");
       expect(areRenderedAppsSemanticallyEqual(appA, appB)).toBe(false);
 
       // Also verify generateReadme returns string cleanly without spurious rewrite

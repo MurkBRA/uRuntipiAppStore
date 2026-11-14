@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 import jsyaml from "js-yaml";
@@ -98,6 +99,20 @@ function collectFilesRecursive(dir: string): string[] {
     }
   }
   return results;
+}
+
+function expectExecutableBit(appId: string, relFile: string): void {
+  const filePath = path.join("./apps", appId, ...relFile.split("/"));
+  expect(fs.existsSync(filePath)).toBe(true);
+  if (process.platform === "win32") {
+    // NTFS does not track POSIX +x bits; verify the git index retains mode 100755 instead.
+    const gitRelPath = path.posix.join("apps", appId, relFile);
+    const staged = execFileSync("git", ["ls-files", "-s", "--", gitRelPath], { encoding: "utf8" }).trim();
+    expect(staged).toMatch(/^100755\s/);
+    return;
+  }
+  const entryStat = fs.statSync(filePath);
+  expect(entryStat.mode & 0o111).toBeGreaterThan(0);
 }
 
 function findUnboundEnvVars(content: string, declaredFormVars: Set<string>): string[] {
@@ -692,8 +707,7 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           const tplPath = path.join(appDir, "data", "nginx", "nginx.conf.template");
           expect(fs.existsSync(tplPath)).toBe(true);
           expect(fs.readFileSync(tplPath, "utf8")).toContain("agora-agora-sidecar:8080");
-          const entryStat = fs.statSync(path.join(appDir, "data", "entrypoint.sh"));
-          expect(entryStat.mode & 0o111).toBeGreaterThan(0);
+          expectExecutableBit(id, "data/entrypoint.sh");
         }
 
         if (id === "bassin") {
@@ -739,8 +753,7 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
           expect(dindSvc?.networkMode).toBe("host");
           expect(dindSvc?.privileged).toBe(true);
           expect(fs.existsSync(path.join(appDir, "data", "default-password"))).toBe(true);
-          const entryStat = fs.statSync(path.join(appDir, "data", "entrypoint.sh"));
-          expect(entryStat.mode & 0o111).toBeGreaterThan(0);
+          expectExecutableBit(id, "data/entrypoint.sh");
         }
 
         if (id === "simplexmq") {
