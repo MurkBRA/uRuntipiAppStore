@@ -70,7 +70,23 @@ function getAvailableDiskSpaceGb(): number {
   return 50;
 }
 
-function parseCliArgs(argv: string[]) {
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function pruneDockerDisk(log: (m: string) => void, aggressive = false): void {
+  try {
+    execFileSync("docker", ["image", "prune", "-af"], { stdio: "ignore" });
+    if (aggressive || getAvailableDiskSpaceGb() < 12) {
+      log("  Disk space still low (< 12GB). Running aggressive docker system prune...");
+      execFileSync("docker", ["system", "prune", "-af", "--volumes"], { stdio: "ignore" });
+    }
+  } catch {
+    // ignore
+  }
+}
+
+export function parseCliArgs(argv: string[]) {
   let baseRef = "";
   let appArg = "";
   let changed = false;
@@ -84,10 +100,13 @@ function parseCliArgs(argv: string[]) {
   let prune = false;
   let waitSec = 20;
   let forceAll = false;
+  let help = false;
 
   for (let i = 2; i < argv.length; i++) {
     const arg = argv[i];
-    if (arg.startsWith("--base=")) {
+    if (arg === "--help" || arg === "-h") {
+      help = true;
+    } else if (arg.startsWith("--base=")) {
       baseRef = arg.slice("--base=".length).trim();
     } else if (arg === "--base" && argv[i + 1]) {
       baseRef = argv[++i].trim();
@@ -138,11 +157,12 @@ function parseCliArgs(argv: string[]) {
     prune,
     waitSec,
     forceAll,
+    help,
   };
 }
 
-function getAllApps(): string[] {
-  const appsDir = path.join(ROOT_DIR, "apps");
+function getAllApps(rootDir = ROOT_DIR): string[] {
+  const appsDir = path.join(rootDir, "apps");
   if (!fs.existsSync(appsDir)) return [];
   return fs
     .readdirSync(appsDir, { withFileTypes: true })
@@ -152,17 +172,18 @@ function getAllApps(): string[] {
     .sort();
 }
 
-function getChangedApps(baseRef?: string): string[] {
+export function getChangedApps(baseRef?: string, rootDir = ROOT_DIR): string[] {
   const apps = new Set<string>();
 
   if (baseRef) {
     try {
       const diff = execFileSync("git", ["diff", "--name-only", `${baseRef}...HEAD`], {
+        cwd: rootDir,
         encoding: "utf8",
       });
-      for (const line of diff.split("\n")) {
+      for (const line of diff.split(/\r?\n/)) {
         const match = line.trim().match(/^apps\/([^/_]+)\//);
-        if (match && fs.existsSync(path.join(ROOT_DIR, "apps", match[1], "docker-compose.yml"))) {
+        if (match && fs.existsSync(path.join(rootDir, "apps", match[1], "docker-compose.yml"))) {
           apps.add(match[1]);
         }
       }
@@ -172,12 +193,17 @@ function getChangedApps(baseRef?: string): string[] {
   }
 
   try {
-    const status = execFileSync("git", ["status", "--porcelain", "apps/"], { encoding: "utf8" });
-    for (const line of status.split("\n")) {
-      const parts = line.trim().split(/\s+/);
-      const file = parts[parts.length - 1];
-      const match = file?.match(/^apps\/([^/_]+)\//);
-      if (match && fs.existsSync(path.join(ROOT_DIR, "apps", match[1], "docker-compose.yml"))) {
+    const status = execFileSync("git", ["status", "--porcelain", "-uall", "--", "apps/"], {
+      cwd: rootDir,
+      encoding: "utf8",
+    });
+    for (const line of status.split(/\r?\n/)) {
+      if (!line.trim()) continue;
+      const rawPath = line.replace(/^\s*[?!MADRCU]{1,2}\s+/, "").trim();
+      const targetPath = rawPath.includes(" -> ") ? rawPath.split(" -> ").pop()! : rawPath;
+      const cleanPath = targetPath.replace(/^"|"$/g, "");
+      const match = cleanPath.match(/^apps\/([^/_]+)\//);
+      if (match && fs.existsSync(path.join(rootDir, "apps", match[1], "docker-compose.yml"))) {
         apps.add(match[1]);
       }
     }
@@ -188,8 +214,8 @@ function getChangedApps(baseRef?: string): string[] {
   return Array.from(apps).sort();
 }
 
-function getAppWeight(appId: string): number {
-  const composePath = path.join(ROOT_DIR, "apps", appId, "docker-compose.yml");
+function getAppWeight(appId: string, rootDir = ROOT_DIR): number {
+  const composePath = path.join(rootDir, "apps", appId, "docker-compose.yml");
   if (!fs.existsSync(composePath)) return 1;
   try {
     const raw = fs.readFileSync(composePath, "utf8");
@@ -201,7 +227,7 @@ function getAppWeight(appId: string): number {
   }
 }
 
-function applySharding(apps: string[], shardStr: string): string[] {
+export function applySharding(apps: string[], shardStr: string, rootDir = ROOT_DIR): string[] {
   const match = shardStr.match(/^(\d+)\/(\d+)$/);
   if (!match) return apps;
   const shardIndex = Number.parseInt(match[1], 10);
@@ -209,7 +235,7 @@ function applySharding(apps: string[], shardStr: string): string[] {
   if (shardIndex < 1 || shardIndex > totalShards) return apps;
 
   // Weight-based Greedy Bin-Packing
-  const weighted = apps.map((app) => ({ app, weight: getAppWeight(app) }));
+  const weighted = apps.map((app) => ({ app, weight: getAppWeight(app, rootDir) }));
   weighted.sort((a, b) => b.weight - a.weight || a.app.localeCompare(b.app));
 
   const bins: Array<{ totalWeight: number; apps: string[] }> = Array.from({ length: totalShards }, () => ({
@@ -249,15 +275,20 @@ function makeScriptsExecutable(dir: string): void {
   }
 }
 
-function buildAppEnv(appId: string): Record<string, string> {
-  const configPath = path.join(ROOT_DIR, "apps", appId, "config.json");
+export function buildAppEnv(
+  appId: string,
+  options?: { rootDir?: string; dataBaseDir?: string },
+): Record<string, string> {
+  const rootDir = options?.rootDir ?? ROOT_DIR;
+  const dataBaseDir = options?.dataBaseDir ?? "/tmp/runtipi-smoke-data";
+  const configPath = path.join(rootDir, "apps", appId, "config.json");
   const config = fs.existsSync(configPath) ? JSON.parse(fs.readFileSync(configPath, "utf8")) : {};
 
-  const appDataDir = `/tmp/runtipi-smoke-data/${appId}`;
+  const appDataDir = path.join(dataBaseDir, appId);
   fs.mkdirSync(appDataDir, { recursive: true });
 
   // Copy real app data directory from repository so scripts, templates and configs exist
-  const repoDataDir = path.join(ROOT_DIR, "apps", appId, "data");
+  const repoDataDir = path.join(rootDir, "apps", appId, "data");
   if (fs.existsSync(repoDataDir)) {
     try {
       fs.cpSync(repoDataDir, path.join(appDataDir, "data"), { recursive: true });
@@ -267,8 +298,12 @@ function buildAppEnv(appId: string): Record<string, string> {
   }
   makeScriptsExecutable(appDataDir);
 
+  const inheritedEnv = Object.fromEntries(
+    Object.entries(process.env).filter((entry): entry is [string, string] => typeof entry[1] === "string"),
+  );
+
   const env: Record<string, string> = {
-    ...process.env,
+    ...inheritedEnv,
     APP_DATA_DIR: appDataDir,
     APP_DOMAIN: "localhost",
     APP_PROTOCOL: "http",
@@ -318,11 +353,11 @@ function buildAppEnv(appId: string): Record<string, string> {
     }
   }
 
-  // Pre-create host directories referenced in docker-compose.yml volumes
-  const composePath = path.join(ROOT_DIR, "apps", appId, "docker-compose.yml");
+  // Pre-create host directories referenced in docker-compose.yml volumes (both ${APP_DATA_DIR} and $APP_DATA_DIR)
+  const composePath = path.join(rootDir, "apps", appId, "docker-compose.yml");
   if (fs.existsSync(composePath)) {
     const content = fs.readFileSync(composePath, "utf8");
-    const volMatches = content.matchAll(/\$\{APP_DATA_DIR\}\/([^\s:]+)/g);
+    const volMatches = content.matchAll(/\$\{?APP_DATA_DIR\}?\/([^\s:'"]+)/g);
     for (const match of volMatches) {
       const relPath = match[1];
       const fullPath = path.join(appDataDir, relPath);
@@ -367,11 +402,11 @@ function buildAppEnv(appId: string): Record<string, string> {
   return env;
 }
 
-function pullImagesWithRetry(
+async function pullImagesWithRetry(
   composePath: string,
   env: Record<string, string>,
   log: (m: string) => void,
-): { success: boolean; error?: string } {
+): Promise<{ success: boolean; error?: string }> {
   const maxAttempts = 3;
   let lastErr = "";
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
@@ -388,7 +423,7 @@ function pullImagesWithRetry(
     if (attempt < maxAttempts) {
       const delaySec = attempt === 1 ? 2 : 5;
       log(`    ⚠️ Pull failed (attempt ${attempt}). Retrying in ${delaySec}s... Details: ${lastErr.slice(0, 100)}`);
-      execFileSync("sleep", [String(delaySec)]);
+      await delay(delaySec * 1000);
     }
   }
   return { success: false, error: lastErr };
@@ -432,6 +467,12 @@ function probePort(containerIp: string, port: number, timeoutMs = 2000): Promise
 
 export async function runSmokeTests() {
   const cli = parseCliArgs(process.argv);
+  if (cli.help) {
+    console.log(
+      "Usage: npm run test:smoke -- [--changed [--base=<ref>] | --all | --app=<id1,id2>] [--shard=i/N] [--max-up=N] [--wait=sec] [--prune] [--force-all] [--logs-dir=dir] [--report-json=file] [--report-md=file] [--json-failures=file]",
+    );
+    return;
+  }
 
   if (!isDockerAvailable()) {
     console.error("❌ Docker and Docker Compose must be installed and running.");
@@ -488,321 +529,372 @@ export async function runSmokeTests() {
   let upCount = 0;
 
   let prefetchProcess: ChildProcess | null = null;
+  let prefetchExitPromise: Promise<number | null> | null = null;
   let prefetchedAppId: string | null = null;
 
-  for (let idx = 0; idx < targetApps.length; idx++) {
-    const appId = targetApps[idx];
-    const composePath = path.join(ROOT_DIR, "apps", appId, "docker-compose.yml");
-    const configPath = path.join(ROOT_DIR, "apps", appId, "config.json");
-    const projectName = `smoke-${appId}`;
-    const logFilePath = cli.logsDir ? path.join(cli.logsDir, `${appId}.log`) : undefined;
-    const logLines: string[] = [];
-    const startTime = Date.now();
+  try {
+    for (let idx = 0; idx < targetApps.length; idx++) {
+      const appId = targetApps[idx];
+      const composePath = path.join(ROOT_DIR, "apps", appId, "docker-compose.yml");
+      const configPath = path.join(ROOT_DIR, "apps", appId, "config.json");
+      const projectName = `smoke-${appId}`;
+      const logFilePath = cli.logsDir ? path.join(cli.logsDir, `${appId}.log`) : undefined;
+      const logLines: string[] = [];
+      const startTime = Date.now();
 
-    function log(msg: string) {
-      console.log(msg);
-      logLines.push(msg);
-    }
-
-    log("\n======================================================");
-    log(`[${idx + 1}/${targetApps.length}] 🧪 Smoke Testing: ${appId}`);
-    log(`Timestamp: ${new Date().toISOString()}`);
-    log("======================================================");
-
-    if (!fs.existsSync(composePath)) {
-      log(`⚠️ Skipping "${appId}": docker-compose.yml not found.`);
-      results.push({
-        appId,
-        status: "CONFIG_FAILED",
-        durationSeconds: 0,
-        details: "docker-compose.yml not found",
-      });
-      continue;
-    }
-
-    const env = buildAppEnv(appId);
-
-    // 1. Validate syntax and variables with docker compose config
-    log("[1/3] Validating Docker Compose configuration...");
-    const configRes = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "config"], {
-      env,
-      encoding: "utf8",
-    });
-    if (configRes.status !== 0) {
-      log(`❌ docker compose config failed for app "${appId}":`);
-      log(configRes.stderr || configRes.stdout || "");
-      results.push({
-        appId,
-        status: "CONFIG_FAILED",
-        durationSeconds: (Date.now() - startTime) / 1000,
-        details: (configRes.stderr || "").slice(0, 200),
-        logFile: logFilePath,
-      });
-      saveLog(logFilePath, logLines);
-      continue;
-    }
-    log("  ✓ Syntax and variable interpolation valid.");
-
-    // Check skip list
-    if (!cli.forceAll && SKIP_CONTAINER_STARTUP.has(appId)) {
-      log(`  ℹ App "${appId}" is in resource-heavy/hardware bypass list. Skipping live container startup.`);
-      results.push({
-        appId,
-        status: "SKIPPED_HARDWARE",
-        durationSeconds: (Date.now() - startTime) / 1000,
-        details: "Bypassed live startup (requires external hardware / kernel device / excessive memory)",
-        logFile: logFilePath,
-      });
-      saveLog(logFilePath, logLines);
-      continue;
-    }
-
-    if (upCount >= cli.maxUp) {
-      log(`  ℹ Reached maximum live container limit (${cli.maxUp}). Syntax validated.`);
-      results.push({
-        appId,
-        status: "SUCCESS",
-        durationSeconds: (Date.now() - startTime) / 1000,
-        details: "Syntax valid (max-up limit reached)",
-        logFile: logFilePath,
-      });
-      saveLog(logFilePath, logLines);
-      continue;
-    }
-
-    // 2. Pull images with retry
-    log("[2/3] Pulling images (with backoff & prefetch check)...");
-    if (prefetchedAppId === appId && prefetchProcess) {
-      log(`  ℹ Prefetch background worker active for ${appId}. Awaiting completion...`);
-      spawnSync("sleep", ["1"]);
-    }
-
-    const pullRes = pullImagesWithRetry(composePath, env, log);
-    if (!pullRes.success) {
-      log(`❌ docker compose pull failed for app "${appId}":`);
-      log(pullRes.error || "");
-      results.push({
-        appId,
-        status: "PULL_FAILED",
-        durationSeconds: (Date.now() - startTime) / 1000,
-        details: (pullRes.error || "").slice(0, 200),
-        logFile: logFilePath,
-      });
-      saveLog(logFilePath, logLines);
-      continue;
-    }
-    log("  ✓ Images successfully pulled from registry.");
-
-    // Start background prefetch for next app (N+1 pipeline)
-    if (idx + 1 < targetApps.length) {
-      const nextAppId = targetApps[idx + 1];
-      const nextCompose = path.join(ROOT_DIR, "apps", nextAppId, "docker-compose.yml");
-      if (fs.existsSync(nextCompose) && (!SKIP_CONTAINER_STARTUP.has(nextAppId) || cli.forceAll)) {
-        const nextEnv = buildAppEnv(nextAppId);
-        prefetchedAppId = nextAppId;
-        try {
-          if (prefetchProcess) prefetchProcess.kill();
-        } catch {
-          // ignore
-        }
-        prefetchProcess = spawn("docker", ["compose", "-f", nextCompose, "pull", "--quiet"], {
-          env: nextEnv,
-          stdio: "ignore",
-        });
+      function log(msg: string) {
+        console.log(msg);
+        logLines.push(msg);
       }
-    }
 
-    // 3. Up in background and monitor
-    log(`[3/3] Starting container(s) and verifying health (max wait ${cli.waitSec}s)...`);
-    upCount++;
-    let testSuccess = true;
-    let failureDetail = "";
-    let portWarning = false;
+      log("\n======================================================");
+      log(`[${idx + 1}/${targetApps.length}] 🧪 Smoke Testing: ${appId}`);
+      log(`Timestamp: ${new Date().toISOString()}`);
+      log("======================================================");
 
-    try {
-      const rawCompose = fs.existsSync(composePath) ? fs.readFileSync(composePath, "utf8") : "";
-      const count = (rawCompose.match(/^\s{2}[a-zA-Z0-9_-]+:/gm) || []).length;
-      const hasCondition =
-        rawCompose.includes("condition: service_healthy") ||
-        rawCompose.includes("condition: service_completed_successfully");
-      // Heavy multi-container or migration-dependent stacks require more headroom during cold boot
-      const upTimeoutMs = count > 4 || hasCondition ? 300000 : 120000;
+      if (!fs.existsSync(composePath)) {
+        log(`⚠️ Skipping "${appId}": docker-compose.yml not found.`);
+        results.push({
+          appId,
+          status: "CONFIG_FAILED",
+          durationSeconds: 0,
+          details: "docker-compose.yml not found",
+          logFile: logFilePath,
+        });
+        saveLog(logFilePath, logLines);
+        continue;
+      }
 
-      const upRes = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "up", "-d"], {
-        env,
-        encoding: "utf8",
-        timeout: upTimeoutMs,
-      });
-      if (upRes.status !== 0) {
-        log(`❌ docker compose up failed for app "${appId}":`);
-        const errOutput = upRes.stderr || upRes.stdout || upRes.error?.message || "";
-        log(errOutput);
-        testSuccess = false;
-        failureDetail = errOutput.slice(0, 200);
+      const env = buildAppEnv(appId);
+      let didStart = false;
+
+      try {
+        // 1. Validate syntax and variables with docker compose config
+        log("[1/3] Validating Docker Compose configuration...");
+        const configRes = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "config"], {
+          env,
+          encoding: "utf8",
+        });
+        if (configRes.status !== 0) {
+          log(`❌ docker compose config failed for app "${appId}":`);
+          log(configRes.stderr || configRes.stdout || "");
+          results.push({
+            appId,
+            status: "CONFIG_FAILED",
+            durationSeconds: (Date.now() - startTime) / 1000,
+            details: (configRes.stderr || "").slice(0, 200),
+            logFile: logFilePath,
+          });
+          continue;
+        }
+        log("  ✓ Syntax and variable interpolation valid.");
+
+        // Check skip list
+        if (!cli.forceAll && SKIP_CONTAINER_STARTUP.has(appId)) {
+          log(`  ℹ App "${appId}" is in resource-heavy/hardware bypass list. Skipping live container startup.`);
+          results.push({
+            appId,
+            status: "SKIPPED_HARDWARE",
+            durationSeconds: (Date.now() - startTime) / 1000,
+            details: "Bypassed live startup (requires external hardware / kernel device / excessive memory)",
+            logFile: logFilePath,
+          });
+          continue;
+        }
+
+        if (upCount >= cli.maxUp) {
+          log(`  ℹ Reached maximum live container limit (${cli.maxUp}). Syntax validated.`);
+          results.push({
+            appId,
+            status: "SUCCESS",
+            durationSeconds: (Date.now() - startTime) / 1000,
+            details: "Syntax valid (max-up limit reached)",
+            logFile: logFilePath,
+          });
+          continue;
+        }
+
+        // 2. Pull images with retry and disk safeguard
+        log("[2/3] Pulling images (with backoff & prefetch check)...");
+        if (prefetchedAppId === appId && prefetchProcess) {
+          log(`  ℹ Prefetch background worker active for ${appId}. Awaiting completion...`);
+          if (prefetchExitPromise) {
+            await Promise.race([prefetchExitPromise, delay(180_000)]);
+          }
+          if (prefetchProcess.exitCode === null) {
+            try {
+              prefetchProcess.kill("SIGTERM");
+            } catch {
+              // ignore
+            }
+          }
+          prefetchProcess = null;
+          prefetchExitPromise = null;
+          prefetchedAppId = null;
+        }
+
+        if (getAvailableDiskSpaceGb() < 15) {
+          log("  Free disk space < 15GB before pull. Pruning unused Docker artifacts...");
+          pruneDockerDisk(log, true);
+        }
+
+        const pullRes = await pullImagesWithRetry(composePath, env, log);
+        if (!pullRes.success) {
+          log(`❌ docker compose pull failed for app "${appId}":`);
+          log(pullRes.error || "");
+          results.push({
+            appId,
+            status: "PULL_FAILED",
+            durationSeconds: (Date.now() - startTime) / 1000,
+            details: (pullRes.error || "").slice(0, 200),
+            logFile: logFilePath,
+          });
+          continue;
+        }
+        log("  ✓ Images successfully pulled from registry.");
+
+        // Start background prefetch for next app only when prune mode is off and ample disk is available
+        if (!cli.prune && upCount + 1 < cli.maxUp && idx + 1 < targetApps.length && getAvailableDiskSpaceGb() >= 20) {
+          const nextAppId = targetApps[idx + 1];
+          const nextCompose = path.join(ROOT_DIR, "apps", nextAppId, "docker-compose.yml");
+          if (fs.existsSync(nextCompose) && (!SKIP_CONTAINER_STARTUP.has(nextAppId) || cli.forceAll)) {
+            const nextEnv = buildAppEnv(nextAppId);
+            prefetchedAppId = nextAppId;
+            try {
+              if (prefetchProcess && prefetchProcess.exitCode === null) {
+                prefetchProcess.kill("SIGTERM");
+              }
+            } catch {
+              // ignore
+            }
+            prefetchProcess = spawn("docker", ["compose", "-f", nextCompose, "pull", "--quiet"], {
+              env: nextEnv,
+              stdio: "ignore",
+            });
+            const activeChild = prefetchProcess;
+            prefetchExitPromise = new Promise<number | null>((resolve) => {
+              activeChild.once("exit", (code) => resolve(code));
+              activeChild.once("error", () => resolve(null));
+            });
+          }
+        }
+
+        // 3. Up in background and monitor
+        log(`[3/3] Starting container(s) and verifying health (max wait ${cli.waitSec}s)...`);
+        upCount++;
+        didStart = true;
+        let testSuccess = true;
+        let failureDetail = "";
+        let portWarning = false;
+
+        const rawCompose = fs.existsSync(composePath) ? fs.readFileSync(composePath, "utf8") : "";
+        const count = (rawCompose.match(/^\s{2}[a-zA-Z0-9_-]+:/gm) || []).length;
+        const hasCondition =
+          rawCompose.includes("condition: service_healthy") ||
+          rawCompose.includes("condition: service_completed_successfully");
+        // Heavy multi-container or migration-dependent stacks require more headroom during cold boot
+        const upTimeoutMs = count > 4 || hasCondition ? 300000 : 120000;
+
+        const upRes = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "up", "-d"], {
+          env,
+          encoding: "utf8",
+          timeout: upTimeoutMs,
+        });
+        if (upRes.status !== 0) {
+          log(`❌ docker compose up failed for app "${appId}":`);
+          const errOutput = upRes.stderr || upRes.stdout || upRes.error?.message || "";
+          log(errOutput);
+          testSuccess = false;
+          failureDetail = errOutput.slice(0, 200);
+          results.push({
+            appId,
+            status: "START_FAILED",
+            durationSeconds: (Date.now() - startTime) / 1000,
+            details: failureDetail,
+            logFile: logFilePath,
+          });
+          continue;
+        }
+
+        // Polling loop
+        const pollStart = Date.now();
+        let lastLines: string[] = [];
+
+        while ((Date.now() - pollStart) / 1000 < cli.waitSec) {
+          await delay(2000);
+          const psOut = execFileSync(
+            "docker",
+            [
+              "compose",
+              "-p",
+              projectName,
+              "-f",
+              composePath,
+              "ps",
+              "--format",
+              "{{.Service}}|{{.State}}|{{.ExitCode}}",
+            ],
+            { env, encoding: "utf8" },
+          );
+          lastLines = psOut.trim().split("\n").filter(Boolean);
+
+          let hasCrash = false;
+          let allRunning = lastLines.length > 0;
+
+          for (const line of lastLines) {
+            const [, state, exitCode] = line.split("|");
+            if (state === "restarting" || (state === "exited" && exitCode !== "0")) {
+              hasCrash = true;
+              break;
+            }
+            if (state !== "running" && !(state === "exited" && exitCode === "0")) {
+              allRunning = false;
+            }
+          }
+
+          if (hasCrash) break;
+          if (allRunning && (Date.now() - pollStart) / 1000 >= 8) break;
+        }
+
+        for (const line of lastLines) {
+          const [svcName, state, exitCode] = line.split("|");
+          log(`    - Service "${svcName}": status=${state}, exit=${exitCode}`);
+          if (state === "restarting" || (state === "exited" && exitCode !== "0")) {
+            testSuccess = false;
+            failureDetail = `Service "${svcName}" crashed (state=${state}, exit=${exitCode})`;
+            log(`\n❌ Service "${svcName}" crashed!`);
+          }
+        }
+
+        // Inspect container restart count and probe port if container is running
+        if (testSuccess) {
+          const psIds = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "ps", "-q"], {
+            env,
+            encoding: "utf8",
+          });
+          const containerIds = (psIds.stdout || "").trim().split("\n").filter(Boolean);
+
+          for (const cid of containerIds) {
+            try {
+              const rawInspect = execFileSync("docker", ["inspect", cid], { encoding: "utf8" });
+              const parsed = JSON.parse(rawInspect)[0];
+              const restartCount = parsed?.RestartCount || 0;
+              if (restartCount > 0) {
+                testSuccess = false;
+                failureDetail = `Container ${parsed.Name} restarted ${restartCount} time(s) (restart loop detected)`;
+                log(`\n❌ Container ${parsed.Name} entered restart loop!`);
+                break;
+              }
+
+              // Probe internal_port on main container
+              if (testSuccess && fs.existsSync(configPath)) {
+                const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
+                const portToProbe = cfg.port;
+                const networks = parsed?.NetworkSettings?.Networks || {};
+                const firstNet = Object.values(networks)[0] as any;
+                const ipAddress = firstNet?.IPAddress;
+
+                if (ipAddress && portToProbe) {
+                  const portResponded = await probePort(ipAddress, portToProbe, 2000);
+                  if (portResponded) {
+                    log(`    ✓ Internal port ${portToProbe} actively listening on container bridge IP ${ipAddress}.`);
+                  } else {
+                    portWarning = true;
+                    log(
+                      `    ⚠️ PORT_WARNING: Container healthy, but port ${portToProbe} did not respond during smoke test window (cold boot / internal TLS / background queue).`,
+                    );
+                  }
+                }
+              }
+            } catch {
+              // ignore
+            }
+          }
+        }
+
+        // Fetch container logs
+        log(`\n--- Container Logs (${appId}) ---`);
+        const logsOut = execFileSync(
+          "docker",
+          ["compose", "-p", projectName, "-f", composePath, "logs", "--tail", "200"],
+          { env, encoding: "utf8" },
+        );
+        log(logsOut || "(no output in container logs)");
+
+        if (!testSuccess) {
+          results.push({
+            appId,
+            status: "CRASHED",
+            durationSeconds: (Date.now() - startTime) / 1000,
+            details: failureDetail,
+            logFile: logFilePath,
+            portWarning,
+          });
+        } else {
+          log("  ✓ Container(s) verified running without crashloops.");
+          results.push({
+            appId,
+            status: "SUCCESS",
+            durationSeconds: (Date.now() - startTime) / 1000,
+            details: lastLines.join(", "),
+            logFile: logFilePath,
+            portWarning,
+          });
+        }
+      } catch (err) {
+        log(`❌ Exception during smoke test: ${(err as Error).message}`);
         results.push({
           appId,
           status: "START_FAILED",
           durationSeconds: (Date.now() - startTime) / 1000,
-          details: failureDetail,
+          details: (err as Error).message,
           logFile: logFilePath,
         });
-        continue;
-      }
-
-      // Polling loop
-      const pollStart = Date.now();
-      let lastLines: string[] = [];
-
-      while ((Date.now() - pollStart) / 1000 < cli.waitSec) {
-        execFileSync("sleep", ["2"]);
-        const psOut = execFileSync(
-          "docker",
-          ["compose", "-p", projectName, "-f", composePath, "ps", "--format", "{{.Service}}|{{.State}}|{{.ExitCode}}"],
-          { env, encoding: "utf8" },
-        );
-        lastLines = psOut.trim().split("\n").filter(Boolean);
-
-        let hasCrash = false;
-        let allRunning = lastLines.length > 0;
-
-        for (const line of lastLines) {
-          const [, state, exitCode] = line.split("|");
-          if (state === "restarting" || (state === "exited" && exitCode !== "0")) {
-            hasCrash = true;
-            break;
-          }
-          if (state !== "running" && !(state === "exited" && exitCode === "0")) {
-            allRunning = false;
-          }
+      } finally {
+        if (didStart) {
+          log("  Cleaning up container(s) (instant teardown -t 0)...");
+          spawnSync(
+            "docker",
+            ["compose", "-p", projectName, "-f", composePath, "down", "-v", "--remove-orphans", "-t", "0"],
+            {
+              env,
+              stdio: "ignore",
+            },
+          );
         }
 
-        if (hasCrash) break;
-        if (allRunning && (Date.now() - pollStart) / 1000 >= 8) break;
-      }
-
-      for (const line of lastLines) {
-        const [svcName, state, exitCode] = line.split("|");
-        log(`    - Service "${svcName}": status=${state}, exit=${exitCode}`);
-        if (state === "restarting" || (state === "exited" && exitCode !== "0")) {
-          testSuccess = false;
-          failureDetail = `Service "${svcName}" crashed (state=${state}, exit=${exitCode})`;
-          log(`\n❌ Service "${svcName}" crashed!`);
-        }
-      }
-
-      // Inspect container restart count and probe port if container is running
-      if (testSuccess) {
-        const psIds = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "ps", "-q"], {
-          env,
-          encoding: "utf8",
-        });
-        const containerIds = (psIds.stdout || "").trim().split("\n").filter(Boolean);
-
-        for (const cid of containerIds) {
-          try {
-            const rawInspect = execFileSync("docker", ["inspect", cid], { encoding: "utf8" });
-            const parsed = JSON.parse(rawInspect)[0];
-            const restartCount = parsed?.RestartCount || 0;
-            if (restartCount > 0) {
-              testSuccess = false;
-              failureDetail = `Container ${parsed.Name} restarted ${restartCount} time(s) (restart loop detected)`;
-              log(`\n❌ Container ${parsed.Name} entered restart loop!`);
-              break;
+        // Prune unused Docker images when --prune is requested or disk space drops below 14 GB
+        if (cli.prune || getAvailableDiskSpaceGb() < 14) {
+          log("  Pruning unused Docker images to reclaim disk space...");
+          if (prefetchProcess && prefetchProcess.exitCode === null) {
+            try {
+              prefetchProcess.kill("SIGTERM");
+            } catch {
+              // ignore
             }
-
-            // Probe internal_port on main container
-            if (testSuccess && fs.existsSync(configPath)) {
-              const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
-              const portToProbe = cfg.port;
-              const networks = parsed?.NetworkSettings?.Networks || {};
-              const firstNet = Object.values(networks)[0] as any;
-              const ipAddress = firstNet?.IPAddress;
-
-              if (ipAddress && portToProbe) {
-                const portResponded = await probePort(ipAddress, portToProbe, 2000);
-                if (portResponded) {
-                  log(`    ✓ Internal port ${portToProbe} actively listening on container bridge IP ${ipAddress}.`);
-                } else {
-                  portWarning = true;
-                  log(
-                    `    ⚠️ PORT_WARNING: Container healthy, but port ${portToProbe} did not respond during smoke test window (cold boot / internal TLS / background queue).`,
-                  );
-                }
-              }
-            }
-          } catch {
-            // ignore
+            prefetchProcess = null;
+            prefetchExitPromise = null;
+            prefetchedAppId = null;
           }
+          pruneDockerDisk(log, getAvailableDiskSpaceGb() < 12);
         }
-      }
 
-      // Fetch container logs
-      log(`\n--- Container Logs (${appId}) ---`);
-      const logsOut = execFileSync(
-        "docker",
-        ["compose", "-p", projectName, "-f", composePath, "logs", "--tail", "200"],
-        { env, encoding: "utf8" },
-      );
-      log(logsOut || "(no output in container logs)");
-
-      if (!testSuccess) {
-        results.push({
-          appId,
-          status: "CRASHED",
-          durationSeconds: (Date.now() - startTime) / 1000,
-          details: failureDetail,
-          logFile: logFilePath,
-          portWarning,
-        });
-      } else {
-        log("  ✓ Container(s) verified running without crashloops.");
-        results.push({
-          appId,
-          status: "SUCCESS",
-          durationSeconds: (Date.now() - startTime) / 1000,
-          details: lastLines.join(", "),
-          logFile: logFilePath,
-          portWarning,
-        });
-      }
-    } catch (err) {
-      log(`❌ Exception during smoke test: ${(err as Error).message}`);
-      results.push({
-        appId,
-        status: "START_FAILED",
-        durationSeconds: (Date.now() - startTime) / 1000,
-        details: (err as Error).message,
-        logFile: logFilePath,
-      });
-    } finally {
-      log("  Cleaning up container(s) (instant teardown -t 0)...");
-      spawnSync(
-        "docker",
-        ["compose", "-p", projectName, "-f", composePath, "down", "-v", "--remove-orphans", "-t", "0"],
-        {
-          env,
-          stdio: "ignore",
-        },
-      );
-
-      // Selective disk management: prune only if free disk falls below 10 GB
-      if (cli.prune || getAvailableDiskSpaceGb() < 10) {
-        log("  Free disk space < 10GB. Pruning old unused images...");
         try {
-          execFileSync("docker", ["image", "prune", "-a", "-f", "--filter", "until=2h"], { stdio: "ignore" });
+          fs.rmSync(env.APP_DATA_DIR, { recursive: true, force: true });
         } catch {
           // ignore
         }
-      }
 
-      const appDataDir = `/tmp/runtipi-smoke-data/${appId}`;
+        saveLog(logFilePath, logLines);
+      }
+    }
+  } finally {
+    if (prefetchProcess && prefetchProcess.exitCode === null) {
       try {
-        fs.rmSync(appDataDir, { recursive: true, force: true });
+        prefetchProcess.kill("SIGTERM");
       } catch {
         // ignore
       }
-
-      saveLog(logFilePath, logLines);
     }
   }
 

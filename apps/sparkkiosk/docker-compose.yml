@@ -12,7 +12,7 @@ services:
       - LND_GRPC_MACAROON=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
       - APP_HIDDEN_SERVICE=http://${APP_DOMAIN}
       - APP_PASSWORD=${APP_PASSWORD}
-      - APP_DOMAIN=$APP_DOMAIN
+      - APP_DOMAIN=${APP_DOMAIN}
     stop_grace_period: 1m
     x-runtipi:
       internal_port: 21214

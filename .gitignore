@@ -5,3 +5,5 @@ node_modules/
 *.log
 .DS_Store
 smoke-results/
+state/smoke-logs/
+state/failures.json

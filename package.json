@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "sync": "node --experimental-strip-types scripts/sync-umbrel.ts",
+    "quarantine": "node --experimental-strip-types scripts/quarantine-failures.ts",
     "update:blacklist": "node --experimental-strip-types scripts/update-blacklist.ts",
     "validate:json": "node scripts/validate-json.js",
-    "test:unit": "vitest run scripts/__tests__/transpiler.test.ts",
+    "typecheck": "tsc --noEmit",
+    "test:unit": "vitest run scripts/__tests__",
     "test:apps": "vitest run apps/__tests__/apps.test.ts apps/__tests__/umbrel-port.test.ts",
     "test:smoke": "node --experimental-strip-types scripts/smoke-test.ts",
     "test": "vitest run scripts/__tests__ apps/__tests__ && node scripts/validate-json.js",

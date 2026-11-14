@@ -1,7 +1,10 @@
+import fs from "node:fs";
+import os from "node:os";
+import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { isDatabaseImage, transpileCompose } from "../transpiler/compose.ts";
 import { createFormFieldFromContract } from "../transpiler/contracts.ts";
-import { parseUmbrelExports } from "../transpiler/exports-hooks.ts";
+import { copyAndPrepareAppDataFiles, parseUmbrelExports } from "../transpiler/exports-hooks.ts";
 import {
   buildRuntipiConfigAndDescription,
   formatUrlSuffix,
@@ -381,10 +384,14 @@ Access at umbrel.local:8080.
     ];
 
     const res = buildRuntipiConfigAndDescription({
+      appId: "arcane",
       umbrelManifest,
-      manifestPort: 3552,
       allocatedPort: 3552,
+      mainImageTag: "2.17.0",
       formFields: formFieldsWithPassword,
+      tipiVersion: 1,
+      createdAt: 1700000000000,
+      updatedAt: 1700000005000,
     });
 
     expect(res.descriptionMd).toContain("- **Username**: `arcane`");
@@ -684,7 +691,6 @@ Access at umbrel.local:8080.
         path: "/chat",
         category: "ai",
       },
-      manifestPort: 18790,
       allocatedPort: 18790,
       mainImageTag: "0.22.4",
       createdAt: 1000,
@@ -743,9 +749,9 @@ export APP_SECRET=$(derive_entropy "key" | head -c32)
     const hassUrlEnv = svc.environment.find((e: any) => e.key === "HASS_URL");
     expect(hassUrlEnv.value).toBe("${HASS_URL:-http://homeassistant-1:8123}");
 
-    const hassField = res.formFields.find((f: any) => f.env_variable === "HASS_URL");
+    const hassField = res.formFields.find((f) => f.env_variable === "HASS_URL");
     expect(hassField).toBeDefined();
-    expect(hassField.default).toBe("http://homeassistant-1:8123");
+    expect(hassField?.default).toBe("http://homeassistant-1:8123");
     expect(svc.internalPort).toBe(5050);
   });
 
@@ -823,10 +829,10 @@ export APP_SECRET=$(derive_entropy "key" | head -c32)
       hasDependencies: false,
     });
 
-    const dbSvc = res.composeJson.services.find((s) => s.name === "wanderer-db");
+    const dbSvc = res.composeJson.services.find((s: any) => s.name === "wanderer-db");
     expect(dbSvc?.healthCheck).toBeUndefined();
 
-    const webSvc = res.composeJson.services.find((s) => s.name === "wanderer");
+    const webSvc = res.composeJson.services.find((s: any) => s.name === "wanderer");
     expect(webSvc?.dependsOn).toEqual({
       "wanderer-db": { condition: "service_started" },
     });
@@ -866,7 +872,7 @@ export APP_SECRET=$(derive_entropy "key" | head -c32)
       hasDependencies: false,
     });
 
-    const webSvc = res.composeJson.services.find((s) => s.name === "pool");
+    const webSvc = res.composeJson.services.find((s: any) => s.name === "pool");
     const dbUrl = webSvc?.environment.find((e: any) => e.key === "DATABASE_URL");
     expect(dbUrl?.value).toBe("postgres://myuser:mypassword@pool-db:5432/mydb");
     expect(res.formFields.some((f) => f.env_variable === "APP_DB_USER")).toBe(false);
@@ -899,5 +905,116 @@ export APP_SECRET_KEY="$(openssl rand -hex 16)"
 
     const secretField = res.formFields.find((f) => f.env_variable === "APP_SECRET_KEY");
     expect(secretField?.type).toBe("random");
+  });
+
+  it("handles nested balanced ${VAR:-${INNER}} fallbacks and normalizes unbraced $BUILTIN variables", () => {
+    const umbrelCompose = {
+      services: {
+        app_proxy: {
+          environment: { APP_HOST: "myapp_web_1", APP_PORT: 8080 },
+        },
+        web: {
+          image: "example/myapp:1.0.0",
+          volumes: ["$APP_DATA_DIR/data:/data"],
+          environment: {
+            PUBLIC_URL: "${CUSTOM_BASE_URL:-http://${APP_DOMAIN:-localhost}:${INNER_PORT:-9090}}",
+            RAW_DOMAIN: "$APP_DOMAIN",
+            ESCAPED_VAL: "$$DO_NOT_TOUCH",
+          },
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "myapp",
+      appName: "MyApp",
+      manifestPort: 8080,
+      allocatedPort: 8080,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const svc = res.composeJson.services.find((s: any) => s.name === "myapp");
+    expect(svc?.volumes[0]?.hostPath).toBe("${APP_DATA_DIR}/data");
+
+    const publicUrlEnv = svc?.environment.find((e: any) => e.key === "PUBLIC_URL");
+    expect(publicUrlEnv?.value).toBe("${CUSTOM_BASE_URL}");
+    const rawDomainEnv = svc?.environment.find((e: any) => e.key === "RAW_DOMAIN");
+    expect(rawDomainEnv?.value).toBe("${APP_DOMAIN}");
+    const escapedEnv = svc?.environment.find((e: any) => e.key === "ESCAPED_VAL");
+    expect(escapedEnv?.value).toBe("$$DO_NOT_TOUCH");
+
+    const customField = res.formFields.find((f) => f.env_variable === "CUSTOM_BASE_URL");
+    expect(customField?.default).toBe("http://${APP_DOMAIN:-localhost}:${INNER_PORT}");
+    const innerPortField = res.formFields.find((f) => f.env_variable === "INNER_PORT");
+    expect(innerPortField?.default).toBe("9090");
+  });
+
+  it("preserves both UDP and TCP addPorts when UDP appears before TCP on the same hostPort", () => {
+    const umbrelCompose = {
+      services: {
+        app_proxy: {
+          environment: { APP_HOST: "frigate_frigate_1", APP_PORT: 8971 },
+        },
+        frigate: {
+          image: "ghcr.io/blakeblackshear/frigate:0.18.2",
+          ports: ["8555:8555/udp", "8555:8555/tcp", "8554:8554/tcp"],
+          environment: {
+            FRIGATE_RTSP_PASSWORD: "${APP_PASSWORD}",
+          },
+        },
+      },
+    };
+
+    const res = transpileCompose({
+      appId: "frigate",
+      appName: "Frigate",
+      manifestPort: 8971,
+      allocatedPort: 8971,
+      umbrelCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const svc = res.composeJson.services.find((s: any) => s.name === "frigate");
+    expect(svc?.shmSize).toBe("256mb");
+    expect(svc?.addPorts).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ hostPort: 8555, containerPort: 8555, udp: true, tcp: false }),
+        expect.objectContaining({ hostPort: 8555, containerPort: 8555, tcp: true }),
+        expect.objectContaining({ hostPort: 8554, containerPort: 8554, tcp: true }),
+      ]),
+    );
+    expect(svc?.addPorts).toHaveLength(3);
+  });
+
+  it("copyAndPrepareAppDataFiles rewrites upstream service hostnames inside nginx/config files", () => {
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "uruntipi-data-test-"));
+    try {
+      const srcDir = path.join(tmpDir, "src");
+      const destDir = path.join(tmpDir, "dest");
+      fs.mkdirSync(path.join(srcDir, "config"), { recursive: true });
+      fs.writeFileSync(
+        path.join(srcDir, "config", "nginx.conf"),
+        "upstream wger { server wger_web_1:8000; }\nupstream ps { server wger_powersync_1:8080; }\n",
+        "utf8",
+      );
+
+      copyAndPrepareAppDataFiles(srcDir, destDir, "wger", {
+        web: "wger-web",
+        powersync: "wger-powersync",
+      });
+
+      const copied = fs.readFileSync(path.join(destDir, "data", "config", "nginx.conf"), "utf8");
+      expect(copied).toContain("server wger-web:8000;");
+      expect(copied).toContain("server wger-powersync:8080;");
+      expect(copied).not.toContain("wger_web_1");
+      expect(copied).not.toContain("wger_powersync_1");
+    } finally {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    }
   });
 });

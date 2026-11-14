@@ -1,10 +1,11 @@
-import { type FormField, convertLegacyToYaml, parseComposeJson } from "@runtipi/common/schemas";
-import { UMBREL_EXTERNAL_CONTRACT_VARS, createFormFieldFromContract } from "./contracts.ts";
+import { convertLegacyToYaml, parseComposeJson } from "@runtipi/common/schemas";
+import { type FormFieldInput, UMBREL_EXTERNAL_CONTRACT_VARS, createFormFieldFromContract } from "./contracts.ts";
+import { APP_OVERRIDES } from "./overrides.ts";
 
 export interface TranspiledComposeResult {
   composeJson: Record<string, any>;
   composeYamlObj: Record<string, any>;
-  formFields: FormField[];
+  formFields: FormFieldInput[];
   mainImageTag: string;
   serviceRenameMap: Record<string, string>;
   uid?: number;
@@ -24,9 +25,7 @@ const RUNTIPI_BUILTIN_ENV_VARS = new Set([
   "TIPI_VERSION",
 ]);
 
-import { APP_OVERRIDES } from "./overrides.ts";
-
-export const CONTAINER_USER_FORM_FIELD: FormField = {
+export const CONTAINER_USER_FORM_FIELD: FormFieldInput = {
   type: "text",
   label: "Container User (UID:GID)",
   hint: "Process user and group ID (UID:GID). Keep 1000:1000 unless custom host permissions are required.",
@@ -124,6 +123,61 @@ function parseEnvToMap(envInput: any): Array<{ key: string; value: string | numb
   return result;
 }
 
+function replaceEnvExpressions(input: string, resolveVar: (varName: string, fallback?: string) => string): string {
+  let result = "";
+  let i = 0;
+
+  while (i < input.length) {
+    if (input[i] !== "$") {
+      result += input[i];
+      i++;
+      continue;
+    }
+
+    // Preserve escaped $$VAR literals used by Docker Compose
+    if (input[i + 1] === "$") {
+      result += "$$";
+      i += 2;
+      continue;
+    }
+
+    if (input[i + 1] === "{") {
+      let depth = 1;
+      let j = i + 2;
+      while (j < input.length && depth > 0) {
+        if (input[j] === "{") depth++;
+        else if (input[j] === "}") depth--;
+        j++;
+      }
+
+      if (depth === 0) {
+        const inner = input.slice(i + 2, j - 1);
+        const match = inner.match(/^([A-Za-z_][A-Za-z0-9_]*)(?::-([\s\S]*))?$/);
+        if (match) {
+          result += resolveVar(match[1], match[2]);
+          i = j;
+          continue;
+        }
+      }
+      result += "$";
+      i++;
+      continue;
+    }
+
+    const plainMatch = input.slice(i + 1).match(/^([A-Za-z_][A-Za-z0-9_]*)/);
+    if (plainMatch) {
+      result += resolveVar(plainMatch[1]);
+      i += 1 + plainMatch[1].length;
+      continue;
+    }
+
+    result += "$";
+    i++;
+  }
+
+  return result;
+}
+
 export function transpileCompose(params: {
   appId: string;
   appName: string;
@@ -131,7 +185,7 @@ export function transpileCompose(params: {
   allocatedPort: number;
   umbrelCompose: Record<string, any>;
   staticExports: Record<string, string>;
-  initialFormFields: FormField[];
+  initialFormFields: FormFieldInput[];
   hasDependencies: boolean;
 }): TranspiledComposeResult {
   const {
@@ -146,18 +200,17 @@ export function transpileCompose(params: {
   } = params;
 
   const rawServices: Record<string, any> = umbrelCompose?.services || {};
-  const formFields: FormField[] = [...initialFormFields];
+  const formFields: FormFieldInput[] = [...initialFormFields];
   const formFieldVars = new Set(formFields.map((f) => f.env_variable));
 
-  function ensureFormField(field: FormField): void {
+  function ensureFormField(field: FormFieldInput): void {
     if (formFieldVars.has(field.env_variable)) return;
     // Never mark random fields as required (Runtipi test rule)
-    if (field.type === "random") {
-      const { required: _, ...rest } = field as any;
-      formFields.push(rest);
-    } else {
-      formFields.push(field);
+    const cleanField: FormFieldInput = { ...field };
+    if (cleanField.type === "random") {
+      Reflect.deleteProperty(cleanField, "required");
     }
+    formFields.push(cleanField);
     formFieldVars.add(field.env_variable);
   }
 
@@ -414,84 +467,81 @@ export function transpileCompose(params: {
       .replace(/\$\{APP_[A-Za-z0-9_]+_LOCAL_IPS(?::-[^}]*)?\}|\$APP_[A-Za-z0-9_]+_LOCAL_IPS\b/g, "${INTERNAL_IP}")
       .replace(/\$\{local_ips(?::-[^}]*)?\}|\$local_ips\b/g, "${INTERNAL_IP}");
 
-    // 5. Inspect any remaining ${VAR} or $VAR references
-    out = out.replace(
-      /\$\{([A-Za-z_][A-Za-z0-9_]*)(?::-([^}]*))?\}|\$([A-Za-z_][A-Za-z0-9_]*)/g,
-      (full, brk, fallback, plain, offset, str) => {
-        if (offset > 0 && str[offset - 1] === "$") return full;
-        const varName = brk || plain;
-        if (!varName || RUNTIPI_BUILTIN_ENV_VARS.has(varName)) return full;
+    // 5. Inspect any remaining ${VAR} or $VAR references (supporting balanced nested ${VAR:-${INNER}})
+    out = replaceEnvExpressions(out, (varName, fallback) => {
+      if (RUNTIPI_BUILTIN_ENV_VARS.has(varName)) {
+        return fallback !== undefined ? `\${${varName}:-${transformString(fallback)}}` : `\${${varName}}`;
+      }
 
-        if (varName === "APP_PASSWORD") {
-          ensureFormField({
-            type: "random",
-            label: `${appName} password`,
-            min: 32,
-            env_variable: "APP_PASSWORD",
-          });
-          return "${APP_PASSWORD}";
+      if (varName === "APP_PASSWORD") {
+        ensureFormField({
+          type: "random",
+          label: `${appName} password`,
+          min: 32,
+          env_variable: "APP_PASSWORD",
+        });
+        return "${APP_PASSWORD}";
+      }
+
+      if (varName === "APP_SEED") {
+        ensureFormField({
+          type: "random",
+          label: `${appName} seed`,
+          min: 64,
+          encoding: "hex",
+          env_variable: "APP_SEED",
+        });
+        return "${APP_SEED}";
+      }
+
+      const contractField = createFormFieldFromContract(varName);
+      if (contractField) {
+        if (
+          varName.startsWith("APP_BITCOIN_") ||
+          varName.startsWith("APP_LIGHTNING_") ||
+          varName.startsWith("APP_CORE_LIGHTNING_") ||
+          varName.startsWith("APP_ELECTRS_") ||
+          varName.startsWith("APP_FULCRUM_") ||
+          varName.startsWith("APP_MEMPOOL_") ||
+          varName.startsWith("APP_NEXTCLOUD_")
+        ) {
+          usesExternalContract = true;
         }
-
-        if (varName === "APP_SEED") {
-          ensureFormField({
-            type: "random",
-            label: `${appName} seed`,
-            min: 64,
-            encoding: "hex",
-            env_variable: "APP_SEED",
-          });
-          return "${APP_SEED}";
-        }
-
-        const contractField = createFormFieldFromContract(varName);
-        if (contractField) {
-          if (
-            varName.startsWith("APP_BITCOIN_") ||
-            varName.startsWith("APP_LIGHTNING_") ||
-            varName.startsWith("APP_CORE_LIGHTNING_") ||
-            varName.startsWith("APP_ELECTRS_") ||
-            varName.startsWith("APP_FULCRUM_") ||
-            varName.startsWith("APP_MEMPOOL_") ||
-            varName.startsWith("APP_NEXTCLOUD_")
-          ) {
-            usesExternalContract = true;
-          }
-          ensureFormField(contractField);
-          return `\${${varName}}`;
-        }
-
-        if (!formFieldVars.has(varName)) {
-          // If fallback was explicitly declared in compose: ${VAR:-value}
-          const cleanFallback = fallback !== undefined ? transformString(fallback.trim()) : undefined;
-
-          if (cleanFallback !== undefined) {
-            ensureFormField({
-              type: "text",
-              label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
-              required: false,
-              default: cleanFallback,
-              env_variable: varName,
-            });
-          } else if (/(PASSWORD|SECRET|KEY|TOKEN|SALT|HASH)/i.test(varName)) {
-            ensureFormField({
-              type: "random",
-              label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
-              min: 32,
-              env_variable: varName,
-            });
-          } else {
-            ensureFormField({
-              type: "text",
-              label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
-              required: false,
-              default: "default",
-              env_variable: varName,
-            });
-          }
-        }
+        ensureFormField(contractField);
         return `\${${varName}}`;
-      },
-    );
+      }
+
+      if (!formFieldVars.has(varName)) {
+        // If fallback was explicitly declared in compose: ${VAR:-value}
+        const cleanFallback = fallback !== undefined ? transformString(fallback.trim()) : undefined;
+
+        if (cleanFallback !== undefined) {
+          ensureFormField({
+            type: "text",
+            label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
+            required: false,
+            default: cleanFallback,
+            env_variable: varName,
+          });
+        } else if (/(PASSWORD|SECRET|KEY|TOKEN|SALT|HASH)/i.test(varName)) {
+          ensureFormField({
+            type: "random",
+            label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
+            min: 32,
+            env_variable: varName,
+          });
+        } else {
+          ensureFormField({
+            type: "text",
+            label: `${appName} ${varName.toLowerCase().replace(/_/g, " ")}`,
+            required: false,
+            default: "default",
+            env_variable: varName,
+          });
+        }
+      }
+      return `\${${varName}}`;
+    });
 
     return out;
   }
@@ -516,7 +566,8 @@ export function transpileCompose(params: {
   }
 
   const transpiledServices: Array<Record<string, any>> = [];
-  const usedHostPortsInApp = new Set<number>([allocatedPort]);
+  const usedTcpHostPorts = new Set<number>([allocatedPort]);
+  const usedUdpHostPorts = new Set<number>();
 
   for (const origKey of keptServiceKeys) {
     const raw = rawServices[origKey];
@@ -892,10 +943,11 @@ export function transpileCompose(params: {
         if (isMain && (hostPort === manifestPort || hostPort === allocatedPort || containerPort === internalPort)) {
           continue;
         }
-        if (usedHostPortsInApp.has(hostPort) && proto === "tcp") {
+        const targetPortSet = proto === "udp" ? usedUdpHostPorts : usedTcpHostPorts;
+        if (targetPortSet.has(hostPort)) {
           continue;
         }
-        usedHostPortsInApp.add(hostPort);
+        targetPortSet.add(hostPort);
 
         addPorts.push({
           hostPort,

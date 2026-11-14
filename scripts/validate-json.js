@@ -9,12 +9,23 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 
-async function fetchSchema(url) {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch schema ${url}: ${response.statusText}`);
+async function fetchSchema(url, retries = 3, timeoutMs = 15000) {
+  let lastError;
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const response = await fetch(url, { signal: AbortSignal.timeout(timeoutMs) });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      }
+      return await response.json();
+    } catch (err) {
+      lastError = err;
+      if (attempt < retries) {
+        await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
+      }
+    }
   }
-  return response.json();
+  throw new Error(`Failed to fetch schema ${url} after ${retries} attempts: ${lastError?.message || lastError}`);
 }
 
 async function validateJson() {
@@ -43,7 +54,10 @@ async function validateJson() {
     const composeJsonPath = path.join(appDir, "docker-compose.json");
     const configJsonPath = path.join(appDir, "config.json");
 
-    if (fs.existsSync(composeJsonPath)) {
+    if (!fs.existsSync(composeJsonPath)) {
+      console.error(`Missing docker-compose.json for apps/${entry.name}`);
+      hasErrors = true;
+    } else {
       try {
         const data = JSON.parse(fs.readFileSync(composeJsonPath, "utf8"));
         const { $schema: _, ...dataToValidate } = data;
@@ -61,7 +75,10 @@ async function validateJson() {
       }
     }
 
-    if (fs.existsSync(configJsonPath)) {
+    if (!fs.existsSync(configJsonPath)) {
+      console.error(`Missing config.json for apps/${entry.name}`);
+      hasErrors = true;
+    } else {
       try {
         const data = JSON.parse(fs.readFileSync(configJsonPath, "utf8"));
         const { $schema: _, ...dataToValidate } = data;

@@ -4,6 +4,10 @@ on:
   pull_request:
     types: [labeled, synchronize, opened, reopened]
 
+concurrency:
+  group: auto-merge-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
   pull-requests: write
@@ -12,9 +16,14 @@ jobs:
   enable-auto-merge:
     if: contains(github.event.pull_request.labels.*.name, 'automerge') && !contains(github.event.pull_request.labels.*.name, 'needs-review')
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - name: Enable Squash Auto-Merge
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_URL: ${{ github.event.pull_request.html_url }}
-        run: gh pr merge --auto --squash "$PR_URL"
+        run: |
+          gh pr merge --auto --squash "$PR_URL" || {
+            echo "::warning::Failed to enable auto-merge. Ensure 'Allow auto-merge' is enabled in Repository Settings -> General -> Pull Requests."
+            exit 1
+          }

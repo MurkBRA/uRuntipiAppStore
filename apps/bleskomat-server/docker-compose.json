@@ -61,7 +61,7 @@
       ],
       "volumes": [
         {
-          "hostPath": "$APP_DATA_DIR/data/web",
+          "hostPath": "${APP_DATA_DIR}/data/web",
           "containerPath": "/usr/src/app/data"
         },
         {
@@ -95,7 +95,7 @@
       ],
       "volumes": [
         {
-          "hostPath": "$APP_DATA_DIR/data/db",
+          "hostPath": "${APP_DATA_DIR}/data/db",
           "containerPath": "/var/lib/postgresql/data"
         }
       ]

@@ -1,4 +1,5 @@
-import type { AppCategory, FormField } from "@runtipi/common/schemas";
+import type { AppCategory } from "@runtipi/common/schemas";
+import type { FormFieldInput } from "./contracts.ts";
 
 const CATEGORY_MAP: Record<string, AppCategory[]> = {
   ai: ["ai"],
@@ -14,7 +15,9 @@ const CATEGORY_MAP: Record<string, AppCategory[]> = {
 };
 
 export function mapUmbrelCategory(category: string, tagline = "", description = ""): AppCategory[] {
-  const base = CATEGORY_MAP[category?.toLowerCase()] ? [...CATEGORY_MAP[category.toLowerCase()]] : ["utilities"];
+  const base: AppCategory[] = CATEGORY_MAP[category?.toLowerCase()]
+    ? [...CATEGORY_MAP[category.toLowerCase()]]
+    : ["utilities"];
   const text = `${tagline} ${description}`.toLowerCase();
 
   if (category === "files") {
@@ -89,7 +92,7 @@ export function buildRuntipiConfigAndDescription(params: {
   umbrelManifest: Record<string, any>;
   allocatedPort: number;
   mainImageTag: string;
-  formFields: FormField[];
+  formFields: FormFieldInput[];
   tipiVersion: number;
   createdAt: number;
   updatedAt: number;

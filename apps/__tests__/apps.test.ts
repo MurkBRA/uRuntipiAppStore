@@ -1,15 +1,17 @@
 import fs from "node:fs";
-import { dynamicComposeSchemaYaml, parseComposeJson } from "@runtipi/common/schemas";
+import { appInfoSchema, dynamicComposeSchemaYaml, parseComposeJson } from "@runtipi/common/schemas";
 import { type } from "arktype";
 import jsyaml from "js-yaml";
 import { describe, expect, it, test } from "vitest";
 
-type FormField = {
+interface FormField {
   type: string;
   required?: boolean;
-};
+  env_variable?: string;
+}
 
 interface AppConfig {
+  $schema?: string;
   id: string;
   port: number;
   categories: string[];
@@ -29,44 +31,91 @@ interface AppConfig {
   dynamic_config: boolean;
   created_at: number;
   updated_at: number;
+  url_suffix?: string;
 }
 
-const getAppConfigs = (): AppConfig[] => {
-  const apps: AppConfig[] = [];
-  if (!fs.existsSync("./apps")) return apps;
+interface LoadedApp {
+  config: AppConfig;
+  composeJsonRaw: string;
+  composeJson: Record<string, any>;
+  composeYmlRaw: string;
+  composeYml: Record<string, any>;
+}
 
-  const appsDir = fs.readdirSync("./apps");
+let cachedApps: LoadedApp[] | null = null;
 
-  for (const app of appsDir) {
-    if (app.startsWith("__")) continue;
-    const configPath = `./apps/${app}/config.json`;
+function getLoadedApps(): LoadedApp[] {
+  if (cachedApps) return cachedApps;
 
-    if (fs.existsSync(configPath)) {
-      const configFile = fs.readFileSync(configPath, "utf8");
-      const config: AppConfig = JSON.parse(configFile);
-      if (config.available) {
-        apps.push(config);
-      }
-    }
+  const apps: LoadedApp[] = [];
+  if (!fs.existsSync("./apps")) {
+    cachedApps = apps;
+    return apps;
   }
 
+  const dirs = fs
+    .readdirSync("./apps")
+    .filter((app) => !app.startsWith("__") && !app.startsWith("."))
+    .sort((a, b) => a.localeCompare(b));
+
+  for (const app of dirs) {
+    const configPath = `./apps/${app}/config.json`;
+    const composeJsonPath = `./apps/${app}/docker-compose.json`;
+    const composeYmlPath = `./apps/${app}/docker-compose.yml`;
+    if (!fs.existsSync(configPath)) continue;
+
+    const config: AppConfig = JSON.parse(fs.readFileSync(configPath, "utf8"));
+    if (!config.available) continue;
+
+    const composeJsonRaw = fs.existsSync(composeJsonPath) ? fs.readFileSync(composeJsonPath, "utf8") : "";
+    const composeYmlRaw = fs.existsSync(composeYmlPath) ? fs.readFileSync(composeYmlPath, "utf8") : "";
+
+    apps.push({
+      config,
+      composeJsonRaw,
+      composeJson: composeJsonRaw ? JSON.parse(composeJsonRaw) : {},
+      composeYmlRaw,
+      composeYml: composeYmlRaw ? (jsyaml.load(composeYmlRaw) as Record<string, any>) : {},
+    });
+  }
+
+  cachedApps = apps;
   return apps;
-};
+}
+
+function extractImageTag(image: string): string {
+  const withoutDigest = image.split("@sha256:")[0].trim();
+  const lastColon = withoutDigest.lastIndexOf(":");
+  const lastSlash = withoutDigest.lastIndexOf("/");
+  return lastColon > lastSlash ? withoutDigest.slice(lastColon + 1) : "latest";
+}
 
 describe("Runtipi Official App Configs Suite", () => {
+  const apps = getLoadedApps();
+
   it("Get app config should return at least one app", () => {
-    const apps = getAppConfigs();
     expect(apps.length).toBeGreaterThan(0);
   });
 
-  describe("Each app docker-compose.json should be parsable by @runtipi/common", () => {
-    const apps = getAppConfigs();
+  describe("Each app config.json should match @runtipi/common appInfoSchema", () => {
+    for (const { config: app } of apps) {
+      test(app.id, () => {
+        const { $schema: _, ...rest } = app;
+        const validated = appInfoSchema({
+          ...rest,
+          urn: `${app.id}:local`,
+        });
+        expect(validated instanceof type.errors, validated instanceof type.errors ? validated.summary : undefined).toBe(
+          false,
+        );
+      });
+    }
+  });
 
-    for (const app of apps) {
+  describe("Each app docker-compose.json should be parsable by @runtipi/common", () => {
+    for (const { config: app, composeJson } of apps) {
       test(app.id, () => {
         expect(fs.existsSync(`./apps/${app.id}/docker-compose.json`)).toBe(true);
-        const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.json`, "utf8");
-        const composeJson = JSON.parse(dockerComposeFile);
         const res = parseComposeJson(composeJson);
         expect(res).toBeDefined();
       });
@@ -74,14 +123,10 @@ describe("Runtipi Official App Configs Suite", () => {
   });
 
   describe("Each app docker-compose.yml should match @runtipi/common dynamicComposeSchemaYaml", () => {
-    const apps = getAppConfigs();
-
-    for (const app of apps) {
+    for (const { config: app, composeYml } of apps) {
       test(app.id, () => {
         expect(fs.existsSync(`./apps/${app.id}/docker-compose.yml`)).toBe(true);
-        const rawYml = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`, "utf8");
-        const parsedYml = jsyaml.load(rawYml) as Record<string, any>;
-        const { "x-runtipi": xRuntipi, ...rest } = parsedYml;
+        const { "x-runtipi": xRuntipi, ...rest } = composeYml;
         expect(xRuntipi?.schema_version).toBe(2);
         const validated = dynamicComposeSchemaYaml(rest);
         expect(validated instanceof type.errors).toBe(false);
@@ -90,9 +135,7 @@ describe("Runtipi Official App Configs Suite", () => {
   });
 
   describe("Each app should have required metadata, files, and valid fields", () => {
-    const apps = getAppConfigs();
-
-    for (const app of apps) {
+    for (const { config: app, composeYml } of apps) {
       test(app.id, () => {
         expect(app.id).toBeDefined();
         expect(app.name).toBeDefined();
@@ -110,13 +153,10 @@ describe("Runtipi Official App Configs Suite", () => {
         expect(fs.existsSync(`./apps/${app.id}/metadata/logo.jpg`)).toBe(true);
 
         // Version match between config.json and docker-compose.yml main service
-        const dockerComposeFile = fs.readFileSync(`./apps/${app.id}/docker-compose.yml`, "utf8");
-        const dockerCompose = jsyaml.load(dockerComposeFile) as { services: Record<string, { image: string }> };
-        expect(dockerCompose.services[app.id]).toBeDefined();
-        expect(dockerCompose.services[app.id]?.image).toBeDefined();
-        const dockerImage = dockerCompose.services[app.id]?.image;
-        const version = dockerImage?.split(":")[1];
-        expect(version).toContain(app.version);
+        expect(composeYml.services[app.id]).toBeDefined();
+        expect(composeYml.services[app.id]?.image).toBeDefined();
+        const dockerImage = String(composeYml.services[app.id]?.image);
+        expect(extractImageTag(dockerImage)).toContain(app.version);
 
         // Random form fields must not be required
         if (app.form_fields) {
@@ -139,22 +179,19 @@ describe("Runtipi Official App Configs Suite", () => {
   });
 
   test("Each app should have a unique port", () => {
-    const appConfigs = getAppConfigs();
-    const ports = appConfigs.map((app) => app.port).filter(Boolean);
+    const ports = apps.map(({ config }) => config.port).filter(Boolean);
     expect(new Set(ports).size).toBe(ports.length);
   });
 
   test("Each app should have a unique id", () => {
-    const appConfigs = getAppConfigs();
-    const ids = appConfigs.map((app) => app.id);
-    expect(new Set(ids).size).toBe(appConfigs.length);
+    const ids = apps.map(({ config }) => config.id);
+    expect(new Set(ids).size).toBe(apps.length);
   });
 
   test("Any app with url_suffix should start with '/' or '?'", () => {
-    const appConfigs = getAppConfigs();
-    for (const app of appConfigs) {
-      if ((app as any).url_suffix) {
-        expect((app as any).url_suffix).toMatch(/^[/?]/);
+    for (const { config } of apps) {
+      if (config.url_suffix) {
+        expect(config.url_suffix).toMatch(/^[/?]/);
       }
     }
   });

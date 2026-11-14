@@ -11,6 +11,10 @@ on:
         default: "false"
         type: boolean
 
+concurrency:
+  group: sync-umbrel-${{ github.ref }}
+  cancel-in-progress: false
+
 permissions:
   contents: write
   pull-requests: write
@@ -20,14 +24,15 @@ permissions:
 jobs:
   sync-store:
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       - name: Setup Node.js 22
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: "22"
           cache: "npm"
@@ -46,27 +51,44 @@ jobs:
             npm run sync
           fi
 
-      - name: Run full test & schema validation suite
+      - name: Run typecheck, linter, test & schema validation suite
         run: |
+          npm run typecheck
           npm run lint
           npm test
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check for initial changes
         id: pre_diff
         run: |
           rm -rf .tmp
           if [ -z "$(git status --porcelain apps/ blacklist.json README.md state/)" ]; then
-            echo "has_changes=false" >> $GITHUB_OUTPUT
+            echo "has_changes=false" >> "$GITHUB_OUTPUT"
           else
-            echo "has_changes=true" >> $GITHUB_OUTPUT
+            echo "has_changes=true" >> "$GITHUB_OUTPUT"
           fi
+
+      - name: Reclaim runner disk space before Docker smoke tests
+        if: steps.pre_diff.outputs.has_changes == 'true'
+        run: |
+          echo "=== Disk usage BEFORE cleanup ==="
+          df -h /
+          sudo rm -rf \
+            /usr/share/dotnet \
+            /usr/local/lib/android \
+            /opt/ghc \
+            /opt/hostedtoolcache/CodeQL \
+            /usr/local/share/boost
+          docker system prune -af --volumes || true
+          echo "=== Disk usage AFTER cleanup ==="
+          df -h /
+
+      - name: Login to GitHub Container Registry
+        if: steps.pre_diff.outputs.has_changes == 'true'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Docker Compose Validation & Smoke Test on updated apps
         if: steps.pre_diff.outputs.has_changes == 'true'
@@ -74,32 +96,60 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p state/smoke-logs
-          npm run test:smoke -- --changed --json-failures=state/failures.json --report-md=state/smoke-report.md --logs-dir=state/smoke-logs
+          npm run test:smoke -- --changed --prune --json-failures=state/failures.json --report-md=state/smoke-report.md --logs-dir=state/smoke-logs
+
+      - name: Upload Smoke Test Logs & Append Summary
+        if: steps.pre_diff.outputs.has_changes == 'true' && always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: sync-smoke-logs
+          path: state/smoke-logs/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Append Smoke Report to Job Summary
+        if: steps.pre_diff.outputs.has_changes == 'true' && always()
+        run: |
+          if [ -f state/smoke-report.md ]; then
+            cat state/smoke-report.md >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Isolate and Quarantine Any Defective Apps
         if: steps.pre_diff.outputs.has_changes == 'true'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npx tsx scripts/quarantine-failures.ts state/failures.json
+        run: |
+          if [ "${{ steps.smoke_run.outcome }}" = "failure" ] && [ ! -f state/failures.json ]; then
+            echo "::error::Smoke test runner aborted unexpectedly without producing state/failures.json."
+            exit 1
+          fi
+          npm run quarantine -- state/failures.json
 
       - name: Check healthy changes after quarantine
         id: post_diff
         run: |
           if [ -z "$(git status --porcelain apps/ blacklist.json README.md state/)" ]; then
-            echo "has_healthy_changes=false" >> $GITHUB_OUTPUT
+            echo "has_healthy_changes=false" >> "$GITHUB_OUTPUT"
           else
-            echo "has_healthy_changes=true" >> $GITHUB_OUTPUT
-            NEW_APPS=$(git status --porcelain 'apps/*/config.json' | grep '^?? ' | wc -l || true)
+            echo "has_healthy_changes=true" >> "$GITHUB_OUTPUT"
+            NEW_APPS=$(git status --porcelain -uall -- 'apps/*/config.json' | grep -c '^?? ' || true)
             if [ "$NEW_APPS" -gt 0 ]; then
-              echo "is_new_app=true" >> $GITHUB_OUTPUT
-              echo "labels=type:new-app,needs-review" >> $GITHUB_OUTPUT
-              echo "pr_title=feat(store): sync new apps from UmbrelOS App Store" >> $GITHUB_OUTPUT
+              echo "is_new_app=true" >> "$GITHUB_OUTPUT"
+              echo "labels=type:new-app,needs-review" >> "$GITHUB_OUTPUT"
+              echo "pr_title=feat(store): sync new apps from UmbrelOS App Store" >> "$GITHUB_OUTPUT"
             else
-              echo "is_new_app=false" >> $GITHUB_OUTPUT
-              echo "labels=type:version-bump,automerge" >> $GITHUB_OUTPUT
-              echo "pr_title=chore(deps): automated version bump sync from UmbrelOS App Store" >> $GITHUB_OUTPUT
+              echo "is_new_app=false" >> "$GITHUB_OUTPUT"
+              echo "labels=type:version-bump,automerge" >> "$GITHUB_OUTPUT"
+              echo "pr_title=chore(deps): automated version bump sync from UmbrelOS App Store" >> "$GITHUB_OUTPUT"
             fi
           fi
+
+      - name: Re-verify test suite after quarantine cleanup
+        if: steps.post_diff.outputs.has_healthy_changes == 'true'
+        run: |
+          npm run typecheck
+          npm run lint
+          npm test
 
       - name: Automatically commit and push version bumps directly to main
         if: steps.post_diff.outputs.has_healthy_changes == 'true' && steps.post_diff.outputs.is_new_app == 'false'
@@ -116,9 +166,11 @@ jobs:
 
       - name: Create Automated Pull Request for new apps requiring review
         if: steps.post_diff.outputs.has_healthy_changes == 'true' && steps.post_diff.outputs.is_new_app == 'true'
-        uses: peter-evans/create-pull-request@v7
+        id: create_pr
+        continue-on-error: true
+        uses: peter-evans/create-pull-request@v8
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
           commit-message: ${{ steps.post_diff.outputs.pr_title }}
           branch: automation/umbrel-sync
           delete-branch: true
@@ -126,9 +178,40 @@ jobs:
           body: |
             ## Automated UmbrelOS $\rightarrow$ Runtipi Store Sync
             This PR introduces brand-new apps ported from UmbrelOS that passed all validation layers:
-            - Passed Layer 1 (Transpiler Unit Tests)
+            - Passed Layer 1 (Transpiler Unit Tests & Typecheck)
             - Passed Layer 2 (`@runtipi/common` & AJV Schema Validation)
             - Passed Layer 3 (Anti-Duplication Blacklist, Port Uniqueness, Zero-Leak & JPEG Header Tests)
             - Passed Layer 4 (Docker Compose Syntax & Interpolation Validation)
             - Passed Layer 5 (Docker Compose Pull, Port & Live Smoke Tests)
           labels: ${{ steps.post_diff.outputs.labels }}
+
+      - name: Handle Pull Request Creation Permission Failure
+        if: steps.create_pr.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMPARE_URL: "https://github.com/${{ github.repository }}/compare/main...automation/umbrel-sync?expand=1"
+        run: |
+          {
+            echo "## ⚠️ Pull Request Creation Blocked by Repository Settings"
+            echo ""
+            echo "Changes were pushed to branch \`automation/umbrel-sync\`, but GitHub Actions was not permitted to open the Pull Request automatically."
+            echo ""
+            echo "1. Open: **Settings -> Actions -> General -> Workflow permissions** and enable **Allow GitHub Actions to create and approve pull requests** (or configure a \`GH_PAT\` repository secret)."
+            echo "2. Or create the PR manually right now: $COMPARE_URL"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          ISSUE_TITLE="[Sync] Ação necessária: permissão de Pull Request do GitHub Actions"
+          ISSUE_BODY=$(printf '%s\n' \
+            "O sync automático gerou mudanças saudáveis e fez push para a branch \`automation/umbrel-sync\`, mas a criação automática do PR falhou por falta de permissão (\`GitHub Actions is not permitted to create or approve pull requests\`)." \
+            "" \
+            "### Como resolver definitivamente" \
+            "1. Acesse **Settings -> Actions -> General -> Workflow permissions** no repositório e habilite **Allow GitHub Actions to create and approve pull requests** (ou configure o secret \`GH_PAT\`)." \
+            "2. Abra o PR pendente manualmente clicando aqui: $COMPARE_URL")
+
+          EXISTING=$(gh issue list --search "\"$ISSUE_TITLE\" in:title state:open" --json number --jq '.[0].number // empty' || true)
+          if [ -n "$EXISTING" ]; then
+            gh issue comment "$EXISTING" --body "$ISSUE_BODY" || true
+          else
+            gh issue create --title "$ISSUE_TITLE" --body "$ISSUE_BODY" || true
+          fi
+          exit 1

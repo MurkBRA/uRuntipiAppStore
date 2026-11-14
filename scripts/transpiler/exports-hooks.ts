@@ -1,9 +1,9 @@
 import fs from "node:fs";
 import path from "node:path";
-import type { FormField } from "@runtipi/common/schemas";
+import type { FormFieldInput } from "./contracts.ts";
 
 export interface ParsedExportsResult {
-  formFields: FormField[];
+  formFields: FormFieldInput[];
   staticExports: Record<string, string>;
 }
 
@@ -31,7 +31,7 @@ function humanizeVarName(envVar: string, appName: string): string {
 }
 
 export function parseUmbrelExports(exportsContent: string, appName: string): ParsedExportsResult {
-  const formFields: FormField[] = [];
+  const formFields: FormFieldInput[] = [];
   const staticExports: Record<string, string> = {};
   const localAssignments: Record<string, string> = {};
   const seenVars = new Set<string>();

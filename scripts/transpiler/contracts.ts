@@ -1,4 +1,6 @@
-import type { FormField } from "@runtipi/common/schemas";
+import type { formFieldSchema } from "@runtipi/common/schemas";
+
+export type FormFieldInput = typeof formFieldSchema.inferIn;
 
 export interface ContractVariableSpec {
   type: "text" | "password" | "number" | "random";
@@ -287,7 +289,7 @@ export const UMBREL_EXTERNAL_CONTRACT_VARS: Record<string, ContractVariableSpec>
   },
 };
 
-export function createFormFieldFromContract(envVar: string): FormField | null {
+export function createFormFieldFromContract(envVar: string): FormFieldInput | null {
   const spec = UMBREL_EXTERNAL_CONTRACT_VARS[envVar];
   if (!spec) return null;
 

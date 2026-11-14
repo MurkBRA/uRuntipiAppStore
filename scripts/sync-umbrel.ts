@@ -53,6 +53,7 @@ function parseCliArgs(argv: string[]) {
   let galleryDir = "";
   let force = false;
   let only = "";
+  let readmeOnly = false;
 
   for (let i = 0; i < argv.length; i++) {
     const arg = argv[i];
@@ -62,6 +63,8 @@ function parseCliArgs(argv: string[]) {
       galleryDir = path.resolve(argv[++i]);
     } else if (arg === "--force") {
       force = true;
+    } else if (arg === "--readme-only") {
+      readmeOnly = true;
     } else if (arg.startsWith("--only=")) {
       only = arg.slice("--only=".length).trim();
     } else if (arg === "--only" && argv[i + 1]) {
@@ -69,7 +72,106 @@ function parseCliArgs(argv: string[]) {
     }
   }
 
-  return { umbrelDir, galleryDir, force, only };
+  return { umbrelDir, galleryDir, force, only, readmeOnly };
+}
+
+export interface ReadmeAppEntry {
+  id: string;
+  name: string;
+  version: string;
+  port: number;
+  categories: string[];
+}
+
+function resolveSkippedBlacklistCount(rootDir: string): number {
+  const readmePath = path.join(rootDir, "README.md");
+  if (fs.existsSync(readmePath)) {
+    const existing = fs.readFileSync(readmePath, "utf8");
+    const match = existing.match(/Blacklisted Duplicates \/ Disabled Apps\*\*:\s*\*\*(\d+)\*\*/);
+    if (match) {
+      return Number.parseInt(match[1], 10);
+    }
+  }
+
+  const blacklistPath = path.join(rootDir, "blacklist.json");
+  if (fs.existsSync(blacklistPath)) {
+    try {
+      const blacklist = JSON.parse(fs.readFileSync(blacklistPath, "utf8"));
+      return Number(
+        blacklist.stats?.total_unique_blacklisted_umbrel_ids ?? blacklist.blacklisted_umbrel_ids?.length ?? 0,
+      );
+    } catch {
+      return 0;
+    }
+  }
+
+  return 0;
+}
+
+export function generateReadme(options?: {
+  rootDir?: string;
+  entries?: ReadmeAppEntry[];
+  skippedBlacklistCount?: number;
+}): string {
+  const rootDir = options?.rootDir ?? ROOT_DIR;
+  let entries = options?.entries;
+
+  if (!entries) {
+    const appsDir = path.join(rootDir, "apps");
+    entries = [];
+    if (fs.existsSync(appsDir)) {
+      const dirs = fs
+        .readdirSync(appsDir, { withFileTypes: true })
+        .filter((d) => d.isDirectory() && !d.name.startsWith("_") && !d.name.startsWith("."))
+        .map((d) => d.name)
+        .sort((a, b) => a.localeCompare(b));
+
+      for (const appId of dirs) {
+        const configPath = path.join(appsDir, appId, "config.json");
+        if (!fs.existsSync(configPath)) continue;
+        const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
+        entries.push({
+          id: cfg.id || appId,
+          name: cfg.name || appId,
+          version: String(cfg.version ?? "latest"),
+          port: Number(cfg.port ?? 0),
+          categories: Array.isArray(cfg.categories) ? cfg.categories : ["utilities"],
+        });
+      }
+    }
+  } else {
+    entries = [...entries].sort((a, b) => a.id.localeCompare(b.id));
+  }
+
+  const skippedCount = options?.skippedBlacklistCount ?? resolveSkippedBlacklistCount(rootDir);
+  const readmeRows = entries
+    .map(
+      (a, idx) =>
+        `| ${idx + 1} | \`${a.id}\` | **${a.name}** | \`${a.version}\` | \`${a.port}\` | \`${a.categories.join(", ")}\` |`,
+    )
+    .join("\n");
+
+  const readmeContent = `# uRuntipiAppStore — UmbrelOS App Store Port for Runtipi
+
+Automated, tested port of **${entries.length}** non-duplicate apps from [\`getumbrel/umbrel-apps\`](https://github.com/getumbrel/umbrel-apps) to the [Runtipi](https://runtipi.io) App Store format (\`schema_version: 2\` YAML + Dynamic Compose JSON v2).
+
+- **Architecture & Engineering Plan**: [\`PLANO_PORT_UMBREL_RUNTIPI.md\`](./PLANO_PORT_UMBREL_RUNTIPI.md)
+- **Official Runtipi & Disabled Apps Blacklist**: [\`blacklist.json\`](./blacklist.json)
+
+## Summary Statistics
+
+- **Ported Active Apps**: **${entries.length}**
+- **Blacklisted Duplicates / Disabled Apps**: **${skippedCount}**
+
+## Ported Apps Catalog (${entries.length} Apps)
+
+| # | App ID | Name | Version | Port | Categories |
+| :---: | :--- | :--- | :---: | :---: | :--- |
+${readmeRows}
+`;
+
+  fs.writeFileSync(path.join(rootDir, "README.md"), readmeContent, "utf8");
+  return readmeContent;
 }
 
 function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string }) {
@@ -112,6 +214,12 @@ function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string })
 
 export async function runSync() {
   const cli = parseCliArgs(process.argv.slice(2));
+  if (cli.readmeOnly) {
+    generateReadme({ rootDir: ROOT_DIR });
+    console.log("Regenerated README.md from apps/ directory.");
+    return;
+  }
+
   const { umbrelDir, galleryDir } = ensureUpstreamRepos(cli);
 
   const blacklistPath = path.join(ROOT_DIR, "blacklist.json");
@@ -335,33 +443,11 @@ export async function runSync() {
 
   // Generate README.md (only when doing full sync)
   if (!cli.only) {
-    const readmeRows = portedSummary
-      .map(
-        (a, idx) =>
-          `| ${idx + 1} | \`${a.id}\` | **${a.name}** | \`${a.version}\` | \`${a.port}\` | \`${a.categories.join(", ")}\` |`,
-      )
-      .join("\n");
-
-    const readmeContent = `# uRuntipiAppStore — UmbrelOS App Store Port for Runtipi
-
-Automated, tested port of **${portedSummary.length}** non-duplicate apps from [\`getumbrel/umbrel-apps\`](https://github.com/getumbrel/umbrel-apps) to the [Runtipi](https://runtipi.io) App Store format (\`schema_version: 2\` YAML + Dynamic Compose JSON v2).
-
-- **Architecture & Engineering Plan**: [\`PLANO_PORT_UMBREL_RUNTIPI.md\`](./PLANO_PORT_UMBREL_RUNTIPI.md)
-- **Official Runtipi & Disabled Apps Blacklist**: [\`blacklist.json\`](./blacklist.json)
-
-## Summary Statistics
-
-- **Ported Active Apps**: **${portedSummary.length}**
-- **Blacklisted Duplicates / Disabled Apps**: **${skippedBlacklistCount}**
-
-## Ported Apps Catalog (${portedSummary.length} Apps)
-
-| # | App ID | Name | Version | Port | Categories |
-| :---: | :--- | :--- | :---: | :---: | :--- |
-${readmeRows}
-`;
-
-    fs.writeFileSync(path.join(ROOT_DIR, "README.md"), readmeContent, "utf8");
+    generateReadme({
+      rootDir: ROOT_DIR,
+      entries: portedSummary,
+      skippedBlacklistCount,
+    });
   }
 
   console.log(

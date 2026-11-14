@@ -1,8 +1,8 @@
-import type { FormField } from "@runtipi/common/schemas";
+import type { FormFieldInput } from "./contracts.ts";
 
 export interface AppOverride {
   /** Optional modifications to form fields */
-  modifyFormFields?: (fields: FormField[]) => FormField[];
+  modifyFormFields?: (fields: FormFieldInput[]) => FormFieldInput[];
   /** Optional service modifications during transpilation */
   modifyService?: (serviceName: string, service: Record<string, any>, origKey: string) => void;
   /** Optional compose-level modifications */
