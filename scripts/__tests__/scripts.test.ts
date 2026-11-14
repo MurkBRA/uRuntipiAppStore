@@ -4,7 +4,15 @@ import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
 import { quarantineFailures } from "../quarantine-failures.ts";
-import { applySharding, buildAppEnv, getChangedApps, parseCliArgs } from "../smoke-test.ts";
+import {
+  applySharding,
+  buildAppEnv,
+  classifyAppChangeFiles,
+  classifyChangedApps,
+  getChangedApps,
+  hasRuntimeRelevantConfigChange,
+  parseCliArgs,
+} from "../smoke-test.ts";
 import { generateReadme } from "../sync-umbrel.ts";
 
 describe("Automation Scripts Unit & Regression Tests", () => {
@@ -205,6 +213,161 @@ describe("Automation Scripts Unit & Regression Tests", () => {
       expect(readme).not.toContain("`bad-new-app`");
     } finally {
       fs.rmSync(tmpRepo, { recursive: true, force: true });
+    }
+  });
+
+  it("hasRuntimeRelevantConfigChange distinguishes metadata updates from runtime config changes", () => {
+    const base = {
+      id: "demo",
+      port: 8080,
+      uid: 1000,
+      gid: 1000,
+      form_fields: [{ env_variable: "APP_PASSWORD", type: "random" }],
+      https: false,
+      url_suffix: "/app",
+      tipi_version: 1,
+      updated_at: 1000,
+      description: "Old desc",
+    };
+
+    expect(
+      hasRuntimeRelevantConfigChange(base, {
+        ...base,
+        tipi_version: 2,
+        updated_at: 2000,
+        version: "1.2.3",
+        description: "Updated prose",
+      }),
+    ).toBe(false);
+
+    expect(hasRuntimeRelevantConfigChange(base, { ...base, port: 18080 })).toBe(true);
+    expect(hasRuntimeRelevantConfigChange(base, { ...base, form_fields: [] })).toBe(true);
+    expect(hasRuntimeRelevantConfigChange(null, base)).toBe(true);
+  });
+
+  it("classifyAppChangeFiles and classifyChangedApps separate runtime apps from metadata/syntax-only updates", () => {
+    expect(
+      classifyAppChangeFiles(["metadata/description.md", "config.json"], {
+        existedBefore: true,
+        prevConfig: { port: 8080, form_fields: [] },
+        nextConfig: { port: 8080, form_fields: [], description: "Edited" },
+      }),
+    ).toBe("syntax-only");
+
+    expect(
+      classifyAppChangeFiles(["data/nginx.conf"], {
+        existedBefore: true,
+        prevConfig: { port: 8080 },
+        nextConfig: { port: 8080 },
+      }),
+    ).toBe("runtime");
+
+    expect(
+      classifyAppChangeFiles(["metadata/description.md"], {
+        existedBefore: false,
+      }),
+    ).toBe("runtime");
+
+    const tmpRepo = fs.mkdtempSync(path.join(os.tmpdir(), "uruntipi-classify-"));
+    try {
+      const git = (args: string[]) => execFileSync("git", args, { cwd: tmpRepo, encoding: "utf8" });
+      git(["init"]);
+      git(["config", "core.autocrlf", "false"]);
+      git(["config", "user.email", "test@example.com"]);
+      git(["config", "user.name", "Test"]);
+
+      for (const id of ["docs-only", "compose-changed"]) {
+        const dir = path.join(tmpRepo, "apps", id, "metadata");
+        fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(
+          path.join(tmpRepo, "apps", id, "config.json"),
+          JSON.stringify({ id, port: 8000, form_fields: [], tipi_version: 1, updated_at: 100 }),
+        );
+        fs.writeFileSync(
+          path.join(tmpRepo, "apps", id, "docker-compose.yml"),
+          "services:\n  web:\n    image: alpine\n",
+        );
+        fs.writeFileSync(path.join(dir, "description.md"), "v1");
+      }
+      git(["add", "."]);
+      git(["commit", "-m", "init"]);
+
+      // Update only description.md + non-runtime config.json fields on docs-only
+      fs.writeFileSync(path.join(tmpRepo, "apps", "docs-only", "metadata", "description.md"), "v2");
+      fs.writeFileSync(
+        path.join(tmpRepo, "apps", "docs-only", "config.json"),
+        JSON.stringify({ id: "docs-only", port: 8000, form_fields: [], tipi_version: 2, updated_at: 200 }),
+      );
+
+      // Update compose on compose-changed
+      fs.writeFileSync(
+        path.join(tmpRepo, "apps", "compose-changed", "docker-compose.yml"),
+        "services:\n  web:\n    image: alpine:3.21\n",
+      );
+
+      // Add brand-new app
+      fs.mkdirSync(path.join(tmpRepo, "apps", "brand-new"), { recursive: true });
+      fs.writeFileSync(
+        path.join(tmpRepo, "apps", "brand-new", "config.json"),
+        JSON.stringify({ id: "brand-new", port: 8001, form_fields: [] }),
+      );
+      fs.writeFileSync(
+        path.join(tmpRepo, "apps", "brand-new", "docker-compose.yml"),
+        "services:\n  web:\n    image: alpine\n",
+      );
+
+      const plan = classifyChangedApps({ rootDir: tmpRepo });
+      expect(plan.syntaxOnlyApps).toEqual(["docs-only"]);
+      expect(plan.runtimeApps).toEqual(["brand-new", "compose-changed"]);
+      expect(plan.allChangedApps).toEqual(["brand-new", "compose-changed", "docs-only"]);
+    } finally {
+      fs.rmSync(tmpRepo, { recursive: true, force: true });
+    }
+  });
+
+  it("buildAppEnv preserves existing data files such as torrc and default-password instead of truncating them", () => {
+    const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), "uruntipi-preserve-data-"));
+    const tmpDataBase = path.join(tmpRoot, "smoke-data");
+    try {
+      const appDir = path.join(tmpRoot, "apps", "simplexmq");
+      fs.mkdirSync(path.join(appDir, "data"), { recursive: true });
+      fs.writeFileSync(
+        path.join(appDir, "config.json"),
+        JSON.stringify({ id: "simplexmq", port: 8000, form_fields: [] }),
+      );
+      fs.writeFileSync(path.join(appDir, "data", "torrc"), "SocksPort 0.0.0.0:9050\n");
+      fs.writeFileSync(
+        path.join(appDir, "docker-compose.yml"),
+        "services:\n  simplexmq-tor:\n    image: ghcr.io/getumbrel/tor:0.4.9.11\n    volumes:\n      - ${APP_DATA_DIR}/data/torrc:/etc/tor/torrc:ro\n",
+      );
+
+      const env = buildAppEnv("simplexmq", { rootDir: tmpRoot, dataBaseDir: tmpDataBase });
+      expect(fs.readFileSync(path.join(env.APP_DATA_DIR, "data", "torrc"), "utf8")).toBe("SocksPort 0.0.0.0:9050\n");
+    } finally {
+      fs.rmSync(tmpRoot, { recursive: true, force: true });
+    }
+  });
+
+  it("applySharding handles multi-shard bin-packing and quarantineFailures skips empty or unsafe entries cleanly", () => {
+    const manyApps = Array.from({ length: 25 }, (_, i) => `app-${String(i).padStart(2, "0")}`);
+    const seen: string[] = [];
+    for (let s = 1; s <= 6; s++) {
+      seen.push(...applySharding(manyApps, `${s}/6`));
+    }
+    expect(seen.sort()).toEqual(manyApps.sort());
+
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "uruntipi-quarantine-guard-"));
+    try {
+      const emptyFile = path.join(tmpDir, "empty.json");
+      fs.writeFileSync(emptyFile, "   \n");
+      expect(quarantineFailures(emptyFile, { rootDir: tmpDir, githubActions: false })).toBe(0);
+      expect(fs.existsSync(emptyFile)).toBe(false);
+
+      const badIdFile = path.join(tmpDir, "bad-id.json");
+      fs.writeFileSync(badIdFile, JSON.stringify([{ appId: "../../etc/passwd", status: "CRASHED" }]));
+      expect(quarantineFailures(badIdFile, { rootDir: tmpDir, githubActions: false })).toBe(0);
+    } finally {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
     }
   });
 });

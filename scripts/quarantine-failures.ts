@@ -16,6 +16,17 @@ interface FailureItem {
   logFile?: string;
 }
 
+function ensureGitHubLabel(rootDir: string, name: string, color: string, description: string): void {
+  try {
+    execFileSync("gh", ["label", "create", name, "--description", description, "--color", color, "--force"], {
+      cwd: rootDir,
+      stdio: "ignore",
+    });
+  } catch {
+    // Label likely already exists or token lacks label creation permission; ignore
+  }
+}
+
 export function quarantineFailures(
   failuresJsonPath: string,
   options?: { rootDir?: string; githubActions?: boolean },
@@ -28,9 +39,20 @@ export function quarantineFailures(
     return 0;
   }
 
+  const rawFailures = fs.readFileSync(failuresJsonPath, "utf8").trim();
+  if (!rawFailures) {
+    console.log("Empty failures file. Everything is healthy!");
+    try {
+      fs.rmSync(failuresJsonPath, { force: true });
+    } catch {
+      // ignore
+    }
+    return 0;
+  }
+
   let failures: FailureItem[] = [];
   try {
-    failures = JSON.parse(fs.readFileSync(failuresJsonPath, "utf8"));
+    failures = JSON.parse(rawFailures);
   } catch (err) {
     console.warn("Could not parse failures JSON:", (err as Error).message);
     return 0;
@@ -58,7 +80,20 @@ export function quarantineFailures(
     }
   }
 
+  let headState: any = null;
+  try {
+    const headStateRaw = execFileSync("git", ["show", "HEAD:state/sync-state.json"], {
+      cwd: rootDir,
+      encoding: "utf8",
+      stdio: ["ignore", "pipe", "ignore"],
+    });
+    headState = JSON.parse(headStateRaw);
+  } catch {
+    headState = null;
+  }
+
   let quarantinedCount = 0;
+  let labelsEnsured = false;
 
   for (const item of failures) {
     const { appId, status, details, logFile } = item;
@@ -82,7 +117,7 @@ export function quarantineFailures(
     if (existedInHead) {
       try {
         execFileSync("git", ["checkout", "HEAD", "--", `apps/${appId}`], { cwd: rootDir, stdio: "inherit" });
-        execFileSync("git", ["clean", "-fd", "--", `apps/${appId}`], { cwd: rootDir, stdio: "inherit" });
+        execFileSync("git", ["clean", "-fd", "--", `apps/${appId}`], { cwd: rootDir, stdio: "ignore" });
         quarantinedCount++;
         console.log(`    ✓ Reverted apps/${appId} to previous healthy version in git HEAD.`);
       } catch (err) {
@@ -100,18 +135,9 @@ export function quarantineFailures(
 
     // Revert state entry if needed
     if (syncState?.apps?.[appId]) {
-      try {
-        const headStateRaw = execFileSync("git", ["show", "HEAD:state/sync-state.json"], {
-          cwd: rootDir,
-          encoding: "utf8",
-        });
-        const headState = JSON.parse(headStateRaw);
-        if (headState?.apps?.[appId]) {
-          syncState.apps[appId] = headState.apps[appId];
-        } else {
-          delete syncState.apps[appId];
-        }
-      } catch {
+      if (headState?.apps?.[appId]) {
+        syncState.apps[appId] = headState.apps[appId];
+      } else {
         delete syncState.apps[appId];
       }
     }
@@ -119,6 +145,12 @@ export function quarantineFailures(
     // Automated Issue creation/update via GitHub CLI
     if (isGithubActions) {
       try {
+        if (!labelsEnsured) {
+          ensureGitHubLabel(rootDir, "auto-quarantine", "D93F0B", "Auto-quarantined app from daily sync");
+          ensureGitHubLabel(rootDir, "bug", "D73A4A", "Something isn't working");
+          labelsEnsured = true;
+        }
+
         let logContent = "(no logs captured)";
         if (logFile && fs.existsSync(logFile)) {
           const raw = fs.readFileSync(logFile, "utf8");
@@ -126,10 +158,11 @@ export function quarantineFailures(
           logContent = lines.slice(Math.max(0, lines.length - 80)).join("\n");
         }
 
-        const title = `🚨 [Auto-Quarantine] Falha no Smoke Test: ${appId}`;
+        const safeAppId = appId.replace(/"/g, "");
+        const title = `🚨 [Auto-Quarantine] Falha no Smoke Test: ${safeAppId}`;
         const body = `### Falha Detectada na Sincronização Automática
 
-O aplicativo **\`${appId}\`** falhou nos testes de inicialização (*Smoke Test*) durante o sincronismo diário com o repositório upstream da Umbrel.
+O aplicativo **\`${safeAppId}\`** falhou nos testes de inicialização (*Smoke Test*) durante o sincronismo diário com o repositório upstream da Umbrel.
 
 - **Status da Falha**: \`${status}\`
 - **Motivo**: ${details || "Falha de container ou inicialização"}
@@ -158,26 +191,7 @@ ${logContent}
             stdio: "inherit",
           });
         } else {
-          console.log(`    ℹ Opening new GitHub Issue for ${appId}...`);
-          try {
-            execFileSync(
-              "gh",
-              [
-                "label",
-                "create",
-                "auto-quarantine",
-                "--description",
-                "Auto-quarantined app from daily sync",
-                "--color",
-                "D93F0B",
-                "--force",
-              ],
-              { cwd: rootDir, stdio: "ignore" },
-            );
-          } catch {
-            // ignore label creation failures
-          }
-
+          console.log(`    ℹ Opening new GitHub Issue for ${safeAppId}...`);
           try {
             execFileSync(
               "gh",
@@ -220,6 +234,6 @@ ${logContent}
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
-  const filePath = process.argv[2] || path.join(ROOT_DIR, "state", "failures.json");
+  const filePath = process.argv[2] || path.join(ROOT_DIR, "smoke-results", "failures.json");
   quarantineFailures(filePath);
 }

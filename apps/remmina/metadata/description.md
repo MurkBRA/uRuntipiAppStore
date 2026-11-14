@@ -17,7 +17,7 @@ What is libre software?
 The ability to use, see, modify, and share with all. Requiring sharing on equal terms is what (additionally) makes it copyleft, meaning none of these software freedoms can be taken away.
 
 ## Links
-- **Upstream Version**: `1.4.35-patch.1`
+- **Upstream Version**: `1.4.43`
 - **Website**: https://remmina.org
 - **Source Repository**: https://gitlab.com/Remmina/Remmina
 - **Support**: https://www.remmina.org/support/

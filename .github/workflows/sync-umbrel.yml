@@ -16,25 +16,31 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write
-  pull-requests: write
-  issues: write
+  contents: read
   packages: read
 
 jobs:
-  sync-store:
+  prepare:
+    name: Prepare & Transpile Store
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 25
+    outputs:
+      has_changes: ${{ steps.bundle.outputs.has_changes }}
+      runtime_count: ${{ steps.plan.outputs.runtime_count }}
+      syntax_count: ${{ steps.plan.outputs.syntax_count }}
+      has_smoke_work: ${{ steps.plan.outputs.has_smoke_work }}
+      total_shards: ${{ steps.plan.outputs.total_shards }}
+      shard_matrix: ${{ steps.plan.outputs.shard_matrix }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js 22
+      - name: Setup Node.js 24
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version: "24"
           cache: "npm"
 
       - name: Install dependencies
@@ -57,18 +63,164 @@ jobs:
           npm run lint
           npm test
 
-      - name: Check for initial changes
-        id: pre_diff
+      - name: Clean temporary upstream clones and bundle workspace changes
+        id: bundle
         run: |
-          rm -rf .tmp
-          if [ -z "$(git status --porcelain apps/ blacklist.json README.md state/)" ]; then
-            echo "has_changes=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "has_changes=true" >> "$GITHUB_OUTPUT"
+          rm -rf .tmp .tmp-bundle
+          node - <<'EOF'
+          const { execFileSync } = require("node:child_process");
+          const fs = require("node:fs");
+
+          const raw = execFileSync(
+            "git",
+            ["status", "--porcelain", "-z", "-uall", "--no-renames", "--", "apps/", "blacklist.json", "README.md", "state/"],
+            { maxBuffer: 50 * 1024 * 1024 },
+          );
+          const records = raw.toString("utf8").split("\0").filter(Boolean);
+          const deleted = [];
+          const pack = [];
+
+          for (const rec of records) {
+            const status = rec.slice(0, 2);
+            const filePath = rec.slice(3);
+            if (!filePath) continue;
+            if (status.includes("D")) {
+              deleted.push(filePath);
+            } else if (fs.existsSync(filePath)) {
+              pack.push(filePath);
+            }
+          }
+
+          const outFile = process.env.GITHUB_OUTPUT;
+          if (deleted.length === 0 && pack.length === 0) {
+            fs.appendFileSync(outFile, "has_changes=false\n");
+            console.log("No repository changes detected after sync.");
+            process.exit(0);
+          }
+
+          fs.mkdirSync(".tmp-bundle", { recursive: true });
+          fs.writeFileSync(".tmp-bundle/deleted-paths.json", JSON.stringify(deleted));
+          fs.writeFileSync(".tmp-bundle/tar-paths.txt", pack.length > 0 ? `${pack.join("\0")}\0` : "");
+          fs.appendFileSync(outFile, "has_changes=true\n");
+          console.log(`Bundling ${pack.length} modified/new file(s) and ${deleted.length} deletion(s).`);
+          EOF
+
+          if [ -d .tmp-bundle ]; then
+            if [ -s .tmp-bundle/tar-paths.txt ]; then
+              tar --null -T .tmp-bundle/tar-paths.txt -czf .tmp-bundle/sync-changes.tar.gz
+            else
+              tar -czf .tmp-bundle/sync-changes.tar.gz --files-from /dev/null
+            fi
           fi
 
+      - name: Compute dynamic smoke test plan & shard matrix
+        id: plan
+        if: steps.bundle.outputs.has_changes == 'true'
+        run: |
+          node - <<'EOF'
+          const { execFileSync } = require("node:child_process");
+          const fs = require("node:fs");
+
+          const raw = execFileSync(
+            "node",
+            ["--experimental-strip-types", "scripts/smoke-test.ts", "--changed", "--list-plan-json"],
+            { encoding: "utf8" },
+          );
+          const lines = raw.trim().split(/\r?\n/).filter(Boolean);
+          const plan = JSON.parse(lines[lines.length - 1]);
+
+          const runtimeCount = Number(plan.runtimeCount || 0);
+          const syntaxCount = Number(plan.syntaxOnlyCount || 0);
+          const hasSmokeWork = runtimeCount + syntaxCount > 0;
+          let totalShards = 0;
+          if (runtimeCount > 0) {
+            totalShards = Math.min(6, Math.max(1, Math.ceil(runtimeCount / 8)));
+          } else if (syntaxCount > 0) {
+            totalShards = 1;
+          }
+          const shards = Array.from({ length: totalShards }, (_, i) => i + 1);
+
+          const out = [
+            `runtime_count=${runtimeCount}`,
+            `syntax_count=${syntaxCount}`,
+            `has_smoke_work=${hasSmokeWork}`,
+            `total_shards=${totalShards}`,
+            `shard_matrix=${JSON.stringify(shards)}`,
+          ].join("\n") + "\n";
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, out);
+          console.log(
+            `Smoke plan: runtime=${runtimeCount}, syntaxOnly=${syntaxCount}, totalShards=${totalShards}, matrix=${JSON.stringify(shards)}`,
+          );
+          EOF
+
+      - name: Upload bundled sync changes artifact
+        if: steps.bundle.outputs.has_changes == 'true'
+        uses: actions/upload-artifact@v7
+        with:
+          name: sync-changes-bundle
+          path: |
+            .tmp-bundle/sync-changes.tar.gz
+            .tmp-bundle/deleted-paths.json
+          retention-days: 1
+
+  smoke:
+    name: Smoke Shard ${{ matrix.shard }}/${{ needs.prepare.outputs.total_shards }}
+    needs: prepare
+    if: needs.prepare.outputs.has_changes == 'true' && needs.prepare.outputs.has_smoke_work == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJson(needs.prepare.outputs.shard_matrix) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Download bundled sync changes
+        uses: actions/download-artifact@v8
+        with:
+          name: sync-changes-bundle
+          path: .tmp-bundle
+
+      - name: Restore synced workspace changes
+        run: |
+          node - <<'EOF'
+          const fs = require("node:fs");
+          const path = require("node:path");
+          const deletedFile = ".tmp-bundle/deleted-paths.json";
+          if (fs.existsSync(deletedFile)) {
+            for (const rel of JSON.parse(fs.readFileSync(deletedFile, "utf8"))) {
+              fs.rmSync(rel, { force: true });
+              let dir = path.dirname(rel);
+              while (dir && dir.startsWith("apps/") && fs.existsSync(dir)) {
+                if (fs.readdirSync(dir).length === 0) {
+                  fs.rmdirSync(dir);
+                  dir = path.dirname(dir);
+                } else {
+                  break;
+                }
+              }
+            }
+          }
+          EOF
+          if [ -f .tmp-bundle/sync-changes.tar.gz ]; then
+            tar -xzf .tmp-bundle/sync-changes.tar.gz
+          fi
+          rm -rf .tmp-bundle
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
       - name: Reclaim runner disk space before Docker smoke tests
-        if: steps.pre_diff.outputs.has_changes == 'true'
         run: |
           echo "=== Disk usage BEFORE cleanup ==="
           df -h /
@@ -83,47 +235,247 @@ jobs:
           df -h /
 
       - name: Login to GitHub Container Registry
-        if: steps.pre_diff.outputs.has_changes == 'true'
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker Compose Validation & Smoke Test on updated apps
-        if: steps.pre_diff.outputs.has_changes == 'true'
+      - name: Docker Compose Validation & Smoke Test (Shard ${{ matrix.shard }}/${{ needs.prepare.outputs.total_shards }})
         id: smoke_run
         continue-on-error: true
         run: |
-          mkdir -p state/smoke-logs
-          npm run test:smoke -- --changed --prune --json-failures=state/failures.json --report-md=state/smoke-report.md --logs-dir=state/smoke-logs
+          mkdir -p "smoke-results/logs-shard-${{ matrix.shard }}"
+          npm run test:smoke -- \
+            --changed \
+            --prune \
+            --shard=${{ matrix.shard }}/${{ needs.prepare.outputs.total_shards }} \
+            --logs-dir=smoke-results/logs-shard-${{ matrix.shard }} \
+            --report-json=smoke-results/report-shard-${{ matrix.shard }}.json \
+            --report-md=smoke-results/summary-shard-${{ matrix.shard }}.md \
+            --json-failures=smoke-results/failures-shard-${{ matrix.shard }}.json
 
-      - name: Upload Smoke Test Logs & Append Summary
-        if: steps.pre_diff.outputs.has_changes == 'true' && always()
+      - name: Upload Smoke Test Logs (Shard ${{ matrix.shard }})
+        if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: sync-smoke-logs
-          path: state/smoke-logs/
+          name: smoke-logs-shard-${{ matrix.shard }}
+          path: smoke-results/logs-shard-${{ matrix.shard }}/
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Append Smoke Report to Job Summary
-        if: steps.pre_diff.outputs.has_changes == 'true' && always()
+      - name: Upload Smoke Test Reports (Shard ${{ matrix.shard }})
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-reports-shard-${{ matrix.shard }}
+          path: |
+            smoke-results/report-shard-${{ matrix.shard }}.json
+            smoke-results/summary-shard-${{ matrix.shard }}.md
+            smoke-results/failures-shard-${{ matrix.shard }}.json
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Append Shard Summary to Job Step Summary
+        if: always()
         run: |
-          if [ -f state/smoke-report.md ]; then
-            cat state/smoke-report.md >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "smoke-results/summary-shard-${{ matrix.shard }}.md" ]; then
+            cat "smoke-results/summary-shard-${{ matrix.shard }}.md" >> "$GITHUB_STEP_SUMMARY"
           fi
 
-      - name: Isolate and Quarantine Any Defective Apps
-        if: steps.pre_diff.outputs.has_changes == 'true'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Verify smoke shard produced valid report
+        if: always()
         run: |
-          if [ "${{ steps.smoke_run.outcome }}" = "failure" ] && [ ! -f state/failures.json ]; then
-            echo "::error::Smoke test runner aborted unexpectedly without producing state/failures.json."
+          if [ "${{ steps.smoke_run.outcome }}" = "cancelled" ]; then
+            echo "::error::Smoke shard ${{ matrix.shard }} was cancelled."
             exit 1
           fi
-          npm run quarantine -- state/failures.json
+          if [ ! -f "smoke-results/report-shard-${{ matrix.shard }}.json" ]; then
+            echo "::error::Smoke test runner in shard ${{ matrix.shard }} aborted unexpectedly without producing report-shard-${{ matrix.shard }}.json."
+            exit 1
+          fi
+
+  publish:
+    name: Quarantine Failures & Publish Changes
+    needs: [prepare, smoke]
+    if: always() && needs.prepare.outputs.has_changes == 'true'
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+      packages: read
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Verify prerequisite jobs completed safely
+        run: |
+          if [ "${{ needs.prepare.result }}" != "success" ]; then
+            echo "::error::Prepare job failed (result=${{ needs.prepare.result }})."
+            exit 1
+          fi
+          if [ "${{ needs.prepare.outputs.has_smoke_work }}" = "true" ]; then
+            if [ "${{ needs.smoke.result }}" = "failure" ] || [ "${{ needs.smoke.result }}" = "cancelled" ]; then
+              echo "::error::Smoke test matrix aborted or failed unexpectedly (result=${{ needs.smoke.result }}). Aborting publish."
+              exit 1
+            fi
+          fi
+
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Download bundled sync changes
+        uses: actions/download-artifact@v8
+        with:
+          name: sync-changes-bundle
+          path: .tmp-bundle
+
+      - name: Restore synced workspace changes
+        run: |
+          node - <<'EOF'
+          const fs = require("node:fs");
+          const path = require("node:path");
+          const deletedFile = ".tmp-bundle/deleted-paths.json";
+          if (fs.existsSync(deletedFile)) {
+            for (const rel of JSON.parse(fs.readFileSync(deletedFile, "utf8"))) {
+              fs.rmSync(rel, { force: true });
+              let dir = path.dirname(rel);
+              while (dir && dir.startsWith("apps/") && fs.existsSync(dir)) {
+                if (fs.readdirSync(dir).length === 0) {
+                  fs.rmdirSync(dir);
+                  dir = path.dirname(dir);
+                } else {
+                  break;
+                }
+              }
+            }
+          }
+          EOF
+          if [ -f .tmp-bundle/sync-changes.tar.gz ]; then
+            tar -xzf .tmp-bundle/sync-changes.tar.gz
+          fi
+          rm -rf .tmp-bundle
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download smoke shard reports
+        if: needs.prepare.outputs.has_smoke_work == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          pattern: smoke-reports-shard-*
+          path: .tmp-smoke/reports
+          merge-multiple: true
+
+      - name: Download smoke shard logs
+        if: needs.prepare.outputs.has_smoke_work == 'true'
+        uses: actions/download-artifact@v8
+        with:
+          pattern: smoke-logs-shard-*
+          path: .tmp-smoke/logs
+
+      - name: Verify all shard reports, merge failures & write combined summary
+        if: needs.prepare.outputs.has_smoke_work == 'true'
+        env:
+          TOTAL_SHARDS: ${{ needs.prepare.outputs.total_shards }}
+        run: |
+          node - <<'EOF'
+          const fs = require("node:fs");
+          const path = require("node:path");
+
+          const totalShards = Number.parseInt(process.env.TOTAL_SHARDS || "0", 10);
+          const reportsDir = ".tmp-smoke/reports";
+          const logsRoot = ".tmp-smoke/logs";
+          const mergedFailures = [];
+          const logIndex = new Map();
+
+          function walkLogs(dir) {
+            if (!fs.existsSync(dir)) return;
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              const full = path.join(dir, entry.name);
+              if (entry.isDirectory()) walkLogs(full);
+              else if (entry.isFile() && entry.name.endsWith(".log")) {
+                logIndex.set(entry.name, full);
+              }
+            }
+          }
+          walkLogs(logsRoot);
+
+          let totalTested = 0;
+          let successCount = 0;
+          let skippedCount = 0;
+          let failedCount = 0;
+          const summaryParts = [];
+
+          for (let shard = 1; shard <= totalShards; shard++) {
+            const reportPath = path.join(reportsDir, `report-shard-${shard}.json`);
+            if (!fs.existsSync(reportPath)) {
+              console.error(`::error::Missing smoke report for shard ${shard}/${totalShards}: ${reportPath}`);
+              process.exit(1);
+            }
+            const items = JSON.parse(fs.readFileSync(reportPath, "utf8"));
+            if (Array.isArray(items)) {
+              for (const item of items) {
+                totalTested++;
+                if (item.status === "SUCCESS") successCount++;
+                else if (item.status === "SKIPPED_HARDWARE") skippedCount++;
+                else failedCount++;
+              }
+            }
+
+            const failuresPath = path.join(reportsDir, `failures-shard-${shard}.json`);
+            if (fs.existsSync(failuresPath)) {
+              const shardFailures = JSON.parse(fs.readFileSync(failuresPath, "utf8"));
+              if (Array.isArray(shardFailures)) {
+                for (const f of shardFailures) {
+                  const matchedLog = logIndex.get(`${f.appId}.log`);
+                  mergedFailures.push({
+                    ...f,
+                    logFile: matchedLog || f.logFile,
+                  });
+                }
+              }
+            }
+
+            const mdPath = path.join(reportsDir, `summary-shard-${shard}.md`);
+            if (fs.existsSync(mdPath)) {
+              summaryParts.push(`### Shard ${shard}/${totalShards}\n\n${fs.readFileSync(mdPath, "utf8")}`);
+            }
+          }
+
+          fs.mkdirSync("smoke-results", { recursive: true });
+          fs.writeFileSync("smoke-results/failures.json", `${JSON.stringify(mergedFailures, null, 2)}\n`, "utf8");
+
+          const header = [
+            "## 🧪 Sync Smoke Test Aggregated Summary",
+            "",
+            `- **Shards Executed**: ${totalShards}`,
+            `- **Total Tested**: ${totalTested}`,
+            `- **Running / Healthy**: ${successCount} ✅`,
+            `- **Hardware / Bypass**: ${skippedCount} ℹ️`,
+            `- **Quarantined Failures**: ${failedCount} ❌`,
+            "",
+          ].join("\n");
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${header}\n${summaryParts.join("\n")}\n`);
+          console.log(`Merged ${totalShards} shard reports: ${totalTested} tested, ${mergedFailures.length} failures.`);
+          EOF
+
+      - name: Isolate and Quarantine Any Defective Apps
+        if: needs.prepare.outputs.has_smoke_work == 'true'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm run quarantine -- smoke-results/failures.json
+
+      - name: Clean temporary smoke artifacts
+        if: always()
+        run: rm -rf .tmp-smoke smoke-results
 
       - name: Check healthy changes after quarantine
         id: post_diff
@@ -176,7 +528,7 @@ jobs:
           delete-branch: true
           title: ${{ steps.post_diff.outputs.pr_title }}
           body: |
-            ## Automated UmbrelOS $\rightarrow$ Runtipi Store Sync
+            ## Automated UmbrelOS -> Runtipi Store Sync
             This PR introduces brand-new apps ported from UmbrelOS that passed all validation layers:
             - Passed Layer 1 (Transpiler Unit Tests & Typecheck)
             - Passed Layer 2 (`@runtipi/common` & AJV Schema Validation)

@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "hermitstash",
   "description": "HermitStash is a self-hosted file upload server with post-quantum encryption. Every file and database field is sealed with an ML-KEM-1024 + ECDH P-384 hybrid envelope and XChaCha20-Poly1305 before touching disk; passwords use Argon2id. Nothing is stored in plaintext, including database fields the operator never thinks of as sensitive.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "1.15.13",
   "categories": [
     "utilities",
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501497562,
-  "updated_at": 1794005949285,
+  "updated_at": 1794674798464,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

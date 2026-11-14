@@ -584,7 +584,178 @@ describe("Umbrel -> Runtipi Port Integrity & Security Suite", () => {
               vol.containerPath,
               `App ${id} service ${svc.name} has host variable in containerPath: ${vol.containerPath}`,
             ).not.toContain("${APP_DATA_DIR}");
+
+            // Referenced .template mounts under data/ must exist on disk
+            const m = String(vol.hostPath || "").match(/^\$\{APP_DATA_DIR\}\/data\/(.+\.template)$/);
+            if (m) {
+              expect(
+                fs.existsSync(path.join(appDir, "data", m[1])),
+                `App ${id} mounts ${vol.hostPath}, but apps/${id}/data/${m[1]} is missing`,
+              ).toBe(true);
+            }
           }
+        }
+
+        // 13. No duplicate environment keys, no duplicate CSV origin tokens, and no non-secret type: "random" fields
+        for (const svc of composeJson.services || []) {
+          const seenKeys = new Set<string>();
+          for (const entry of svc.environment || []) {
+            expect(seenKeys.has(entry.key), `Duplicate env key "${entry.key}" in ${id}/${svc.name}`).toBe(false);
+            seenKeys.add(entry.key);
+
+            if (
+              typeof entry.value === "string" &&
+              entry.value.includes(",") &&
+              /(?:ORIGIN|ORIGINS|ALLOWED_HOSTS|TRUSTED_HOSTS|TRUSTED_DOMAINS|LOCAL_URLS)/i.test(entry.key) &&
+              !entry.value.includes("'") &&
+              !entry.value.startsWith("[") &&
+              !entry.value.startsWith("{")
+            ) {
+              const tokens = entry.value
+                .split(",")
+                .map((x: string) => x.trim())
+                .filter(Boolean);
+              expect(
+                new Set(tokens).size,
+                `Duplicate CSV tokens in ${id}/${svc.name} env "${entry.key}": ${entry.value}`,
+              ).toBe(tokens.length);
+            }
+          }
+        }
+
+        if (Array.isArray(configJson.form_fields)) {
+          for (const field of configJson.form_fields) {
+            if (field.type === "random") {
+              expect(
+                field.env_variable,
+                `Non-secret field "${field.env_variable}" in ${id} must not use type "random"`,
+              ).toMatch(
+                /(PASSWORD|PASS|SECRET|KEY|TOKEN|SALT|HASH|SEED|COOKIE|AUTH|MNEMONIC|API|SIGN|PIN|PRIVATE|RPC|MACAROON|HEX)/i,
+              );
+            }
+          }
+        }
+
+        // 14. Check host-network sidecars do not leave 127.0.0.1:<port> loopback calls on main bridge services
+        const hasHostSidecar = (composeJson.services || []).some((s: any) => !s.isMain && s.networkMode === "host");
+        if (hasHostSidecar) {
+          for (const svc of composeJson.services || []) {
+            if (svc.isMain && svc.networkMode !== "host") {
+              const targetText = JSON.stringify({ cmd: svc.command, env: svc.environment });
+              expect(
+                targetText,
+                `App ${id}/${svc.name} still targets 127.0.0.1 alongside a host-network sidecar`,
+              ).not.toMatch(/\b127\.0\.0\.1:\d+\b/);
+            }
+          }
+        }
+
+        // 15. Verify data/ files do not leak NGINX_DOLLAR, unrendered APP_*_IP, or DNS SocksPolicy accept in torrc
+        for (const file of dataFiles) {
+          if (/\.(png|jpg|jpeg|gif|webp|ico|woff2?|ttf|wasm|bin|db|sqlite)$/i.test(file)) continue;
+          const fileRaw = fs.readFileSync(file, "utf8");
+          expect(fileRaw, `Unrendered NGINX_DOLLAR placeholder in ${file}`).not.toMatch(
+            /\$\{?APP_[A-Z0-9_]+_NGINX_DOLLAR\}?/,
+          );
+          if (!file.endsWith(".template")) {
+            expect(fileRaw, `Unrendered APP_*_IP placeholder in ${file}`).not.toMatch(/\$\{?APP_[A-Z0-9_]+_IP\}?/);
+          }
+          const baseName = path.basename(file);
+          if (baseName === "torrc" || baseName === "torrc.template") {
+            for (const line of fileRaw.split(/\r?\n/)) {
+              const m = line.match(/^\s*SocksPolicy\s+accept\s+([^\s#]+)/i);
+              if (m) {
+                const target = m[1];
+                expect(
+                  target === "*" || /^\d+\.\d+\.\d+\.\d+(?:\/\d+)?$/.test(target),
+                  `Invalid non-CIDR SocksPolicy target "${target}" in ${file}`,
+                ).toBe(true);
+              }
+            }
+          }
+        }
+
+        // 16. Additional specific app regression checks
+        if (id === "openreader") {
+          const nginxConfPath = path.join(appDir, "data", "nginx.conf");
+          expect(fs.existsSync(nginxConfPath)).toBe(true);
+          expect(fs.existsSync(path.join(appDir, "data", "nginx.conf.template"))).toBe(false);
+          const nginxConf = fs.readFileSync(nginxConfPath, "utf8");
+          expect(nginxConf).toContain("proxy_pass http://openreader-web:3003;");
+          expect(nginxConf).toContain("Host $http_host;");
+          expect(nginxConf).not.toContain("APP_OPENREADER_NGINX_DOLLAR");
+          expect(composeYmlRaw).not.toContain("://${LOCAL_DOMAIN}:3391");
+          expect(composeYmlRaw).toContain("${LOCAL_DOMAIN}:${APP_PORT}");
+        }
+
+        if (id === "agora") {
+          const tplPath = path.join(appDir, "data", "nginx", "nginx.conf.template");
+          expect(fs.existsSync(tplPath)).toBe(true);
+          expect(fs.readFileSync(tplPath, "utf8")).toContain("agora-agora-sidecar:8080");
+          const entryStat = fs.statSync(path.join(appDir, "data", "entrypoint.sh"));
+          expect(entryStat.mode & 0o111).toBeGreaterThan(0);
+        }
+
+        if (id === "bassin") {
+          expect(fs.existsSync(path.join(appDir, "data", "config", "ckpool.conf.template"))).toBe(true);
+        }
+
+        if (id === "hermitstash") {
+          expect(composeYmlRaw).toContain("TRUST_PROXY=172.16.0.0/12");
+        }
+
+        if (id === "albyhub") {
+          const lndField = configJson.form_fields.find((f: any) => f.env_variable === "APP_ALBYHUB_LND_ADDRESS");
+          expect(lndField?.default).toBe("lightning:10009");
+        }
+
+        if (id === "lightning") {
+          expect(configJson.form_fields.some((f: any) => f.env_variable === "APP_LIGHTNING_COMMAND")).toBe(false);
+          const torInitField = configJson.form_fields.find(
+            (f: any) => f.env_variable === "LND_INITIALIZE_WITH_TOR_ONLY",
+          );
+          expect(torInitField?.type).toBe("text");
+          expect(composeYmlRaw).toContain("--configfile=/data/.lnd/umbrel-lnd.conf");
+          expect(composeYmlRaw).not.toContain("APP_LIGHTNING_COMMAND");
+        }
+
+        if (id === "lndg") {
+          const csrfField = configJson.form_fields.find((f: any) => f.env_variable === "APP_LNDG_CSRF_TRUSTED_ORIGINS");
+          expect(csrfField?.type).toBe("text");
+          expect(csrfField?.default).toBe("");
+          expect(composeYmlRaw).toContain("LNDG_CSRF_TRUSTED_ORIGINS=${APP_LNDG_CSRF_TRUSTED_ORIGINS:-");
+        }
+
+        if (id === "omada-controller") {
+          const mainSvc = composeJson.services.find((s: any) => s.isMain);
+          const serverSvc = composeJson.services.find((s: any) => s.name === "omada-controller-server");
+          expect(mainSvc?.extraHosts).toContain("host.docker.internal:host-gateway");
+          expect(JSON.stringify(mainSvc?.command || "")).toContain("https://host.docker.internal:8043");
+          expect(serverSvc?.networkMode).toBe("host");
+        }
+
+        if (id === "portainer-business") {
+          const dindSvc = composeJson.services.find((s: any) => s.name === "portainer-business-docker");
+          expect(dindSvc?.networkMode).toBe("host");
+          expect(dindSvc?.privileged).toBe(true);
+          expect(fs.existsSync(path.join(appDir, "data", "default-password"))).toBe(true);
+          const entryStat = fs.statSync(path.join(appDir, "data", "entrypoint.sh"));
+          expect(entryStat.mode & 0o111).toBeGreaterThan(0);
+        }
+
+        if (id === "simplexmq") {
+          expect(composeJson.services.some((s: any) => s.name === "simplexmq-tor")).toBe(true);
+          const torrcPath = path.join(appDir, "data", "torrc");
+          expect(fs.existsSync(torrcPath)).toBe(true);
+          const torrc = fs.readFileSync(torrcPath, "utf8");
+          expect(torrc).toContain("SocksPolicy accept 10.0.0.0/8");
+          expect(torrc).toContain("HiddenServicePort 5223 simplexmq:5223");
+          expect(torrc).toContain("HiddenServicePort 5443 simplexmq-xftp-server:5443");
+        }
+
+        if (id === "calibre-web-automated") {
+          expect(configJson.available).toBe(true);
+          expect(composeJson.services[0]?.name).toBe("calibre-web-automated");
         }
       });
     }

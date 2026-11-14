@@ -142,4 +142,80 @@ export const APP_OVERRIDES: Record<string, AppOverride> = {
       }
     },
   },
+  hermitstash: {
+    modifyService: (serviceName, service) => {
+      if (serviceName === "hermitstash" && Array.isArray(service.environment)) {
+        for (const entry of service.environment) {
+          if (entry.key === "TRUST_PROXY" && entry.value === "10.21.0.0/16") {
+            entry.value = "172.16.0.0/12";
+          }
+        }
+      }
+    },
+  },
+  albyhub: {
+    modifyFormFields: (fields) => {
+      return fields.map((f) => {
+        if (f.env_variable === "APP_ALBYHUB_LND_ADDRESS") {
+          return {
+            ...f,
+            type: "text",
+            required: false,
+            default: "lightning:10009",
+            hint: "gRPC host:port when using an LND backend (e.g. lightning:10009)",
+          };
+        }
+        if (f.env_variable === "APP_ALBYHUB_LND_CERT_FILE") {
+          return {
+            ...f,
+            type: "text",
+            required: false,
+            default: "/lnd/tls.cert",
+          };
+        }
+        if (f.env_variable === "APP_ALBYHUB_LND_MACAROON_FILE") {
+          return {
+            ...f,
+            type: "text",
+            required: false,
+            default: "/lnd/data/chain/bitcoin/mainnet/admin.macaroon",
+          };
+        }
+        return f;
+      });
+    },
+  },
+  lightning: {
+    staticEnvOverrides: {
+      APP_LIGHTNING_COMMAND:
+        "--configfile=/data/.lnd/umbrel-lnd.conf --listen=0.0.0.0:9735 --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:8080 --bitcoin.active --bitcoin.${APP_BITCOIN_NETWORK} --bitcoin.node=bitcoind --bitcoind.rpchost=${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT} --bitcoind.rpcuser=${APP_BITCOIN_RPC_USER} --bitcoind.rpcpass=${APP_BITCOIN_RPC_PASS} --bitcoind.zmqpubrawblock=tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_RAWBLOCK_PORT} --bitcoind.zmqpubrawtx=tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_RAWTX_PORT}",
+    },
+    modifyFormFields: (fields) => fields.filter((f) => f.env_variable !== "APP_LIGHTNING_COMMAND"),
+  },
+  lndg: {
+    modifyFormFields: (fields) => {
+      return fields.map((f) => {
+        if (f.env_variable === "APP_LNDG_CSRF_TRUSTED_ORIGINS") {
+          return {
+            type: "text",
+            label: f.label || "LNDg CSRF trusted origins",
+            hint: "Optional comma-and-quote separated trusted origins override (leave empty for Runtipi defaults).",
+            required: false,
+            default: "",
+            env_variable: "APP_LNDG_CSRF_TRUSTED_ORIGINS",
+          };
+        }
+        return f;
+      });
+    },
+    modifyService: (serviceName, service) => {
+      if (serviceName === "lndg" && Array.isArray(service.environment)) {
+        const entry = service.environment.find((e: any) => e.key === "LNDG_CSRF_TRUSTED_ORIGINS");
+        if (entry) {
+          entry.value =
+            "${APP_LNDG_CSRF_TRUSTED_ORIGINS:-https://${APP_DOMAIN}','http://${APP_DOMAIN}','http://${LOCAL_DOMAIN}:${APP_PORT}','https://${LOCAL_DOMAIN}:${APP_PORT}','http://${INTERNAL_IP}:${APP_PORT}}";
+        }
+      }
+    },
+  },
 };

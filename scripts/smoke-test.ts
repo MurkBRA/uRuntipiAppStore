@@ -34,6 +34,8 @@ const SKIP_CONTAINER_STARTUP = new Set([
   "nextcloud", // Multi-container complex bootstrap
 ]);
 
+const EXTENSIONLESS_CONFIG_FILES = new Set(["torrc", "Caddyfile", "Dockerfile", "Procfile"]);
+
 export interface AppTestResult {
   appId: string;
   status: "SUCCESS" | "SKIPPED_HARDWARE" | "PULL_FAILED" | "START_FAILED" | "CRASHED" | "CONFIG_FAILED";
@@ -41,6 +43,12 @@ export interface AppTestResult {
   details?: string;
   logFile?: string;
   portWarning?: boolean;
+}
+
+export interface ChangedAppsClassification {
+  runtimeApps: string[];
+  syntaxOnlyApps: string[];
+  allChangedApps: string[];
 }
 
 function isDockerAvailable(): boolean {
@@ -74,13 +82,15 @@ function delay(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function pruneDockerDisk(log: (m: string) => void, aggressive = false): void {
+function pruneDockerDisk(log: (m: string) => void): void {
+  log("  🧹 Pruning unused Docker images, stopped containers, volumes & build cache...");
   try {
-    execFileSync("docker", ["image", "prune", "-af"], { stdio: "ignore" });
-    if (aggressive || getAvailableDiskSpaceGb() < 12) {
-      log("  Disk space still low (< 12GB). Running aggressive docker system prune...");
-      execFileSync("docker", ["system", "prune", "-af", "--volumes"], { stdio: "ignore" });
-    }
+    execFileSync("docker", ["system", "prune", "-a", "-f", "--volumes"], { stdio: "ignore" });
+  } catch {
+    // ignore
+  }
+  try {
+    execFileSync("docker", ["builder", "prune", "-a", "-f"], { stdio: "ignore" });
   } catch {
     // ignore
   }
@@ -100,6 +110,8 @@ export function parseCliArgs(argv: string[]) {
   let prune = false;
   let waitSec = 20;
   let forceAll = false;
+  let listRuntimeCount = false;
+  let listPlanJson = false;
   let help = false;
 
   for (let i = 2; i < argv.length; i++) {
@@ -140,6 +152,10 @@ export function parseCliArgs(argv: string[]) {
       prune = true;
     } else if (arg === "--force-all") {
       forceAll = true;
+    } else if (arg === "--list-runtime-count") {
+      listRuntimeCount = true;
+    } else if (arg === "--list-plan-json") {
+      listPlanJson = true;
     }
   }
 
@@ -157,6 +173,8 @@ export function parseCliArgs(argv: string[]) {
     prune,
     waitSec,
     forceAll,
+    listRuntimeCount,
+    listPlanJson,
     help,
   };
 }
@@ -172,20 +190,82 @@ function getAllApps(rootDir = ROOT_DIR): string[] {
     .sort();
 }
 
-export function getChangedApps(baseRef?: string, rootDir = ROOT_DIR): string[] {
-  const apps = new Set<string>();
+export function hasRuntimeRelevantConfigChange(
+  prevCfg: Record<string, any> | null,
+  nextCfg: Record<string, any> | null,
+): boolean {
+  if (!prevCfg || !nextCfg) return true;
+  const pickRuntimeKeys = (cfg: Record<string, any>) => ({
+    port: cfg.port ?? null,
+    uid: cfg.uid ?? null,
+    gid: cfg.gid ?? null,
+    form_fields: cfg.form_fields ?? null,
+    https: cfg.https ?? null,
+    url_suffix: cfg.url_suffix ?? null,
+  });
+  return JSON.stringify(pickRuntimeKeys(prevCfg)) !== JSON.stringify(pickRuntimeKeys(nextCfg));
+}
+
+export function classifyAppChangeFiles(
+  changedRelPaths: string[],
+  options?: {
+    existedBefore?: boolean;
+    prevConfig?: Record<string, any> | null;
+    nextConfig?: Record<string, any> | null;
+    forceAll?: boolean;
+  },
+): "runtime" | "syntax-only" {
+  if (options?.forceAll || !options?.existedBefore) {
+    return "runtime";
+  }
+  for (const rel of changedRelPaths) {
+    const clean = rel.replace(/\\/g, "/").replace(/^\/+/, "");
+    if (
+      clean === "docker-compose.yml" ||
+      clean === "docker-compose.json" ||
+      clean === "data" ||
+      clean.startsWith("data/") ||
+      clean === "" // Whole directory untracked
+    ) {
+      return "runtime";
+    }
+    if (clean === "config.json") {
+      if (hasRuntimeRelevantConfigChange(options?.prevConfig ?? null, options?.nextConfig ?? null)) {
+        return "runtime";
+      }
+    }
+  }
+  return "syntax-only";
+}
+
+export function classifyChangedApps(options?: {
+  baseRef?: string;
+  rootDir?: string;
+  forceAll?: boolean;
+}): ChangedAppsClassification {
+  const rootDir = options?.rootDir || ROOT_DIR;
+  const baseRef = options?.baseRef;
+  const filesByApp = new Map<string, Set<string>>();
+
+  function recordFilePath(rawPath: string) {
+    const cleaned = rawPath.trim().replace(/^"(.*)"$/, "$1");
+    const match = cleaned.match(/^apps\/([^/_][^/]*)\/(.*)$/);
+    if (!match) return;
+    const appId = match[1];
+    const rel = match[2] || "";
+    if (!fs.existsSync(path.join(rootDir, "apps", appId, "docker-compose.yml"))) return;
+    if (!filesByApp.has(appId)) filesByApp.set(appId, new Set());
+    filesByApp.get(appId)!.add(rel);
+  }
 
   if (baseRef) {
     try {
-      const diff = execFileSync("git", ["diff", "--name-only", `${baseRef}...HEAD`], {
+      const diff = execFileSync("git", ["diff", "--name-only", "--diff-filter=ACMRT", `${baseRef}...HEAD`], {
         cwd: rootDir,
         encoding: "utf8",
       });
       for (const line of diff.split(/\r?\n/)) {
-        const match = line.trim().match(/^apps\/([^/_]+)\//);
-        if (match && fs.existsSync(path.join(rootDir, "apps", match[1], "docker-compose.yml"))) {
-          apps.add(match[1]);
-        }
+        if (line.trim()) recordFilePath(line);
       }
     } catch (err) {
       console.warn(`Warning: Could not diff against ${baseRef}:`, (err as Error).message);
@@ -199,22 +279,69 @@ export function getChangedApps(baseRef?: string, rootDir = ROOT_DIR): string[] {
     });
     for (const line of status.split(/\r?\n/)) {
       if (!line.trim()) continue;
-      const rawPath = line.replace(/^\s*[?!MADRCU]{1,2}\s+/, "").trim();
-      const targetPath = rawPath.includes(" -> ") ? rawPath.split(" -> ").pop()! : rawPath;
-      const cleanPath = targetPath.replace(/^"|"$/g, "");
-      const match = cleanPath.match(/^apps\/([^/_]+)\//);
-      if (match && fs.existsSync(path.join(rootDir, "apps", match[1], "docker-compose.yml"))) {
-        apps.add(match[1]);
-      }
+      // Handle rename notation "R  old -> new" and standard "M  path"
+      const statusBody = line.replace(/^\s*[?!MADRCU]{1,2}\s+/, "").trim();
+      const targetPath = statusBody.includes(" -> ") ? statusBody.split(" -> ").pop()! : statusBody;
+      recordFilePath(targetPath);
     }
   } catch {
     // ignore
   }
 
-  return Array.from(apps).sort();
+  const compareRef = baseRef || "HEAD";
+  const runtimeApps: string[] = [];
+  const syntaxOnlyApps: string[] = [];
+  const allChangedApps = Array.from(filesByApp.keys()).sort((a, b) => a.localeCompare(b));
+
+  for (const appId of allChangedApps) {
+    const relPaths = Array.from(filesByApp.get(appId)!);
+    let existedBefore = false;
+    let prevConfig: Record<string, any> | null = null;
+    try {
+      const prevRaw = execFileSync("git", ["show", `${compareRef}:apps/${appId}/config.json`], {
+        cwd: rootDir,
+        encoding: "utf8",
+        stdio: ["ignore", "pipe", "ignore"],
+      });
+      existedBefore = true;
+      prevConfig = JSON.parse(prevRaw);
+    } catch {
+      existedBefore = false;
+      prevConfig = null;
+    }
+
+    let nextConfig: Record<string, any> | null = null;
+    const cfgPath = path.join(rootDir, "apps", appId, "config.json");
+    if (fs.existsSync(cfgPath)) {
+      try {
+        nextConfig = JSON.parse(fs.readFileSync(cfgPath, "utf8"));
+      } catch {
+        nextConfig = null;
+      }
+    }
+
+    const kind = classifyAppChangeFiles(relPaths, {
+      existedBefore,
+      prevConfig,
+      nextConfig,
+      forceAll: options?.forceAll,
+    });
+
+    if (kind === "runtime") {
+      runtimeApps.push(appId);
+    } else {
+      syntaxOnlyApps.push(appId);
+    }
+  }
+
+  return { runtimeApps, syntaxOnlyApps, allChangedApps };
 }
 
-function getAppWeight(appId: string, rootDir = ROOT_DIR): number {
+export function getChangedApps(baseRef?: string, rootDir = ROOT_DIR): string[] {
+  return classifyChangedApps({ baseRef, rootDir }).allChangedApps;
+}
+
+export function getAppWeight(appId: string, rootDir = ROOT_DIR): number {
   const composePath = path.join(rootDir, "apps", appId, "docker-compose.yml");
   if (!fs.existsSync(composePath)) return 1;
   try {
@@ -232,7 +359,7 @@ export function applySharding(apps: string[], shardStr: string, rootDir = ROOT_D
   if (!match) return apps;
   const shardIndex = Number.parseInt(match[1], 10);
   const totalShards = Number.parseInt(match[2], 10);
-  if (shardIndex < 1 || shardIndex > totalShards) return apps;
+  if (totalShards <= 1 || shardIndex < 1 || shardIndex > totalShards) return apps;
 
   // Weight-based Greedy Bin-Packing
   const weighted = apps.map((app) => ({ app, weight: getAppWeight(app, rootDir) }));
@@ -353,7 +480,7 @@ export function buildAppEnv(
     }
   }
 
-  // Pre-create host directories referenced in docker-compose.yml volumes (both ${APP_DATA_DIR} and $APP_DATA_DIR)
+  // Pre-create host directories/files referenced in docker-compose.yml volumes (both ${APP_DATA_DIR} and $APP_DATA_DIR)
   const composePath = path.join(rootDir, "apps", appId, "docker-compose.yml");
   if (fs.existsSync(composePath)) {
     const content = fs.readFileSync(composePath, "utf8");
@@ -361,10 +488,13 @@ export function buildAppEnv(
     for (const match of volMatches) {
       const relPath = match[1];
       const fullPath = path.join(appDataDir, relPath);
+      const baseName = path.basename(relPath);
       const isFile =
-        /\.(conf|cfg|ya?ml|json|toml|sh|txt|key|crt|pem|env|ini|sql|xml|properties|passwd|htpasswd|pub|cert)$/i.test(
-          path.basename(relPath),
-        ) && !relPath.endsWith("/");
+        !relPath.endsWith("/") &&
+        (/\.(conf|cfg|ya?ml|json|toml|sh|txt|key|crt|pem|env|ini|sql|xml|properties|passwd|htpasswd|pub|cert|template)$/i.test(
+          baseName,
+        ) ||
+          EXTENSIONLESS_CONFIG_FILES.has(baseName));
       const dirToCreate = isFile ? path.dirname(fullPath) : fullPath;
       try {
         fs.mkdirSync(dirToCreate, { recursive: true });
@@ -469,17 +599,13 @@ export async function runSmokeTests() {
   const cli = parseCliArgs(process.argv);
   if (cli.help) {
     console.log(
-      "Usage: npm run test:smoke -- [--changed [--base=<ref>] | --all | --app=<id1,id2>] [--shard=i/N] [--max-up=N] [--wait=sec] [--prune] [--force-all] [--logs-dir=dir] [--report-json=file] [--report-md=file] [--json-failures=file]",
+      "Usage: npm run test:smoke -- [--changed [--base=<ref>] | --all | --app=<id1,id2>] [--shard=i/N] [--max-up=N] [--wait=sec] [--prune] [--force-all] [--list-runtime-count] [--list-plan-json] [--logs-dir=dir] [--report-json=file] [--report-md=file] [--json-failures=file]",
     );
     return;
   }
 
-  if (!isDockerAvailable()) {
-    console.error("❌ Docker and Docker Compose must be installed and running.");
-    process.exit(1);
-  }
-
   let targetApps: string[] = [];
+  const syntaxOnlySet = new Set<string>();
 
   if (cli.appArg) {
     const requested = cli.appArg
@@ -489,38 +615,154 @@ export async function runSmokeTests() {
     for (const app of requested) {
       if (fs.existsSync(path.join(ROOT_DIR, "apps", app, "docker-compose.yml"))) {
         targetApps.push(app);
-      } else {
+      } else if (!cli.listPlanJson && !cli.listRuntimeCount) {
         console.warn(`Warning: app "${app}" not found under apps/`);
       }
     }
-  } else if (cli.changed) {
-    targetApps = getChangedApps(cli.baseRef || undefined);
-    if (targetApps.length === 0) {
-      console.log("ℹ️ No app changes detected via git diff. Nothing to smoke test.");
-      process.exit(0);
+    if (cli.listPlanJson) {
+      console.log(
+        JSON.stringify({
+          totalChanged: targetApps.length,
+          runtimeCount: targetApps.length,
+          syntaxOnlyCount: 0,
+          runtimeApps: targetApps,
+          syntaxOnlyApps: [],
+        }),
+      );
+      return;
     }
-    console.log(`Found ${targetApps.length} changed app(s): ${targetApps.join(", ")}`);
+    if (cli.listRuntimeCount) {
+      console.log(String(targetApps.length));
+      return;
+    }
+    if (cli.shard && targetApps.length > 0) {
+      const totalBefore = targetApps.length;
+      targetApps = applySharding(targetApps, cli.shard);
+      console.log(
+        `⚖️ Shard ${cli.shard} (weighted): selected ${targetApps.length} of ${totalBefore} app(s): ${targetApps.join(", ")}`,
+      );
+    }
+  } else if (cli.changed) {
+    const plan = classifyChangedApps({
+      baseRef: cli.baseRef || undefined,
+      forceAll: cli.forceAll,
+    });
+
+    if (cli.listPlanJson) {
+      console.log(
+        JSON.stringify({
+          totalChanged: plan.allChangedApps.length,
+          runtimeCount: plan.runtimeApps.length,
+          syntaxOnlyCount: plan.syntaxOnlyApps.length,
+          runtimeApps: plan.runtimeApps,
+          syntaxOnlyApps: plan.syntaxOnlyApps,
+        }),
+      );
+      return;
+    }
+
+    if (cli.listRuntimeCount) {
+      console.log(String(plan.runtimeApps.length));
+      return;
+    }
+
+    if (plan.allChangedApps.length === 0) {
+      console.log("ℹ️ No app changes detected via git diff. Nothing to smoke test.");
+      writeReports([], cli.reportJson, cli.reportMd, cli.jsonFailures);
+      return;
+    }
+
+    console.log(
+      `Found ${plan.allChangedApps.length} changed app(s): ${plan.runtimeApps.length} runtime (${plan.runtimeApps.join(", ") || "none"}), ${plan.syntaxOnlyApps.length} metadata/syntax-only (${plan.syntaxOnlyApps.join(", ") || "none"}).`,
+    );
+
+    if (cli.shard) {
+      const shardMatch = cli.shard.match(/^(\d+)\/(\d+)$/);
+      const shardIdx = shardMatch ? Number.parseInt(shardMatch[1], 10) : 1;
+      const shardedRuntime = applySharding(plan.runtimeApps, cli.shard);
+      const shardSyntax = shardIdx === 1 ? plan.syntaxOnlyApps : [];
+      for (const s of shardSyntax) syntaxOnlySet.add(s);
+      targetApps = [...shardSyntax, ...shardedRuntime];
+      console.log(
+        `⚖️ Shard ${cli.shard} (weighted): selected ${targetApps.length} app(s): ${targetApps.join(", ") || "none"}`,
+      );
+    } else {
+      for (const s of plan.syntaxOnlyApps) syntaxOnlySet.add(s);
+      targetApps = [...plan.syntaxOnlyApps, ...plan.runtimeApps];
+    }
   } else if (cli.all) {
     targetApps = getAllApps();
-  } else {
-    targetApps = getChangedApps(cli.baseRef || undefined);
-    if (targetApps.length === 0) {
-      console.log("No changed apps detected. Use --all to test the entire store.");
-      process.exit(0);
+    if (cli.listRuntimeCount) {
+      console.log(String(targetApps.length));
+      return;
     }
-  }
-
-  if (cli.shard) {
-    const totalBefore = targetApps.length;
-    targetApps = applySharding(targetApps, cli.shard);
-    console.log(
-      `⚖️ Shard ${cli.shard} (weighted): selected ${targetApps.length} of ${totalBefore} app(s): ${targetApps.join(", ")}`,
-    );
+    if (cli.listPlanJson) {
+      console.log(
+        JSON.stringify({
+          totalChanged: targetApps.length,
+          runtimeCount: targetApps.length,
+          syntaxOnlyCount: 0,
+          runtimeApps: targetApps,
+          syntaxOnlyApps: [],
+        }),
+      );
+      return;
+    }
+    if (cli.shard) {
+      const totalBefore = targetApps.length;
+      targetApps = applySharding(targetApps, cli.shard);
+      console.log(
+        `⚖️ Shard ${cli.shard} (weighted): selected ${targetApps.length} of ${totalBefore} app(s): ${targetApps.join(", ")}`,
+      );
+    }
+  } else {
+    const plan = classifyChangedApps({
+      baseRef: cli.baseRef || undefined,
+      forceAll: cli.forceAll,
+    });
+    if (cli.listRuntimeCount) {
+      console.log(String(plan.runtimeApps.length));
+      return;
+    }
+    if (cli.listPlanJson) {
+      console.log(
+        JSON.stringify({
+          totalChanged: plan.allChangedApps.length,
+          runtimeCount: plan.runtimeApps.length,
+          syntaxOnlyCount: plan.syntaxOnlyApps.length,
+          runtimeApps: plan.runtimeApps,
+          syntaxOnlyApps: plan.syntaxOnlyApps,
+        }),
+      );
+      return;
+    }
+    if (plan.allChangedApps.length === 0) {
+      console.log("No changed apps detected. Use --all to test the entire store.");
+      writeReports([], cli.reportJson, cli.reportMd, cli.jsonFailures);
+      return;
+    }
+    if (cli.shard) {
+      const shardMatch = cli.shard.match(/^(\d+)\/(\d+)$/);
+      const shardIdx = shardMatch ? Number.parseInt(shardMatch[1], 10) : 1;
+      const shardedRuntime = applySharding(plan.runtimeApps, cli.shard);
+      const shardSyntax = shardIdx === 1 ? plan.syntaxOnlyApps : [];
+      for (const s of shardSyntax) syntaxOnlySet.add(s);
+      targetApps = [...shardSyntax, ...shardedRuntime];
+    } else {
+      for (const s of plan.syntaxOnlyApps) syntaxOnlySet.add(s);
+      targetApps = [...plan.syntaxOnlyApps, ...plan.runtimeApps];
+    }
   }
 
   if (targetApps.length === 0) {
     console.log("No apps to test in current selection.");
-    process.exit(0);
+    writeReports([], cli.reportJson, cli.reportMd, cli.jsonFailures);
+    return;
+  }
+
+  if (!isDockerAvailable()) {
+    console.error("❌ Docker and Docker Compose must be installed and running.");
+    process.exit(1);
   }
 
   console.log(`\n🚀 Starting Docker Smoke Tests for ${targetApps.length} app(s)...`);
@@ -528,9 +770,38 @@ export async function runSmokeTests() {
   const results: AppTestResult[] = [];
   let upCount = 0;
 
-  let prefetchProcess: ChildProcess | null = null;
-  let prefetchExitPromise: Promise<number | null> | null = null;
-  let prefetchedAppId: string | null = null;
+  let activePrefetch: { appId: string; proc: ChildProcess; done: Promise<number | null> } | null = null;
+
+  async function awaitOrCancelPrefetch(targetAppId: string | null, log?: (m: string) => void): Promise<void> {
+    if (!activePrefetch) return;
+    const current = activePrefetch;
+    activePrefetch = null;
+
+    if (targetAppId && current.appId === targetAppId) {
+      log?.(`  ℹ Prefetch background worker active for ${targetAppId}. Awaiting completion...`);
+      await Promise.race([
+        current.done,
+        new Promise<null>((resolve) =>
+          setTimeout(() => {
+            try {
+              current.proc.kill("SIGTERM");
+            } catch {
+              // ignore
+            }
+            resolve(null);
+          }, 120000),
+        ),
+      ]);
+      return;
+    }
+
+    try {
+      current.proc.kill("SIGTERM");
+    } catch {
+      // ignore
+    }
+    await Promise.race([current.done, new Promise<null>((resolve) => setTimeout(() => resolve(null), 3000))]);
+  }
 
   try {
     for (let idx = 0; idx < targetApps.length; idx++) {
@@ -541,6 +812,8 @@ export async function runSmokeTests() {
       const logFilePath = cli.logsDir ? path.join(cli.logsDir, `${appId}.log`) : undefined;
       const logLines: string[] = [];
       const startTime = Date.now();
+      let startedContainer = false;
+      let env: Record<string, string> | null = null;
 
       function log(msg: string) {
         console.log(msg);
@@ -552,23 +825,21 @@ export async function runSmokeTests() {
       log(`Timestamp: ${new Date().toISOString()}`);
       log("======================================================");
 
-      if (!fs.existsSync(composePath)) {
-        log(`⚠️ Skipping "${appId}": docker-compose.yml not found.`);
-        results.push({
-          appId,
-          status: "CONFIG_FAILED",
-          durationSeconds: 0,
-          details: "docker-compose.yml not found",
-          logFile: logFilePath,
-        });
-        saveLog(logFilePath, logLines);
-        continue;
-      }
-
-      const env = buildAppEnv(appId);
-      let didStart = false;
-
       try {
+        if (!fs.existsSync(composePath)) {
+          log(`⚠️ Skipping "${appId}": docker-compose.yml not found.`);
+          results.push({
+            appId,
+            status: "CONFIG_FAILED",
+            durationSeconds: 0,
+            details: "docker-compose.yml not found",
+            logFile: logFilePath,
+          });
+          continue;
+        }
+
+        env = buildAppEnv(appId);
+
         // 1. Validate syntax and variables with docker compose config
         log("[1/3] Validating Docker Compose configuration...");
         const configRes = spawnSync("docker", ["compose", "-p", projectName, "-f", composePath, "config"], {
@@ -588,6 +859,18 @@ export async function runSmokeTests() {
           continue;
         }
         log("  ✓ Syntax and variable interpolation valid.");
+
+        if (syntaxOnlySet.has(appId) && !cli.forceAll) {
+          log("  ✓ Metadata/version-only change detected: skipping image pull and container startup.");
+          results.push({
+            appId,
+            status: "SUCCESS",
+            durationSeconds: (Date.now() - startTime) / 1000,
+            details: "Syntax validated (metadata/version-only change)",
+            logFile: logFilePath,
+          });
+          continue;
+        }
 
         // Check skip list
         if (!cli.forceAll && SKIP_CONTAINER_STARTUP.has(appId)) {
@@ -614,28 +897,14 @@ export async function runSmokeTests() {
           continue;
         }
 
-        // 2. Pull images with retry and disk safeguard
+        // 2. Pull images with retry
         log("[2/3] Pulling images (with backoff & prefetch check)...");
-        if (prefetchedAppId === appId && prefetchProcess) {
-          log(`  ℹ Prefetch background worker active for ${appId}. Awaiting completion...`);
-          if (prefetchExitPromise) {
-            await Promise.race([prefetchExitPromise, delay(180_000)]);
-          }
-          if (prefetchProcess.exitCode === null) {
-            try {
-              prefetchProcess.kill("SIGTERM");
-            } catch {
-              // ignore
-            }
-          }
-          prefetchProcess = null;
-          prefetchExitPromise = null;
-          prefetchedAppId = null;
-        }
+        await awaitOrCancelPrefetch(appId, log);
 
-        if (getAvailableDiskSpaceGb() < 15) {
-          log("  Free disk space < 15GB before pull. Pruning unused Docker artifacts...");
-          pruneDockerDisk(log, true);
+        const prePullFreeGb = getAvailableDiskSpaceGb();
+        if ((cli.prune && prePullFreeGb < 20) || prePullFreeGb < 12) {
+          log(`  Low free disk before pull (${prePullFreeGb.toFixed(1)}GB). Cleaning Docker disk...`);
+          pruneDockerDisk(log);
         }
 
         const pullRes = await pullImagesWithRetry(composePath, env, log);
@@ -653,36 +922,33 @@ export async function runSmokeTests() {
         }
         log("  ✓ Images successfully pulled from registry.");
 
-        // Start background prefetch for next app only when prune mode is off and ample disk is available
-        if (!cli.prune && upCount + 1 < cli.maxUp && idx + 1 < targetApps.length && getAvailableDiskSpaceGb() >= 20) {
+        // Start background prefetch for next runtime app (N+1 pipeline) when sufficient disk headroom exists
+        if (!cli.prune && idx + 1 < targetApps.length && upCount + 1 < cli.maxUp) {
           const nextAppId = targetApps[idx + 1];
           const nextCompose = path.join(ROOT_DIR, "apps", nextAppId, "docker-compose.yml");
-          if (fs.existsSync(nextCompose) && (!SKIP_CONTAINER_STARTUP.has(nextAppId) || cli.forceAll)) {
+          if (
+            fs.existsSync(nextCompose) &&
+            !syntaxOnlySet.has(nextAppId) &&
+            (!SKIP_CONTAINER_STARTUP.has(nextAppId) || cli.forceAll) &&
+            getAvailableDiskSpaceGb() >= 22
+          ) {
             const nextEnv = buildAppEnv(nextAppId);
-            prefetchedAppId = nextAppId;
-            try {
-              if (prefetchProcess && prefetchProcess.exitCode === null) {
-                prefetchProcess.kill("SIGTERM");
-              }
-            } catch {
-              // ignore
-            }
-            prefetchProcess = spawn("docker", ["compose", "-f", nextCompose, "pull", "--quiet"], {
+            const proc = spawn("docker", ["compose", "-f", nextCompose, "pull", "--quiet"], {
               env: nextEnv,
               stdio: "ignore",
             });
-            const activeChild = prefetchProcess;
-            prefetchExitPromise = new Promise<number | null>((resolve) => {
-              activeChild.once("exit", (code) => resolve(code));
-              activeChild.once("error", () => resolve(null));
+            const done = new Promise<number | null>((resolve) => {
+              proc.once("exit", (code) => resolve(code));
+              proc.once("error", () => resolve(null));
             });
+            activePrefetch = { appId: nextAppId, proc, done };
           }
         }
 
         // 3. Up in background and monitor
         log(`[3/3] Starting container(s) and verifying health (max wait ${cli.waitSec}s)...`);
         upCount++;
-        didStart = true;
+        startedContainer = true;
         let testSuccess = true;
         let failureDetail = "";
         let portWarning = false;
@@ -851,7 +1117,7 @@ export async function runSmokeTests() {
           logFile: logFilePath,
         });
       } finally {
-        if (didStart) {
+        if (startedContainer && env) {
           log("  Cleaning up container(s) (instant teardown -t 0)...");
           spawnSync(
             "docker",
@@ -863,24 +1129,16 @@ export async function runSmokeTests() {
           );
         }
 
-        // Prune unused Docker images when --prune is requested or disk space drops below 14 GB
-        if (cli.prune || getAvailableDiskSpaceGb() < 14) {
-          log("  Pruning unused Docker images to reclaim disk space...");
-          if (prefetchProcess && prefetchProcess.exitCode === null) {
-            try {
-              prefetchProcess.kill("SIGTERM");
-            } catch {
-              // ignore
-            }
-            prefetchProcess = null;
-            prefetchExitPromise = null;
-            prefetchedAppId = null;
-          }
-          pruneDockerDisk(log, getAvailableDiskSpaceGb() < 12);
+        const postAppFreeGb = getAvailableDiskSpaceGb();
+        if ((startedContainer && cli.prune && postAppFreeGb < 18) || postAppFreeGb < 12) {
+          log(`  Free disk space is ${postAppFreeGb.toFixed(1)}GB. Running full Docker prune...`);
+          await awaitOrCancelPrefetch(null);
+          pruneDockerDisk(log);
         }
 
+        const appDataDir = env?.APP_DATA_DIR || `/tmp/runtipi-smoke-data/${appId}`;
         try {
-          fs.rmSync(env.APP_DATA_DIR, { recursive: true, force: true });
+          fs.rmSync(appDataDir, { recursive: true, force: true });
         } catch {
           // ignore
         }
@@ -889,13 +1147,7 @@ export async function runSmokeTests() {
       }
     }
   } finally {
-    if (prefetchProcess && prefetchProcess.exitCode === null) {
-      try {
-        prefetchProcess.kill("SIGTERM");
-      } catch {
-        // ignore
-      }
-    }
+    await awaitOrCancelPrefetch(null);
   }
 
   writeReports(results, cli.reportJson, cli.reportMd, cli.jsonFailures);
@@ -987,7 +1239,8 @@ function writeReports(
         else if (res.status !== "SUCCESS") icon = "❌";
 
         const warnNote = res.portWarning ? " *(PORT_WARNING)*" : "";
-        md += `| \`${res.appId}\` | ${icon} ${res.status} | ${res.durationSeconds.toFixed(1)}s | ${(res.details || "-") + warnNote} |\n`;
+        const safeDetails = (res.details || "-").replace(/\r?\n/g, " ").replace(/\|/g, "\\|");
+        md += `| \`${res.appId}\` | ${icon} ${res.status} | ${res.durationSeconds.toFixed(1)}s | ${safeDetails + warnNote} |\n`;
       }
 
       fs.writeFileSync(reportMd, md, "utf8");
@@ -998,5 +1251,8 @@ function writeReports(
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
-  runSmokeTests();
+  runSmokeTests().catch((err) => {
+    console.error("❌ Smoke test runner crashed:", err);
+    process.exit(1);
+  });
 }

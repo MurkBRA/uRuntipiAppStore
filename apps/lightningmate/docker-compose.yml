@@ -1,6 +1,6 @@
 services:
   lightningmate:
-    image: ghcr.io/opensourceminers/lightningmate:v0.7.7
+    image: ghcr.io/opensourceminers/lightningmate:v0.9.1
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
@@ -21,6 +21,8 @@ services:
       - LND_WRITE_MACAROON_PATH=/lnd/data/chain/bitcoin/${APP_BITCOIN_NETWORK}/admin.macaroon
       - LM_SELL_FEE_BPS=100
       - LM_SELL_FEE_ADDRESS=lightningmate@btcpay.opensourceminers.de
+      - TOR_PROXY_IP=${TOR_PROXY_IP}
+      - TOR_PROXY_PORT=${TOR_PROXY_PORT}
     stop_grace_period: 1m
     x-runtipi:
       internal_port: 3001

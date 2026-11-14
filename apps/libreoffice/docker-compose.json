@@ -3,9 +3,11 @@
   "services": [
     {
       "name": "libreoffice",
-      "image": "linuxserver/libreoffice:7.6.7",
+      "image": "linuxserver/libreoffice:25.8.7",
       "isMain": true,
       "internalPort": 3000,
+      "hostname": "libreoffice",
+      "shmSize": "1gb",
       "stopGracePeriod": "1m",
       "environment": [
         {

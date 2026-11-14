@@ -3,12 +3,22 @@
   "services": [
     {
       "name": "mailflow",
-      "image": "ghcr.io/maathimself/mailflow-frontend:4.3.1",
+      "image": "ghcr.io/maathimself/mailflow-frontend:4.4.0",
       "isMain": true,
       "internalPort": 80,
       "stopGracePeriod": "1m",
+      "environment": [
+        {
+          "key": "TLS_MODE",
+          "value": "off"
+        },
+        {
+          "key": "BACKEND_HOST",
+          "value": "mailflow-backend"
+        }
+      ],
       "healthCheck": {
-        "test": "wget -qO/dev/null http://127.0.0.1:80/ || exit 1",
+        "test": "wget -qO/dev/null http://127.0.0.1:2080/healthz || exit 1",
         "interval": "15s",
         "timeout": "5s",
         "retries": 3,
@@ -22,7 +32,7 @@
     },
     {
       "name": "mailflow-backend",
-      "image": "ghcr.io/maathimself/mailflow-backend:4.3.1",
+      "image": "ghcr.io/maathimself/mailflow-backend:4.4.0",
       "stopGracePeriod": "1m",
       "environment": [
         {
@@ -70,10 +80,6 @@
           "value": "mailflow"
         },
         {
-          "key": "REDIS_URL",
-          "value": "redis://mailflow-redis:6379"
-        },
-        {
           "key": "TRUST_PROXY_HOPS",
           "value": 2
         }
@@ -87,9 +93,6 @@
       },
       "dependsOn": {
         "mailflow-postgres": {
-          "condition": "service_healthy"
-        },
-        "mailflow-redis": {
           "condition": "service_healthy"
         }
       }
@@ -123,24 +126,6 @@
         "timeout": "5s",
         "retries": 5,
         "startPeriod": "20s"
-      }
-    },
-    {
-      "name": "mailflow-redis",
-      "image": "redis:7-alpine",
-      "command": "redis-server --save 60 1 --loglevel warning",
-      "volumes": [
-        {
-          "hostPath": "${APP_DATA_DIR}/data/redis",
-          "containerPath": "/data"
-        }
-      ],
-      "healthCheck": {
-        "test": "redis-cli ping",
-        "interval": "10s",
-        "timeout": "3s",
-        "retries": 5,
-        "startPeriod": "10s"
       }
     }
   ]

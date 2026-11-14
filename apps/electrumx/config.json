@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "electrumx",
   "description": "Run your personal Electrum server and connect your Electrum-compatible wallet, including BitBoxApp, BlueWallet, Electrum Wallet (Android and Desktop), Nunchuk  (Desktop), Phoenix, and Sparrow Wallet to it instead of using a third-party Electrum server.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "1.0.1",
   "categories": [
     "finance"
@@ -66,7 +66,7 @@
     "amd64"
   ],
   "created_at": 1792501495153,
-  "updated_at": 1794005949207,
+  "updated_at": 1794674798025,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

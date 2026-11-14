@@ -1,6 +1,6 @@
 services:
   robosats:
-    image: recksato/robosats-client:v0.8.7-alpha
+    image: recksato/robosats-client:v0.8.8-alpha
     command:
       - sh
       - '-ec'

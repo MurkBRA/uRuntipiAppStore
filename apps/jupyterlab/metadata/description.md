@@ -21,7 +21,7 @@ JupyterLab uses the same notebook document format as the classic Jupyter Noteboo
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `v4.6.5`
+- **Upstream Version**: `v4.6.6`
 - **Website**: https://jupyterlab.readthedocs.io/en/latest/
 - **Source Repository**: https://github.com/jupyterlab/jupyterlab
 - **Support**: https://github.com/jupyterlab/jupyterlab/issues

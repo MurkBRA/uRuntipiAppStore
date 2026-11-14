@@ -19,7 +19,7 @@ Homescreen widget developed by RodB.
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `1.2.3`
+- **Upstream Version**: `1.2.4`
 - **Website**: https://gobrrr.me
 - **Source Repository**: https://github.com/gobrrrme/GoBrrr-Pool
 - **Support**: https://github.com/gobrrrme/GoBrrr-Pool/issues

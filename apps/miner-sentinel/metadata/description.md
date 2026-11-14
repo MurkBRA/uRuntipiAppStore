@@ -27,7 +27,7 @@ Runs entirely on your own hardware. All metrics stay in your PostgreSQL database
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `1.2.0`
+- **Upstream Version**: `1.2.0-patch.1`
 - **Website**: https://github.com/dcbert/miner-sentinel
 - **Source Repository**: https://github.com/dcbert/miner-sentinel
 - **Support**: https://github.com/dcbert/miner-sentinel/issues

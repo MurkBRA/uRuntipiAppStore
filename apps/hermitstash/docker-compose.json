@@ -24,7 +24,7 @@
         },
         {
           "key": "TRUST_PROXY",
-          "value": "10.21.0.0/16"
+          "value": "172.16.0.0/12"
         },
         {
           "key": "RP_ORIGIN",

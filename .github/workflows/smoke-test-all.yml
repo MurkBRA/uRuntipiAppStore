@@ -48,11 +48,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js 22
+      - name: Setup Node.js 24
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
-          cache: npm
+          node-version: "24"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -77,6 +77,8 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Shard ${{ matrix.shard }}/20 Smoke Test (Weight-Balanced)
+        env:
+          WAIT_SECONDS: ${{ inputs.wait_seconds || '12' }}
         run: |
           PRUNE_FLAG=""
           if [ "${{ inputs.prune }}" = "true" ]; then
@@ -86,7 +88,7 @@ jobs:
             --all \
             --shard=${{ matrix.shard }}/20 \
             --logs-dir=logs/shard-${{ matrix.shard }} \
-            --wait=${{ inputs.wait_seconds || 12 }} \
+            --wait="$WAIT_SECONDS" \
             --report-json=report-shard-${{ matrix.shard }}.json \
             --report-md=summary-shard-${{ matrix.shard }}.md \
             $PRUNE_FLAG
@@ -127,11 +129,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Setup Node.js 22
+      - name: Setup Node.js 24
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
-          cache: npm
+          node-version: "24"
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
@@ -156,15 +158,18 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Run Custom Smoke Test
+        env:
+          APPS_INPUT: ${{ inputs.apps }}
+          WAIT_SECONDS: ${{ inputs.wait_seconds || '12' }}
         run: |
           PRUNE_FLAG=""
           if [ "${{ inputs.prune }}" = "true" ]; then
             PRUNE_FLAG="--prune"
           fi
           npm run test:smoke -- \
-            --apps="${{ inputs.apps }}" \
+            --apps="$APPS_INPUT" \
             --logs-dir=logs/custom \
-            --wait=${{ inputs.wait_seconds || 12 }} \
+            --wait="$WAIT_SECONDS" \
             --report-json=report-custom.json \
             --report-md=summary-custom.md \
             $PRUNE_FLAG
@@ -175,6 +180,15 @@ jobs:
         with:
           name: container-logs-custom
           path: logs/custom/
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload Custom Report
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: report-custom
+          path: report-custom.json
           if-no-files-found: ignore
           retention-days: 14
 
@@ -192,6 +206,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
       - name: Download all log artifacts
         uses: actions/download-artifact@v8
         with:
@@ -210,17 +229,70 @@ jobs:
             zip -r all-container-logs.zip consolidated-logs/
           fi
 
-          {
-            echo "## 📦 Complete Store Smoke Test & Container Logs"
-            echo ""
-            echo "- **Total Logs Captured**: $TOTAL_LOGS"
-            if [ "$TOTAL_LOGS" -gt 0 ]; then
-              echo "- All container logs are archived in the downloadable artifact: **all-container-logs**"
-            else
-              echo "- No container logs were produced during this run."
-            fi
-            echo ""
-          } >> "$GITHUB_STEP_SUMMARY"
+          TOTAL_LOGS="$TOTAL_LOGS" node - <<'EOF'
+          const fs = require("node:fs");
+          const path = require("node:path");
+
+          const reportFiles = [];
+          function walkReports(dir) {
+            if (!fs.existsSync(dir)) return;
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              const full = path.join(dir, entry.name);
+              if (entry.isDirectory()) walkReports(full);
+              else if (entry.isFile() && /^report-.*\.json$/.test(entry.name)) {
+                reportFiles.push(full);
+              }
+            }
+          }
+          walkReports("artifacts-downloaded");
+          reportFiles.sort();
+
+          const allResults = [];
+          for (const rf of reportFiles) {
+            try {
+              const parsed = JSON.parse(fs.readFileSync(rf, "utf8"));
+              if (Array.isArray(parsed)) allResults.push(...parsed);
+            } catch (err) {
+              console.warn(`Warning: failed to parse ${rf}:`, err.message);
+            }
+          }
+
+          allResults.sort((a, b) => String(a.appId).localeCompare(String(b.appId)));
+          const passed = allResults.filter((r) => r.status === "SUCCESS");
+          const skipped = allResults.filter((r) => r.status === "SKIPPED_HARDWARE");
+          const failed = allResults.filter((r) => r.status !== "SUCCESS" && r.status !== "SKIPPED_HARDWARE");
+          const portWarnings = allResults.filter((r) => r.portWarning);
+
+          const lines = [
+            "## 📦 Complete Store Smoke Test & Container Logs",
+            "",
+            `- **Report Files Aggregated**: ${reportFiles.length}`,
+            `- **Total Tested**: ${allResults.length}`,
+            `- **Running / Healthy**: ${passed.length} ✅`,
+            `- **Hardware / Bypass**: ${skipped.length} ℹ️`,
+            `- **Failures / Crashes**: ${failed.length} ❌`,
+            `- **Port Warnings**: ${portWarnings.length} ⚠️`,
+            `- **Total Logs Captured**: ${process.env.TOTAL_LOGS || 0}`,
+          ];
+
+          if (Number(process.env.TOTAL_LOGS || 0) > 0) {
+            lines.push("- All container logs are archived in the downloadable artifact: **all-container-logs**");
+          } else {
+            lines.push("- No container logs were produced during this run.");
+          }
+
+          if (failed.length > 0) {
+            lines.push("", "### ❌ Failed Apps Breakdown", "", "| App | Status | Duration | Details |", "| :--- | :---: | :---: | :--- |");
+            for (const f of failed) {
+              const details = String(f.details || "-").replace(/\r?\n/g, " ").replace(/\|/g, "\\|");
+              const dur = typeof f.durationSeconds === "number" ? `${f.durationSeconds.toFixed(1)}s` : "-";
+              lines.push(`| \`${f.appId}\` | ❌ ${f.status} | ${dur} | ${details} |`);
+            }
+          }
+
+          lines.push("");
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `${lines.join("\n")}\n`);
+          EOF
 
       - name: Upload Unified Logs ZIP
         if: always() && hashFiles('all-container-logs.zip') != ''

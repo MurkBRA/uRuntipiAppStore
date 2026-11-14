@@ -1,6 +1,7 @@
 import type { formFieldSchema } from "@runtipi/common/schemas";
 
 export type FormFieldInput = typeof formFieldSchema.inferIn;
+export type TranspiledFormField = FormFieldInput;
 
 export interface ContractVariableSpec {
   type: "text" | "password" | "number" | "random";

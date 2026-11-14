@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "portainer-business",
+      "image": "portainer/portainer-ee:2.45.3-alpine",
+      "isMain": true,
+      "internalPort": 9000,
+      "command": "--host unix:///var/run/docker.sock --admin-password-file=/default-password",
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/default-password",
+          "containerPath": "/default-password"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/portainer",
+          "containerPath": "/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/var/run"
+        }
+      ]
+    },
+    {
+      "name": "portainer-business-docker",
+      "image": "docker:27.2.0-dind",
+      "networkMode": "host",
+      "privileged": true,
+      "stopGracePeriod": "1m",
+      "command": "dockerd\n  --bridge dind1\n  --data-root /data/data\n  --exec-root /data/exec\n  --host unix:///data/docker.sock\n  --pidfile /data/docker.pid",
+      "entrypoint": "/entrypoint.sh",
+      "environment": [
+        {
+          "key": "DOCKER_ENSURE_BRIDGE",
+          "value": "dind1:10.33.0.1/16"
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/entrypoint.sh",
+          "containerPath": "/entrypoint.sh"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/docker",
+          "containerPath": "/data"
+        }
+      ]
+    }
+  ]
+}

@@ -18,7 +18,7 @@ The app provides sensible defaults and is easy to use for beginners while still 
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.4.1-patch.1`
+- **Upstream Version**: `0.4.1-patch.2`
 - **Website**: https://jamapp.org
 - **Source Repository**: https://github.com/joinmarket-webui/jam
 - **Support**: https://github.com/joinmarket-webui/jam/issues

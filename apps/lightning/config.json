@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "lightning",
   "description": "Run your personal Lightning Network node, and join the future of Bitcoin today.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "v1.3.3",
   "categories": [
     "finance"
@@ -18,12 +18,6 @@
   "uid": 1000,
   "gid": 1000,
   "form_fields": [
-    {
-      "type": "random",
-      "label": "Lightning Node lightning command",
-      "min": 32,
-      "env_variable": "APP_LIGHTNING_COMMAND"
-    },
     {
       "type": "text",
       "label": "Lightning Node lightning rest hidden service",
@@ -119,6 +113,20 @@
       "regex": "^[0-9]+(:[0-9]+)?$",
       "pattern_error": "Must be a numeric UID:GID (e.g. 1000:1000) or numeric UID (e.g. 1000)",
       "env_variable": "APP_CONTAINER_USER"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Rawblock Port",
+      "required": false,
+      "default": 28332,
+      "env_variable": "APP_BITCOIN_ZMQ_RAWBLOCK_PORT"
+    },
+    {
+      "type": "number",
+      "label": "Bitcoin ZMQ Rawtx Port",
+      "required": false,
+      "default": 28333,
+      "env_variable": "APP_BITCOIN_ZMQ_RAWTX_PORT"
     }
   ],
   "supported_architectures": [
@@ -126,7 +134,7 @@
     "amd64"
   ],
   "created_at": 1792501500084,
-  "updated_at": 1794005949365,
+  "updated_at": 1794674798798,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

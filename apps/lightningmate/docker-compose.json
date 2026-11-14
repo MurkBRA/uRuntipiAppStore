@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "lightningmate",
-      "image": "ghcr.io/opensourceminers/lightningmate:v0.7.7",
+      "image": "ghcr.io/opensourceminers/lightningmate:v0.9.1",
       "isMain": true,
       "internalPort": 3001,
       "addToMainNetwork": true,
@@ -69,6 +69,14 @@
         {
           "key": "LM_SELL_FEE_ADDRESS",
           "value": "lightningmate@btcpay.opensourceminers.de"
+        },
+        {
+          "key": "TOR_PROXY_IP",
+          "value": "${TOR_PROXY_IP}"
+        },
+        {
+          "key": "TOR_PROXY_PORT",
+          "value": "${TOR_PROXY_PORT}"
         }
       ],
       "volumes": [

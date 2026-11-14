@@ -5,9 +5,9 @@
   "exposable": true,
   "dynamic_config": true,
   "id": "lightningmate",
-  "description": "Lightning Mate manages your Lightning node so you don't have to babysit it. It connects automatically to your Runtipi Lightning (LND) node.",
-  "tipi_version": 2,
-  "version": "0.7.7",
+  "description": "Lightning Mate manages your Lightning node so you don't have to babysit it. It connects automatically to your Runtipi Lightning (LND) node and asks three short questions the first time you open it: what the node is for, how much the app may use, and what that will do.",
+  "tipi_version": 3,
+  "version": "0.9.1",
   "categories": [
     "finance"
   ],
@@ -65,6 +65,20 @@
     },
     {
       "type": "text",
+      "label": "Tor SOCKS Proxy Host / IP (Optional)",
+      "required": false,
+      "default": "127.0.0.1",
+      "env_variable": "TOR_PROXY_IP"
+    },
+    {
+      "type": "number",
+      "label": "Tor SOCKS Proxy Port (Optional)",
+      "required": false,
+      "default": 9050,
+      "env_variable": "TOR_PROXY_PORT"
+    },
+    {
+      "type": "text",
       "label": "Lightning (LND) Data Directory",
       "required": false,
       "default": "/data/lnd",
@@ -76,7 +90,7 @@
     "amd64"
   ],
   "created_at": 1792501500297,
-  "updated_at": 1794005949372,
+  "updated_at": 1794674798882,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

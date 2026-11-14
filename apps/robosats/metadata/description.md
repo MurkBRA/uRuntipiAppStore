@@ -18,7 +18,7 @@ Features:
 You can join other cool Robots and get community support at https://t.me/robosats telegram group.
 
 ## Links
-- **Upstream Version**: `v0.8.7-alpha`
+- **Upstream Version**: `v0.8.8-alpha`
 - **Website**: https://learn.robosats.org
 - **Source Repository**: https://github.com/RoboSats/robosats
 - **Support**: https://t.me/robosats

@@ -7,9 +7,9 @@ services:
       - ${APP_DATA_DIR}/data/app-data/lightning/data/lnd:/lnd:ro
     environment:
       - LN_BACKEND_TYPE=${APP_ALBYHUB_LN_BACKEND}
-      - LND_ADDRESS=10.21.21.9:10009
-      - LND_CERT_FILE=/lnd/tls.cert
-      - LND_MACAROON_FILE=/lnd/data/chain/bitcoin/mainnet/admin.macaroon
+      - LND_ADDRESS=${APP_ALBYHUB_LND_ADDRESS}
+      - LND_CERT_FILE=${APP_ALBYHUB_LND_CERT_FILE}
+      - LND_MACAROON_FILE=${APP_ALBYHUB_LND_MACAROON_FILE}
       - WORK_DIR=/data/albyhub
       - COOKIE_SECRET=${APP_SEED}
       - HIDE_UPDATE_BANNER=true

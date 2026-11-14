@@ -30,7 +30,7 @@ Yuvomi keeps all data in a local SQLite database (optionally encrypted with SQLC
 Open Yuvomi from your Runtipi dashboard and create the first account — that account becomes the family admin and can invite the rest of the household.
 
 ## Links
-- **Upstream Version**: `2.86.0`
+- **Upstream Version**: `2.89.1`
 - **Website**: https://github.com/ulsklyc/yuvomi
 - **Source Repository**: https://github.com/ulsklyc/yuvomi
 - **Support**: https://github.com/ulsklyc/yuvomi/issues

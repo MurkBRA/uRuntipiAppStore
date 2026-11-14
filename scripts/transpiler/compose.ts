@@ -1,5 +1,5 @@
 import { convertLegacyToYaml, parseComposeJson } from "@runtipi/common/schemas";
-import { type FormFieldInput, UMBREL_EXTERNAL_CONTRACT_VARS, createFormFieldFromContract } from "./contracts.ts";
+import { type FormFieldInput, createFormFieldFromContract } from "./contracts.ts";
 import { APP_OVERRIDES } from "./overrides.ts";
 
 export interface TranspiledComposeResult {
@@ -8,6 +8,9 @@ export interface TranspiledComposeResult {
   formFields: FormFieldInput[];
   mainImageTag: string;
   serviceRenameMap: Record<string, string>;
+  resolvedStaticExports: Record<string, string>;
+  keepTor: boolean;
+  referencedTemplates: Set<string>;
   uid?: number;
   gid?: number;
 }
@@ -61,10 +64,41 @@ export function extractImageVersionTag(image: string): string {
   return parts[parts.length - 1] || "latest";
 }
 
-function isIgnoredSidecarService(serviceName: string, serviceConfig: Record<string, any>): boolean {
+export function shouldKeepTorSidecar(rawServices: Record<string, any>): boolean {
+  const torSvc = rawServices?.tor;
+  if (!torSvc || typeof torSvc !== "object") return false;
+  if (typeof torSvc.network_mode === "string" && torSvc.network_mode.startsWith("service:")) {
+    return false;
+  }
+
+  const torVols = Array.isArray(torSvc.volumes) ? torSvc.volumes.map(String) : [];
+  const usesSharedUmbrelTorDir = torVols.some((v: string) => v.includes("TOR_DATA_DIR"));
+  if (usesSharedUmbrelTorDir) return false;
+
+  const hasAppTorDataDir = torVols.some(
+    (v: string) => /\$\{?APP_DATA_DIR\}?\/(?:data\/)?tor\b/.test(v) || /\$\{?APP_DATA_DIR\}?\/torrc\b/.test(v),
+  );
+  if (!hasAppTorDataDir) return false;
+
+  return Object.entries(rawServices).some(([name, svc]) => {
+    if (name === "tor" || name === "app_proxy" || !svc || typeof svc !== "object") return false;
+    const deps = (svc as any).depends_on;
+    const dependsOnTor =
+      (Array.isArray(deps) && deps.includes("tor")) ||
+      (deps && typeof deps === "object" && Object.prototype.hasOwnProperty.call(deps, "tor"));
+    const siblingVols = Array.isArray((svc as any).volumes) ? (svc as any).volumes.map(String) : [];
+    const mountsAppTorDir = siblingVols.some((v: string) => /\$\{?APP_DATA_DIR\}?\/(?:data\/)?tor\b/.test(v));
+    return dependsOnTor && mountsAppTorDir;
+  });
+}
+
+function isIgnoredSidecarService(serviceName: string, serviceConfig: Record<string, any>, keepTor = false): boolean {
   if (serviceName === "app_proxy") return true;
   const image = String(serviceConfig?.image || "").toLowerCase();
   if (!image) return true;
+  if (serviceName === "tor" && keepTor) {
+    return false;
+  }
   if (image.includes("getumbrel/tor") || (serviceName === "tor" && image.includes("tor"))) {
     return true;
   }
@@ -214,6 +248,13 @@ export function transpileCompose(params: {
     formFieldVars.add(field.env_variable);
   }
 
+  // Collect explicit *.template references from compose (excluding YAML comments)
+  const referencedTemplates = new Set<string>();
+  const composeSerialized = JSON.stringify(umbrelCompose || {});
+  for (const m of composeSerialized.matchAll(/([A-Za-z0-9_.-]+\.template)(?=["'\s:/]|$)/g)) {
+    referencedTemplates.add(m[1]);
+  }
+
   // 1. Inspect app_proxy to identify main service and internalPort
   const proxyEnvEntries = parseEnvToMap(rawServices.app_proxy?.environment);
   const proxyEnv = new Map(proxyEnvEntries.map((e) => [e.key, String(e.value)]));
@@ -247,10 +288,13 @@ export function transpileCompose(params: {
     internalPort = manifestPort || allocatedPort || 8080;
   }
 
-  // 2. Filter active services
+  // 2. Determine whether Tor sidecar is self-contained and filter active services
+  const keepTor = shouldKeepTorSidecar(rawServices);
   const keptServiceKeys = Object.keys(rawServices).filter(
     (key) =>
-      rawServices[key] && typeof rawServices[key] === "object" && !isIgnoredSidecarService(key, rawServices[key]),
+      rawServices[key] &&
+      typeof rawServices[key] === "object" &&
+      !isIgnoredSidecarService(key, rawServices[key], keepTor),
   );
 
   if (keptServiceKeys.length === 0) {
@@ -321,7 +365,10 @@ export function transpileCompose(params: {
   }
 
   // Map legacy Umbrel per-service ipv4_address variables ($APP_*_IP) to their Docker DNS service names
-  const resolvedStaticExports: Record<string, string> = { ...staticExports };
+  const resolvedStaticExports: Record<string, string> = {
+    ...staticExports,
+    ...(APP_OVERRIDES[appId]?.staticEnvOverrides || {}),
+  };
   for (const key of keptServiceKeys) {
     const svcIp = rawServices[key]?.networks?.default?.ipv4_address;
     if (typeof svcIp === "string" && svcIp.startsWith("$")) {
@@ -418,8 +465,10 @@ export function transpileCompose(params: {
       }
     }
     // Also catch any removed tor service references
-    out = out.replaceAll(`${appId}_tor_1`, "127.0.0.1");
-    out = out.replaceAll(`${appId}_tor_server_1`, "127.0.0.1");
+    if (!keepTor) {
+      out = out.replaceAll(`${appId}_tor_1`, "127.0.0.1");
+      out = out.replaceAll(`${appId}_tor_server_1`, "127.0.0.1");
+    }
 
     // Replace explicit Umbrel container_name in URLs/URIs -> renamed service
     for (const [cName, finalKey] of Object.entries(containerNameMap)) {
@@ -430,7 +479,7 @@ export function transpileCompose(params: {
       out = out.replace(urlHostRegex, `$1${finalKey}$2`);
     }
 
-    // 3. Replace Umbrel URL patterns
+    // 3. Replace Umbrel URL patterns (handles DEVICE_DOMAIN_NAME and DEVICE_HOSTNAME with ports)
     out = out.replace(
       /https?:\/\/\$\{?DEVICE_DOMAIN_NAME(?::-[^}]*)?\}?:\$\{?(?:APP_PROXY_PORT|[A-Za-z0-9_]+)\}?/g,
       "${APP_PROTOCOL:-http}://${APP_DOMAIN}",
@@ -438,6 +487,14 @@ export function transpileCompose(params: {
     out = out.replace(
       new RegExp(`https?://\\$\\{?DEVICE_DOMAIN_NAME(?::-[^}]*)?\\}?:${manifestPort}\\b`, "g"),
       "${APP_PROTOCOL:-http}://${APP_DOMAIN}",
+    );
+    out = out.replace(
+      /(https?):\/\/\$\{?DEVICE_HOSTNAME(?::-[^}]*)?\}?:\$\{?(?:APP_PROXY_PORT)\}?/g,
+      "$1://${LOCAL_DOMAIN}:${APP_PORT}",
+    );
+    out = out.replace(
+      new RegExp(`(https?)://\\$\\{?DEVICE_HOSTNAME(?::-[^}]*)?\\}?:${manifestPort}\\b`, "g"),
+      "$1://${LOCAL_DOMAIN}:${APP_PORT}",
     );
 
     // 4. Replace Umbrel platform paths & variables (handling both ${VAR}, ${VAR:-default}, and $VAR)
@@ -783,7 +840,27 @@ export function transpileCompose(params: {
         ) {
           rawVal = containerNameMap[trimmed] || serviceRenameMap[trimmed];
         }
-        const val = transformString(rawVal).trim();
+        let val = transformString(rawVal).trim();
+        if (
+          val.includes(",") &&
+          /(?:ORIGIN|ORIGINS|ALLOWED_HOSTS|TRUSTED_HOSTS|TRUSTED_DOMAINS|LOCAL_URLS)/i.test(entry.key) &&
+          !val.includes("'") &&
+          !val.startsWith("[") &&
+          !val.startsWith("{")
+        ) {
+          const seen = new Set<string>();
+          const deduped: string[] = [];
+          for (const part of val.split(",")) {
+            const item = part.trim();
+            if (item && !seen.has(item)) {
+              seen.add(item);
+              deduped.push(item);
+            }
+          }
+          if (deduped.length > 0) {
+            val = deduped.join(",");
+          }
+        }
         // Schema rule: string env value must have minLength: 1
         if (val.length > 0) {
           transformedEnv.push({ key: entry.key, value: val });
@@ -1124,6 +1201,59 @@ export function transpileCompose(params: {
   // Ensure main service is first in services list
   transpiledServices.sort((a, b) => (a.isMain ? -1 : b.isMain ? 1 : 0));
 
+  // If a sidecar uses host networking while the main proxy service uses bridge networking,
+  // rewrite 127.0.0.1:<port> loopback targets to host.docker.internal:<port> and expose host-gateway
+  const hasHostNetworkSidecar = transpiledServices.some((s) => !s.isMain && s.networkMode === "host");
+  if (hasHostNetworkSidecar) {
+    for (const s of transpiledServices) {
+      if (!s.isMain || s.networkMode === "host") continue;
+      let rewroteLoopback = false;
+      if (typeof s.command === "string") {
+        const nextCmd = s.command.replace(/\b127\.0\.0\.1:(\d+)\b/g, "host.docker.internal:$1");
+        if (nextCmd !== s.command) {
+          s.command = nextCmd;
+          rewroteLoopback = true;
+        }
+      } else if (Array.isArray(s.command)) {
+        s.command = s.command.map((c: string) => {
+          const next = c.replace(/\b127\.0\.0\.1:(\d+)\b/g, "host.docker.internal:$1");
+          if (next !== c) rewroteLoopback = true;
+          return next;
+        });
+      }
+      if (Array.isArray(s.environment)) {
+        for (const envEntry of s.environment) {
+          if (typeof envEntry.value === "string") {
+            const nextVal = envEntry.value.replace(/\b127\.0\.0\.1:(\d+)\b/g, "host.docker.internal:$1");
+            if (nextVal !== envEntry.value) {
+              envEntry.value = nextVal;
+              rewroteLoopback = true;
+            }
+          }
+        }
+      }
+      if (rewroteLoopback) {
+        const hosts = Array.isArray(s.extraHosts) ? [...s.extraHosts] : [];
+        if (!hosts.includes("host.docker.internal:host-gateway")) {
+          hosts.push("host.docker.internal:host-gateway");
+        }
+        s.extraHosts = hosts;
+      }
+    }
+  }
+
+  // Deduplicate environment keys per service (last write / override wins, preserving insertion order)
+  for (const s of transpiledServices) {
+    if (!Array.isArray(s.environment) || s.environment.length <= 1) continue;
+    const byKey = new Map<string, { key: string; value: any }>();
+    for (const entry of s.environment) {
+      if (entry?.key) {
+        byKey.set(entry.key, entry);
+      }
+    }
+    s.environment = Array.from(byKey.values());
+  }
+
   // If usesExternalContract became true during string scanning, mark main service addToMainNetwork: true
   if (usesExternalContract && transpiledServices[0]) {
     transpiledServices[0].addToMainNetwork = true;
@@ -1158,6 +1288,9 @@ export function transpileCompose(params: {
     formFields: finalFormFields,
     mainImageTag,
     serviceRenameMap,
+    resolvedStaticExports,
+    keepTor,
+    referencedTemplates,
     uid: detectedUid,
     gid: detectedGid,
   };

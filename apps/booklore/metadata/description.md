@@ -23,7 +23,7 @@ The design of the interface is another strength of BookLore. It is responsive, i
 At its core, BookLore is more than just a management tool. It is a thoughtful environment for digital reading that combines organization, automation, sharing, and customization into a single experience. By bringing together the functional needs of cataloging with the emotional enjoyment of reading, it helps transform a scattered set of files into a living, evolving library that is both beautiful and deeply personal.
 
 ## Links
-- **Upstream Version**: `2.4.0`
+- **Upstream Version**: `2.4.0-patch.1`
 - **Website**: https://demo.booklore.dev/login
 - **Source Repository**: https://github.com/booklore-app/booklore
 - **Support**: https://github.com/booklore-app/booklore/issues

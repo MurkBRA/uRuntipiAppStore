@@ -33,8 +33,8 @@ services:
       add_to_main_network: true
       is_main: true
   lightning-lnd:
-    image: lightninglabs/lnd:v0.21.6-beta
-    command: ${APP_LIGHTNING_COMMAND}
+    image: lightninglabs/lnd:v0.21.8-beta
+    command: '--configfile=/data/.lnd/umbrel-lnd.conf --listen=0.0.0.0:9735 --rpclisten=0.0.0.0:10009 --restlisten=0.0.0.0:8080 --bitcoin.active --bitcoin.${APP_BITCOIN_NETWORK} --bitcoin.node=bitcoind --bitcoind.rpchost=${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_RPC_PORT} --bitcoind.rpcuser=${APP_BITCOIN_RPC_USER} --bitcoind.rpcpass=${APP_BITCOIN_RPC_PASS} --bitcoind.zmqpubrawblock=tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_RAWBLOCK_PORT} --bitcoind.zmqpubrawtx=tcp://${APP_BITCOIN_NODE_IP}:${APP_BITCOIN_ZMQ_RAWTX_PORT}'
     user: ${APP_CONTAINER_USER:-1000:1000}
     hostname: ${APP_DOMAIN}
     ports:

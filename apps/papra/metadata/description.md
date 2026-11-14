@@ -9,7 +9,7 @@ Papra is a platform for long-term document storage and management, like a digita
 Forget about that receipt of that gift you bought for your friend last year, or that warranty for your new phone. With Papra, you can easily store, forget, and retrieve your documents whenever you need them.
 
 ## Links
-- **Upstream Version**: `26.6.2-patch.1`
+- **Upstream Version**: `26.7.1`
 - **Website**: https://papra.app
 - **Source Repository**: https://github.com/papra-hq/papra
 - **Support**: https://github.com/papra-hq/papra/issues

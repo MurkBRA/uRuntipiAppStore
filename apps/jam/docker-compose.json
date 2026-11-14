@@ -8,6 +8,14 @@
       "internalPort": 80,
       "addToMainNetwork": true,
       "stopGracePeriod": "1m",
+      "entrypoint": [
+        "tini",
+        "-g",
+        "--",
+        "sh",
+        "-c",
+        "echo 'type = internal' > /etc/dinit.d/tor && exec /jam-entrypoint.sh"
+      ],
       "environment": [
         {
           "key": "RESTORE_DEFAULT_CONFIG",

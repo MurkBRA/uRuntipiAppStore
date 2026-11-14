@@ -1,0 +1,31 @@
+services:
+  portainer-business:
+    image: portainer/portainer-ee:2.45.3-alpine
+    command: '--host unix:///var/run/docker.sock --admin-password-file=/default-password'
+    volumes:
+      - ${APP_DATA_DIR}/data/default-password:/default-password
+      - ${APP_DATA_DIR}/data/portainer:/data
+      - ${APP_DATA_DIR}/data/docker:/var/run
+    x-runtipi:
+      internal_port: 9000
+      is_main: true
+  portainer-business-docker:
+    image: docker:27.2.0-dind
+    command: |-
+      dockerd
+        --bridge dind1
+        --data-root /data/data
+        --exec-root /data/exec
+        --host unix:///data/docker.sock
+        --pidfile /data/docker.pid
+    entrypoint: /entrypoint.sh
+    volumes:
+      - ${APP_DATA_DIR}/data/entrypoint.sh:/entrypoint.sh
+      - ${APP_DATA_DIR}/data/docker:/data
+    environment:
+      - DOCKER_ENSURE_BRIDGE=dind1:10.33.0.1/16
+    network_mode: host
+    privileged: true
+    stop_grace_period: 1m
+x-runtipi:
+  schema_version: 2

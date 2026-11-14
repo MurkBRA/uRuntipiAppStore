@@ -29,5 +29,5 @@ Super Productivity is designed for those who want to boost their productivity wh
 ## Links
 - **Upstream Version**: `20.0.0`
 - **Website**: https://super-productivity.com/
-- **Source Repository**: https://github.com/johannesjo/super-productivity
-- **Support**: https://github.com/johannesjo/super-productivity/issues
+- **Source Repository**: https://github.com/super-productivity/super-productivity
+- **Support**: https://github.com/super-productivity/super-productivity/issues

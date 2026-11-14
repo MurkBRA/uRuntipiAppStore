@@ -10,7 +10,7 @@ services:
       - UMASK=022
       - TZ=Etc/UTC
       - NODE_ENV=production
-      - TRUST_PROXY=10.21.0.0/16
+      - TRUST_PROXY=172.16.0.0/12
       - RP_ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
       - EMAIL_VERIFICATION=false
     healthcheck:

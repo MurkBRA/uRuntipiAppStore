@@ -6,7 +6,7 @@
   "dynamic_config": true,
   "id": "lndg",
   "description": "LNDg is your command center for running a profitable and efficient routing node. From quickly viewing your node's health, automated rebalancing, selecting new potential peers and much more.",
-  "tipi_version": 2,
+  "tipi_version": 3,
   "version": "v1.11.1",
   "categories": [
     "finance"
@@ -17,9 +17,11 @@
   "website": "https://github.com/cryptosharks131",
   "form_fields": [
     {
-      "type": "random",
+      "type": "text",
       "label": "LNDg csrf trusted origins",
-      "min": 32,
+      "hint": "Optional comma-and-quote separated trusted origins override (leave empty for Runtipi defaults).",
+      "required": false,
+      "default": "",
       "env_variable": "APP_LNDG_CSRF_TRUSTED_ORIGINS"
     },
     {
@@ -63,7 +65,7 @@
     "amd64"
   ],
   "created_at": 1792501500677,
-  "updated_at": 1794005949383,
+  "updated_at": 1794674798942,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }
