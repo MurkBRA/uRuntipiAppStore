@@ -1,16 +1,16 @@
 # uRuntipiAppStore — UmbrelOS App Store Port for Runtipi
 
-Automated, tested port of **246** non-duplicate apps from [`getumbrel/umbrel-apps`](https://github.com/getumbrel/umbrel-apps) to the [Runtipi](https://runtipi.io) App Store format (`schema_version: 2` YAML + Dynamic Compose JSON v2).
+Automated, tested port of **245** non-duplicate apps from [`getumbrel/umbrel-apps`](https://github.com/getumbrel/umbrel-apps) to the [Runtipi](https://runtipi.io) App Store format (`schema_version: 2` YAML + Dynamic Compose JSON v2).
 
 - **Architecture & Engineering Plan**: [`PLANO_PORT_UMBREL_RUNTIPI.md`](./PLANO_PORT_UMBREL_RUNTIPI.md)
 - **Official Runtipi & Disabled Apps Blacklist**: [`blacklist.json`](./blacklist.json)
 
 ## Summary Statistics
 
-- **Ported Active Apps**: **246**
-- **Blacklisted Duplicates / Disabled Apps**: **157**
+- **Ported Active Apps**: **245**
+- **Blacklisted Duplicates / Disabled Apps**: **158**
 
-## Ported Apps Catalog (246 Apps)
+## Ported Apps Catalog (245 Apps)
 
 | # | App ID | Name | Version | Port | Categories |
 | :---: | :--- | :--- | :---: | :---: | :--- |
@@ -204,59 +204,58 @@ Automated, tested port of **246** non-duplicate apps from [`getumbrel/umbrel-app
 | 188 | `seedtool` | **Bitcoin Seed Tool** | `2.3.0` | `8147` | `finance` |
 | 189 | `shopstr` | **Shopstr** | `0.7.5` | `30402` | `finance` |
 | 190 | `silo` | **Silo** | `RELEASE.2026-11-12T00-00-00Z` | `9130` | `utilities, data` |
-| 191 | `simplexmq` | **SimpleX Server** | `7.0.1` | `9553` | `social` |
-| 192 | `skybro` | **SkyBro** | `1.6.2` | `7437` | `network` |
-| 193 | `slink` | **Slink** | `1.14.6` | `8811` | `photography, utilities, data` |
-| 194 | `snapdrop` | **Snapdrop** | `version-b8b78cc2` | `22763` | `utilities, data` |
-| 195 | `snort` | **Snort** | `v0.5.4` | `52027` | `social` |
-| 196 | `snowflake` | **Tor Snowflake Proxy** | `v1.6.0` | `3800` | `network, security` |
-| 197 | `solidtime` | **Solidtime** | `0.22.1` | `8770` | `utilities, data` |
-| 198 | `spacebot` | **Spacebot** | `v0.5.0` | `19898` | `ai` |
-| 199 | `sparkkiosk` | **Sparkkiosk** | `v1.0.0` | `21214` | `finance` |
-| 200 | `specter-desktop` | **Specter Desktop** | `v2.1.11` | `25441` | `finance` |
-| 201 | `sphinx-relay` | **Sphinx Relay** | `v2.5.2` | `3300` | `social` |
-| 202 | `sqlitebrowser` | **SQLite Browser** | `3.13.1` | `8887` | `development` |
-| 203 | `squeaknode` | **Squeaknode** | `v0.3.4` | `12994` | `social` |
-| 204 | `squeakroad` | **Squeak Road** | `v0.1.14` | `18200` | `finance` |
-| 205 | `stash` | **Stash** | `1.0.1` | `5173` | `ai` |
-| 206 | `strix` | **Strix** | `2.2.0` | `24438` | `automation` |
-| 207 | `super-productivity` | **Super Productivity** | `20.0.0` | `8020` | `utilities, data` |
-| 208 | `sure` | **Sure** | `0.7.6` | `3064` | `finance` |
-| 209 | `suredbits-wallet` | **Suredbits Wallet** | `1.9.7` | `3020` | `finance` |
-| 210 | `sv2-ui` | **Stratum V2 UI** | `0.8.2` | `8077` | `finance` |
-| 211 | `swingmusic` | **Swing Music** | `v3.0.0` | `1970` | `media, music` |
-| 212 | `synapse` | **Synapse** | `1.165.0` | `20060` | `social` |
-| 213 | `syslog-ng` | **Syslog-ng** | `0.17.1` | `5142` | `network` |
-| 214 | `tdex` | **TDEX Provider** | `2.6.4-alpine` | `9094` | `finance` |
-| 215 | `technitium-dns` | **Technitium DNS Server** | `15.6.2` | `5380` | `network, security` |
-| 216 | `telegrapho` | **Telegrapho** | `1.0.1` | `3712` | `network` |
-| 217 | `termix` | **Termix** | `2.9.2` | `6444` | `development` |
-| 218 | `thinkdashboard` | **ThinkDashboard** | `v0.7.6` | `8229` | `utilities, data` |
-| 219 | `threema` | **Threema Web** | `2.6.5` | `8855` | `utilities, data` |
-| 220 | `thunderhub` | **ThunderHub** | `0.19.1` | `24188` | `finance` |
-| 221 | `torbrowser` | **Tor Browser** | `15.0.17` | `5832` | `network` |
-| 222 | `torq` | **Torq** | `2.2.9` | `7028` | `finance` |
-| 223 | `toshi-moto` | **Toshi Moto** | `1.37.3` | `8021` | `finance` |
-| 224 | `transmute` | **Transmute** | `2.1.1` | `3313` | `utilities, data` |
-| 225 | `trip` | **Trip** | `1.50.1` | `8980` | `utilities, data` |
-| 226 | `twenty` | **Twenty** | `2.58.0` | `2020` | `utilities, data` |
-| 227 | `urbit` | **Urbit** | `v4.6` | `21955` | `network` |
-| 228 | `urbit-bitcoin-connector` | **Urbit Bitcoin Connector** | `latest` | `9090` | `finance` |
-| 229 | `usocial` | **usocial** | `v0.1.5-buster` | `8448` | `social` |
-| 230 | `valorgrid` | **ValorGrid** | `3.36.3` | `1325` | `finance` |
-| 231 | `vert` | **VERT** | `257bcb3` | `3884` | `utilities, data` |
-| 232 | `wanderer` | **Wanderer** | `0.21.2` | `3111` | `utilities, data` |
-| 233 | `wavelog` | **Wavelog** | `3.2.5` | `22784` | `social` |
-| 234 | `wealthfolio` | **Wealthfolio** | `3.13.0` | `19334` | `finance` |
-| 235 | `webcheck` | **WebCheck** | `2.4.0` | `3093` | `network, security` |
-| 236 | `wger` | **wger** | `alpine3.22` | `8450` | `utilities, data` |
-| 237 | `wingfit` | **Wingfit** | `5.3.1` | `8950` | `utilities, data` |
-| 238 | `woofbot` | **WoofBot (without Lightning)** | `0.9.8` | `22182` | `finance` |
-| 239 | `woofbot-lnd` | **WoofBot (LND)** | `v0.9.8` | `21412` | `finance` |
-| 240 | `yamtrack` | **Yamtrack** | `0.26.3` | `8742` | `media` |
-| 241 | `yucca` | **Yucca** | `0.13.4` | `9910` | `automation` |
-| 242 | `yuvomi` | **Yuvomi** | `2.89.1` | `26765` | `utilities, data` |
-| 243 | `zabbix` | **Zabbix** | `8.0.0` | `10052` | `network, security` |
-| 244 | `zen` | **Zen** | `2.0.0` | `8894` | `utilities, data` |
-| 245 | `zeronote` | **ZeroNote** | `1.0.12` | `18817` | `utilities, data` |
-| 246 | `zoraxy` | **Zoraxy** | `v3.3.4` | `8400` | `network, security` |
+| 191 | `skybro` | **SkyBro** | `1.6.2` | `7437` | `network` |
+| 192 | `slink` | **Slink** | `1.14.6` | `8811` | `photography, utilities, data` |
+| 193 | `snapdrop` | **Snapdrop** | `version-b8b78cc2` | `22763` | `utilities, data` |
+| 194 | `snort` | **Snort** | `v0.5.4` | `52027` | `social` |
+| 195 | `snowflake` | **Tor Snowflake Proxy** | `v1.6.0` | `3800` | `network, security` |
+| 196 | `solidtime` | **Solidtime** | `0.22.1` | `8770` | `utilities, data` |
+| 197 | `spacebot` | **Spacebot** | `v0.5.0` | `19898` | `ai` |
+| 198 | `sparkkiosk` | **Sparkkiosk** | `v1.0.0` | `21214` | `finance` |
+| 199 | `specter-desktop` | **Specter Desktop** | `v2.1.11` | `25441` | `finance` |
+| 200 | `sphinx-relay` | **Sphinx Relay** | `v2.5.2` | `3300` | `social` |
+| 201 | `sqlitebrowser` | **SQLite Browser** | `3.13.1` | `8887` | `development` |
+| 202 | `squeaknode` | **Squeaknode** | `v0.3.4` | `12994` | `social` |
+| 203 | `squeakroad` | **Squeak Road** | `v0.1.14` | `18200` | `finance` |
+| 204 | `stash` | **Stash** | `1.0.1` | `5173` | `ai` |
+| 205 | `strix` | **Strix** | `2.2.0` | `24438` | `automation` |
+| 206 | `super-productivity` | **Super Productivity** | `20.0.0` | `8020` | `utilities, data` |
+| 207 | `sure` | **Sure** | `0.7.6` | `3064` | `finance` |
+| 208 | `suredbits-wallet` | **Suredbits Wallet** | `1.9.7` | `3020` | `finance` |
+| 209 | `sv2-ui` | **Stratum V2 UI** | `0.8.2` | `8077` | `finance` |
+| 210 | `swingmusic` | **Swing Music** | `v3.0.0` | `1970` | `media, music` |
+| 211 | `synapse` | **Synapse** | `1.165.0` | `20060` | `social` |
+| 212 | `syslog-ng` | **Syslog-ng** | `0.17.1` | `5142` | `network` |
+| 213 | `tdex` | **TDEX Provider** | `2.6.4-alpine` | `9094` | `finance` |
+| 214 | `technitium-dns` | **Technitium DNS Server** | `15.6.2` | `5380` | `network, security` |
+| 215 | `telegrapho` | **Telegrapho** | `1.0.1` | `3712` | `network` |
+| 216 | `termix` | **Termix** | `2.9.2` | `6444` | `development` |
+| 217 | `thinkdashboard` | **ThinkDashboard** | `v0.7.6` | `8229` | `utilities, data` |
+| 218 | `threema` | **Threema Web** | `2.6.5` | `8855` | `utilities, data` |
+| 219 | `thunderhub` | **ThunderHub** | `0.19.1` | `24188` | `finance` |
+| 220 | `torbrowser` | **Tor Browser** | `15.0.17` | `5832` | `network` |
+| 221 | `torq` | **Torq** | `2.2.9` | `7028` | `finance` |
+| 222 | `toshi-moto` | **Toshi Moto** | `1.37.3` | `8021` | `finance` |
+| 223 | `transmute` | **Transmute** | `2.1.1` | `3313` | `utilities, data` |
+| 224 | `trip` | **Trip** | `1.50.1` | `8980` | `utilities, data` |
+| 225 | `twenty` | **Twenty** | `2.58.0` | `2020` | `utilities, data` |
+| 226 | `urbit` | **Urbit** | `v4.6` | `21955` | `network` |
+| 227 | `urbit-bitcoin-connector` | **Urbit Bitcoin Connector** | `latest` | `9090` | `finance` |
+| 228 | `usocial` | **usocial** | `v0.1.5-buster` | `8448` | `social` |
+| 229 | `valorgrid` | **ValorGrid** | `3.36.3` | `1325` | `finance` |
+| 230 | `vert` | **VERT** | `257bcb3` | `3884` | `utilities, data` |
+| 231 | `wanderer` | **Wanderer** | `0.21.2` | `3111` | `utilities, data` |
+| 232 | `wavelog` | **Wavelog** | `3.2.5` | `22784` | `social` |
+| 233 | `wealthfolio` | **Wealthfolio** | `3.13.0` | `19334` | `finance` |
+| 234 | `webcheck` | **WebCheck** | `2.4.0` | `3093` | `network, security` |
+| 235 | `wger` | **wger** | `alpine3.22` | `8450` | `utilities, data` |
+| 236 | `wingfit` | **Wingfit** | `5.3.1` | `8950` | `utilities, data` |
+| 237 | `woofbot` | **WoofBot (without Lightning)** | `0.9.8` | `22182` | `finance` |
+| 238 | `woofbot-lnd` | **WoofBot (LND)** | `v0.9.8` | `21412` | `finance` |
+| 239 | `yamtrack` | **Yamtrack** | `0.26.3` | `8742` | `media` |
+| 240 | `yucca` | **Yucca** | `0.13.4` | `9910` | `automation` |
+| 241 | `yuvomi` | **Yuvomi** | `2.89.1` | `26765` | `utilities, data` |
+| 242 | `zabbix` | **Zabbix** | `8.0.0` | `10052` | `network, security` |
+| 243 | `zen` | **Zen** | `2.0.0` | `8894` | `utilities, data` |
+| 244 | `zeronote` | **ZeroNote** | `1.0.12` | `18817` | `utilities, data` |
+| 245 | `zoraxy` | **Zoraxy** | `v3.3.4` | `8400` | `network, security` |

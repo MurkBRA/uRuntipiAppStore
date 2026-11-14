@@ -1,5 +1,5 @@
 {
-  "last_synced_at": "2026-11-14T16:46:50.844Z",
+  "last_synced_at": "2026-11-14T17:42:52.672Z",
   "apps": {
     "adventurelog": {
       "tipi_version": 3,
@@ -1960,14 +1960,6 @@
       "created_at": 1794674739996,
       "updated_at": 1794674799996,
       "upstream_hash": "2ab5de52e7c3f906ee2a2db8b3242ca3ba3d98df47ca32738e4a1d8042a0ead4"
-    },
-    "simplexmq": {
-      "tipi_version": 1,
-      "version": "7.0.1",
-      "port": 9553,
-      "created_at": 1794674740385,
-      "updated_at": 1794674800385,
-      "upstream_hash": "6b9587503356419163aa7dc73cc18ececc12ab88a762ad8626d6d59a4d90437e"
     }
   }
 }
