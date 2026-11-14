@@ -1,6 +1,7 @@
 import { execFileSync } from "node:child_process";
 import crypto from "node:crypto";
 import fs from "node:fs";
+import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import jsyaml from "js-yaml";
@@ -15,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, "..");
 
-interface SyncAppState {
+export interface SyncAppState {
   tipi_version: number;
   version: string;
   port: number;
@@ -24,10 +25,20 @@ interface SyncAppState {
   upstream_hash: string;
 }
 
-interface SyncStateFile {
+export interface SyncStateFile {
   last_synced_at: string;
   apps: Record<string, SyncAppState>;
 }
+
+export interface ReadmeAppEntry {
+  id: string;
+  name: string;
+  version: string;
+  port: number;
+  categories: string[];
+}
+
+export type AppCatalogEntry = ReadmeAppEntry;
 
 function computeAppSourceHash(appDir: string): string {
   const hash = crypto.createHash("sha256");
@@ -48,6 +59,69 @@ function computeAppSourceHash(appDir: string): string {
   return hash.digest("hex");
 }
 
+export function normalizeConfigForDiff(configObj: Record<string, any>): Record<string, any> {
+  const { tipi_version: _tv, created_at: _ca, updated_at: _ua, ...rest } = configObj;
+  return rest;
+}
+
+function collectFilesRelative(dirPath: string): Map<string, { content: Buffer; isExec: boolean }> {
+  const result = new Map<string, { content: Buffer; isExec: boolean }>();
+  if (!fs.existsSync(dirPath)) return result;
+
+  function walk(currentDir: string, rel = ""): void {
+    const entries = fs.readdirSync(currentDir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
+    for (const entry of entries) {
+      const relPath = rel ? `${rel}/${entry.name}` : entry.name;
+      const fullPath = path.join(currentDir, entry.name);
+      if (entry.isDirectory()) {
+        walk(fullPath, relPath);
+      } else if (entry.isFile()) {
+        const stat = fs.statSync(fullPath);
+        result.set(relPath, {
+          content: fs.readFileSync(fullPath),
+          isExec: (stat.mode & 0o111) !== 0,
+        });
+      }
+    }
+  }
+
+  walk(dirPath);
+  return result;
+}
+
+export function areRenderedAppsSemanticallyEqual(existingAppDir: string, stagedAppDir: string): boolean {
+  try {
+    const existingCfg = JSON.parse(fs.readFileSync(path.join(existingAppDir, "config.json"), "utf8"));
+    const stagedCfg = JSON.parse(fs.readFileSync(path.join(stagedAppDir, "config.json"), "utf8"));
+    if (JSON.stringify(normalizeConfigForDiff(existingCfg)) !== JSON.stringify(normalizeConfigForDiff(stagedCfg))) {
+      return false;
+    }
+
+    for (const relFile of ["docker-compose.json", "docker-compose.yml", "metadata/description.md"]) {
+      const aPath = path.join(existingAppDir, relFile);
+      const bPath = path.join(stagedAppDir, relFile);
+      if (!fs.existsSync(aPath) || !fs.existsSync(bPath)) return false;
+      const aBuf = fs.readFileSync(aPath);
+      const bBuf = fs.readFileSync(bPath);
+      if (!aBuf.equals(bBuf)) return false;
+    }
+
+    const existingData = collectFilesRelative(path.join(existingAppDir, "data"));
+    const stagedData = collectFilesRelative(path.join(stagedAppDir, "data"));
+    if (existingData.size !== stagedData.size) return false;
+    for (const [relPath, stagedFile] of stagedData.entries()) {
+      const existingFile = existingData.get(relPath);
+      if (!existingFile) return false;
+      if (existingFile.isExec !== stagedFile.isExec) return false;
+      if (!existingFile.content.equals(stagedFile.content)) return false;
+    }
+
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 function parseCliArgs(argv: string[]) {
   let umbrelDir = "";
   let galleryDir = "";
@@ -59,8 +133,12 @@ function parseCliArgs(argv: string[]) {
     const arg = argv[i];
     if (arg === "--umbrel-dir" && argv[i + 1]) {
       umbrelDir = path.resolve(argv[++i]);
+    } else if (arg.startsWith("--umbrel-dir=")) {
+      umbrelDir = path.resolve(arg.slice("--umbrel-dir=".length).trim());
     } else if (arg === "--gallery-dir" && argv[i + 1]) {
       galleryDir = path.resolve(argv[++i]);
+    } else if (arg.startsWith("--gallery-dir=")) {
+      galleryDir = path.resolve(arg.slice("--gallery-dir=".length).trim());
     } else if (arg === "--force") {
       force = true;
     } else if (arg === "--readme-only") {
@@ -73,14 +151,6 @@ function parseCliArgs(argv: string[]) {
   }
 
   return { umbrelDir, galleryDir, force, only, readmeOnly };
-}
-
-export interface ReadmeAppEntry {
-  id: string;
-  name: string;
-  version: string;
-  port: number;
-  categories: string[];
 }
 
 function resolveSkippedBlacklistCount(rootDir: string): number {
@@ -170,9 +240,15 @@ Automated, tested port of **${entries.length}** non-duplicate apps from [\`getum
 ${readmeRows}
 `;
 
-  fs.writeFileSync(path.join(rootDir, "README.md"), readmeContent, "utf8");
+  const readmePath = path.join(rootDir, "README.md");
+  const prevContent = fs.existsSync(readmePath) ? fs.readFileSync(readmePath, "utf8") : "";
+  if (prevContent !== readmeContent) {
+    fs.writeFileSync(readmePath, readmeContent, "utf8");
+  }
   return readmeContent;
 }
+
+export const rebuildStoreReadme = generateReadme;
 
 function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string }) {
   const tmpDir = path.join(ROOT_DIR, ".tmp");
@@ -264,9 +340,11 @@ export async function runSync() {
   let createdCount = 0;
   let updatedCount = 0;
   let unchangedCount = 0;
+  let hashOnlyUpdatedCount = 0;
   let skippedBlacklistCount = 0;
+  let stateChanged = false;
 
-  const portedSummary: Array<{ id: string; name: string; version: string; port: number; categories: string[] }> = [];
+  const portedSummary: ReadmeAppEntry[] = [];
 
   // In full sync mode, discover all valid upstream app IDs to detect and remove zombie apps
   if (!cli.only) {
@@ -297,7 +375,10 @@ export async function runSync() {
       if (!upstreamAppIds.has(localId)) {
         console.log(`Removing zombie app '${localId}' deleted from upstream...`);
         fs.rmSync(path.join(appsOutputDir, localId), { recursive: true, force: true });
-        delete syncState.apps[localId];
+        if (syncState.apps[localId]) {
+          delete syncState.apps[localId];
+          stateChanged = true;
+        }
         updatedCount++;
       }
     }
@@ -319,8 +400,11 @@ export async function runSync() {
       const staleDir = path.join(appsOutputDir, appId);
       if (fs.existsSync(staleDir)) {
         fs.rmSync(staleDir, { recursive: true, force: true });
-        delete syncState.apps[appId];
         updatedCount++;
+      }
+      if (syncState.apps[appId]) {
+        delete syncState.apps[appId];
+        stateChanged = true;
       }
       continue;
     }
@@ -330,18 +414,14 @@ export async function runSync() {
     const nowSafe = Date.now() - 10000;
 
     const allocatedPort = portAllocator.allocatePort(appId, Number(manifest.port));
-    const isNew = !prev;
-    const isChanged = isNew || prev.upstream_hash !== upstreamHash;
-
-    const tipiVersion = isNew ? 1 : isChanged ? prev.tipi_version + 1 : prev.tipi_version;
-    const createdAt = isNew ? nowSafe - 60000 : prev.created_at;
-    const updatedAt = isChanged ? nowSafe : prev.updated_at;
-
     const destAppDir = path.join(appsOutputDir, appId);
-    const destMetadataDir = path.join(destAppDir, "metadata");
-    fs.mkdirSync(destMetadataDir, { recursive: true });
+    const existingConfigPath = path.join(destAppDir, "config.json");
+    const existingLogoPath = path.join(destAppDir, "metadata", "logo.jpg");
 
-    if (isChanged || cli.force || !fs.existsSync(path.join(destAppDir, "config.json"))) {
+    const isNew = !prev || !fs.existsSync(existingConfigPath);
+    const isUpstreamHashChanged = isNew || prev.upstream_hash !== upstreamHash;
+
+    if (isUpstreamHashChanged || cli.force || !fs.existsSync(existingLogoPath)) {
       const exportsPath = path.join(srcAppDir, "exports.sh");
       const exportsRaw = fs.existsSync(exportsPath) ? fs.readFileSync(exportsPath, "utf8") : "";
       const { formFields: initialFormFields, staticExports } = parseUmbrelExports(
@@ -364,6 +444,10 @@ export async function runSync() {
         hasDependencies: hasDeps,
       });
 
+      const tipiVersion = isNew ? 1 : prev.tipi_version + 1;
+      const createdAt = isNew ? nowSafe - 60000 : prev.created_at;
+      const updatedAt = nowSafe;
+
       const { config, descriptionMd } = buildRuntipiConfigAndDescription({
         appId,
         umbrelManifest: manifest,
@@ -377,54 +461,100 @@ export async function runSync() {
         gid: transpiled.gid,
       });
 
-      // Write config.json, docker-compose.json, docker-compose.yml, metadata/description.md
-      fs.writeFileSync(path.join(destAppDir, "config.json"), `${JSON.stringify(config, null, 2)}\n`, "utf8");
-      fs.writeFileSync(
-        path.join(destAppDir, "docker-compose.json"),
-        `${JSON.stringify(transpiled.composeJson, null, 2)}\n`,
-        "utf8",
-      );
-      const ymlDump = jsyaml.dump(transpiled.composeYamlObj, {
-        lineWidth: -1,
-        noRefs: true,
-        sortKeys: false,
-        indent: 2,
-      });
-      fs.writeFileSync(path.join(destAppDir, "docker-compose.yml"), ymlDump, "utf8");
-      fs.writeFileSync(path.join(destMetadataDir, "description.md"), descriptionMd, "utf8");
+      const stagingDir = fs.mkdtempSync(path.join(os.tmpdir(), "uruntipi-stage-"));
+      try {
+        fs.chmodSync(stagingDir, 0o755);
+        const stagingMetaDir = path.join(stagingDir, "metadata");
+        fs.mkdirSync(stagingMetaDir, { recursive: true });
+        fs.writeFileSync(path.join(stagingDir, "config.json"), `${JSON.stringify(config, null, 2)}\n`, "utf8");
+        fs.writeFileSync(
+          path.join(stagingDir, "docker-compose.json"),
+          `${JSON.stringify(transpiled.composeJson, null, 2)}\n`,
+          "utf8",
+        );
+        const ymlDump = jsyaml.dump(transpiled.composeYamlObj, {
+          lineWidth: -1,
+          noRefs: true,
+          sortKeys: false,
+          indent: 2,
+        });
+        fs.writeFileSync(path.join(stagingDir, "docker-compose.yml"), ymlDump, "utf8");
+        fs.writeFileSync(path.join(stagingMetaDir, "description.md"), descriptionMd, "utf8");
 
-      // Clean stale data files before copying seed data and rendering templates
-      const destDataDir = path.join(destAppDir, "data");
-      if (fs.existsSync(destDataDir)) {
-        fs.rmSync(destDataDir, { recursive: true, force: true });
+        copyAndPrepareAppDataFiles(srcAppDir, stagingDir, appId, transpiled.serviceRenameMap, {
+          resolvedStaticExports: transpiled.resolvedStaticExports,
+          keepTor: transpiled.keepTor,
+          referencedTemplates: transpiled.referencedTemplates,
+        });
+
+        const hasExistingApp = !isNew && fs.existsSync(existingConfigPath) && fs.existsSync(existingLogoPath);
+        if (hasExistingApp && areRenderedAppsSemanticallyEqual(destAppDir, stagingDir)) {
+          // Semantic output is identical: only update upstream_hash if it actually changed
+          if (prev.upstream_hash !== upstreamHash) {
+            syncState.apps[appId] = {
+              ...prev,
+              upstream_hash: upstreamHash,
+            };
+            stateChanged = true;
+            hashOnlyUpdatedCount++;
+          }
+          unchangedCount++;
+
+          const existingConfig = JSON.parse(fs.readFileSync(existingConfigPath, "utf8"));
+          portedSummary.push({
+            id: appId,
+            name: existingConfig.name,
+            version: existingConfig.version,
+            port: existingConfig.port,
+            categories: existingConfig.categories,
+          });
+        } else {
+          await generateAppLogo(
+            appId,
+            String(manifest.name || appId),
+            galleryDir,
+            path.join(stagingMetaDir, "logo.jpg"),
+          );
+
+          fs.rmSync(destAppDir, { recursive: true, force: true });
+          fs.cpSync(stagingDir, destAppDir, { recursive: true, preserveTimestamps: false });
+          fs.chmodSync(destAppDir, 0o755);
+
+          // Ensure executable permissions survive cpSync consistently
+          const stagedDataFiles = collectFilesRelative(path.join(stagingDir, "data"));
+          for (const [relFile, info] of stagedDataFiles.entries()) {
+            if (info.isExec) {
+              fs.chmodSync(path.join(destAppDir, "data", relFile), 0o755);
+            }
+          }
+
+          syncState.apps[appId] = {
+            tipi_version: tipiVersion,
+            version: config.version,
+            port: allocatedPort,
+            created_at: createdAt,
+            updated_at: updatedAt,
+            upstream_hash: upstreamHash,
+          };
+          stateChanged = true;
+
+          if (isNew) createdCount++;
+          else updatedCount++;
+
+          portedSummary.push({
+            id: appId,
+            name: config.name,
+            version: config.version,
+            port: allocatedPort,
+            categories: config.categories,
+          });
+        }
+      } finally {
+        fs.rmSync(stagingDir, { recursive: true, force: true });
       }
-      copyAndPrepareAppDataFiles(srcAppDir, destAppDir, appId, transpiled.serviceRenameMap);
-
-      // Generate 512x512 JPEG logo
-      await generateAppLogo(appId, String(manifest.name || appId), galleryDir, path.join(destMetadataDir, "logo.jpg"));
-
-      syncState.apps[appId] = {
-        tipi_version: tipiVersion,
-        version: config.version,
-        port: allocatedPort,
-        created_at: createdAt,
-        updated_at: updatedAt,
-        upstream_hash: upstreamHash,
-      };
-
-      if (isNew) createdCount++;
-      else updatedCount++;
-
-      portedSummary.push({
-        id: appId,
-        name: config.name,
-        version: config.version,
-        port: allocatedPort,
-        categories: config.categories,
-      });
     } else {
       unchangedCount++;
-      const existingConfig = JSON.parse(fs.readFileSync(path.join(destAppDir, "config.json"), "utf8"));
+      const existingConfig = JSON.parse(fs.readFileSync(existingConfigPath, "utf8"));
       portedSummary.push({
         id: appId,
         name: existingConfig.name,
@@ -435,7 +565,17 @@ export async function runSync() {
     }
   }
 
-  if (createdCount > 0 || updatedCount > 0 || !fs.existsSync(statePath)) {
+  // Prune any orphaned state entries whose app directory no longer exists (in full sync mode)
+  if (!cli.only) {
+    for (const id of Object.keys(syncState.apps)) {
+      if (!fs.existsSync(path.join(appsOutputDir, id, "config.json"))) {
+        delete syncState.apps[id];
+        stateChanged = true;
+      }
+    }
+  }
+
+  if (stateChanged || createdCount > 0 || updatedCount > 0 || !fs.existsSync(statePath)) {
     fs.mkdirSync(path.dirname(statePath), { recursive: true });
     syncState.last_synced_at = new Date().toISOString();
     fs.writeFileSync(statePath, `${JSON.stringify(syncState, null, 2)}\n`, "utf8");
@@ -451,7 +591,7 @@ export async function runSync() {
   }
 
   console.log(
-    `Sync complete: ${portedSummary.length} total apps (${createdCount} created, ${updatedCount} updated, ${unchangedCount} unchanged, ${skippedBlacklistCount} skipped via blacklist).`,
+    `Sync complete: ${portedSummary.length} total apps (${createdCount} created, ${updatedCount} updated, ${unchangedCount} unchanged [${hashOnlyUpdatedCount} hash-only skipped], ${skippedBlacklistCount} skipped via blacklist).`,
   );
 }
 

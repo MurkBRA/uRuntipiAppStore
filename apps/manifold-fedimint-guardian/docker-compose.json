@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "manifold-fedimint-guardian",
-      "image": "ghcr.io/fedibtc/manifold-fman:cd0f1689df79fc00c9153c9bd9f014113f38c489",
+      "image": "ghcr.io/fedibtc/manifold-fman:bb5fe29eee54256e78d2f678b0eca5975bbb98fb",
       "isMain": true,
       "internalPort": 8181,
       "addToMainNetwork": true,

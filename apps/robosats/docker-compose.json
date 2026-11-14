@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "robosats",
-      "image": "recksato/robosats-client:v0.8.7-alpha",
+      "image": "recksato/robosats-client:v0.8.8-alpha",
       "isMain": true,
       "internalPort": 12596,
       "stopGracePeriod": "1m",

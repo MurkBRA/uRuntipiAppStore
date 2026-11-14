@@ -3,7 +3,8 @@ services:
     image: ghcr.io/seanmorley15/adventurelog-frontend:v0.13.1
     environment:
       - PUBLIC_SERVER_URL=http://adventurelog-server:8000
-      - ORIGIN=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - PROTOCOL_HEADER=x-forwarded-proto
+      - HOST_HEADER=x-forwarded-host
       - BODY_SIZE_LIMIT=Infinity
     depends_on:
       - adventurelog-server
@@ -41,7 +42,7 @@ services:
       - DJANGO_ADMIN_PASSWORD=admin
       - DJANGO_ADMIN_EMAIL=admin@example.com
       - PUBLIC_URL=http://${APP_DOMAIN}:8016
-      - CSRF_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN}
+      - CSRF_TRUSTED_ORIGINS=${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:${APP_PORT},https://${LOCAL_DOMAIN}:${APP_PORT},http://${INTERNAL_IP}:${APP_PORT}
       - DEBUG=False
       - FRONTEND_URL=${APP_PROTOCOL:-http}://${APP_DOMAIN}
     depends_on:

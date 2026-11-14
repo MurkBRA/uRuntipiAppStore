@@ -1,6 +1,13 @@
 services:
   jam:
     image: ghcr.io/joinmarket-webui/jam-standalone:v0.4.1-clientserver-v0.9.11
+    entrypoint:
+      - tini
+      - '-g'
+      - '--'
+      - sh
+      - '-c'
+      - echo 'type = internal' > /etc/dinit.d/tor && exec /jam-entrypoint.sh
     volumes:
       - ${APP_DATA_DIR}/data/joinmarket:/root/.joinmarket
     environment:

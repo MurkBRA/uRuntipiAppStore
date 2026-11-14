@@ -88,14 +88,14 @@ export function sanitizeUmbrelDescriptionText(text: string, manifestPort: number
 }
 
 export function buildRuntipiConfigAndDescription(params: {
-  appId: string;
+  appId?: string;
   umbrelManifest: Record<string, any>;
   allocatedPort: number;
-  mainImageTag: string;
+  mainImageTag?: string;
   formFields: FormFieldInput[];
-  tipiVersion: number;
-  createdAt: number;
-  updatedAt: number;
+  tipiVersion?: number;
+  createdAt?: number;
+  updatedAt?: number;
   uid?: number;
   gid?: number;
 }): { config: Record<string, any>; descriptionMd: string } {
@@ -105,14 +105,19 @@ export function buildRuntipiConfigAndDescription(params: {
     allocatedPort,
     mainImageTag,
     formFields = [],
-    tipiVersion,
+    tipiVersion = 1,
     createdAt,
     updatedAt,
     uid,
     gid,
   } = params;
 
-  const name = String(umbrelManifest.name ?? appId).trim();
+  const resolvedId = (appId || String(umbrelManifest.id || "app")).trim();
+  const safeNow = Date.now() - 10000;
+  const resolvedCreatedAt = createdAt ?? safeNow - 50000;
+  const resolvedUpdatedAt = updatedAt ?? safeNow;
+
+  const name = String(umbrelManifest.name ?? resolvedId).trim();
   const manifestPort = Number(umbrelManifest.port) || allocatedPort;
   const tagline = sanitizeUmbrelDescriptionText(
     String(umbrelManifest.tagline ?? name).trim(),
@@ -150,7 +155,7 @@ export function buildRuntipiConfigAndDescription(params: {
     port: allocatedPort,
     exposable: true,
     dynamic_config: true,
-    id: appId,
+    id: resolvedId,
     description: firstParagraph,
     tipi_version: tipiVersion,
     version: resolvedVersion,
@@ -167,8 +172,8 @@ export function buildRuntipiConfigAndDescription(params: {
     ...(gid !== undefined ? { gid } : {}),
     ...(formFields.length > 0 ? { form_fields: formFields } : {}),
     supported_architectures: ["arm64", "amd64"],
-    created_at: createdAt,
-    updated_at: updatedAt,
+    created_at: resolvedCreatedAt,
+    updated_at: resolvedUpdatedAt,
     $schema: "../app-info-schema.json",
     min_tipi_version: "4.7.0",
   };

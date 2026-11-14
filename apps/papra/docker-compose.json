@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "papra",
-      "image": "ghcr.io/papra-hq/papra:26.6.2-rootless",
+      "image": "ghcr.io/papra-hq/papra:26.7.1-rootless",
       "isMain": true,
       "internalPort": 1221,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

@@ -1,6 +1,6 @@
 services:
   lightning-terminal:
-    image: lightninglabs/lightning-terminal:v0.17.7
+    image: lightninglabs/lightning-terminal:v0.17.11
     command:
       - '--uipassword_env=APP_PASSWORD'
       - '--insecure-httplisten=0.0.0.0:3004'

@@ -1,0 +1,26 @@
+{
+  "name": "Portainer Business",
+  "available": true,
+  "port": 9015,
+  "exposable": true,
+  "dynamic_config": true,
+  "id": "portainer-business",
+  "description": "⚠️ Portainer Business Edition needs a license key from Portainer. You'll be asked for it after you sign in for the first time. Portainer offers a free license for up to 3 nodes at portainer.io/take-3.",
+  "tipi_version": 1,
+  "version": "2.45.3",
+  "categories": [
+    "development"
+  ],
+  "short_desc": "Manage Docker containers on your Runtipi with Portainer Business Edition",
+  "author": "Portainer",
+  "source": "https://www.portainer.io",
+  "website": "https://www.portainer.io",
+  "supported_architectures": [
+    "arm64",
+    "amd64"
+  ],
+  "created_at": 1794674739996,
+  "updated_at": 1794674799996,
+  "$schema": "../app-info-schema.json",
+  "min_tipi_version": "4.7.0"
+}

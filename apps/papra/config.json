@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "papra",
   "description": "Papra is a minimalistic document management and archiving platform. It is designed to be simple to use and accessible to everyone.",
-  "tipi_version": 2,
-  "version": "26.6.2-rootless",
+  "tipi_version": 3,
+  "version": "26.7.1",
   "categories": [
     "utilities",
     "data"
@@ -42,7 +42,7 @@
     "amd64"
   ],
   "created_at": 1792501504721,
-  "updated_at": 1794005949489,
+  "updated_at": 1794674799818,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

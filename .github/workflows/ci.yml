@@ -16,19 +16,26 @@ permissions:
   packages: read
 
 jobs:
-  validate-and-test:
+  validate-and-plan:
+    name: Validate Store & Plan Smoke Matrix
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 15
+    outputs:
+      runtime_count: ${{ steps.plan.outputs.runtime_count }}
+      syntax_count: ${{ steps.plan.outputs.syntax_count }}
+      has_smoke_work: ${{ steps.plan.outputs.has_smoke_work }}
+      total_shards: ${{ steps.plan.outputs.total_shards }}
+      shard_matrix: ${{ steps.plan.outputs.shard_matrix }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Setup Node.js 22
+      - name: Setup Node.js 24
         uses: actions/setup-node@v7
         with:
-          node-version: "22"
+          node-version: "24"
           cache: "npm"
 
       - name: Install dependencies
@@ -43,8 +50,75 @@ jobs:
       - name: Run Unit & App Store Tests (Layers 1, 2 & 3)
         run: npm test
 
-      - name: Reclaim runner disk space before PR smoke tests
+      - name: Compute PR smoke test shard plan
+        id: plan
         if: github.event_name == 'pull_request'
+        env:
+          BASE_REF: origin/${{ github.base_ref }}
+        run: |
+          node - <<'EOF'
+          const { execFileSync } = require("node:child_process");
+          const fs = require("node:fs");
+
+          const baseRef = process.env.BASE_REF;
+          const raw = execFileSync(
+            "node",
+            ["--experimental-strip-types", "scripts/smoke-test.ts", "--changed", `--base=${baseRef}`, "--list-plan-json"],
+            { encoding: "utf8" },
+          );
+          const lines = raw.trim().split(/\r?\n/).filter(Boolean);
+          const plan = JSON.parse(lines[lines.length - 1]);
+
+          const runtimeCount = Number(plan.runtimeCount || 0);
+          const syntaxCount = Number(plan.syntaxOnlyCount || 0);
+          const hasSmokeWork = runtimeCount + syntaxCount > 0;
+          let totalShards = 0;
+          if (runtimeCount > 0) {
+            totalShards = Math.min(6, Math.max(1, Math.ceil(runtimeCount / 8)));
+          } else if (syntaxCount > 0) {
+            totalShards = 1;
+          }
+          const shards = Array.from({ length: totalShards }, (_, i) => i + 1);
+
+          const out = [
+            `runtime_count=${runtimeCount}`,
+            `syntax_count=${syntaxCount}`,
+            `has_smoke_work=${hasSmokeWork}`,
+            `total_shards=${totalShards}`,
+            `shard_matrix=${JSON.stringify(shards)}`,
+          ].join("\n") + "\n";
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, out);
+          console.log(
+            `PR Smoke plan (base=${baseRef}): runtime=${runtimeCount}, syntaxOnly=${syntaxCount}, totalShards=${totalShards}, matrix=${JSON.stringify(shards)}`,
+          );
+          EOF
+
+  smoke:
+    name: PR Smoke Shard ${{ matrix.shard }}/${{ needs.validate-and-plan.outputs.total_shards }}
+    needs: validate-and-plan
+    if: github.event_name == 'pull_request' && needs.validate-and-plan.outputs.has_smoke_work == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJson(needs.validate-and-plan.outputs.shard_matrix) }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Reclaim runner disk space before PR smoke tests
         run: |
           df -h /
           sudo rm -rf \
@@ -57,20 +131,39 @@ jobs:
           df -h /
 
       - name: Login to GitHub Container Registry
-        if: github.event_name == 'pull_request'
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Docker Compose Validation & Smoke Test on changed apps (Layers 4 & 5)
-        if: github.event_name == 'pull_request'
-        run: npm run test:smoke -- --changed --base=origin/${{ github.base_ref }} --prune --report-md=/tmp/smoke-report-ci.md
+      - name: Docker Compose Validation & Smoke Test (Shard ${{ matrix.shard }}/${{ needs.validate-and-plan.outputs.total_shards }})
+        env:
+          BASE_REF: origin/${{ github.base_ref }}
+        run: |
+          mkdir -p "smoke-results/logs-shard-${{ matrix.shard }}"
+          npm run test:smoke -- \
+            --changed \
+            --base="$BASE_REF" \
+            --prune \
+            --shard=${{ matrix.shard }}/${{ needs.validate-and-plan.outputs.total_shards }} \
+            --logs-dir="smoke-results/logs-shard-${{ matrix.shard }}" \
+            --report-json="smoke-results/report-shard-${{ matrix.shard }}.json" \
+            --report-md="smoke-results/summary-shard-${{ matrix.shard }}.md" \
+            --json-failures="smoke-results/failures-shard-${{ matrix.shard }}.json"
+
+      - name: Upload CI Smoke Test Logs & Reports (Shard ${{ matrix.shard }})
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ci-smoke-results-shard-${{ matrix.shard }}
+          path: smoke-results/
+          if-no-files-found: ignore
+          retention-days: 14
 
       - name: Append CI Smoke Report to Job Summary
-        if: github.event_name == 'pull_request' && always()
+        if: always()
         run: |
-          if [ -f /tmp/smoke-report-ci.md ]; then
-            cat /tmp/smoke-report-ci.md >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "smoke-results/summary-shard-${{ matrix.shard }}.md" ]; then
+            cat "smoke-results/summary-shard-${{ matrix.shard }}.md" >> "$GITHUB_STEP_SUMMARY"
           fi

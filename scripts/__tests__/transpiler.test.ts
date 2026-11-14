@@ -2,9 +2,10 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import { describe, expect, it } from "vitest";
-import { isDatabaseImage, transpileCompose } from "../transpiler/compose.ts";
+import { areRenderedAppsSemanticallyEqual, generateReadme, normalizeConfigForDiff } from "../sync-umbrel.ts";
+import { isDatabaseImage, shouldKeepTorSidecar, transpileCompose } from "../transpiler/compose.ts";
 import { createFormFieldFromContract } from "../transpiler/contracts.ts";
-import { copyAndPrepareAppDataFiles, parseUmbrelExports } from "../transpiler/exports-hooks.ts";
+import { copyAndPrepareAppDataFiles, parseUmbrelExports, splitShellStatements } from "../transpiler/exports-hooks.ts";
 import {
   buildRuntipiConfigAndDescription,
   formatUrlSuffix,
@@ -1013,6 +1014,267 @@ export APP_SECRET_KEY="$(openssl rand -hex 16)"
       expect(copied).toContain("server wger-powersync:8080;");
       expect(copied).not.toContain("wger_web_1");
       expect(copied).not.toContain("wger_powersync_1");
+    } finally {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    }
+  });
+
+  it("splitShellStatements handles nested quotes inside subshells, case/esac in subshells, and conditional depths", () => {
+    const script = `
+export APP_OPENREADER_PLAYBACK_SECRET="$(derive_entropy "\${app_entropy_identifier}-tts-playback")"
+export APP_OPENREADER_NGINX_DOLLAR='$'
+ips_with_port=$(for ip in $local_ips; do
+  if [[ "$ip" == *:* ]]; then
+    echo -n "http://[$ip]:$APP_OPENREADER_PORT,"
+  fi
+done | sed 's/,$//')
+export APP_LNDG_CSRF_TRUSTED_ORIGINS="$(
+  for host in "\${DEVICE_DOMAIN_NAME}"; do
+    case "$host" in
+      ""|*[!a-zA-Z0-9.:-]*) continue ;;
+    esac
+    case "$host" in
+      *:*) host="[$host]" ;;
+    esac
+    printf 'https://%s' "$host"
+  done
+)"
+if [ "$cond" = "1" ]; then
+  export CONDITIONAL_VAR="should_skip"
+elif [ "$cond" = "2" ]; then
+  export CONDITIONAL_VAR_2="also_skip"
+else
+  {
+    export BLOCK_VAR="nested_skip"
+  } || true
+fi
+export AFTER_IF="top_level_keyword if then fi"
+`;
+
+    const stmts = splitShellStatements(script);
+    const playback = stmts.find((s) => s.text.includes("APP_OPENREADER_PLAYBACK_SECRET"));
+    const dollar = stmts.find((s) => s.text.includes("APP_OPENREADER_NGINX_DOLLAR"));
+    const lndg = stmts.find((s) => s.text.includes("APP_LNDG_CSRF_TRUSTED_ORIGINS"));
+    const cond1 = stmts.find((s) => s.text.includes("CONDITIONAL_VAR="));
+    const cond2 = stmts.find((s) => s.text.includes("CONDITIONAL_VAR_2="));
+    const blockVar = stmts.find((s) => s.text.includes("BLOCK_VAR="));
+    const afterIf = stmts.find((s) => s.text.includes("AFTER_IF="));
+
+    expect(playback?.conditionalDepth).toBe(0);
+    expect(dollar?.conditionalDepth).toBe(0);
+    expect(lndg?.conditionalDepth).toBe(0);
+    expect(cond1?.conditionalDepth).toBeGreaterThan(0);
+    expect(cond2?.conditionalDepth).toBeGreaterThan(0);
+    expect(blockVar?.conditionalDepth).toBeGreaterThan(0);
+    expect(afterIf?.conditionalDepth).toBe(0);
+
+    const parsed = parseUmbrelExports(script, "Sample");
+    expect(parsed.staticExports.APP_OPENREADER_NGINX_DOLLAR).toBe("$");
+    expect(parsed.staticExports.AFTER_IF).toBe("top_level_keyword if then fi");
+    expect(parsed.staticExports.CONDITIONAL_VAR).toBeUndefined();
+    expect(parsed.staticExports.CONDITIONAL_VAR_2).toBeUndefined();
+    expect(parsed.staticExports.BLOCK_VAR).toBeUndefined();
+
+    const csrfField = parsed.formFields.find((f) => f.env_variable === "APP_LNDG_CSRF_TRUSTED_ORIGINS");
+    expect(csrfField?.type).toBe("text");
+    expect(csrfField?.default).toBe("");
+  });
+
+  it("copyAndPrepareAppDataFiles selectively strips unreferenced .template files, preserves referenced templates, rewrites torrc SocksPolicy, and keeps +x permissions", () => {
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "uruntipi-tpl-test-"));
+    try {
+      const srcDir = path.join(tmpDir, "src");
+      const destDir = path.join(tmpDir, "dest");
+      fs.mkdirSync(path.join(srcDir, "nginx"), { recursive: true });
+
+      fs.writeFileSync(
+        path.join(srcDir, "nginx.conf.template"),
+        "map ${APP_NGINX_DOLLAR}host { proxy_pass http://myapp_web_1:3000; }",
+        "utf8",
+      );
+      fs.writeFileSync(
+        path.join(srcDir, "nginx", "preserved.conf.template"),
+        "upstream u { server myapp_api_1:8080; }",
+        "utf8",
+      );
+      fs.writeFileSync(
+        path.join(srcDir, "torrc.template"),
+        "SocksPort 0.0.0.0:9050\nSocksPolicy accept $APP_MYAPP_WEB_IP\nHiddenServicePort 5223 $APP_MYAPP_WEB_IP:5223\n",
+        "utf8",
+      );
+      const scriptPath = path.join(srcDir, "entrypoint.sh");
+      fs.writeFileSync(scriptPath, "#!/bin/sh\necho ok\n", "utf8");
+      fs.chmodSync(scriptPath, 0o755);
+
+      copyAndPrepareAppDataFiles(
+        srcDir,
+        destDir,
+        "myapp",
+        { web: "myapp", api: "myapp-api" },
+        {
+          resolvedStaticExports: {
+            APP_NGINX_DOLLAR: "$",
+            APP_MYAPP_WEB_IP: "myapp",
+          },
+          keepTor: true,
+          referencedTemplates: new Set(["preserved.conf.template"]),
+        },
+      );
+
+      // Unreferenced nginx.conf.template -> stripped to data/nginx.conf and interpolated
+      const strippedNginx = path.join(destDir, "data", "nginx.conf");
+      expect(fs.existsSync(strippedNginx)).toBe(true);
+      expect(fs.existsSync(path.join(destDir, "data", "nginx.conf.template"))).toBe(false);
+      expect(fs.readFileSync(strippedNginx, "utf8")).toBe("map $host { proxy_pass http://myapp:3000; }");
+
+      // Referenced preserved.conf.template -> keeps .template filename
+      const keptTpl = path.join(destDir, "data", "nginx", "preserved.conf.template");
+      expect(fs.existsSync(keptTpl)).toBe(true);
+      expect(fs.readFileSync(keptTpl, "utf8")).toBe("upstream u { server myapp-api:8080; }");
+
+      // torrc.template -> stripped to data/torrc and SocksPolicy converted to RFC1918 CIDRs
+      const torrcOut = fs.readFileSync(path.join(destDir, "data", "torrc"), "utf8");
+      expect(torrcOut).toContain("SocksPolicy accept 10.0.0.0/8");
+      expect(torrcOut).toContain("SocksPolicy accept 172.16.0.0/12");
+      expect(torrcOut).toContain("SocksPolicy accept 192.168.0.0/16");
+      expect(torrcOut).toContain("HiddenServicePort 5223 myapp:5223");
+
+      // Executable permission bit preserved
+      const destEntryStat = fs.statSync(path.join(destDir, "data", "entrypoint.sh"));
+      expect(destEntryStat.mode & 0o111).toBeGreaterThan(0);
+    } finally {
+      fs.rmSync(tmpDir, { recursive: true, force: true });
+    }
+  });
+
+  it("shouldKeepTorSidecar distinguishes self-contained tor sidecars from shared Umbrel tor containers", () => {
+    expect(
+      shouldKeepTorSidecar({
+        tor: {
+          image: "ghcr.io/getumbrel/tor:0.4.9",
+          volumes: ["${APP_DATA_DIR}/torrc:/etc/tor/torrc:ro", "${APP_DATA_DIR}/data/tor:/data"],
+        },
+        smp: {
+          image: "simplexchat/smp-server:v7",
+          depends_on: ["tor"],
+          volumes: ["${APP_DATA_DIR}/data/tor:/tor:ro"],
+        },
+      }),
+    ).toBe(true);
+
+    expect(
+      shouldKeepTorSidecar({
+        tor: {
+          image: "ghcr.io/getumbrel/tor:0.4.9",
+          volumes: ["${TOR_DATA_DIR}:/data"],
+        },
+        web: {
+          image: "example/web:1.0",
+          depends_on: ["tor"],
+        },
+      }),
+    ).toBe(false);
+  });
+
+  it("transpileCompose rewrites host-networked sidecar loopback targets, deduplicates CSV origins & env keys, and applies app overrides", () => {
+    const omadaCompose = {
+      services: {
+        server: {
+          image: "mbentley/omada-controller:6.3.0.111",
+          network_mode: "host",
+        },
+        web: {
+          image: "caddy:2.11.9-alpine",
+          network_mode: "host",
+          command: ["sh", "-c", "reverse_proxy https://127.0.0.1:8043"],
+          environment: {
+            ORIGINS:
+              "http://${DEVICE_DOMAIN_NAME}:8074,https://${DEVICE_DOMAIN_NAME}:8074,http://${DEVICE_HOSTNAME}:8074",
+          },
+        },
+      },
+    };
+
+    const omadaRes = transpileCompose({
+      appId: "omada-controller",
+      appName: "Omada Controller",
+      manifestPort: 8074,
+      allocatedPort: 8074,
+      umbrelCompose: omadaCompose,
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+
+    const omadaMain = omadaRes.composeJson.services.find((s: any) => s.isMain);
+    const omadaServer = omadaRes.composeJson.services.find((s: any) => s.name === "omada-controller-server");
+    expect(omadaMain?.extraHosts).toContain("host.docker.internal:host-gateway");
+    expect(omadaMain?.command?.[2]).toContain("https://host.docker.internal:8043");
+    expect(omadaServer?.networkMode).toBe("host");
+    const originsEnv = omadaMain?.environment?.find((e: any) => e.key === "ORIGINS")?.value;
+    expect(originsEnv).toBe("${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:${APP_PORT}");
+
+    const hermitRes = transpileCompose({
+      appId: "hermitstash",
+      appName: "HermitStash",
+      manifestPort: 3081,
+      allocatedPort: 3081,
+      umbrelCompose: {
+        services: {
+          app_proxy: { environment: { APP_HOST: "hermitstash_web_1", APP_PORT: 3000 } },
+          web: {
+            image: "ghcr.io/dotcoocoo/hermitstash:1.15.13",
+            environment: {
+              TRUST_PROXY: "10.21.0.0/16",
+            },
+          },
+        },
+      },
+      staticExports: {},
+      initialFormFields: [],
+      hasDependencies: false,
+    });
+    const hermitEnv = hermitRes.composeJson.services[0].environment.find((e: any) => e.key === "TRUST_PROXY");
+    expect(hermitEnv?.value).toBe("172.16.0.0/12");
+  });
+
+  it("areRenderedAppsSemanticallyEqual ignores tipi_version/timestamps but detects file mode, compose, and data diffs", () => {
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), "uruntipi-sem-diff-"));
+    try {
+      const appA = path.join(tmpDir, "a");
+      const appB = path.join(tmpDir, "b");
+      for (const dir of [appA, appB]) {
+        fs.mkdirSync(path.join(dir, "metadata"), { recursive: true });
+        fs.mkdirSync(path.join(dir, "data"), { recursive: true });
+        fs.writeFileSync(path.join(dir, "docker-compose.json"), '{"schemaVersion":2,"services":[]}\n');
+        fs.writeFileSync(path.join(dir, "docker-compose.yml"), "services: {}\n");
+        fs.writeFileSync(path.join(dir, "metadata", "description.md"), "desc\n");
+        fs.writeFileSync(path.join(dir, "data", "run.sh"), "#!/bin/sh\n");
+        fs.chmodSync(path.join(dir, "data", "run.sh"), 0o755);
+      }
+
+      const baseCfg = { id: "demo", version: "1.0.0", port: 8080 };
+      fs.writeFileSync(
+        path.join(appA, "config.json"),
+        JSON.stringify({ ...baseCfg, tipi_version: 1, created_at: 1000, updated_at: 2000 }),
+      );
+      fs.writeFileSync(
+        path.join(appB, "config.json"),
+        JSON.stringify({ ...baseCfg, tipi_version: 9, created_at: 1000, updated_at: 9999 }),
+      );
+
+      expect(normalizeConfigForDiff({ ...baseCfg, tipi_version: 5, created_at: 1, updated_at: 2 })).toEqual(baseCfg);
+      expect(areRenderedAppsSemanticallyEqual(appA, appB)).toBe(true);
+
+      // Flipping executable bit should break semantic equality
+      fs.chmodSync(path.join(appB, "data", "run.sh"), 0o644);
+      expect(areRenderedAppsSemanticallyEqual(appA, appB)).toBe(false);
+
+      // Also verify generateReadme returns string cleanly without spurious rewrite
+      fs.writeFileSync(path.join(tmpDir, "README.md"), "initial");
+      const r1 = generateReadme({ rootDir: tmpDir, entries: [], skippedBlacklistCount: 0 });
+      const r2 = generateReadme({ rootDir: tmpDir, entries: [], skippedBlacklistCount: 0 });
+      expect(r1).toBe(r2);
     } finally {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }

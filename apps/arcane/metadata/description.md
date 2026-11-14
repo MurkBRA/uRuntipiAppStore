@@ -27,7 +27,7 @@ The platform is designed to bridge the gap between simplicity and advanced contr
 - **Password**: `arcane-admin`
 
 ## Links
-- **Upstream Version**: `2.17.3`
+- **Upstream Version**: `2.17.3-patch.1`
 - **Website**: https://getarcane.app/
 - **Source Repository**: https://github.com/getarcaneapp/arcane
 - **Support**: https://github.com/getarcaneapp/arcane/issues

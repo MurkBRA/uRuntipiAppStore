@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 2,
+  "services": [
+    {
+      "name": "omada-controller",
+      "image": "caddy:2.11.9-alpine",
+      "isMain": true,
+      "internalPort": 8074,
+      "user": "${APP_CONTAINER_USER:-1000:1000}",
+      "command": [
+        "sh",
+        "-c",
+        "cat > /tmp/Caddyfile <<'CADDY'\n{\n  admin off\n}\n:8074 {\n  reverse_proxy https://host.docker.internal:8043 {\n    transport http {\n      tls_insecure_skip_verify\n    }\n    header_down Location ^https?://[^/]+:(8043|8072) \"\"\n  }\n}\nCADDY\nexec caddy run --config /tmp/Caddyfile --adapter caddyfile\n"
+      ],
+      "extraHosts": [
+        "host.docker.internal:host-gateway"
+      ]
+    },
+    {
+      "name": "omada-controller-server",
+      "image": "mbentley/omada-controller:6.3.0.111",
+      "networkMode": "host",
+      "stopGracePeriod": "60s",
+      "environment": [
+        {
+          "key": "PUID",
+          "value": 1000
+        },
+        {
+          "key": "PGID",
+          "value": 1000
+        },
+        {
+          "key": "MANAGE_HTTP_PORT",
+          "value": 8072
+        },
+        {
+          "key": "PORTAL_HTTP_PORT",
+          "value": 8072
+        }
+      ],
+      "volumes": [
+        {
+          "hostPath": "${APP_DATA_DIR}/data/config",
+          "containerPath": "/opt/tplink/EAPController/data"
+        },
+        {
+          "hostPath": "${APP_DATA_DIR}/data/logs",
+          "containerPath": "/opt/tplink/EAPController/logs"
+        }
+      ],
+      "ulimits": {
+        "nofile": {
+          "soft": 4096,
+          "hard": 8192
+        }
+      }
+    }
+  ]
+}

@@ -15,15 +15,15 @@
         },
         {
           "key": "LND_ADDRESS",
-          "value": "10.21.21.9:10009"
+          "value": "${APP_ALBYHUB_LND_ADDRESS}"
         },
         {
           "key": "LND_CERT_FILE",
-          "value": "/lnd/tls.cert"
+          "value": "${APP_ALBYHUB_LND_CERT_FILE}"
         },
         {
           "key": "LND_MACAROON_FILE",
-          "value": "/lnd/data/chain/bitcoin/mainnet/admin.macaroon"
+          "value": "${APP_ALBYHUB_LND_MACAROON_FILE}"
         },
         {
           "key": "WORK_DIR",

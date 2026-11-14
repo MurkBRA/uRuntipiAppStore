@@ -13,7 +13,7 @@ Initial sync downloads the full Bitcoin Cash blockchain and may take some time. 
 Donations are never expected. If LoneStrike Labs apps are useful to you, contributions help keep development going: qpp8hg2n60mhhlsr2apw6l60x5vrdq0vp5pq3j4gyt
 
 ## Links
-- **Upstream Version**: `29.1.37`
+- **Upstream Version**: `29.1.37-patch.1`
 - **Website**: https://bitcoincashnode.org
 - **Source Repository**: https://github.com/danhaus93-ops/umbrel-bch-apps
 - **Support**: https://github.com/danhaus93-ops/umbrel-bch-apps/issues

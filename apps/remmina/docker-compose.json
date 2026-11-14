@@ -3,9 +3,10 @@
   "services": [
     {
       "name": "remmina",
-      "image": "linuxserver/remmina:1.4.35",
+      "image": "linuxserver/remmina:1.4.43",
       "isMain": true,
       "internalPort": 3000,
+      "shmSize": "1gb",
       "environment": [
         {
           "key": "PUID",

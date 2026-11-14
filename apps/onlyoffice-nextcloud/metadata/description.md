@@ -11,7 +11,7 @@ Simply install ONLYOFFICE Docs and follow the in-app instructions to connect it 
 This package integrates with **nextcloud** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `10.0.0`
+- **Upstream Version**: `10.0.0-patch.1`
 - **Website**: https://www.onlyoffice.com/
 - **Source Repository**: https://github.com/ONLYOFFICE/DocumentServer
 - **Support**: https://forum.onlyoffice.com/

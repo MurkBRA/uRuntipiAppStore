@@ -28,13 +28,13 @@ Add Murmur to your phone's home screen and it feels like a native app. There's a
 
   - **Routines and memory** - Schedule a morning briefing, and see what each agent remembers.
 
-  - **More than one Hermes** - Add a Hermes running on another computer and switch between them in a tap.
+  - **More than one Hermes** - Add a Hermes running on another computer, and every agent sits in one list, with nothing to switch.
 
 
 Call your agents to talk out loud, with voices on your Runtipi, on your ChatGPT plan, or from OpenAI or ElevenLabs. Calls need a secure connection, so Murmur reopens itself over https when you start. Reading replies aloud works everywhere.
 
 ## Links
-- **Upstream Version**: `0.12.0`
+- **Upstream Version**: `0.15.0`
 - **Website**: https://umbrel.com
 - **Source Repository**: https://github.com/getumbrel/murmur
 - **Support**: https://github.com/getumbrel/murmur/issues

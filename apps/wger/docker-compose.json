@@ -46,7 +46,7 @@
         },
         {
           "key": "CSRF_TRUSTED_ORIGINS",
-          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:8450,http://${INTERNAL_IP}:${APP_PORT}"
+          "value": "${APP_PROTOCOL:-http}://${APP_DOMAIN},http://${LOCAL_DOMAIN}:${APP_PORT},https://${LOCAL_DOMAIN}:${APP_PORT},http://${INTERNAL_IP}:${APP_PORT}"
         },
         {
           "key": "SITE_URL",

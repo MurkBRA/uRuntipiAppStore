@@ -1,0 +1,16 @@
+services:
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:v4.0.8
+    volumes:
+      - ${APP_DATA_DIR}/data/config:/config
+      - ${APP_DATA_DIR}/data/book-ingest:/cwa-book-ingest
+      - ${APP_DATA_DIR}/data/calibre-library:/calibre-library
+    environment:
+      - PUID=1000
+      - PGID=1000
+    stop_grace_period: 1m
+    x-runtipi:
+      internal_port: 8083
+      is_main: true
+x-runtipi:
+  schema_version: 2
