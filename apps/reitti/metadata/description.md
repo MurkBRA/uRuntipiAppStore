@@ -18,7 +18,7 @@ Overall, Reitti focuses on giving users a comprehensive picture of their mobilit
 - **Username**: `admin`
 
 ## Links
-- **Upstream Version**: `5.10.1-patch.1`
+- **Upstream Version**: `5.11.0`
 - **Website**: https://www.dedicatedcode.com/projects/reitti/overview/
 - **Source Repository**: https://github.com/dedicatedcode/reitti
 - **Support**: https://github.com/dedicatedcode/reitti/issues

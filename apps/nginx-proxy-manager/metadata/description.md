@@ -18,7 +18,7 @@ Expose your apps to the internet easily and securely.
   - User management, permissions and audit log
 
 ## Links
-- **Upstream Version**: `2.17.0`
+- **Upstream Version**: `2.17.0-patch.1`
 - **Website**: https://nginxproxymanager.com/
 - **Source Repository**: https://github.com/NginxProxyManager/nginx-proxy-manager
 - **Support**: https://github.com/NginxProxyManager/nginx-proxy-manager/issues

@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "obsidian",
   "description": "**Your thoughts are yours.** Obsidian stores notes on your device, so you can access them quickly, even offline. No one else can read them, not even us.",
-  "tipi_version": 3,
-  "version": "1.15.0",
+  "tipi_version": 4,
+  "version": "1.15.1",
   "categories": [
     "utilities",
     "data"
@@ -22,7 +22,7 @@
     "amd64"
   ],
   "created_at": 1792501503610,
-  "updated_at": 1794674799579,
+  "updated_at": 1794841079594,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

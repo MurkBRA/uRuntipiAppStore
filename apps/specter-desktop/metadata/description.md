@@ -23,7 +23,7 @@ Specter Desktop also supports using the Bitcoin Core on your Runtipi as a hot wa
 This package integrates with **bitcoin** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `2.1.11-patch.1`
+- **Upstream Version**: `2.3.0`
 - **Website**: https://specter.solutions
 - **Source Repository**: https://github.com/cryptoadvance/specter-desktop
 - **Support**: https://t.me/spectersupport

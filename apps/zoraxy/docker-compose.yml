@@ -1,6 +1,6 @@
 services:
   zoraxy:
-    image: zoraxydocker/zoraxy:v3.3.4
+    image: zoraxydocker/zoraxy:v3.3.5
     ports:
       - 41080:80/tcp
       - 41443:443/tcp

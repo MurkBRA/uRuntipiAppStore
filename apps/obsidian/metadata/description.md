@@ -12,7 +12,7 @@ With thousands of plugins and themes, you can shape Obsidian to fit your way of 
 Obsidian uses open, non-proprietary files, so you're never locked in, and can preserve your data for the long term.
 
 ## Links
-- **Upstream Version**: `1.15.0`
+- **Upstream Version**: `1.15.1`
 - **Website**: https://obsidian.md/
 - **Source Repository**: https://github.com/linuxserver/docker-obsidian
 - **Support**: https://github.com/linuxserver/docker-obsidian/issues

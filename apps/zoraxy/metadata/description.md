@@ -30,7 +30,7 @@ Key Features:
 Zoraxy is particularly popular in the homelab and developer communities for its extensive feature set, reliability, and open-source nature. It can be run on low-power devices, making it suitable for a variety of hosting environments, from personal setups to larger, distributed network architectures. Its flexibility, combined with a robust feature set, makes it a compelling choice for anyone looking to streamline their network management setup or host web services securely and efficiently.
 
 ## Links
-- **Upstream Version**: `3.3.4-patch.1`
+- **Upstream Version**: `3.3.5`
 - **Website**: https://zoraxy.aroz.org/
 - **Source Repository**: https://github.com/tobychui/zoraxy
 - **Support**: https://github.com/tobychui/zoraxy/issues

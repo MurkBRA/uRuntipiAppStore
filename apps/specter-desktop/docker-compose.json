@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "specter-desktop",
-      "image": "ghcr.io/cryptoadvance/specter-desktop:v2.1.11",
+      "image": "ghcr.io/cryptoadvance/specter-desktop:v2.3.0",
       "isMain": true,
       "internalPort": 25441,
       "addToMainNetwork": true,

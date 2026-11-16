@@ -1,6 +1,6 @@
 services:
   obsidian:
-    image: linuxserver/obsidian:1.15.0
+    image: linuxserver/obsidian:1.15.1
     volumes:
       - ${APP_DATA_DIR}/data/config:/config
     environment:
