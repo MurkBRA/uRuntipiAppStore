@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "element",
-      "image": "vectorim/element-web:v1.12.32",
+      "image": "vectorim/element-web:v1.12.35",
       "isMain": true,
       "internalPort": 80,
       "user": "nginx:nginx",

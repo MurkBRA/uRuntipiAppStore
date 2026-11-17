@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "docuseal",
   "description": "DocuSeal is an open source platform that provides secure and efficient digital document signing and processing.",
-  "tipi_version": 3,
-  "version": "3.3.6",
+  "tipi_version": 4,
+  "version": "3.3.7",
   "categories": [
     "utilities",
     "data"
@@ -35,7 +35,7 @@
     "amd64"
   ],
   "created_at": 1792501494122,
-  "updated_at": 1794320761407,
+  "updated_at": 1794929676682,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

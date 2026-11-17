@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "monetr",
-      "image": "ghcr.io/monetr/monetr:1.22.1",
+      "image": "ghcr.io/monetr/monetr:1.22.2",
       "isMain": true,
       "internalPort": 4000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

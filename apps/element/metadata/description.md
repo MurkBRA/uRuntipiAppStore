@@ -23,7 +23,7 @@ When you register or login through Element, you will need to change the address 
 For seamless connection even when you are accessing Element away from home, simply install the "Tailscale" app on your Runtipi and your device you are using to access Element, and use http://umbrel:8008 as the address of your server.
 
 ## Links
-- **Upstream Version**: `1.12.32`
+- **Upstream Version**: `1.12.35`
 - **Website**: https://element.io
 - **Source Repository**: https://github.com/vector-im/element-web
 - **Support**: https://matrix.to/#/#element-web:matrix.org

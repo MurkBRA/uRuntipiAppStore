@@ -26,7 +26,7 @@
     },
     {
       "name": "openreader-web",
-      "image": "ghcr.io/richardr1126/openreader:5.4.1",
+      "image": "ghcr.io/richardr1126/openreader:5.5.0",
       "addToMainNetwork": true,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [

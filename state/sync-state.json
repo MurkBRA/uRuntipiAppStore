@@ -1,5 +1,5 @@
 {
-  "last_synced_at": "2026-11-16T14:58:09.938Z",
+  "last_synced_at": "2026-11-17T15:34:47.385Z",
   "apps": {
     "adventurelog": {
       "tipi_version": 3,
@@ -378,12 +378,12 @@
       "upstream_hash": "7cbdcfb767ee9bebef348c0e065dda2db73d2e2b018557b3540e0466a52f9bb4"
     },
     "docuseal": {
-      "tipi_version": 3,
-      "version": "3.3.6",
+      "tipi_version": 4,
+      "version": "3.3.7",
       "port": 8387,
       "created_at": 1792501494122,
-      "updated_at": 1794320761407,
-      "upstream_hash": "d1d67908965abfa672204e33364a43877f39ee755ffff77115d36bbe78bbd2d1"
+      "updated_at": 1794929676682,
+      "upstream_hash": "ad2117f8d77fca77ccb9e187bbef2c13f68dcc777a29c4014711a89162d7ddc5"
     },
     "domain-locker": {
       "tipi_version": 2,
@@ -442,12 +442,12 @@
       "upstream_hash": "a782a5a70708f9243badb5af8bc80f6976587362f97af2589461e9c910e97729"
     },
     "ekko-studio": {
-      "tipi_version": 7,
-      "version": "0.8.24",
+      "tipi_version": 8,
+      "version": "0.8.25",
       "port": 6063,
       "created_at": 1792501494907,
-      "updated_at": 1794841079127,
-      "upstream_hash": "cb9fbeb2281286b283c4e65ea50f4ce7e8b1288ec809093112d15190a8fac7d8"
+      "updated_at": 1794929676731,
+      "upstream_hash": "fbaaa47faf35f100816994492abf97b14cb3d71d92fddd6b237886edbf40f437"
     },
     "electrumx": {
       "tipi_version": 3,
@@ -458,12 +458,12 @@
       "upstream_hash": "38634fb9a098f828681605d53ef6c4b4de3a559260512ae3ed1bf796c4a905ce"
     },
     "element": {
-      "tipi_version": 2,
-      "version": "1.12.32",
+      "tipi_version": 3,
+      "version": "1.12.35",
       "port": 25597,
       "created_at": 1792501495235,
-      "updated_at": 1794005949210,
-      "upstream_hash": "99d0286509f1fff1253e5fcfa716c140f43b20384b20c164318d828a2541edab"
+      "updated_at": 1794929676866,
+      "upstream_hash": "b1eebb81b6222e792e94fc1175317de768dcde400ec870c94df0a4a3e164e60a"
     },
     "elements": {
       "tipi_version": 2,
@@ -578,12 +578,12 @@
       "upstream_hash": "5f43ef2993e750c6d971827f151c42d63145faecb8e838883018dfb83e89aab7"
     },
     "gitlab": {
-      "tipi_version": 4,
-      "version": "19.5.5",
+      "tipi_version": 5,
+      "version": "19.5.6",
       "port": 8929,
       "created_at": 1792501496766,
-      "updated_at": 1794674798226,
-      "upstream_hash": "719e051bdad3ff62e0afe385b87861212f2ab58862c827a33383b7eb76134aa5"
+      "updated_at": 1794929676903,
+      "upstream_hash": "ee8d992673d713abf2e8243b01d2d2fc9f75d15335c20d31e8afc5cf39ed1cc7"
     },
     "glasshome": {
       "tipi_version": 2,
@@ -602,12 +602,12 @@
       "upstream_hash": "0f2b737633d694ab6370e9094a8095eaf224e20d4506670bc5a4a9b30e4ace02"
     },
     "gupt": {
-      "tipi_version": 5,
-      "version": "6.0.1",
+      "tipi_version": 6,
+      "version": "6.0.9",
       "port": 8423,
       "created_at": 1792501497145,
-      "updated_at": 1794841079351,
-      "upstream_hash": "c5a1898cfe072d0cf4e45c716f40a3a0da6bee6cacb3d4aa530f3fa56b2bc001"
+      "updated_at": 1794929676927,
+      "upstream_hash": "683b78ffc08694ec8b06e1a2b1b772f2ee2292d419cc68b7b30a817170a7103e"
     },
     "habitica": {
       "tipi_version": 2,
@@ -930,12 +930,12 @@
       "upstream_hash": "42fc118b482d4a4a87c56109108fbce023d583ac5027fcab379a55732f3a7652"
     },
     "manifold-fedimint-guardian": {
-      "tipi_version": 4,
-      "version": "bb5fe29eee54256e78d2f678b0eca5975bbb98fb",
+      "tipi_version": 5,
+      "version": "bcd879de33c0109ad15ff9a5c8e4f42fdfcbb8af",
       "port": 8483,
       "created_at": 1792501501284,
-      "updated_at": 1794674799152,
-      "upstream_hash": "a982bf88a9557d9589fe3797e433d33ca4448554c62ec4cf061b60ddb3feaa6f"
+      "updated_at": 1794929676982,
+      "upstream_hash": "619a8ebd8e57d1ea00d44cc0349e04da365aea3c7f000641b636c813444891f1"
     },
     "maybe": {
       "tipi_version": 2,
@@ -970,12 +970,12 @@
       "upstream_hash": "bcaa550fed288937189cbb5d8c276517b6f48ffee8ddfb40a02a955c85abbcc9"
     },
     "monetr": {
-      "tipi_version": 4,
-      "version": "1.22.1",
+      "tipi_version": 5,
+      "version": "1.22.2",
       "port": 8379,
       "created_at": 1792501502184,
-      "updated_at": 1794674799336,
-      "upstream_hash": "0aea5d3f9c737451037e872d7f6fe381d409c0a89a78778e3a55c3ff5714ec11"
+      "updated_at": 1794929677045,
+      "upstream_hash": "1b8330ac57c976a18bd5ccb9b782130904d9e6a90246bd92d7b7f25ea21061ef"
     },
     "morphos": {
       "tipi_version": 2,
@@ -1050,12 +1050,12 @@
       "upstream_hash": "3c0c30c43e9e8207435c0ca34dd10d978b87e593acc3bcfbbba20aca6641c8ff"
     },
     "nostr-vpn": {
-      "tipi_version": 2,
-      "version": "v4.1.20",
+      "tipi_version": 3,
+      "version": "v4.1.22",
       "port": 38180,
       "created_at": 1792501503232,
-      "updated_at": 1794005949447,
-      "upstream_hash": "9cacb042d788a4d79bd2f71c44d3062f6a2811ff09b1bfcfa167737bf003eabb"
+      "updated_at": 1794929677077,
+      "upstream_hash": "6347c23dc1fc65f3dc15dd3226669f4f7c8d9dcaba47884e1eff526bb3f57b77"
     },
     "nostrudel": {
       "tipi_version": 2,
@@ -1066,12 +1066,12 @@
       "upstream_hash": "77f4cf1caa49f45ec325c60a87cb5a49aeb260138d9aa2da2cd6d3428b69365a"
     },
     "notediscovery": {
-      "tipi_version": 3,
-      "version": "0.34.1",
+      "tipi_version": 4,
+      "version": "0.35.0",
       "port": 8736,
       "created_at": 1792501503363,
-      "updated_at": 1794841079565,
-      "upstream_hash": "18a5055d76ba6596189946251a392a05aa74ddc69ff64d575d89e873871711c2"
+      "updated_at": 1794929677101,
+      "upstream_hash": "88b1abab77bb0c4a44ae48174587f4d09db5aacbb4ca6bbd09196b161fccd542"
     },
     "nutstash-wallet": {
       "tipi_version": 2,
@@ -1130,12 +1130,12 @@
       "upstream_hash": "e6158a4d867286851a7d175348df50a718a8a4104df9e443d4d1b1fb6b06f666"
     },
     "openreader": {
-      "tipi_version": 4,
+      "tipi_version": 5,
       "version": "1.30.5-alpine",
       "port": 3391,
       "created_at": 1792501504196,
-      "updated_at": 1794674799752,
-      "upstream_hash": "da4f9bed067285d32e91d1dbb2406cee486146d213a86c91006ad989d4e59293"
+      "updated_at": 1794929677130,
+      "upstream_hash": "dc904d6872eea73b525d4985741ebb2d02cfcf06fe0c2c7afb359dccc3ff4f16"
     },
     "openresty-manager": {
       "tipi_version": 2,
@@ -1266,12 +1266,12 @@
       "upstream_hash": "bf08e6c06a7309b0a5504da4aea2f78b82ab49cbc47e3bc6886ed2088a2c9713"
     },
     "poznote": {
-      "tipi_version": 7,
-      "version": "6.148.1",
+      "tipi_version": 8,
+      "version": "6.149.1",
       "port": 8389,
       "created_at": 1792501505846,
-      "updated_at": 1794841079657,
-      "upstream_hash": "a602c506bd1a45a47ceb4c73eeb94681cf81cc7b0c1dc474621f411f72db64f7"
+      "updated_at": 1794929677219,
+      "upstream_hash": "0fb9d9c8564323cdf207fa704b0bd1fffa2ccaeb769d4d1dd773d33d096a5c2d"
     },
     "public-pool": {
       "tipi_version": 2,
@@ -1306,12 +1306,12 @@
       "upstream_hash": "144a656fd09968f030856b0108454527c7d36ccf47f4b947c218c68d7a032197"
     },
     "readur": {
-      "tipi_version": 2,
-      "version": "3.1.2",
+      "tipi_version": 3,
+      "version": "3.1.3",
       "port": 19289,
       "created_at": 1792501506499,
-      "updated_at": 1794005949557,
-      "upstream_hash": "5f62988f78fd97e96ba7022bb7f42b91a67a0a1dfefdc2b7092a19e4ce506988"
+      "updated_at": 1794929677246,
+      "upstream_hash": "d3ca6b4ec5daa9d13b70d32204f22ac849c1f0be626fb04e9966ec5c854894dd"
     },
     "reitti": {
       "tipi_version": 6,
@@ -1482,12 +1482,12 @@
       "upstream_hash": "f057712c7b9fa9be3ba083032eb30537e899706315c8e358d588fa44df4babb1"
     },
     "snort": {
-      "tipi_version": 2,
-      "version": "v0.5.4",
+      "tipi_version": 3,
+      "version": "v0.5.6",
       "port": 52027,
       "created_at": 1792501509186,
-      "updated_at": 1794005949624,
-      "upstream_hash": "1746f07c9e95fa404e1bd9f6291e012fed0b1a1245973bc4f2b2f18bfad9da4c"
+      "updated_at": 1794929677282,
+      "upstream_hash": "0b9f98e283e52fbdda448d6550f8fddde1f5e6ad05c320dfd34dec8bde517a2f"
     },
     "snowflake": {
       "tipi_version": 3,
@@ -1730,12 +1730,12 @@
       "upstream_hash": "eaeeaba71b369a94ae5e3a1d7c7ad2e16d5fbb2691e3381b9635db8689cf4578"
     },
     "twenty": {
-      "tipi_version": 6,
-      "version": "2.58.2",
+      "tipi_version": 7,
+      "version": "2.59.1",
       "port": 2020,
       "created_at": 1792501511931,
-      "updated_at": 1794841079814,
-      "upstream_hash": "9a5e06ae2b9b8b841de1ce0112d9bf37127d4bdb4421eab3c24a36b2370a9f4b"
+      "updated_at": 1794929677341,
+      "upstream_hash": "76e4409474b24b10fa0e2bfda904893639fe9806d265f4c8dd06e6167918e204"
     },
     "urbit": {
       "tipi_version": 2,
@@ -1890,12 +1890,12 @@
       "upstream_hash": "8311160669a484c06d138394f4ccbb6915908b222f9a3e2254e7d7da8eabc919"
     },
     "plane": {
-      "tipi_version": 1,
+      "tipi_version": 2,
       "version": "alpine3.23",
       "port": 8762,
       "created_at": 1794010927640,
-      "updated_at": 1794010987640,
-      "upstream_hash": "0ddbef3800b6abe8349aca8765f6dd97ecc07d9169de8465ce83d2a217815149"
+      "updated_at": 1794929677172,
+      "upstream_hash": "e92a7fc164989900858bfce86d498548d8cf0875baebb1fee8ce349a0be23993"
     },
     "openhands": {
       "tipi_version": 2,

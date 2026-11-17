@@ -1,6 +1,6 @@
 services:
   element:
-    image: vectorim/element-web:v1.12.32
+    image: vectorim/element-web:v1.12.35
     user: nginx:nginx
     stop_grace_period: 1m
     x-runtipi:

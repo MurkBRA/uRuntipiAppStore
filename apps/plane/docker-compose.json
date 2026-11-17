@@ -417,7 +417,7 @@
     },
     {
       "name": "plane-api",
-      "image": "makeplane/plane-backend:v1.4.3",
+      "image": "makeplane/plane-backend:v1.5.0",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
@@ -547,7 +547,7 @@
     },
     {
       "name": "plane-worker",
-      "image": "makeplane/plane-backend:v1.4.3",
+      "image": "makeplane/plane-backend:v1.5.0",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": [
         "sh",
@@ -682,7 +682,7 @@
     },
     {
       "name": "plane-beat-worker",
-      "image": "makeplane/plane-backend:v1.4.3",
+      "image": "makeplane/plane-backend:v1.5.0",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": [
         "sh",
@@ -820,7 +820,7 @@
     },
     {
       "name": "plane-migrator",
-      "image": "makeplane/plane-backend:v1.4.3",
+      "image": "makeplane/plane-backend:v1.5.0",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "command": [
         "sh",
@@ -949,7 +949,7 @@
     },
     {
       "name": "plane-web",
-      "image": "makeplane/plane-frontend:v1.4.3",
+      "image": "makeplane/plane-frontend:v1.5.0",
       "environment": [
         {
           "key": "NGINX_PORT",
@@ -1070,8 +1070,9 @@
     },
     {
       "name": "plane-live",
-      "image": "makeplane/plane-live:v1.4.3",
+      "image": "makeplane/plane-live:v1.5.0",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
+      "stopGracePeriod": "30s",
       "environment": [
         {
           "key": "NGINX_PORT",
@@ -1192,7 +1193,7 @@
     },
     {
       "name": "plane-space",
-      "image": "makeplane/plane-space:v1.4.3",
+      "image": "makeplane/plane-space:v1.5.0",
       "user": "${APP_CONTAINER_USER:-1000:1000}",
       "environment": [
         {
@@ -1321,7 +1322,7 @@
     },
     {
       "name": "plane-admin",
-      "image": "makeplane/plane-admin:v1.4.3",
+      "image": "makeplane/plane-admin:v1.5.0",
       "environment": [
         {
           "key": "NGINX_PORT",

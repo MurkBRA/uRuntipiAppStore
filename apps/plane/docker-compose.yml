@@ -122,7 +122,7 @@ services:
       - SESSION_COOKIE_SECURE=0
       - CSRF_COOKIE_SECURE=0
   plane-api:
-    image: makeplane/plane-backend:v1.4.3
+    image: makeplane/plane-backend:v1.5.0
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - NGINX_PORT=8762
@@ -161,7 +161,7 @@ services:
       plane-rabbitmq:
         condition: service_started
   plane-worker:
-    image: makeplane/plane-backend:v1.4.3
+    image: makeplane/plane-backend:v1.5.0
     command:
       - sh
       - '-c'
@@ -204,7 +204,7 @@ services:
       plane-rabbitmq:
         condition: service_started
   plane-beat-worker:
-    image: makeplane/plane-backend:v1.4.3
+    image: makeplane/plane-backend:v1.5.0
     command:
       - sh
       - '-c'
@@ -249,7 +249,7 @@ services:
       plane-migrator:
         condition: service_completed_successfully
   plane-migrator:
-    image: makeplane/plane-backend:v1.4.3
+    image: makeplane/plane-backend:v1.5.0
     command:
       - sh
       - '-c'
@@ -288,7 +288,7 @@ services:
       plane-db:
         condition: service_healthy
   plane-web:
-    image: makeplane/plane-frontend:v1.4.3
+    image: makeplane/plane-frontend:v1.5.0
     environment:
       - NGINX_PORT=8762
       - LISTEN_HTTP_PORT=8762
@@ -321,7 +321,7 @@ services:
     depends_on:
       - plane-api
   plane-live:
-    image: makeplane/plane-live:v1.4.3
+    image: makeplane/plane-live:v1.5.0
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - NGINX_PORT=8762
@@ -354,8 +354,9 @@ services:
       - CSRF_COOKIE_SECURE=0
     depends_on:
       - plane-api
+    stop_grace_period: 30s
   plane-space:
-    image: makeplane/plane-space:v1.4.3
+    image: makeplane/plane-space:v1.5.0
     user: ${APP_CONTAINER_USER:-1000:1000}
     environment:
       - NGINX_PORT=8762
@@ -395,7 +396,7 @@ services:
       retries: 3
       start_period: 10s
   plane-admin:
-    image: makeplane/plane-admin:v1.4.3
+    image: makeplane/plane-admin:v1.5.0
     environment:
       - NGINX_PORT=8762
       - LISTEN_HTTP_PORT=8762

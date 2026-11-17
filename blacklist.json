@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-11-16T14:57:57.704Z",
+  "generated_at": "2026-11-17T15:34:34.536Z",
   "stats": {
     "runtipi_official_total": 267,
     "umbrel_total_packages": 396,
@@ -2790,7 +2790,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "gitea/gitea:28.3.0",
+        "gitea/gitea:28.4.0",
         "postgres:14"
       ]
     },
@@ -3090,7 +3090,7 @@
       "images": [
         "ghcr.io/hoarder-app/hoarder:0.34.1",
         "ghcr.io/karakeep-app/karakeep-chrome:release",
-        "getmeili/meilisearch:v1.55"
+        "getmeili/meilisearch:v1.57"
       ]
     },
     {
@@ -3120,7 +3120,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/home-assistant/home-assistant:2026.11.1"
+        "ghcr.io/home-assistant/home-assistant:2026.11.2"
       ]
     },
     {
@@ -3749,7 +3749,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "neosmemo/memos:26.11.0"
+        "neosmemo/memos:26.11.1"
       ]
     },
     {
@@ -4364,7 +4364,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "1dev/server:17.2.0",
+        "1dev/server:17.2.1",
         "postgres:14"
       ]
     },
