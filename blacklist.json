@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-11-17T15:34:34.536Z",
+  "generated_at": "2026-11-18T15:12:28.791Z",
   "stats": {
     "runtipi_official_total": 267,
     "umbrel_total_packages": 396,
@@ -3088,7 +3088,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/hoarder-app/hoarder:0.34.1",
+        "ghcr.io/hoarder-app/hoarder:0.35.0",
         "ghcr.io/karakeep-app/karakeep-chrome:release",
         "getmeili/meilisearch:v1.57"
       ]

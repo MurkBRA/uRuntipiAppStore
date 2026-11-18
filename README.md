@@ -15,13 +15,13 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | # | App ID | Name | Version | Port | Categories |
 | :---: | :--- | :--- | :---: | :---: | :--- |
 | 1 | `adventurelog` | **AdventureLog** | `v0.13.1` | `19442` | `utilities, data` |
-| 2 | `agent-zero` | **Agent Zero** | `v2.15` | `3015` | `ai` |
+| 2 | `agent-zero` | **Agent Zero** | `v2.16` | `3015` | `ai` |
 | 3 | `agora` | **Agora** | `1.19-alpine` | `12080` | `utilities, data` |
 | 4 | `airtrail` | **AirTrail** | `3.14.0` | `3256` | `utilities, data` |
 | 5 | `akaunting` | **Akaunting** | `3.1.21` | `8773` | `finance` |
 | 6 | `albyhub` | **Alby Hub ✨** | `1.24.7` | `59000` | `finance` |
 | 7 | `am-i-exposed` | **am-i.exposed** | `0.43.2` | `4080` | `finance` |
-| 8 | `anything-llm` | **AnythingLLM** | `1.19.0` | `3031` | `ai` |
+| 8 | `anything-llm` | **AnythingLLM** | `1.20.0` | `3031` | `ai` |
 | 9 | `appsmith` | **Appsmith** | `v2.7.0` | `25946` | `development` |
 | 10 | `arcane` | **Arcane** | `v2.17.3` | `3552` | `development` |
 | 11 | `bark-wallet` | **Bark Wallet** | `0.11.0` | `4004` | `finance` |
@@ -48,7 +48,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 32 | `btctracker` | **BTC Tracker** | `0.8.0` | `3947` | `finance` |
 | 33 | `calibre-web-automated` | **Calibre-Web Automated** | `v4.0.8` | `24060` | `books, utilities, data` |
 | 34 | `campfire` | **Campfire** | `1.5.10` | `8004` | `social` |
-| 35 | `canary` | **Canary Wallet** | `1.7.1` | `3005` | `finance` |
+| 35 | `canary` | **Canary Wallet** | `1.7.2` | `3005` | `finance` |
 | 36 | `cashu-me` | **Cashu.me Wallet** | `0.1.1` | `3194` | `finance` |
 | 37 | `chainforensics` | **ChainForensics** | `1.2.0` | `3016` | `finance` |
 | 38 | `chantools` | **chantools CLI** | `v0.14.1-umbrel` | `7682` | `finance` |
@@ -65,19 +65,19 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 49 | `docuseal` | **DocuSeal** | `3.3.7` | `8387` | `utilities, data` |
 | 50 | `domain-locker` | **Domain Locker** | `0.3.0` | `8839` | `network, security` |
 | 51 | `donetick` | **Donetick** | `0.1.86` | `27781` | `utilities, data` |
-| 52 | `downtify` | **Downtify** | `3.10.0` | `8789` | `media, music` |
+| 52 | `downtify` | **Downtify** | `3.11.0` | `8789` | `media, music` |
 | 53 | `dropgate-server` | **Dropgate Server** | `3.0.13` | `52443` | `utilities, data` |
 | 54 | `dtan-server` | **DTAN Server** | `v0.2.0` | `8022` | `network` |
 | 55 | `dumbpad` | **DumbPad** | `1.0.4` | `26406` | `utilities, data` |
 | 56 | `ee-gateway` | **EE Gateway** | `0.6.5` | `26231` | `network` |
-| 57 | `ekko-studio` | **Ekko Studio** | `0.8.25` | `6063` | `ai` |
+| 57 | `ekko-studio` | **Ekko Studio** | `0.8.26` | `6063` | `ai` |
 | 58 | `electrumx` | **ElectrumX** | `1.0.1` | `23042` | `finance` |
 | 59 | `element` | **Element** | `1.12.35` | `25597` | `social` |
 | 60 | `elements` | **Elements Core** | `v0.0.3` | `3042` | `finance` |
 | 61 | `enclosed` | **Enclosed** | `1.16.1` | `8788` | `utilities, data` |
 | 62 | `endurain` | **Endurain** | `0.20.2` | `8865` | `social` |
 | 63 | `ersatztv-legacy` | **ErsatzTV Legacy** | `26.12.0` | `8409` | `media` |
-| 64 | `etherpad` | **Etherpad** | `3.3.17` | `9002` | `utilities, data` |
+| 64 | `etherpad` | **Etherpad** | `3.3.19` | `9002` | `utilities, data` |
 | 65 | `fedimint-gateway` | **Fedimint Lightning Gateway** | `v0.13.0` | `21335` | `finance` |
 | 66 | `fedimintd` | **Fedimint** | `v0.13.0` | `28099` | `finance` |
 | 67 | `fizzy` | **Fizzy** | `5f45e54` | `8005` | `social` |
@@ -85,16 +85,16 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 69 | `formicaio` | **Formicaio** | `0.3.0` | `52100` | `finance` |
 | 70 | `frigate` | **Frigate** | `0.18.2` | `5004` | `automation` |
 | 71 | `fulcrum` | **Fulcrum** | `1.0.2` | `2109` | `finance` |
-| 72 | `gitea-mirror` | **Gitea Mirror** | `3.53.0` | `4322` | `development` |
+| 72 | `gitea-mirror` | **Gitea Mirror** | `3.54.0` | `4322` | `development` |
 | 73 | `gitingest` | **Gitingest** | `0.3.1` | `8895` | `development` |
 | 74 | `gitlab` | **GitLab** | `19.5.6` | `8929` | `development` |
 | 75 | `glasshome` | **GlassHome** | `1.4.5` | `3123` | `automation` |
 | 76 | `gobrrr-pool` | **Go Brrr Pool** | `1.2.4` | `21421` | `finance` |
-| 77 | `gupt` | **Gupt** | `6.0.9` | `8423` | `social` |
+| 77 | `gupt` | **Gupt** | `6.1.16` | `8423` | `social` |
 | 78 | `habitica` | **Habitica** | `5.50.6` | `3944` | `utilities, data` |
 | 79 | `hashrate-autopilot` | **Hashrate Autopilot** | `1.18.2` | `3018` | `finance` |
 | 80 | `helipad` | **Helipad** | `0.2.2` | `2112` | `finance` |
-| 81 | `hermes-agent` | **Hermes Agent** | `v0.23.1` | `18790` | `ai` |
+| 81 | `hermes-agent` | **Hermes Agent** | `0.23.2` | `18790` | `ai` |
 | 82 | `hermitstash` | **HermitStash** | `1.15.13` | `3081` | `utilities, data` |
 | 83 | `holesail-switchboard` | **Holesail Switchboard** | `v2.0.8` | `3160` | `network, security` |
 | 84 | `home-assistant-fusion-ui` | **HA-Fusion** | `2024.10.1` | `5023` | `automation` |
@@ -106,7 +106,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 90 | `invio` | **Invio** | `2.4.1` | `26954` | `finance` |
 | 91 | `ipfs-podcasting` | **IPFS Podcasting** | `0.6` | `23718` | `utilities, data` |
 | 92 | `jam` | **Jam** | `v0.4.1-clientserver-v0.9.11` | `5002` | `finance` |
-| 93 | `jotty` | **Jotty** | `1.29.2` | `8345` | `utilities, data` |
+| 93 | `jotty` | **Jotty** | `1.30.0` | `8345` | `utilities, data` |
 | 94 | `jupyterlab` | **JupyterLab** | `lab-4.6.6` | `8899` | `development` |
 | 95 | `just-download` | **Just. Download.** | `v1.0.9` | `3684` | `media` |
 | 96 | `kan` | **kan** | `0.7.0` | `8373` | `utilities, data` |
@@ -114,7 +114,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 98 | `kokoro` | **Kokoro** | `0.10.0` | `8877` | `ai` |
 | 99 | `komodo` | **Komodo** | `2.3.4` | `9120` | `development` |
 | 100 | `krystal-bull` | **Krystal Bull** | `1.9.7` | `21774` | `finance` |
-| 101 | `langflow` | **Langflow** | `1.13.2` | `8862` | `ai` |
+| 101 | `langflow` | **Langflow** | `1.13.3` | `8862` | `ai` |
 | 102 | `leafwiki` | **LeafWiki** | `0.14.2` | `8066` | `books, utilities, data` |
 | 103 | `librechat` | **LibreChat** | `0.8.7` | `7050` | `ai` |
 | 104 | `libreoffice` | **LibreOffice** | `25.8.7` | `5001` | `utilities, data` |
@@ -139,7 +139,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 123 | `miner-sentinel` | **MinerSentinel** | `v1.2.0` | `3082` | `finance` |
 | 124 | `monetr` | **Monetr** | `1.22.2` | `8379` | `finance` |
 | 125 | `morphos` | **Morphos server** | `0.6.0` | `3778` | `photography, utilities, data` |
-| 126 | `murmur` | **Murmur** | `0.15.0` | `18793` | `ai` |
+| 126 | `murmur` | **Murmur** | `0.15.1` | `18793` | `ai` |
 | 127 | `music-assistant` | **Music Assistant** | `2.10.12` | `8896` | `media, music` |
 | 128 | `myspeed` | **MySpeed** | `1.0.9` | `5216` | `network` |
 | 129 | `neko` | **Neko** | `3.2.0` | `3880` | `network` |
@@ -156,7 +156,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 140 | `omada-controller` | **Omada Controller** | `2.11.9-alpine` | `8074` | `network` |
 | 141 | `omnitools` | **OmniTools** | `0.7.0` | `22424` | `photography, utilities, data` |
 | 142 | `onlyoffice-nextcloud` | **ONLYOFFICE Docs** | `1.0.4` | `3014` | `utilities, data` |
-| 143 | `opencode` | **OpenCode** | `1.19.5` | `4096` | `ai` |
+| 143 | `opencode` | **OpenCode** | `1.19.6` | `4096` | `ai` |
 | 144 | `opengist` | **Opengist** | `1.15.3` | `6157` | `development` |
 | 145 | `openhands` | **OpenHands** | `1.10.0` | `3993` | `ai` |
 | 146 | `openreader` | **OpenReader** | `1.30.5-alpine` | `3391` | `ai` |
@@ -178,7 +178,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 162 | `pocketbase` | **PocketBase** | `0.40.6` | `5400` | `development` |
 | 163 | `pogolo` | **pogolo** | `v1.x` | `5663` | `finance` |
 | 164 | `portainer-business` | **Portainer Business** | `2.45.3` | `9015` | `development` |
-| 165 | `poznote` | **Poznote** | `6.149.1` | `8389` | `utilities, data` |
+| 165 | `poznote` | **Poznote** | `6.150.2` | `8389` | `utilities, data` |
 | 166 | `public-pool` | **Public Pool** | `1.25.3` | `2019` | `finance` |
 | 167 | `public-pool-web` | **Public Pool's Web** | `0.2.0` | `2021` | `finance` |
 | 168 | `pyload-ng` | **pyload-ng** | `0.5.0` | `26317` | `utilities, data` |
@@ -237,7 +237,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 221 | `toshi-moto` | **Toshi Moto** | `1.37.3` | `8021` | `finance` |
 | 222 | `transmute` | **Transmute** | `2.1.1` | `3313` | `utilities, data` |
 | 223 | `trip` | **Trip** | `1.50.1` | `8980` | `utilities, data` |
-| 224 | `twenty` | **Twenty** | `2.59.1` | `2020` | `utilities, data` |
+| 224 | `twenty` | **Twenty** | `2.59.3` | `2020` | `utilities, data` |
 | 225 | `urbit` | **Urbit** | `v4.6` | `21955` | `network` |
 | 226 | `urbit-bitcoin-connector` | **Urbit Bitcoin Connector** | `latest` | `9090` | `finance` |
 | 227 | `usocial` | **usocial** | `v0.1.5-buster` | `8448` | `social` |
@@ -253,7 +253,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 237 | `woofbot-lnd` | **WoofBot (LND)** | `v0.9.8` | `21412` | `finance` |
 | 238 | `yamtrack` | **Yamtrack** | `0.26.3` | `8742` | `media` |
 | 239 | `yucca` | **Yucca** | `0.13.4` | `9910` | `automation` |
-| 240 | `yuvomi` | **Yuvomi** | `2.91.0` | `26765` | `utilities, data` |
+| 240 | `yuvomi` | **Yuvomi** | `2.91.1` | `26765` | `utilities, data` |
 | 241 | `zabbix` | **Zabbix** | `8.0.0` | `10052` | `network, security` |
 | 242 | `zen` | **Zen** | `2.0.0` | `8894` | `utilities, data` |
 | 243 | `zeronote` | **ZeroNote** | `1.0.12` | `18817` | `utilities, data` |

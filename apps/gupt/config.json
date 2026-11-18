@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "gupt",
   "description": "Encrypted chat, passwords, notes, bookmarks, and file sharing — with no phone number, no email, no account, and no central server.",
-  "tipi_version": 6,
-  "version": "6.0.9",
+  "tipi_version": 7,
+  "version": "6.1.16",
   "categories": [
     "social"
   ],
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501497145,
-  "updated_at": 1794929676927,
+  "updated_at": 1795014752042,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

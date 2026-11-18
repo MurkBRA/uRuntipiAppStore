@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "agent-zero",
-      "image": "agent0ai/agent-zero:v2.15",
+      "image": "agent0ai/agent-zero:v2.16",
       "isMain": true,
       "internalPort": 80,
       "environment": [

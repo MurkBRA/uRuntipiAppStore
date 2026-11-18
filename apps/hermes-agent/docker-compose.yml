@@ -1,6 +1,6 @@
 services:
   hermes-agent:
-    image: ghcr.io/getumbrel/hermes-agent-umbrel:v0.23.1
+    image: ghcr.io/getumbrel/hermes-agent-umbrel:v0.23.2
     command:
       - gateway
       - run

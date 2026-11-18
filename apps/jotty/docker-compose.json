@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "jotty",
-      "image": "ghcr.io/fccview/jotty:1.29.2",
+      "image": "ghcr.io/fccview/jotty:1.30.0",
       "isMain": true,
       "internalPort": 3000,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

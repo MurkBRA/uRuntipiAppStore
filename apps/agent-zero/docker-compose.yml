@@ -1,6 +1,6 @@
 services:
   agent-zero:
-    image: agent0ai/agent-zero:v2.15
+    image: agent0ai/agent-zero:v2.16
     volumes:
       - ${APP_DATA_DIR}/data/usr:/a0/usr
     environment:
