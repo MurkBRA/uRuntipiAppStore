@@ -3,110 +3,137 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const ROOT_DIR = path.resolve(__dirname, "..");
+const REPO_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-const ajv = new Ajv2020({ allErrors: true, strict: false });
+const SCHEMA_ENDPOINTS = {
+  appInfo: "https://schemas.runtipi.io/app-info.json",
+  dynamicCompose: "https://schemas.runtipi.io/dynamic-compose.json",
+};
 
-async function fetchSchema(url, retries = 3, timeoutMs = 15000) {
-  let lastError;
-  for (let attempt = 1; attempt <= retries; attempt++) {
+/**
+ * Downloads a remote JSON Schema with exponential-ish linear retry backoff.
+ */
+async function loadRemoteJsonSchema(url, maxAttempts = 3, timeoutMs = 15_000) {
+  let lastFailure;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
-      const response = await fetch(url, { signal: AbortSignal.timeout(timeoutMs) });
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      const res = await fetch(url, { signal: AbortSignal.timeout(timeoutMs) });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status} (${res.statusText})`);
       }
-      return await response.json();
+      return await res.json();
     } catch (err) {
-      lastError = err;
-      if (attempt < retries) {
+      lastFailure = err;
+      if (attempt < maxAttempts) {
         await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
       }
     }
   }
-  throw new Error(`Failed to fetch schema ${url} after ${retries} attempts: ${lastError?.message || lastError}`);
+  throw new Error(`Unable to download schema ${url} after ${maxAttempts} attempt(s): ${lastFailure?.message}`);
 }
 
-async function validateJson() {
-  const composeSchema = await fetchSchema("https://schemas.runtipi.io/dynamic-compose.json");
-  const appInfoSchema = await fetchSchema("https://schemas.runtipi.io/app-info.json");
+/**
+ * Lists all active app directory names under apps/ (excluding internal __tests__ / dot directories).
+ */
+function discoverAppDirectories(appsRoot) {
+  if (!fs.existsSync(appsRoot)) return [];
+  return fs
+    .readdirSync(appsRoot, { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && !entry.name.startsWith("__") && !entry.name.startsWith("."))
+    .map((entry) => entry.name)
+    .sort((a, b) => a.localeCompare(b));
+}
 
-  const validateCompose = ajv.compile(composeSchema);
-  const validateAppInfo = ajv.compile(appInfoSchema);
+/**
+ * Parses and validates a single JSON artifact against a compiled AJV validator.
+ */
+function verifyAppJsonArtifact(filePath, validator, relativeLabel) {
+  if (!fs.existsSync(filePath)) {
+    return { ok: false, message: `Missing required file: ${relativeLabel}` };
+  }
 
-  const appsDir = path.join(ROOT_DIR, "apps");
-  if (!fs.existsSync(appsDir)) {
-    console.log("No apps directory found.");
+  let parsed;
+  try {
+    parsed = JSON.parse(fs.readFileSync(filePath, "utf8"));
+  } catch (err) {
+    return { ok: false, message: `Invalid JSON in ${relativeLabel}: ${err.message}` };
+  }
+
+  // Strip local IDE $schema pointer before AJV validation against remote schema
+  const payload = { ...parsed };
+  Reflect.deleteProperty(payload, "$schema");
+
+  if (!validator(payload)) {
+    return {
+      ok: false,
+      message: `Schema mismatch in ${relativeLabel}`,
+      errors: validator.errors,
+    };
+  }
+
+  return { ok: true };
+}
+
+async function runStoreSchemaValidation() {
+  const ajv = new Ajv2020({ allErrors: true, strict: false });
+  const [appInfoSchema, composeSchema] = await Promise.all([
+    loadRemoteJsonSchema(SCHEMA_ENDPOINTS.appInfo),
+    loadRemoteJsonSchema(SCHEMA_ENDPOINTS.dynamicCompose),
+  ]);
+
+  const checkAppInfo = ajv.compile(appInfoSchema);
+  const checkCompose = ajv.compile(composeSchema);
+
+  const appsRoot = path.join(REPO_ROOT, "apps");
+  const appIds = discoverAppDirectories(appsRoot);
+  if (appIds.length === 0) {
+    console.log("No app directories detected under apps/.");
     return;
   }
 
-  const appEntries = fs
-    .readdirSync(appsDir, { withFileTypes: true })
-    .filter((d) => d.isDirectory() && !d.name.startsWith("__"));
+  let validConfigs = 0;
+  let validComposes = 0;
+  let failureCount = 0;
 
-  let hasErrors = false;
-  let validatedComposeCount = 0;
-  let validatedConfigCount = 0;
+  for (const appId of appIds) {
+    const appDir = path.join(appsRoot, appId);
 
-  for (const entry of appEntries) {
-    const appDir = path.join(appsDir, entry.name);
-    const composeJsonPath = path.join(appDir, "docker-compose.json");
-    const configJsonPath = path.join(appDir, "config.json");
-
-    if (!fs.existsSync(composeJsonPath)) {
-      console.error(`Missing docker-compose.json for apps/${entry.name}`);
-      hasErrors = true;
-    } else {
-      try {
-        const data = JSON.parse(fs.readFileSync(composeJsonPath, "utf8"));
-        const { $schema: _, ...dataToValidate } = data;
-        const valid = validateCompose(dataToValidate);
-        if (!valid) {
-          console.error(`Validation failed for apps/${entry.name}/docker-compose.json:`);
-          console.error(validateCompose.errors);
-          hasErrors = true;
-        } else {
-          validatedComposeCount++;
-        }
-      } catch (err) {
-        console.error(`Error parsing apps/${entry.name}/docker-compose.json:`, err.message);
-        hasErrors = true;
-      }
-    }
-
-    if (!fs.existsSync(configJsonPath)) {
-      console.error(`Missing config.json for apps/${entry.name}`);
-      hasErrors = true;
-    } else {
-      try {
-        const data = JSON.parse(fs.readFileSync(configJsonPath, "utf8"));
-        const { $schema: _, ...dataToValidate } = data;
-        const valid = validateAppInfo(dataToValidate);
-        if (!valid) {
-          console.error(`Validation failed for apps/${entry.name}/config.json:`);
-          console.error(validateAppInfo.errors);
-          hasErrors = true;
-        } else {
-          validatedConfigCount++;
-        }
-      } catch (err) {
-        console.error(`Error parsing apps/${entry.name}/config.json:`, err.message);
-        hasErrors = true;
-      }
-    }
-  }
-
-  if (hasErrors) {
-    process.exit(1);
-  } else {
-    console.log(
-      `All JSON files are valid! (${validatedConfigCount} config.json, ${validatedComposeCount} docker-compose.json)`,
+    const configOutcome = verifyAppJsonArtifact(
+      path.join(appDir, "config.json"),
+      checkAppInfo,
+      `apps/${appId}/config.json`,
     );
+    if (configOutcome.ok) {
+      validConfigs++;
+    } else {
+      failureCount++;
+      console.error(configOutcome.message);
+      if (configOutcome.errors) console.error(configOutcome.errors);
+    }
+
+    const composeOutcome = verifyAppJsonArtifact(
+      path.join(appDir, "docker-compose.json"),
+      checkCompose,
+      `apps/${appId}/docker-compose.json`,
+    );
+    if (composeOutcome.ok) {
+      validComposes++;
+    } else {
+      failureCount++;
+      console.error(composeOutcome.message);
+      if (composeOutcome.errors) console.error(composeOutcome.errors);
+    }
   }
+
+  if (failureCount > 0) {
+    console.error(`Schema validation failed with ${failureCount} error(s).`);
+    process.exit(1);
+  }
+
+  console.log(`JSON schema validation passed (${validConfigs} config.json, ${validComposes} docker-compose.json).`);
 }
 
-validateJson().catch((error) => {
-  console.error("Validation script error:", error);
+runStoreSchemaValidation().catch((err) => {
+  console.error("Schema validation runner failed:", err);
   process.exit(1);
 });

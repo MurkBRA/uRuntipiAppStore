@@ -4,6 +4,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 
 - **Architecture & Engineering Plan**: [`PLANO_PORT_UMBREL_RUNTIPI.md`](./PLANO_PORT_UMBREL_RUNTIPI.md)
 - **Official Runtipi & Disabled Apps Blacklist**: [`blacklist.json`](./blacklist.json)
+- **License & Third-Party Scope**: [`LICENSE`](./LICENSE) (MIT for original tooling) · [`NOTICE`](./NOTICE) (Third-party rights & attribution)
 
 ## Summary Statistics
 
@@ -258,3 +259,9 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 242 | `zen` | **Zen** | `2.0.0` | `8894` | `utilities, data` |
 | 243 | `zeronote` | **ZeroNote** | `1.0.12` | `18817` | `utilities, data` |
 | 244 | `zoraxy` | **Zoraxy** | `3.3.5` | `8400` | `network, security` |
+
+## License & Third-Party Notices
+
+- **Original code & tooling**: All scripts under `scripts/`, test suites under `scripts/__tests__/` and `apps/__tests__/`, GitHub Actions workflows, and repository documentation are licensed under the [MIT License](./LICENSE).
+- **Third-party packages & assets (`apps/`)**: Generated app definitions, auxiliary files under `apps/*/data/`, descriptions, logos, and referenced container images originate from [`getumbrel/umbrel-apps`](https://github.com/getumbrel/umbrel-apps), [`getumbrel/umbrel-apps-gallery`](https://github.com/getumbrel/umbrel-apps-gallery), and their respective upstream projects. They are **not relicensed under MIT** and remain subject to their original authors' copyrights, trademarks, and licenses. See [`NOTICE`](./NOTICE) for full details and removal requests.
+- **No affiliation**: This is an independent community project and is not affiliated with Umbrel Inc. or Runtipi.
