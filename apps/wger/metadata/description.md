@@ -15,7 +15,7 @@ One of the standout aspects of wger is its multi-user functionality, which makes
 As an open-source project, wger is continuously evolving, with an active community contributing new features and improvements. Its flexibility, extensive feature set, and emphasis on customization make it a valuable tool for anyone serious about fitness, whether they are beginners, experienced athletes, or fitness professionals.
 
 ## Links
-- **Upstream Version**: `2.7-patch.1`
+- **Upstream Version**: `2.7-patch.2`
 - **Website**: https://wger.de/
 - **Source Repository**: https://github.com/wger-project/wger
 - **Support**: https://github.com/wger-project/wger/issues

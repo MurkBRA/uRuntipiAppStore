@@ -1,6 +1,6 @@
 services:
   influxdb2:
-    image: influxdb:2.9.1-alpine
+    image: influxdb:2.10.1-alpine
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/data:/var/lib/influxdb2

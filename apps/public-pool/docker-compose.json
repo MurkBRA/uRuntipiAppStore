@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "public-pool",
-      "image": "nginx:1.25.3",
+      "image": "nginx:1.30.7-alpine",
       "isMain": true,
       "internalPort": 80,
       "addToMainNetwork": true,

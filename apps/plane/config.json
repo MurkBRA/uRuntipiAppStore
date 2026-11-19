@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "plane",
   "description": "Meet Plane, an open-source project management tool to track issues, run sprints cycles, and manage product roadmaps without the chaos of managing the tool itself. 🧘‍♀️",
-  "tipi_version": 2,
-  "version": "alpine3.23",
+  "tipi_version": 3,
+  "version": "1.30.7-alpine",
   "categories": [
     "utilities",
     "data"
@@ -48,7 +48,7 @@
     "amd64"
   ],
   "created_at": 1794010927640,
-  "updated_at": 1794929677172,
+  "updated_at": 1795101649169,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "wger",
-      "image": "nginx:alpine3.22",
+      "image": "nginx:1.30.7-alpine",
       "isMain": true,
       "internalPort": 80,
       "volumes": [

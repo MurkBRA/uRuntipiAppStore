@@ -1,6 +1,6 @@
 services:
   mattermost:
-    image: alexlack/mattermost-app:v12.0.2
+    image: alexlack/mattermost-app:v12.1.0
     user: ${APP_CONTAINER_USER:-1000:1000}
     ports:
       - 8443:8443/tcp

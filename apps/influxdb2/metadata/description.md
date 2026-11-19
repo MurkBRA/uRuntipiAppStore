@@ -14,7 +14,7 @@ Powered by columnar analytics, optimized for cost-efficient storage, and built w
 - Interoperability with Data Lakehouses: built on open data standards for direct access to data from lakehouses and warehouses via Apache Iceberg.
 
 ## Links
-- **Upstream Version**: `2.9.1-patch.1`
+- **Upstream Version**: `2.10.1`
 - **Website**: https://www.influxdata.com/
 - **Source Repository**: https://github.com/influxdata/influxdb
 - **Support**: https://support.influxdata.com/s/

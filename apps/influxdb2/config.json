@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "influxdb2",
   "description": "Purpose built for real-time analytics at any scale.",
-  "tipi_version": 2,
-  "version": "2.9.1-alpine",
+  "tipi_version": 3,
+  "version": "2.10.1",
   "categories": [
     "development"
   ],
@@ -34,7 +34,7 @@
     "amd64"
   ],
   "created_at": 1792501498352,
-  "updated_at": 1794005949305,
+  "updated_at": 1795101648912,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

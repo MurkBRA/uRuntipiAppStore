@@ -11,7 +11,7 @@ One of the major benefits of RustDesk is its ability to function without relying
 Overall, RustDesk provides a powerful alternative to proprietary remote desktop software. Its open-source nature, self-hosting capability, and high performance make it an appealing choice for anyone seeking a reliable, secure, and customizable remote desktop solution.
 
 ## Links
-- **Upstream Version**: `1.1.16`
+- **Upstream Version**: `1.1.16-patch.1`
 - **Website**: https://rustdesk.com
 - **Source Repository**: https://github.com/rustdesk/rustdesk-server
 - **Support**: https://github.com/rustdesk/rustdesk/issues

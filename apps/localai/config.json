@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "localai",
   "description": "LocalAI is the free, Open Source OpenAI alternative. LocalAI act as a drop-in replacement REST API that's compatible with OpenAI API specifications for local inferencing.",
-  "tipi_version": 3,
-  "version": "v4.12.1",
+  "tipi_version": 4,
+  "version": "v5.0.0",
   "categories": [
     "ai"
   ],
@@ -15,12 +15,21 @@
   "author": "Ettore Di Giacinto",
   "source": "https://github.com/mudler/LocalAI",
   "website": "https://localai.io/",
+  "form_fields": [
+    {
+      "type": "text",
+      "label": "Home Gateway IP",
+      "required": false,
+      "default": "192.168.1.1",
+      "env_variable": "GATEWAY_IP"
+    }
+  ],
   "supported_architectures": [
     "arm64",
     "amd64"
   ],
   "created_at": 1792501500868,
-  "updated_at": 1794674798984,
+  "updated_at": 1795101648949,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

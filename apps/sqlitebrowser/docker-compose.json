@@ -6,6 +6,7 @@
       "image": "linuxserver/sqlitebrowser:3.13.1",
       "isMain": true,
       "internalPort": 3000,
+      "shmSize": "1gb",
       "environment": [
         {
           "key": "PUID",

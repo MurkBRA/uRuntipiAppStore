@@ -17,7 +17,7 @@ Key features include:
 Gupt is fully client-side with no backend — it connects directly to public or private Rabta nodes. Your keys, your messages, your privacy.
 
 ## Links
-- **Upstream Version**: `6.1.16`
+- **Upstream Version**: `6.1.32`
 - **Website**: https://github.com/besoeasy/gupt
 - **Source Repository**: https://github.com/besoeasy/gupt
 - **Support**: https://github.com/besoeasy/gupt/issues

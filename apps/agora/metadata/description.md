@@ -15,7 +15,7 @@ Agora serves the contents of a local directory, providing file listings and down
 This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.1.2`
+- **Upstream Version**: `0.1.2-patch.1`
 - **Website**: https://agora-org.github.io/agora/
 - **Source Repository**: https://github.com/agora-org/agora
 - **Support**: https://t.me/agoradiscussion

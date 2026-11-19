@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "netbird",
-      "image": "nginx:1.27",
+      "image": "nginx:1.30.7-alpine",
       "isMain": true,
       "internalPort": 80,
       "volumes": [

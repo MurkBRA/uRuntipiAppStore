@@ -20,7 +20,7 @@ Controls and wizards are available for users to:
 - Plot simple graphs based on table or query data
 
 ## Links
-- **Upstream Version**: `3.13.1-patch.1`
+- **Upstream Version**: `3.13.1-patch.2`
 - **Website**: https://sqlitebrowser.org/
 - **Source Repository**: https://github.com/sqlitebrowser/sqlitebrowser
 - **Support**: https://github.com/sqlitebrowser/sqlitebrowser/issues

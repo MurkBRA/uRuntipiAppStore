@@ -1,6 +1,6 @@
 services:
   agora:
-    image: nginx:1.19-alpine
+    image: nginx:1.30.7-alpine
     volumes:
       - ${APP_DATA_DIR}/data/nginx/nginx.conf.template:/etc/nginx/templates/nginx.conf.template
       - ${APP_DATA_DIR}/data/www:/usr/share/nginx/html

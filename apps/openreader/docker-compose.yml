@@ -1,6 +1,6 @@
 services:
   openreader:
-    image: nginx:1.30.5-alpine
+    image: nginx:1.30.7-alpine
     entrypoint:
       - nginx
       - '-g'

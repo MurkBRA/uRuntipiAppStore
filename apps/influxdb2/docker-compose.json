@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "influxdb2",
-      "image": "influxdb:2.9.1-alpine",
+      "image": "influxdb:2.10.1-alpine",
       "isMain": true,
       "internalPort": 8086,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

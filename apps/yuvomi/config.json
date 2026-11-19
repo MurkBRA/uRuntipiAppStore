@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "yuvomi",
   "description": "Yuvomi is a self-hosted, privacy-focused family planner that bundles everything a household needs into a single fast PWA — no cloud, no tracking, no ads.",
-  "tipi_version": 7,
-  "version": "2.91.1",
+  "tipi_version": 8,
+  "version": "2.93.0",
   "categories": [
     "utilities",
     "data"
@@ -30,7 +30,7 @@
     "amd64"
   ],
   "created_at": 1792501513448,
-  "updated_at": 1795014752412,
+  "updated_at": 1795101649505,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

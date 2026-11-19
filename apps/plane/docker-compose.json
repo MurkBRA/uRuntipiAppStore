@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "plane",
-      "image": "nginx:alpine3.23",
+      "image": "nginx:1.30.7-alpine",
       "isMain": true,
       "internalPort": 8762,
       "volumes": [

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "agora",
-      "image": "nginx:1.19-alpine",
+      "image": "nginx:1.30.7-alpine",
       "isMain": true,
       "internalPort": 80,
       "addToMainNetwork": true,
