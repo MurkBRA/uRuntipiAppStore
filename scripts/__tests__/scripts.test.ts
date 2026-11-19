@@ -370,4 +370,24 @@ describe("Automation Scripts Unit & Regression Tests", () => {
       fs.rmSync(tmpDir, { recursive: true, force: true });
     }
   });
+
+  it("maintains consistent MIT license metadata, NOTICE third-party scope, and README license notices", () => {
+    const repoRoot = path.resolve(import.meta.dirname, "..", "..");
+    const pkg = JSON.parse(fs.readFileSync(path.join(repoRoot, "package.json"), "utf8"));
+    const lock = JSON.parse(fs.readFileSync(path.join(repoRoot, "package-lock.json"), "utf8"));
+    const licenseText = fs.readFileSync(path.join(repoRoot, "LICENSE"), "utf8");
+    const noticeText = fs.readFileSync(path.join(repoRoot, "NOTICE"), "utf8");
+    const readmeText = fs.readFileSync(path.join(repoRoot, "README.md"), "utf8");
+
+    expect(pkg.license).toBe("MIT");
+    expect(lock.packages?.[""]?.license).toBe("MIT");
+    expect(licenseText).toMatch(/^MIT License\n/);
+    expect(licenseText).toContain("Permission is hereby granted, free of charge");
+    expect(noticeText).toContain("getumbrel/umbrel-apps");
+    expect(noticeText).toContain("getumbrel/umbrel-apps-gallery");
+    expect(noticeText).toContain("not claim copyright over, nor relicense under MIT");
+    expect(readmeText).toContain("## License & Third-Party Notices");
+    expect(readmeText).toContain("[`LICENSE`](./LICENSE)");
+    expect(readmeText).toContain("[`NOTICE`](./NOTICE)");
+  });
 });

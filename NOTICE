@@ -1,0 +1,35 @@
+# Third-Party Notices & License Scope
+
+## 1. Scope of the MIT License
+
+The [MIT License](./LICENSE) in this repository applies **exclusively** to the original source code, automation tooling, and documentation authored for **uRuntipiAppStore**, including:
+
+- Transpiler, sync, blacklist, smoke-test, validation, and quarantine scripts under `scripts/`
+- Automated test suites under `scripts/__tests__/` and `apps/__tests__/`
+- GitHub Actions workflows under `.github/workflows/`
+- Project documentation and configuration files (`README.md`, `PLANO_PORT_UMBREL_RUNTIPI.md`, `package.json`, `tsconfig.json`, `biome.json`, `vitest.config.ts`)
+
+## 2. Third-Party App Definitions, Data Files, and Assets (`apps/`)
+
+The generated application packages under `apps/<app-id>/` are automated adaptations derived from upstream community packages published in:
+
+- [`getumbrel/umbrel-apps`](https://github.com/getumbrel/umbrel-apps)
+- [`getumbrel/umbrel-apps-gallery`](https://github.com/getumbrel/umbrel-apps-gallery)
+
+Those upstream repositories do not publish a permissive open-source license file at the repository root. Accordingly, **this project does not claim copyright over, nor relicense under MIT**, any third-party material under `apps/<app-id>/`, including:
+
+- Adapted app manifests and Docker Compose definitions derived from `getumbrel/umbrel-apps`
+- Auxiliary scripts, configuration files, and templates copied under `apps/<app-id>/data/` (for example, files carrying their own upstream copyright headers such as `apps/bitcoin-knots/data/scripts/rpcauth.py` retain their original upstream license notices)
+- Application descriptions (`apps/<app-id>/metadata/description.md`) adapted from upstream metadata
+- Application icons and brand marks (`apps/<app-id>/metadata/logo.jpg`) converted from `getumbrel/umbrel-apps-gallery`
+- Container images and upstream software referenced in `docker-compose.yml` / `docker-compose.json`
+
+All such third-party materials, trademarks, logos, and software remain the property of their respective copyright and trademark holders and are governed by their original upstream terms and licenses.
+
+## 3. No Affiliation
+
+**uRuntipiAppStore** is an independent community project. It is not affiliated with, endorsed by, or sponsored by Umbrel Inc. (`umbrelOS`) or Runtipi (`runtipi.io`).
+
+## 4. Removal / Takedown Requests
+
+If you are a copyright or trademark holder and would like an app package, data file, description, or logo removed or updated, please open an issue in this repository and the content will be promptly removed.
