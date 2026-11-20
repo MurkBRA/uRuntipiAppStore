@@ -2,7 +2,8 @@ name: Sync Umbrel App Store
 
 on:
   schedule:
-    - cron: "0 6 * * *"
+    # Use a non-zero minute to avoid GitHub Actions top-of-the-hour cron spikes
+    - cron: "23 6 * * *"
   workflow_dispatch:
     inputs:
       force:
@@ -47,9 +48,11 @@ jobs:
         run: npm ci
 
       - name: Refresh official Runtipi blacklist
+        timeout-minutes: 10
         run: npm run update:blacklist
 
       - name: Sync and transpile Umbrel apps
+        timeout-minutes: 15
         run: |
           if [ "${{ inputs.force }}" = "true" ]; then
             npm run sync -- --force
@@ -58,6 +61,7 @@ jobs:
           fi
 
       - name: Run typecheck, linter, test & schema validation suite
+        timeout-minutes: 10
         run: |
           npm run typecheck
           npm run lint
@@ -243,6 +247,7 @@ jobs:
 
       - name: Docker Compose Validation & Smoke Test (Shard ${{ matrix.shard }}/${{ needs.prepare.outputs.total_shards }})
         id: smoke_run
+        timeout-minutes: 80
         continue-on-error: true
         run: |
           mkdir -p "smoke-results/logs-shard-${{ matrix.shard }}"
@@ -469,6 +474,7 @@ jobs:
 
       - name: Isolate and Quarantine Any Defective Apps
         if: needs.prepare.outputs.has_smoke_work == 'true'
+        timeout-minutes: 10
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run quarantine -- smoke-results/failures.json
@@ -498,6 +504,7 @@ jobs:
 
       - name: Re-verify test suite after quarantine cleanup
         if: steps.post_diff.outputs.has_healthy_changes == 'true'
+        timeout-minutes: 10
         run: |
           npm run typecheck
           npm run lint
@@ -505,6 +512,7 @@ jobs:
 
       - name: Automatically commit and push version bumps directly to main
         if: steps.post_diff.outputs.has_healthy_changes == 'true' && steps.post_diff.outputs.is_new_app == 'false'
+        timeout-minutes: 5
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

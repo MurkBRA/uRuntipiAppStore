@@ -49,14 +49,23 @@ function normalizeImageName(image: string): string {
 
 function ensureRuntipiRepo(): string {
   const targetDir = path.join(ROOT_DIR, ".tmp", "runtipi-appstore");
+  const gitTimeoutMs = 5 * 60 * 1000;
+  const gitEnv = { ...process.env, GIT_TERMINAL_PROMPT: "0" };
   if (!fs.existsSync(targetDir)) {
     fs.mkdirSync(path.dirname(targetDir), { recursive: true });
     execFileSync("git", ["clone", "--depth", "1", "https://github.com/runtipi/runtipi-appstore.git", targetDir], {
       stdio: "inherit",
+      timeout: gitTimeoutMs,
+      env: gitEnv,
     });
   } else {
     try {
-      execFileSync("git", ["pull", "--ff-only"], { cwd: targetDir, stdio: "inherit" });
+      execFileSync("git", ["pull", "--ff-only"], {
+        cwd: targetDir,
+        stdio: "inherit",
+        timeout: gitTimeoutMs,
+        env: gitEnv,
+      });
     } catch {
       // ignore
     }

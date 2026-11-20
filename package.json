@@ -7,6 +7,7 @@
     "sync": "node --experimental-strip-types scripts/sync-umbrel.ts",
     "quarantine": "node --experimental-strip-types scripts/quarantine-failures.ts",
     "update:blacklist": "node --experimental-strip-types scripts/update-blacklist.ts",
+    "watchdog": "node --experimental-strip-types scripts/watchdog-runs.ts",
     "validate:json": "node scripts/validate-json.js",
     "typecheck": "tsc --noEmit",
     "test:unit": "vitest run scripts/__tests__",

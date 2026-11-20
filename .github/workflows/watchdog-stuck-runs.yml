@@ -1,0 +1,69 @@
+name: Watchdog Stuck Workflow Runs
+
+on:
+  schedule:
+    # Off-peak minute every 2 hours to catch orphaned/stuck queued runs rapidly
+    - cron: "47 */2 * * *"
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/watchdog-stuck-runs.yml"
+      - "scripts/watchdog-runs.ts"
+  workflow_dispatch:
+    inputs:
+      max_queued_minutes:
+        description: "Cancel runs queued without a runner for at least N minutes"
+        required: false
+        default: "45"
+        type: string
+      max_in_progress_minutes:
+        description: "Cancel runs stuck in_progress for at least N minutes"
+        required: false
+        default: "180"
+        type: string
+      retry_sync:
+        description: "Automatically re-dispatch Sync Umbrel App Store if a stuck sync run was cancelled"
+        required: false
+        default: true
+        type: boolean
+      dry_run:
+        description: "Inspect and report only without cancelling or re-dispatching runs"
+        required: false
+        default: false
+        type: boolean
+
+concurrency:
+  group: watchdog-stuck-runs
+  cancel-in-progress: true
+
+permissions:
+  actions: write
+  contents: read
+  issues: write
+
+jobs:
+  watchdog:
+    name: Detect & Recover Stuck Runs
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 1
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v7
+        with:
+          node-version: "24"
+
+      - name: Run Workflow Watchdog
+        timeout-minutes: 5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT || secrets.GITHUB_TOKEN }}
+          MAX_QUEUED_MINUTES: ${{ inputs.max_queued_minutes || '45' }}
+          MAX_IN_PROGRESS_MINUTES: ${{ inputs.max_in_progress_minutes || '180' }}
+          RETRY_SYNC: ${{ github.event_name == 'workflow_dispatch' && format('{0}', inputs.retry_sync) || 'true' }}
+          DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && format('{0}', inputs.dry_run) || 'false' }}
+        run: node --experimental-strip-types scripts/watchdog-runs.ts

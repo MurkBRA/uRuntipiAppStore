@@ -261,17 +261,26 @@ function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string })
   const tmpDir = path.join(ROOT_DIR, ".tmp");
   const umbrelDir = options.umbrelDir || path.join(tmpDir, "umbrel-apps");
   const galleryDir = options.galleryDir || path.join(tmpDir, "umbrel-apps-gallery");
+  const gitTimeoutMs = 5 * 60 * 1000;
+  const gitEnv = { ...process.env, GIT_TERMINAL_PROMPT: "0" };
 
   if (!fs.existsSync(umbrelDir)) {
     fs.mkdirSync(path.dirname(umbrelDir), { recursive: true });
     console.log(`Cloning getumbrel/umbrel-apps into ${umbrelDir}...`);
     execFileSync("git", ["clone", "--depth", "1", "https://github.com/getumbrel/umbrel-apps.git", umbrelDir], {
       stdio: "inherit",
+      timeout: gitTimeoutMs,
+      env: gitEnv,
     });
   } else {
     try {
       console.log(`Pulling latest changes in ${umbrelDir}...`);
-      execFileSync("git", ["pull", "--ff-only"], { cwd: umbrelDir, stdio: "inherit" });
+      execFileSync("git", ["pull", "--ff-only"], {
+        cwd: umbrelDir,
+        stdio: "inherit",
+        timeout: gitTimeoutMs,
+        env: gitEnv,
+      });
     } catch (err) {
       console.warn(`Warning: failed to git pull in ${umbrelDir}:`, (err as Error).message);
     }
@@ -282,11 +291,18 @@ function ensureUpstreamRepos(options: { umbrelDir: string; galleryDir: string })
     console.log(`Cloning getumbrel/umbrel-apps-gallery into ${galleryDir}...`);
     execFileSync("git", ["clone", "--depth", "1", "https://github.com/getumbrel/umbrel-apps-gallery.git", galleryDir], {
       stdio: "inherit",
+      timeout: gitTimeoutMs,
+      env: gitEnv,
     });
   } else {
     try {
       console.log(`Pulling latest changes in ${galleryDir}...`);
-      execFileSync("git", ["pull", "--ff-only"], { cwd: galleryDir, stdio: "inherit" });
+      execFileSync("git", ["pull", "--ff-only"], {
+        cwd: galleryDir,
+        stdio: "inherit",
+        timeout: gitTimeoutMs,
+        env: gitEnv,
+      });
     } catch (err) {
       console.warn(`Warning: failed to git pull in ${galleryDir}:`, (err as Error).message);
     }
