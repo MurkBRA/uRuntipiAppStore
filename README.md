@@ -95,7 +95,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 78 | `habitica` | **Habitica** | `5.50.6` | `3944` | `utilities, data` |
 | 79 | `hashrate-autopilot` | **Hashrate Autopilot** | `1.18.2` | `3018` | `finance` |
 | 80 | `helipad` | **Helipad** | `0.2.2` | `2112` | `finance` |
-| 81 | `hermes-agent` | **Hermes Agent** | `0.23.2` | `18790` | `ai` |
+| 81 | `hermes-agent` | **Hermes Agent** | `0.23.3` | `18790` | `ai` |
 | 82 | `hermitstash` | **HermitStash** | `1.15.13` | `3081` | `utilities, data` |
 | 83 | `holesail-switchboard` | **Holesail Switchboard** | `v2.0.8` | `3160` | `network, security` |
 | 84 | `home-assistant-fusion-ui` | **HA-Fusion** | `2024.10.1` | `5023` | `automation` |

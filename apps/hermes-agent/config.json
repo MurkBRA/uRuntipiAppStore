@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "hermes-agent",
   "description": "Hermes Agent is an AI agent that gets better the more you use it by creating its own skills, storing user preferences, and updating its memory.",
-  "tipi_version": 6,
-  "version": "0.23.2",
+  "tipi_version": 7,
+  "version": "0.23.3",
   "categories": [
     "ai"
   ],
@@ -21,7 +21,7 @@
     "amd64"
   ],
   "created_at": 1792501497466,
-  "updated_at": 1795014752071,
+  "updated_at": 1795272448290,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

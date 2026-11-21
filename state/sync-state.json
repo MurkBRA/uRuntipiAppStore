@@ -1,5 +1,5 @@
 {
-  "last_synced_at": "2026-11-19T15:20:59.525Z",
+  "last_synced_at": "2026-11-21T14:47:38.463Z",
   "apps": {
     "adventurelog": {
       "tipi_version": 3,
@@ -634,12 +634,12 @@
       "upstream_hash": "cc1a49a9c95c1dbe904aa10cdc155257bc5cb5066e4dfacf060869722c7a07f0"
     },
     "hermes-agent": {
-      "tipi_version": 6,
-      "version": "0.23.2",
+      "tipi_version": 7,
+      "version": "0.23.3",
       "port": 18790,
       "created_at": 1792501497466,
-      "updated_at": 1795014752071,
-      "upstream_hash": "9f920cd095ff50baf7af4491a25f71b97042808018cc3c10e557189103dd5994"
+      "updated_at": 1795272448290,
+      "upstream_hash": "d8b44212f8d5ff4b85aed2713d693798c341a1f8afb0ad91a1ad967a7d530293"
     },
     "hermitstash": {
       "tipi_version": 3,

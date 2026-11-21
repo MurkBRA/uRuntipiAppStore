@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-11-18T15:12:28.791Z",
+  "generated_at": "2026-11-21T14:47:21.774Z",
   "stats": {
     "runtipi_official_total": 267,
     "umbrel_total_packages": 396,
@@ -1723,7 +1723,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/atuinsh/atuin:18.24.8",
+        "ghcr.io/atuinsh/atuin:18.25.1",
         "postgres:14"
       ]
     },
@@ -1740,7 +1740,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/advplyr/audiobookshelf:2.37.2"
+        "ghcr.io/advplyr/audiobookshelf:2.38.0"
       ]
     },
     {
@@ -1755,8 +1755,8 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/goauthentik/server:2026.8.5",
-        "ghcr.io/goauthentik/server:2026.8.5",
+        "ghcr.io/goauthentik/server:2026.8.6",
+        "ghcr.io/goauthentik/server:2026.8.6",
         "postgres:18-alpine"
       ]
     },
@@ -1772,7 +1772,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/autobrr/autobrr:v1.90.0"
+        "ghcr.io/autobrr/autobrr:v1.91.0"
       ]
     },
     {
@@ -1990,7 +1990,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/dgtlmoon/changedetection.io:0.70.3"
+        "ghcr.io/dgtlmoon/changedetection.io:0.70.4"
       ]
     },
     {
@@ -2068,7 +2068,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "wisdomsky/cloudflared-web:2026.11.0"
+        "wisdomsky/cloudflared-web:2026.11.1"
       ]
     },
     {
@@ -2114,7 +2114,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "registry.gitlab.com/crafty-controller/crafty-4:4.11.0"
+        "registry.gitlab.com/crafty-controller/crafty-4:4.11.1"
       ]
     },
     {
@@ -2241,7 +2241,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/lissy93/dashy:4.9.18"
+        "ghcr.io/lissy93/dashy:4.9.19"
       ]
     },
     {
@@ -2365,7 +2365,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "amir20/dozzle:v11.4.3"
+        "amir20/dozzle:v11.5.0"
       ]
     },
     {
@@ -2380,7 +2380,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "jgraph/drawio:32.6.10"
+        "jgraph/drawio:32.7.4"
       ]
     },
     {
@@ -2521,7 +2521,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/esphome/esphome:2026.10.2"
+        "ghcr.io/esphome/esphome:2026.11.0"
       ]
     },
     {
@@ -2615,7 +2615,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "shaneisrael/fireshare:1.9.0"
+        "shaneisrael/fireshare:1.9.3"
       ]
     },
     {
@@ -2694,7 +2694,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "codeberg.org/forgejo/forgejo:17.0.1",
+        "codeberg.org/forgejo/forgejo:17.0.2",
         "postgres:14"
       ]
     },
@@ -2898,7 +2898,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/gramps-project/grampsweb:26.11.2"
+        "ghcr.io/gramps-project/grampsweb:26.11.3"
       ]
     },
     {
@@ -2914,7 +2914,7 @@
       "available": true,
       "deprecated": true,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.29"
+        "lscr.io/linuxserver/grav:2.2.31"
       ]
     },
     {
@@ -2930,7 +2930,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/grav:2.2.29"
+        "lscr.io/linuxserver/grav:2.2.31"
       ]
     },
     {
@@ -3180,7 +3180,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "b4bz/homer:v26.11.3"
+        "b4bz/homer:v26.11.4"
       ]
     },
     {
@@ -3196,8 +3196,8 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/immich-app/immich-server:v3.4.1",
-        "ghcr.io/immich-app/immich-machine-learning:v3.4.1",
+        "ghcr.io/immich-app/immich-server:v3.4.2",
+        "ghcr.io/immich-app/immich-machine-learning:v3.4.2",
         "redis:6.2",
         "ghcr.io/immich-app/postgres:14-vectorchord0.3.0-pgvectors0.2.0"
       ]
@@ -3640,7 +3640,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/hargata/lubelogger:v1.7.4",
+        "ghcr.io/hargata/lubelogger:v1.7.5",
         "postgres:16.4-alpine"
       ]
     },
@@ -3672,7 +3672,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lscr.io/linuxserver/mastodon:4.7.5",
+        "lscr.io/linuxserver/mastodon:4.7.6",
         "postgres:14-alpine",
         "redis:7-alpine"
       ]
@@ -3782,7 +3782,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "metabase/metabase:v0.65.4"
+        "metabase/metabase:v0.65.6"
       ]
     },
     {
@@ -4049,7 +4049,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "n8nio/n8n:2.48.4",
+        "n8nio/n8n:2.49.3",
         "postgres:18",
         "bash:5.3.20"
       ]
@@ -4097,7 +4097,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "netdata/netdata:v2.12.3"
+        "netdata/netdata:v2.13.0"
       ]
     },
     {
@@ -4161,7 +4161,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "nginx:1.31.8"
+        "nginx:1.31.9"
       ]
     },
     {
@@ -4192,7 +4192,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "nocodb/nocodb:2026.10.1",
+        "nocodb/nocodb:2026.10.2",
         "postgres:16",
         "redis:alpine"
       ]
@@ -4209,7 +4209,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "nodered/node-red:5.0.9"
+        "nodered/node-red:5.0.10"
       ]
     },
     {
@@ -4364,7 +4364,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "1dev/server:17.2.1",
+        "1dev/server:17.2.2",
         "postgres:14"
       ]
     },
@@ -4380,7 +4380,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/open-webui/open-webui:v0.13.3"
+        "ghcr.io/open-webui/open-webui:v0.13.4"
       ]
     },
     {
@@ -4494,7 +4494,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/paperless-ngx/paperless-ngx:3.4.2",
+        "ghcr.io/paperless-ngx/paperless-ngx:3.5.1",
         "redis:7",
         "postgres:17",
         "gotenberg/gotenberg:8.40",
@@ -4644,7 +4644,7 @@
       "images": [
         "ghcr.io/plausible/community-edition:v2.1.5",
         "postgres:16-alpine",
-        "clickhouse/clickhouse-server:26.10.4.207"
+        "clickhouse/clickhouse-server:26.10.7.24"
       ]
     },
     {
@@ -4689,7 +4689,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "portainer/portainer-ce:2.45.3"
+        "portainer/portainer-ce:2.45.4"
       ]
     },
     {
@@ -4796,7 +4796,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "lukevella/rallly:4.17.0",
+        "lukevella/rallly:4.17.1",
         "postgres:14"
       ]
     },
@@ -5096,7 +5096,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "b3log/siyuan:v3.8.10"
+        "b3log/siyuan:v3.8.11"
       ]
     },
     {
@@ -5237,7 +5237,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "stirlingtools/stirling-pdf:3.3.0"
+        "stirlingtools/stirling-pdf:3.4.0"
       ]
     },
     {
@@ -5300,7 +5300,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/tandoorrecipes/recipes:2.7.3",
+        "ghcr.io/tandoorrecipes/recipes:2.7.6",
         "postgres:15-alpine"
       ]
     },
@@ -5554,7 +5554,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "bellamy/wallos:5.11.1"
+        "bellamy/wallos:5.11.2"
       ]
     },
     {
@@ -5585,7 +5585,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/wekan/wekan:v13.13",
+        "ghcr.io/wekan/wekan:v13.24",
         "mongo:6"
       ]
     },
@@ -5647,7 +5647,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/requarks/wiki:3.4.0",
+        "ghcr.io/requarks/wiki:3.5.0",
         "postgres:18-alpine"
       ]
     },
@@ -5663,7 +5663,7 @@
       "available": true,
       "deprecated": true,
       "images": [
-        "ghcr.io/requarks/wiki:3.4.0",
+        "ghcr.io/requarks/wiki:3.5.0",
         "postgres:11-alpine"
       ]
     },
@@ -5709,7 +5709,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "wordpress:7.1.4",
+        "wordpress:7.1.5",
         "mariadb:11.1.3"
       ]
     },
@@ -5790,7 +5790,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/diced/zipline:4.8.3",
+        "ghcr.io/diced/zipline:4.8.4",
         "postgres:18"
       ]
     }
