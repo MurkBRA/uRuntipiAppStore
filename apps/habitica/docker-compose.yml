@@ -1,6 +1,6 @@
 services:
   habitica:
-    image: awinterstein/habitica-server:5.50.6
+    image: awinterstein/habitica-server:5.53.1
     command: 'sh -c "perl -0pi -e ''s/upgradeInsecureRequests: IS_PROD \\? \\[\\] : null,?/upgradeInsecureRequests: null/g'' /var/lib/habitica/website/server/middlewares/index.js /var/lib/habitica/website/transpiled-babel/middlewares/index.js && printenv | grep -v ''no_proxy'' >> /etc/environment && /etc/init.d/cron start && node /var/lib/habitica/website/transpiled-babel/index.js"'
     environment:
       - NODE_DB_URI=mongodb://habitica-mongo/habitica

@@ -9,7 +9,7 @@ What makes VERT stand out is its focus on privacy and performance. Conversions a
 VERT combines a clean, intuitive interface with advanced conversion logic, giving users both simplicity and flexibility. Whether it's converting a single file or processing multiple files in sequence, it provides a seamless experience that adapts to different needs. The result is a reliable and privacy-respecting tool that turns file conversion into a fast, straightforward, and enjoyable process.
 
 ## Links
-- **Upstream Version**: `35ebeb1`
+- **Upstream Version**: `9d2c9d8`
 - **Website**: https://vert.sh/
 - **Source Repository**: https://github.com/VERT-sh/VERT
 - **Support**: https://github.com/VERT-sh/VERT/issues

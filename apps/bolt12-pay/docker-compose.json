@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "bolt12-pay",
-      "image": "alex71btc/bolt12-pay:0.3.24",
+      "image": "alex71btc/bolt12-pay:0.3.30",
       "isMain": true,
       "internalPort": 8081,
       "addToMainNetwork": true,
@@ -15,6 +15,10 @@
         {
           "key": "APP_CONFIG_PATH",
           "value": "/data/config.json"
+        },
+        {
+          "key": "BOLT12_PAY_INITIAL_PASSWORD",
+          "value": "${APP_PASSWORD:?Umbrel APP_PASSWORD is required}"
         },
         {
           "key": "CONFIG_JSON_PATH",

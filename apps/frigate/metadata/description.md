@@ -17,7 +17,7 @@ A complete and local NVR designed for Home Assistant with AI object detection.  
 - **RTSP Stream Password**: Configured via the `APP_RTSP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `0.18.2`
+- **Upstream Version**: `0.18.3`
 - **Website**: https://frigate.video/
 - **Source Repository**: https://github.com/blakeblackshear/frigate
 - **Support**: https://github.com/blakeblackshear/frigate/issues

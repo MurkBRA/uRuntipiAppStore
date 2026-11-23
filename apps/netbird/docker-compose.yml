@@ -7,7 +7,7 @@ services:
       internal_port: 80
       is_main: true
   netbird-app:
-    image: ghcr.io/netbirdio/netbird:0.83.1-rootless
+    image: ghcr.io/netbirdio/netbird:0.83.2-rootless
     user: ${APP_CONTAINER_USER:-1000:1000}
     volumes:
       - ${APP_DATA_DIR}/data/app_data:/var/lib/netbird
@@ -17,7 +17,7 @@ services:
       - SYS_ADMIN
       - SYS_RESOURCE
   netbird-status:
-    image: ghcr.io/netbirdio/netbird:0.83.1-rootless
+    image: ghcr.io/netbirdio/netbird:0.83.2-rootless
     command:
       - |
         trap 'exit 0' TERM INT

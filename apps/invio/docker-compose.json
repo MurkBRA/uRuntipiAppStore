@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "invio",
-      "image": "ghcr.io/kittendevv/invio-frontend:v2.4.1",
+      "image": "ghcr.io/kittendevv/invio-frontend:v2.5.0",
       "isMain": true,
       "internalPort": 8000,
       "environment": [
@@ -34,7 +34,7 @@
     },
     {
       "name": "invio-backend",
-      "image": "ghcr.io/kittendevv/invio-backend:v2.4.1",
+      "image": "ghcr.io/kittendevv/invio-backend:v2.5.0",
       "environment": [
         {
           "key": "ADMIN_USER",

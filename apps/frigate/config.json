@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "frigate",
   "description": "A complete and local NVR designed for Home Assistant with AI object detection.  Uses OpenCV and Tensorflow to perform realtime object detection locally for IP cameras.",
-  "tipi_version": 2,
-  "version": "0.18.2",
+  "tipi_version": 3,
+  "version": "0.18.3",
   "categories": [
     "automation"
   ],
@@ -29,7 +29,7 @@
     "amd64"
   ],
   "created_at": 1792501496394,
-  "updated_at": 1794005949248,
+  "updated_at": 1795458553028,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

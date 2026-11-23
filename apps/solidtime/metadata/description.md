@@ -24,7 +24,7 @@ The application takes a few minutes until it becomes available after installatio
 - **Username / Email**: Configured via `SUPER_ADMINS` in your Runtipi app settings (default: `admin@tipi.local`)
 
 ## Links
-- **Upstream Version**: `0.22.1`
+- **Upstream Version**: `0.23.0`
 - **Website**: https://www.solidtime.io/
 - **Source Repository**: https://github.com/solidtime-io/solidtime
 - **Support**: https://github.com/solidtime-io/solidtime/issues

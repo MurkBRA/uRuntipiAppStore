@@ -9,7 +9,7 @@ One of Habitica's key features is its focus on habit-building and personal growt
 Beyond individual use, Habitica offers social features like joining groups and participating in challenges with friends or a wider community. This adds a layer of accountability and fosters a sense of camaraderie, making it easier to stay motivated. Overall, Habitica transforms mundane tasks into a more interactive and fun experience, encouraging users to work toward their goals while enjoying the journey.
 
 ## Links
-- **Upstream Version**: `5.50.6`
+- **Upstream Version**: `5.53.1`
 - **Website**: https://habitica.com/
 - **Source Repository**: https://github.com/HabitRPG/habitica
 - **Support**: https://github.com/HabitRPG/habitica/issues

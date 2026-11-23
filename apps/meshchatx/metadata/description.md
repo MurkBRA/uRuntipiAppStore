@@ -21,7 +21,7 @@ Features:
   - Improved application security
 
 ## Links
-- **Upstream Version**: `4.10.7`
+- **Upstream Version**: `4.12.0`
 - **Website**: https://quad4.io
 - **Source Repository**: https://github.com/Quad4-Software/MeshChatX
 - **Support**: https://github.com/Quad4-Software/MeshChatX/issues

@@ -17,7 +17,7 @@ Notes can be edited, restored from the trash, exported for safekeeping, or dupli
 - **Password**: `admin`
 
 ## Links
-- **Upstream Version**: `6.151.1`
+- **Upstream Version**: `6.156.2`
 - **Website**: https://poznote.com/
 - **Source Repository**: https://github.com/timothepoznanski/poznote
 - **Support**: https://github.com/timothepoznanski/poznote/issues

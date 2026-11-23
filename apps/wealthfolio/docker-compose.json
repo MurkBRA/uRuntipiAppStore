@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "wealthfolio",
-      "image": "wealthfolio/wealthfolio:3.13.0",
+      "image": "wealthfolio/wealthfolio:3.13.1",
       "isMain": true,
       "internalPort": 8088,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
@@ -24,10 +24,6 @@
         {
           "key": "WF_AUTH_TOKEN_TTL_MINUTES",
           "value": "60"
-        },
-        {
-          "key": "WF_REQUEST_TIMEOUT_MS",
-          "value": "30000"
         },
         {
           "key": "WF_SECRET_KEY",

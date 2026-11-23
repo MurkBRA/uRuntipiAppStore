@@ -1,6 +1,6 @@
 services:
   bentopdf:
-    image: ghcr.io/alam00000/bentopdf:v2.8.11
+    image: ghcr.io/alam00000/bentopdf:v2.8.12
     x-runtipi:
       internal_port: 8080
       is_main: true

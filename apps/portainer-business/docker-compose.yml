@@ -1,6 +1,6 @@
 services:
   portainer-business:
-    image: portainer/portainer-ee:2.45.3-alpine
+    image: portainer/portainer-ee:2.45.4-alpine
     command: '--host unix:///var/run/docker.sock --admin-password-file=/default-password'
     volumes:
       - ${APP_DATA_DIR}/data/default-password:/default-password

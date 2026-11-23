@@ -21,7 +21,7 @@ Expose your apps to the internet easily and securely.
 - **Password**: `#Passw0rd`
 
 ## Links
-- **Upstream Version**: `2.4.6`
+- **Upstream Version**: `2.4.7`
 - **Website**: https://om.uusec.com/
 - **Source Repository**: https://github.com/Safe3/openresty-manager
 - **Support**: https://github.com/Safe3/openresty-manager/issues

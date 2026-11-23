@@ -1,6 +1,6 @@
 services:
   localai:
-    image: localai/localai:v5.0.0
+    image: localai/localai:v5.0.1
     volumes:
       - ${APP_DATA_DIR}/data/models:/models
       - ${APP_DATA_DIR}/data/backends:/backends

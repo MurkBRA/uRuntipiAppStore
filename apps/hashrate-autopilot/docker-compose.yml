@@ -1,6 +1,6 @@
 services:
   hashrate-autopilot:
-    image: ghcr.io/rdouma/hashrate-autopilot:1.18.2
+    image: ghcr.io/rdouma/hashrate-autopilot:1.18.3
     volumes:
       - ${APP_DATA_DIR}/data:/app/data
     environment:

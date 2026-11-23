@@ -74,10 +74,11 @@
       ],
       "healthCheck": {
         "test": "docker -H unix:///data/docker.sock volume inspect sv2-config >/dev/null",
-        "interval": "5s",
+        "interval": "5m",
         "timeout": "5s",
-        "retries": 10,
-        "startPeriod": "180s"
+        "retries": 3,
+        "startPeriod": "300s",
+        "startInterval": "5s"
       }
     }
   ]

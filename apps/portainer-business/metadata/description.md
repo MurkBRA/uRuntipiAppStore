@@ -25,7 +25,7 @@ Portainer Business Edition is the commercial edition of Portainer. It adds featu
 - **Password**: `changeme`
 
 ## Links
-- **Upstream Version**: `2.45.3`
+- **Upstream Version**: `2.45.4`
 - **Website**: https://www.portainer.io
 - **Source Repository**: https://www.portainer.io
 - **Support**: https://www.portainer.io/resources/get-support

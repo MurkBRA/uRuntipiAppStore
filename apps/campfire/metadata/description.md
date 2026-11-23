@@ -18,7 +18,7 @@ Features:
 On first launch, you'll be guided through creating an admin account. This admin can then invite other users and manage rooms and permissions.
 
 ## Links
-- **Upstream Version**: `1.5.10`
+- **Upstream Version**: `1.5.13`
 - **Website**: https://once.com/campfire
 - **Source Repository**: https://github.com/basecamp/once-campfire
 - **Support**: https://github.com/basecamp/once-campfire/issues

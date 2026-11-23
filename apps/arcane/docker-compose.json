@@ -71,10 +71,11 @@
       ],
       "healthCheck": {
         "test": "docker --host unix:///data/docker.sock version",
-        "interval": "5s",
+        "interval": "5m",
         "timeout": "10s",
-        "retries": 6,
-        "startPeriod": "5m"
+        "retries": 3,
+        "startPeriod": "5m",
+        "startInterval": "5s"
       }
     }
   ]

@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "Blacklist oficial da uRuntipiAppStore para impedir duplicação com a runtipi/runtipi-appstore e filtrar pacotes desativados no getumbrel/umbrel-apps.",
-  "generated_at": "2026-11-22T14:43:21.694Z",
+  "generated_at": "2026-11-23T18:29:07.402Z",
   "stats": {
     "runtipi_official_total": 267,
     "umbrel_total_packages": 396,
@@ -1644,7 +1644,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "adguard/adguardhome:v0.107.80"
+        "adguard/adguardhome:v1.0.0"
       ]
     },
     {
@@ -2426,7 +2426,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "eclipse-mosquitto:2.0.22",
+        "eclipse-mosquitto:2.0.23",
         "cedalo/management-center:2"
       ]
     },
@@ -2615,7 +2615,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "shaneisrael/fireshare:1.9.3"
+        "shaneisrael/fireshare:1.9.4"
       ]
     },
     {
@@ -3749,7 +3749,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "neosmemo/memos:26.11.1"
+        "neosmemo/memos:26.11.2"
       ]
     },
     {
@@ -3986,8 +3986,8 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "leepeuker/movary:0.83.0",
-        "leepeuker/movary:0.83.0",
+        "leepeuker/movary:0.84.0",
+        "leepeuker/movary:0.84.0",
         "mysql:8.0"
       ]
     },
@@ -4319,7 +4319,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.16"
+        "ollama/ollama:0.40.17"
       ]
     },
     {
@@ -4334,7 +4334,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.16"
+        "ollama/ollama:0.40.17"
       ]
     },
     {
@@ -4349,7 +4349,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ollama/ollama:0.40.16"
+        "ollama/ollama:0.40.17"
       ]
     },
     {
@@ -4364,7 +4364,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "1dev/server:17.2.2",
+        "1dev/server:17.2.3",
         "postgres:14"
       ]
     },
@@ -4735,7 +4735,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/linuxserver/prowlarr:2.7.0"
+        "ghcr.io/linuxserver/prowlarr:3.0.2"
       ]
     },
     {
@@ -4781,7 +4781,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/linuxserver/radarr:6.4.4"
+        "ghcr.io/linuxserver/radarr:7.0.3"
       ]
     },
     {
@@ -5237,7 +5237,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "stirlingtools/stirling-pdf:3.4.0"
+        "stirlingtools/stirling-pdf:3.5.0"
       ]
     },
     {
@@ -5253,7 +5253,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/suwayomi/tachidesk:v2.4.2490"
+        "ghcr.io/suwayomi/tachidesk:v2.4.2512"
       ]
     },
     {
@@ -5585,7 +5585,7 @@
       "available": true,
       "deprecated": false,
       "images": [
-        "ghcr.io/wekan/wekan:v13.24",
+        "ghcr.io/wekan/wekan:v13.28",
         "mongo:6"
       ]
     },

@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "copyparty",
-      "image": "ghcr.io/9001/copyparty-ac:1.20.26",
+      "image": "ghcr.io/9001/copyparty-ac:1.20.27",
       "isMain": true,
       "internalPort": 3923,
       "user": "${APP_CONTAINER_USER:-1000:1000}",

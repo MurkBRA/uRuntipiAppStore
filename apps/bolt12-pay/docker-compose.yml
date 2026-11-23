@@ -1,12 +1,13 @@
 services:
   bolt12-pay:
-    image: alex71btc/bolt12-pay:0.3.24
+    image: alex71btc/bolt12-pay:0.3.30
     volumes:
       - ${APP_DATA_DIR}/data:/data
       - ${APP_LIGHTNING_NODE_DATA_DIR}:/lnd:ro
     environment:
       - APP_DATA_DIR=/data
       - APP_CONFIG_PATH=/data/config.json
+      - BOLT12_PAY_INITIAL_PASSWORD=${APP_PASSWORD:?Umbrel APP_PASSWORD is required}
       - CONFIG_JSON_PATH=/data/config.json
       - SECRETS_JSON_PATH=/data/config/secrets.json
       - PAY_UI_SESSION_TTL=1800

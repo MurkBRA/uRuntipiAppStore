@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "hashrate-autopilot",
-      "image": "ghcr.io/rdouma/hashrate-autopilot:1.18.2",
+      "image": "ghcr.io/rdouma/hashrate-autopilot:1.18.3",
       "isMain": true,
       "internalPort": 3010,
       "addToMainNetwork": true,

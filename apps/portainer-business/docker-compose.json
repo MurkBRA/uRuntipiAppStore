@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "portainer-business",
-      "image": "portainer/portainer-ee:2.45.3-alpine",
+      "image": "portainer/portainer-ee:2.45.4-alpine",
       "isMain": true,
       "internalPort": 9000,
       "command": "--host unix:///var/run/docker.sock --admin-password-file=/default-password",

@@ -21,7 +21,7 @@ This app declares a Bitcoin node, an Electrum server, and Datum Gateway as depen
 This package integrates with **bitcoin, electrs, datum** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `1.18.2-patch.1`
+- **Upstream Version**: `1.18.3`
 - **Website**: https://github.com/rdouma/hashrate-autopilot
 - **Source Repository**: https://github.com/rdouma/hashrate-autopilot
 - **Support**: https://github.com/rdouma/hashrate-autopilot/issues

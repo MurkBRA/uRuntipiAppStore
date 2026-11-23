@@ -6,8 +6,8 @@
   "dynamic_config": true,
   "id": "portainer-business",
   "description": "⚠️ Portainer Business Edition needs a license key from Portainer. You'll be asked for it after you sign in for the first time. Portainer offers a free license for up to 3 nodes at portainer.io/take-3.",
-  "tipi_version": 1,
-  "version": "2.45.3",
+  "tipi_version": 2,
+  "version": "2.45.4",
   "categories": [
     "development"
   ],
@@ -20,7 +20,7 @@
     "amd64"
   ],
   "created_at": 1794674739996,
-  "updated_at": 1794674799996,
+  "updated_at": 1795458553901,
   "$schema": "../app-info-schema.json",
   "min_tipi_version": "4.7.0"
 }

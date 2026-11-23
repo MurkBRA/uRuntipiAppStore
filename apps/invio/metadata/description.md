@@ -11,7 +11,7 @@ Create and share invoices in seconds, host your data yourself, and share secure,
 - **Password**: Generated automatically via the `APP_PASSWORD` field in your Runtipi app configuration.
 
 ## Links
-- **Upstream Version**: `2.4.1`
+- **Upstream Version**: `2.5.0`
 - **Website**: https://github.com/kittendevv/invio
 - **Source Repository**: https://github.com/kittendevv/invio
 - **Support**: https://github.com/kittendevv/invio/issues

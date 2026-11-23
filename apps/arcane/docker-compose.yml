@@ -35,10 +35,11 @@ services:
     network_mode: host
     healthcheck:
       test: docker --host unix:///data/docker.sock version
-      interval: 5s
+      interval: 5m
       timeout: 10s
-      retries: 6
+      retries: 3
       start_period: 5m
+      start_interval: 5s
     privileged: true
     stop_grace_period: 1m
 x-runtipi:

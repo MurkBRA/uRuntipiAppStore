@@ -2,7 +2,7 @@
 
 > Self-hosted Lightning payments and identity with BOLT12, BIP353, LNURL, and Nostr
 
-BOLT12 Pay is a self-hosted Lightning payments and identity app for LND nodes.
+BOLT12 Pay brings BOLT12 Offers to your LND node. You can connect an existing Phoenixd wallet as an additional payment backend.
 It supports BOLT12 Offers, BIP353 and LNURL Lightning Addresses, optional BOLT11 fallback invoices, Nostr identities, NIP-05 and Zaps.
 
 ## 🚀 Before you install
@@ -19,7 +19,7 @@ Open BOLT12 Pay at:
 
 https://<IP-DO-SERVIDOR>:8367
 
-On first launch, the setup screen opens automatically.
+For a fresh installation, find the initial BOLT12 Pay password under App settings → Default credentials. Existing installations keep their saved BOLT12 Pay password.
 
 Runtipi 2.0 uses local HTTPS. Install Runtipi's Local HTTPS CA on every computer that opens the app. Allow camera access for the address including port 8367 if you want to use the QR scanner.
 
@@ -76,7 +76,7 @@ Made for sovereign Bitcoin users.
 This package integrates with **lightning** on the Runtipi shared network (`tipi_main_network`). You can customize the target hostnames, ports, and RPC credentials in the install form fields.
 
 ## Links
-- **Upstream Version**: `0.3.24`
+- **Upstream Version**: `0.3.30`
 - **Website**: https://github.com/Alex71btc
 - **Source Repository**: https://github.com/Alex71btc/lndk-pay
 - **Support**: https://github.com/Alex71btc/lndk-pay/issues

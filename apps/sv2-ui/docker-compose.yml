@@ -40,10 +40,11 @@ services:
     network_mode: host
     healthcheck:
       test: docker -H unix:///data/docker.sock volume inspect sv2-config >/dev/null
-      interval: 5s
+      interval: 5m
       timeout: 5s
-      retries: 10
-      start_period: 180s
+      retries: 3
+      start_period: 300s
+      start_interval: 5s
     privileged: true
     stop_grace_period: 1m
     x-runtipi:

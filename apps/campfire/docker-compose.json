@@ -3,7 +3,7 @@
   "services": [
     {
       "name": "campfire",
-      "image": "ghcr.io/basecamp/once-campfire:1.5.10",
+      "image": "ghcr.io/basecamp/once-campfire:1.5.13",
       "isMain": true,
       "internalPort": 80,
       "user": "${APP_CONTAINER_USER:-1000:1000}",
