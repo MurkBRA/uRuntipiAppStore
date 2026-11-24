@@ -56,17 +56,17 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 39 | `circuitbreaker` | **Circuit Breaker** | `v0.5.1` | `9235` | `finance` |
 | 40 | `cobalt` | **cobalt** | `11.5` | `9009` | `media, music` |
 | 41 | `convertx` | **ConvertX** | `0.20.0` | `8386` | `utilities, data` |
-| 42 | `copyparty` | **copyparty** | `1.20.27` | `3923` | `books, utilities, data` |
+| 42 | `copyparty` | **copyparty** | `1.20.28` | `3923` | `books, utilities, data` |
 | 43 | `core-lightning` | **Core Lightning** | `26.09` | `2103` | `finance` |
 | 44 | `core-lightning-rtl` | **Ride The Lightning (Core Lightning)** | `v0.15.17` | `3100` | `finance` |
 | 45 | `datum` | **DATUM** | `v0.5.1` | `21000` | `finance` |
 | 46 | `dcrdex` | **Bison Wallet** | `v1.0.5` | `5758` | `finance` |
 | 47 | `dcrpulse` | **Decred Pulse** | `1.0.3` | `8735` | `finance` |
 | 48 | `deepsea` | **DeepSea Dashboard** | `v2.0.4` | `5300` | `finance` |
-| 49 | `docuseal` | **DocuSeal** | `3.3.8` | `8387` | `utilities, data` |
+| 49 | `docuseal` | **DocuSeal** | `3.4.0` | `8387` | `utilities, data` |
 | 50 | `domain-locker` | **Domain Locker** | `0.3.0` | `8839` | `network, security` |
 | 51 | `donetick` | **Donetick** | `0.1.89` | `27781` | `utilities, data` |
-| 52 | `downtify` | **Downtify** | `3.13.0` | `8789` | `media, music` |
+| 52 | `downtify` | **Downtify** | `3.14.0` | `8789` | `media, music` |
 | 53 | `dropgate-server` | **Dropgate Server** | `3.0.13` | `52443` | `utilities, data` |
 | 54 | `dtan-server` | **DTAN Server** | `v0.2.0` | `8022` | `network` |
 | 55 | `dumbpad` | **DumbPad** | `1.0.4` | `26406` | `utilities, data` |
@@ -86,7 +86,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 69 | `formicaio` | **Formicaio** | `0.3.0` | `52100` | `finance` |
 | 70 | `frigate` | **Frigate** | `0.18.3` | `5004` | `automation` |
 | 71 | `fulcrum` | **Fulcrum** | `1.0.2` | `2109` | `finance` |
-| 72 | `gitea-mirror` | **Gitea Mirror** | `3.54.0` | `4322` | `development` |
+| 72 | `gitea-mirror` | **Gitea Mirror** | `3.55.0` | `4322` | `development` |
 | 73 | `gitingest` | **Gitingest** | `0.3.1` | `8895` | `development` |
 | 74 | `gitlab` | **GitLab** | `19.6.0` | `8929` | `development` |
 | 75 | `glasshome` | **GlassHome** | `1.4.5` | `3123` | `automation` |
@@ -150,7 +150,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 133 | `nostr-relay` | **Nostr Relay** | `v1.2.1` | `4848` | `social` |
 | 134 | `nostr-vpn` | **Nostr VPN** | `v4.1.23` | `38180` | `network, security` |
 | 135 | `nostrudel` | **noStrudel** | `1.1.0` | `3149` | `social` |
-| 136 | `notediscovery` | **NoteDiscovery** | `0.35.0` | `8736` | `utilities, data` |
+| 136 | `notediscovery` | **NoteDiscovery** | `0.36.0` | `8736` | `utilities, data` |
 | 137 | `nutstash-wallet` | **Nutstash Wallet** | `0.1.10` | `4173` | `finance` |
 | 138 | `obsidian` | **Obsidian** | `1.15.1` | `3435` | `utilities, data` |
 | 139 | `octoprint` | **OctoPrint** | `1.11.8` | `5003` | `utilities, data` |
@@ -179,7 +179,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 162 | `pocketbase` | **PocketBase** | `0.40.6` | `5400` | `development` |
 | 163 | `pogolo` | **pogolo** | `v1.x` | `5663` | `finance` |
 | 164 | `portainer-business` | **Portainer Business** | `2.45.4` | `9015` | `development` |
-| 165 | `poznote` | **Poznote** | `6.156.2` | `8389` | `utilities, data` |
+| 165 | `poznote` | **Poznote** | `6.158.2` | `8389` | `utilities, data` |
 | 166 | `public-pool` | **Public Pool** | `1.30.7-alpine` | `2019` | `finance` |
 | 167 | `public-pool-web` | **Public Pool's Web** | `0.2.0` | `2021` | `finance` |
 | 168 | `pyload-ng` | **pyload-ng** | `0.5.0` | `26317` | `utilities, data` |
@@ -238,7 +238,7 @@ Automated, tested port of **244** non-duplicate apps from [`getumbrel/umbrel-app
 | 221 | `toshi-moto` | **Toshi Moto** | `1.37.3` | `8021` | `finance` |
 | 222 | `transmute` | **Transmute** | `2.1.1` | `3313` | `utilities, data` |
 | 223 | `trip` | **Trip** | `1.50.1` | `8980` | `utilities, data` |
-| 224 | `twenty` | **Twenty** | `2.61.0` | `2020` | `utilities, data` |
+| 224 | `twenty` | **Twenty** | `2.62.2` | `2020` | `utilities, data` |
 | 225 | `urbit` | **Urbit** | `v4.6` | `21955` | `network` |
 | 226 | `urbit-bitcoin-connector` | **Urbit Bitcoin Connector** | `latest` | `9090` | `finance` |
 | 227 | `usocial` | **usocial** | `v0.1.5-buster` | `8448` | `social` |

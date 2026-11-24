@@ -17,7 +17,7 @@ In essence, copyparty is not just a file server but a flexible and elegant file 
 - **Password**: `umbrel`
 
 ## Links
-- **Upstream Version**: `1.20.27`
+- **Upstream Version**: `1.20.28`
 - **Website**: https://github.com/9001/copyparty
 - **Source Repository**: https://github.com/9001/copyparty
 - **Support**: https://github.com/9001/copyparty/issues
